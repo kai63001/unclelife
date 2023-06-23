@@ -12,16 +12,29 @@ import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Icons } from "@/components/Icons";
+import { Database } from "@/lib/types_db";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const LoginPage = () => {
   const form = useForm();
+  const supabase = createClientComponentClient<Database>()
+
+  async function signInWithNotion() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'notion',
+      options: {
+        redirectTo: 'http://localhost:3000/auth/callback'
+      }
+    })
+    console.log(data, error)
+  }
 
   return (
     <div className="h-screen w-screen bg-[#F2F2F2] flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         {/* close */}
         <div className="flex justify-end">
-          <X size={24} />
+          <X size={24} /> 
         </div>
         <h1 className="text-center text-3xl font-bold">UncleLife</h1>
         <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
@@ -64,7 +77,7 @@ const LoginPage = () => {
         <div className="border-b my-4"></div>
         {/* notion login */}
         <div className="flex justify-center items-center">
-          <Button className="w-full ">
+          <Button onClick={signInWithNotion} className="w-full ">
             <Icons.notion  className="mr-2 h-5 w-5"/>
             Login with Notion
           </Button>
