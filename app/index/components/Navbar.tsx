@@ -14,7 +14,7 @@ const IndexNavbar = () => {
           <Link href="/">
             <li className="text-gray-500 hover:text-gray-900">Sign Up</li>
           </Link>
-          <Link href="/">
+          <Link href="/login">
             <li>
               <Button>
                 <LogIn className="mr-2" size={20} /> Login
