@@ -1,9 +1,11 @@
-const CreateFormPage = () => {
-    return (
-        <div>
-            hello create form
-        </div>
-    )
-}
+import CreateFormSelection from "./components/selection";
 
-export default CreateFormPage
+const CreateFormPage = () => {
+  return (
+    <div>
+      <CreateFormSelection />
+    </div>
+  );
+};
+
+export default CreateFormPage;

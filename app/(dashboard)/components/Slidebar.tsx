@@ -41,7 +41,7 @@ const Slidebars = () => {
     <div className="text-black h-screen w-64 flex flex-col border-r">
       <div className="p-4">
         <Link href="/home">
-          <h1 className="text-2xl font-bold">UncleLife</h1>
+          <p className="text-2xl font-bold">UncleLife</p>
         </Link>
       </div>
       <div className="flex-grow p-4">
