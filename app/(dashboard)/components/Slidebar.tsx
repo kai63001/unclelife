@@ -1,7 +1,42 @@
+"use client";
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { Home, PlusSquare, Timer, Clock } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const Slidebars = () => {
+  const pathname = usePathname();
+  const pathList = [
+    {
+      group: "FORMS",
+      items: [
+        {
+          path: "/home",
+          name: "Home",
+          icon: <Home className="mr-1 h-5" />,
+        },
+        {
+          path: "/form/create",
+          name: "Create a form",
+          icon: <PlusSquare className="mr-1 h-5" />,
+        },
+      ],
+    },
+    {
+      group: "WIDGETS",
+      items: [
+        {
+          path: "/pomodoro",
+          name: "Pomodoro",
+          icon: <Timer className="mr-1 h-5" />,
+        },
+        {
+          path: "/clock",
+          name: "Clock",
+          icon: <Clock className="mr-1 h-5" />,
+        },
+      ],
+    },
+  ];
   return (
     <div className="text-black h-screen w-64 flex flex-col border-r">
       <div className="p-4">
@@ -10,18 +45,28 @@ const Slidebars = () => {
         </Link>
       </div>
       <div className="flex-grow p-4">
-        <span className="font-bold text-xs">FORMS</span>
-        <ul className="space-y-2 mt-2">
-          <li>
-            <Link
-              href="/home"
-              className="bg-primary text-white rounded-sm px-3 py-2 flex items-center space-x-2"
-            >
-              <Home className="mr-1 h-5" />
-              Home
-            </Link>
-          </li>
-        </ul>
+        {pathList.map((group) => (
+          <div key={group.group} className="mb-5">
+            <span className="font-bold text-xs">{group.group}</span>
+            <ul className="space-y-2 mt-2">
+              {group.items.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`${
+                      pathname === item.path
+                        ? "bg-primary text-white"
+                        : "hover:bg-primary hover:text-white duration-300"
+                    } rounded-sm py-2 flex items-center space-x-2 px-3`}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );

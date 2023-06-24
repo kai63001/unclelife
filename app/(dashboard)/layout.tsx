@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <div className="flex">
       <Slidebars />
-      <div className="flex-grow p-4">{children}</div>
+      <div className="flex-grow p-4 w-full max-w-6xl mx-auto">{children}</div>
     </div>
   );
 }
