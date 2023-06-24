@@ -21,7 +21,7 @@ const IndexNavbar = async () => {
             <li className="text-gray-500 hover:text-gray-900">Pricing</li>
           </Link>
           {session ? (
-            <Link href="/dashboard">
+            <Link href="/home">
               <Button>
                 <li>Dashboard</li>
               </Button>

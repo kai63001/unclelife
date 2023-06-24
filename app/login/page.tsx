@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,19 +15,20 @@ import { useForm } from "react-hook-form";
 import { Icons } from "@/components/Icons";
 import { Database } from "@/lib/types_db";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import Link from "next/link";
 
 const LoginPage = () => {
   const form = useForm();
-  const supabase = createClientComponentClient<Database>()
+  const supabase = createClientComponentClient<Database>();
 
   async function signInWithNotion() {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'notion',
+      provider: "notion",
       options: {
-        redirectTo: 'http://localhost:3000/auth/callback'
-      }
-    })
-    console.log(data, error)
+        redirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
+      },
+    });
+    if (error) console.log(error);
   }
 
   return (
@@ -34,7 +36,9 @@ const LoginPage = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         {/* close */}
         <div className="flex justify-end">
-          <X size={24} /> 
+          <Link href="/">
+            <X size={24} />
+          </Link>
         </div>
         <h1 className="text-center text-3xl font-bold">UncleLife</h1>
         <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
@@ -78,7 +82,7 @@ const LoginPage = () => {
         {/* notion login */}
         <div className="flex justify-center items-center">
           <Button onClick={signInWithNotion} className="w-full ">
-            <Icons.notion  className="mr-2 h-5 w-5"/>
+            <Icons.notion className="mr-2 h-5 w-5" />
             Login with Notion
           </Button>
         </div>
