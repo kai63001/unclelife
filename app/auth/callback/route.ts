@@ -9,6 +9,11 @@ export async function GET(req: NextRequest) {
 
   if (code) {
     await supabase.auth.exchangeCodeForSession(code)
+    //save code to local storage
+    cookies().set('code', code, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
   }
 
   return NextResponse.redirect(new URL('/', req.url))
