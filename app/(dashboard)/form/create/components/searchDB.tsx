@@ -34,7 +34,7 @@ const CreateFormSearchDB = () => {
         <div className="flex w-full max-w-xl mt-5 items-center space-x-2">
           <Input type="link" placeholder="Notion Table Page URL" />
           <Button type="submit" onClick={onSubmit}>
-            Save
+            Continue
           </Button>
         </div>
         <p className="text-xs text-muted-foreground mt-1">

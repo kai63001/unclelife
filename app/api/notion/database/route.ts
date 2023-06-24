@@ -8,10 +8,23 @@ export async function GET(req: NextRequest) {
     auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
   });
   // ee18e4c2e30d47da81fdcc3a609a4dee
-  const response = await notion.databases.query({
+  const response: any = await notion.databases.query({
     database_id: "ee18e4c2e30d47da81fdcc3a609a4dee",
+    //filter only properties
+    page_size: 0,
   });
-  console.log(response);
+  const properties = response.results[0].properties;
+  let propertiesList: any[] = [];
+  if (properties) {
+    Object.entries(properties).forEach(async ([propertyName, propertyValue]: any) => {
+      await propertiesList.push({
+        name: propertyName,
+        type: propertyValue.type,
+      });
+    });
+  }
 
-  return NextResponse.json(response);
+  //get only properties
+
+  return NextResponse.json(await propertiesList);
 }
