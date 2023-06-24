@@ -7,7 +7,6 @@ const CreateFormMainPage = dynamic(
 );
 
 const CreateFormSelection = () => {
-  const [selected, setSelected] = useState<"db" | null>(null);
   return (
     <div>
       <CreateFormMainPage />
