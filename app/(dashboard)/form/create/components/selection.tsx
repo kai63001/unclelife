@@ -1,15 +1,14 @@
-'use client';
-import { useState } from "react";
+"use client";
 import dynamic from "next/dynamic";
-const CreateFormMainPage = dynamic(
-    () => import("./main"),
-    { ssr: false }
-);
+import CreateFormSearchDB from "./searchDB";
+import { useAppSelector } from "@/app/redux/hook";
+const CreateFormMainPage = dynamic(() => import("./main"), { ssr: false });
 
 const CreateFormSelection = () => {
+  const { selectedForm } = useAppSelector((state) => state.formReducer);
   return (
     <div>
-      <CreateFormMainPage />
+      {selectedForm === "DB" ? <CreateFormSearchDB /> : <CreateFormMainPage />}
     </div>
   );
 };

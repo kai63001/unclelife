@@ -2,13 +2,23 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Database } from "lucide-react";
+import { useAppDispatch } from "@/app/redux/hook";
+import { setSelectedForm } from "@/app/redux/slice/formController.slice";
 
 const CreateFormMainPage = () => {
+  const dispatch = useAppDispatch();
+  const handleCreateFormDB = () => {
+    dispatch(
+      setSelectedForm({
+        selectedForm: "DB",
+      })
+    );
+  };
+
   return (
     <div>
       <h1 className="font-bold text-2xl">Create a Form</h1>
@@ -19,7 +29,10 @@ const CreateFormMainPage = () => {
       </p>
       {/* middle selection card box */}
       <div className="mt-5 grid grid-cols-2 gap-4">
-        <Card className="cursor-pointer hover:bg-primary hover:text-secondary duration-300">
+        <Card
+          onClick={handleCreateFormDB}
+          className="cursor-pointer hover:bg-primary hover:text-secondary duration-300"
+        >
           <CardContent className="w-full text-center p-0 mt-5">
             <Database className="h-20 w-20 mx-auto" />
           </CardContent>

@@ -1,10 +1,10 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
-import formReducer from "./slice/formController.slice";
+import FormReducer from "./slice/formController.slice";
 
 export const store = configureStore({
   reducer: {
-    counter: formReducer,
+    formReducer: FormReducer,
   },
 });
 

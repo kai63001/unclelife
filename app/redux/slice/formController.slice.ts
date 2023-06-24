@@ -2,7 +2,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface FormState {
-  selectedForm: string;
+  selectedForm: "DB" | "";
 }
 
 const initialState: FormState = {
@@ -13,8 +13,8 @@ export const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    setSelectedForm: (state, action: PayloadAction<string>) => {
-      state.selectedForm = action.payload;
+    setSelectedForm: (state, action: PayloadAction<FormState>) => {
+      state.selectedForm = action.payload.selectedForm;
     },
   },
 });
