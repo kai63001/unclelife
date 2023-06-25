@@ -1,6 +1,9 @@
 "use client";
 import { useAppDispatch } from "@/app/redux/hook";
-import { setSelectedForm } from "@/app/redux/slice/formController.slice";
+import {
+  setSelectedForm,
+  setTableOfDatabase,
+} from "@/app/redux/slice/formController.slice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "lucide-react";
@@ -14,7 +17,7 @@ const CreateFormSearchDB = () => {
   const [error, setError] = useState("");
   const [notionLink, setNotionLink] = useState<string | any>("");
   const handleBack = () => {
-    dispatch(setSelectedForm({ selectedForm: "" }));
+    dispatch(setSelectedForm(""));
   };
 
   const onSubmit = async (e: any) => {
@@ -27,8 +30,7 @@ const CreateFormSearchDB = () => {
       return;
     }
     const database = await getDatabase(databaseId);
-    console.log(database);
-
+    dispatch(setTableOfDatabase(database));
     setLoading(false);
   };
 
@@ -70,9 +72,7 @@ const CreateFormSearchDB = () => {
             Continue
           </Button>
         </div>
-        {
-            <p className="text-red-500 text-sm mt-2">{error && error}</p>
-        }
+        {<p className="text-red-500 text-sm mt-2">{error && error}</p>}
         <p className="text-xs text-muted-foreground mt-1">
           example:
           https://www.notion.so/workspace/my-todo-63ffb0d41fe94cada5215c113dcdd9d9?pvs=4

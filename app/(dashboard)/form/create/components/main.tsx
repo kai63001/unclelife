@@ -12,11 +12,7 @@ import { setSelectedForm } from "@/app/redux/slice/formController.slice";
 const CreateFormMainPage = () => {
   const dispatch = useAppDispatch();
   const handleCreateFormDB = () => {
-    dispatch(
-      setSelectedForm({
-        selectedForm: "DB",
-      })
-    );
+    dispatch(setSelectedForm("DB"));
   };
 
   return (
