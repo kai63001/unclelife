@@ -1,4 +1,6 @@
-import ToolsBar from "./components/toolsBar";
+import dynamic from "next/dynamic";
+const LayerBar = dynamic(() => import("./components/layerBar"), { ssr: false });
+const ToolsBar = dynamic(() => import("./components/toolsBar"), { ssr: false });
 
 //layout
 export const metadata = {
@@ -14,12 +16,10 @@ export default function RootLayout({
   return (
     <div className="flex">
       <ToolsBar />
-      <div className="flex-grow p-4 w-full max-w-6xl mx-auto mt-14">
+      <div className="flex-grow flex justify-center p-4 w-full max-w-6xl mx-auto mt-14">
         {children}
       </div>
-      <div className="text-black h-screen w-96 flex flex-col border-l px-3 ">
-        asdas
-      </div>
+      <LayerBar />
     </div>
   );
 }

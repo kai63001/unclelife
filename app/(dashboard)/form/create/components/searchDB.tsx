@@ -10,9 +10,11 @@ import { ChevronLeft } from "lucide-react";
 import { getDatabase } from "@/lib/notionApi";
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
+import { useRouter } from "next/navigation";
 
 const CreateFormSearchDB = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [notionLink, setNotionLink] = useState<string | any>("");
@@ -32,6 +34,8 @@ const CreateFormSearchDB = () => {
     const database = await getDatabase(databaseId);
     dispatch(setTableOfDatabase(database));
     setLoading(false);
+    // redirect to custom/form
+    router.push("/custom/form");
   };
 
   function getNotionIds(url: string): any {

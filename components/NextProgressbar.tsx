@@ -1,13 +1,14 @@
 "use client";
-import NextNProgress from "nextjs-progressbar";
+import ProgressBar from "next-nprogress-bar";
 
 const NextNProgressbar = () => {
   return (
-    <NextNProgress
-      color="#29D"
-      startPosition={0.3}
-      stopDelayMs={200}
-      height={3}
+    <ProgressBar
+      height="4px"
+      color="#000000"
+      options={{ showSpinner: false }}
+      shallowRouting
+      appDirectory
     />
   );
 };

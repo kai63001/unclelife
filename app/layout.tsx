@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/provider";
-import dynamic from "next/dynamic";
 import NextNProgressbar from "@/components/NextProgressbar";
 
 const inter = Inter({ subsets: ["latin"] });
