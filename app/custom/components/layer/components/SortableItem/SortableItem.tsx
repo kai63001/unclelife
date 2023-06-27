@@ -46,7 +46,7 @@ export function SortableItem({ children, id }: PropsWithChildren<Props>) {
   return (
     <SortableItemContext.Provider value={context}>
       <li
-        className="SortableItem list-none bg-white px-5 py-2 w-full flex justify-between"
+        className="SortableItem list-none bg-white px-5 py-2 w-full flex justify-between mb-1 border rounded-sm"
         ref={setNodeRef}
       >
         {children}
