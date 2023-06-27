@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@/app/redux/hook";
+import { Input } from "@/components/ui/input";
 
 const CreateFormCustomPage = () => {
   const { form } = useAppSelector((state) => state.formReducer);
@@ -10,6 +11,7 @@ const CreateFormCustomPage = () => {
         <h1 className="text-2xl font-bold">
             {form.title}
         </h1>
+        <Input placeholder="Title" />
       </div>
     </div>
   );
