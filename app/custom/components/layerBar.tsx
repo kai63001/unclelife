@@ -22,8 +22,11 @@ const LayerBar = () => {
       newTable.push({
         id: index + 1,
         name: item,
+        type: tableOfDatabase[item].type,
       });
     });
+
+    console.log("newTable", newTable)
 
     dispatch(setLayer(newTable));
     // eslint-disable-next-line react-hooks/exhaustive-deps
