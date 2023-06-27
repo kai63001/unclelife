@@ -19,6 +19,7 @@ import {
 import { DragHandle, SortableItem, SortableOverlay } from "./components";
 
 interface BaseItem {
+  name: ReactNode;
   id: UniqueIdentifier;
 }
 
