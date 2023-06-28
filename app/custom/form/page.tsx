@@ -13,8 +13,8 @@ const CreateFormCustomPage = () => {
         </h1>
         {layer.map((item: any, index: number) => {
           return (
-            <div key={index} className="mt-5">
-              <p className="text-xl font-bold">{item.name}</p>
+            <div key={index} className="mt-2">
+              <p className="text-sm font-bold">{item.name}</p>
               <Input
                 placeholder={item.name}
                 className="focus:outline-none focus-visible:ring-0 text-black"
