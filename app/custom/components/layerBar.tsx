@@ -23,10 +23,12 @@ const LayerBar = () => {
         id: index + 1,
         name: item,
         type: tableOfDatabase[item].type,
+        options: tableOfDatabase[item][tableOfDatabase[item].type].options || [],
         label: item
       });
     });
-
+    //reverse
+    newTable = newTable.reverse();
     console.log("newTable", newTable)
 
     dispatch(setLayer(newTable));

@@ -9,6 +9,10 @@ const RichTextRender = dynamic(() => import("./RichText/RichText"), {
 const DateRender = dynamic(() => import("./Date/DateRender"), {
   ssr: false,
 });
+const SelectionRender = dynamic(() => import("./Selection/SelectionRender"), {
+  ssr: false,
+});
+
 
 
 const RenderFormComponent = ({ data }: any) => {
@@ -21,8 +25,10 @@ const RenderFormComponent = ({ data }: any) => {
         return <RichTextRender data={data}/>;
       case "date":
         return <DateRender data={data}/>;
+      case "select":
+        return <SelectionRender data={data}/>;
       default:
-        return <div>asdasd</div>;
+        return <TitleRendert data={data} type={data.type} />;
     }
   };
   return <div>{renderCase()}</div>;
