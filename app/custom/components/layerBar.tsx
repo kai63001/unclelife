@@ -23,6 +23,7 @@ const LayerBar = () => {
         id: index + 1,
         name: item,
         type: tableOfDatabase[item].type,
+        label: item
       });
     });
 
