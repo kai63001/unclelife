@@ -9,14 +9,17 @@ export async function GET(req: NextRequest) {
     const notion = new Client({
       auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
     });
-    const response: any = await notion.databases.query({
+    const response: any = await notion.databases.retrieve({
       database_id: req.nextUrl.searchParams.get("id") as string,
-      page_size: 0,
     });
-    const properties = response.results[0].properties;
+    //this code for get user retrieve and will be use in the future
+    // notion.users.retrieve({ user_id: response.properties.Author.people }).then((user) => {
+    //   console.log(user);
+    // });
+    const properties = response.properties;
 
     return NextResponse.json(await properties);
-  } catch (error:any) {
+  } catch (error: any) {
     return NextResponse.json({ error: error.message });
   }
 }
