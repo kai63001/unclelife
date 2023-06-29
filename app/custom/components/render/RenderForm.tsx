@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import MultiSelectRender from "./MultiSelect/MultiSelectRender";
 
 const TitleRendert = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -27,6 +28,8 @@ const RenderFormComponent = ({ data }: any) => {
         return <DateRender data={data}/>;
       case "select":
         return <SelectionRender data={data}/>;
+      case "multi_select":
+        return <MultiSelectRender data={data}/>;
       default:
         return <TitleRendert data={data} type={data.type} />;
     }
