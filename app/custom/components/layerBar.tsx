@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SortableList } from "./layer";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
 import { setLayer } from "@/app/redux/slice/formController.slice";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const LayerBar = () => {
   const { form, tableOfDatabase, layer }: any = useAppSelector(
@@ -23,13 +24,14 @@ const LayerBar = () => {
         id: index + 1,
         name: item,
         type: tableOfDatabase[item].type,
-        options: tableOfDatabase[item][tableOfDatabase[item].type].options || [],
-        label: item
+        options:
+          tableOfDatabase[item][tableOfDatabase[item].type].options || [],
+        label: item,
       });
     });
     //reverse
     newTable = newTable.reverse();
-    console.log("newTable", newTable)
+    console.log("newTable", newTable);
 
     dispatch(setLayer(newTable));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,20 +41,24 @@ const LayerBar = () => {
     dispatch(setLayer(newLayer));
   };
 
-
   return (
-    <div className="text-[#3d3d3d] bg-[#FBFBFA] h-screen w-96 flex flex-col border-r px-3 ">
+    <div className="text-[#3d3d3d] bg-[#FBFBFA] h-screen w-96 flex flex-col border-r px-3 fixed right-0">
       <b className="mt-5 mb-5">LAYER</b>
-      <SortableList
-        items={layer}
-        onChange={setLayerHook}
-        renderItem={(item):any => (
-          <SortableList.Item id={item.id}>
-            {item.name}
-            <SortableList.DragHandle />
-          </SortableList.Item>
-        )}
-      />
+      <ScrollArea>
+        <SortableList
+          items={layer}
+          onChange={setLayerHook}
+          renderItem={(item: any) => (
+            <SortableList.Item id={item.id}>
+              <div className="flex flex-col">
+                <p>{item.name}</p>
+                <p className="text-xs text-[#9E9E9E]">{item.type}</p>
+              </div>
+              <SortableList.DragHandle />
+            </SortableList.Item>
+          )}
+        />
+      </ScrollArea>
     </div>
   );
 };

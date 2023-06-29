@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import MultiSelectRender from "./MultiSelect/MultiSelectRender";
+import CheckBoxRender from "./CheckBox/CheckBoxRender";
 
 const TitleRendert = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -14,8 +15,6 @@ const SelectionRender = dynamic(() => import("./Selection/SelectionRender"), {
   ssr: false,
 });
 
-
-
 const RenderFormComponent = ({ data }: any) => {
   const renderCase = () => {
     //return SwitchCase
@@ -23,13 +22,17 @@ const RenderFormComponent = ({ data }: any) => {
       case "title":
         return <TitleRendert data={data} />;
       case "rich_text":
-        return <RichTextRender data={data}/>;
+        return <RichTextRender data={data} />;
       case "date":
-        return <DateRender data={data}/>;
+        return <DateRender data={data} />;
       case "select":
-        return <SelectionRender data={data}/>;
+        return <SelectionRender data={data} />;
+      case "status":
+        return <SelectionRender data={data} />;
       case "multi_select":
-        return <MultiSelectRender data={data}/>;
+        return <MultiSelectRender data={data} />;
+      case "checkbox":
+        return <CheckBoxRender data={data} />;
       default:
         return <TitleRendert data={data} type={data.type} />;
     }

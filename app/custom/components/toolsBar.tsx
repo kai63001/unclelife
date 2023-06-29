@@ -18,7 +18,7 @@ const ToolsBar = () => {
   };
 
   return (
-    <div className="text-[#3d3d3d] bg-[#FBFBFA] h-screen w-96 flex flex-col border-r px-3 ">
+    <div className="text-[#3d3d3d] bg-[#FBFBFA] h-screen w-96 flex flex-col border-r px-3 fixed left-0">
       <b className="mt-5 mb-5">INFORMATION</b>
       <div className="mb-3">
         <p className="text-xs font-bold">
