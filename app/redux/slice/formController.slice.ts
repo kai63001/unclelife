@@ -6,6 +6,7 @@ export interface FormState {
   tableOfDatabase: any[];
   form: any;
   layer: any[];
+  infomation: any;
 }
 
 const initialState: FormState = {
@@ -14,6 +15,7 @@ const initialState: FormState = {
   form: {
     title: "Contact Form",
   },
+  infomation: {},
   layer: [],
 };
 
@@ -33,10 +35,18 @@ export const formSlice = createSlice({
     setLayer: (state, action: PayloadAction<any>) => {
       state.layer = action.payload;
     },
+    setInformation: (state, action: PayloadAction<any>) => {
+      state.infomation = action.payload;
+    },
   },
 });
 
-export const { setSelectedForm, setTableOfDatabase, setForm, setLayer } =
-  formSlice.actions;
+export const {
+  setSelectedForm,
+  setTableOfDatabase,
+  setForm,
+  setLayer,
+  setInformation,
+} = formSlice.actions;
 
 export default formSlice.reducer;

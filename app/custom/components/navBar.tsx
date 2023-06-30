@@ -1,29 +1,52 @@
 "use client";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
+import { setInformation } from "@/app/redux/slice/formController.slice";
 
 const CustomFormNavbar = () => {
   const [loading, setLoading] = useState(false);
-  const { layer } = useAppSelector((state) => state.formReducer);
+  const dispatch = useAppDispatch();
+  const { layer, infomation } = useAppSelector((state) => state.formReducer);
   const supabase = createClientComponentClient();
 
   const saveLayer = async () => {
     setLoading(true);
     console.log(layer);
-    const { data, error } = await supabase.from("form").insert({
+    if (infomation.id) {
+      const { data, error } = await supabase
+        .from("form")
+        .upsert({
+          id: infomation.id,
+          layer: layer,
+        })
+        .select();
+      if (error) {
+        console.log(error);
+      }
+      setLoading(false);
+      return;
+    }
+    const { data, error } = await supabase
+      .from("form")
+      .insert({
         layer: layer,
-    }).select();
+      })
+      .select();
     if (error) {
       console.log(error);
       setLoading(false);
       return;
     }
-    console.log(data);
     setLoading(false);
+    dispatch(
+      setInformation({
+        id: data[0].id,
+      })
+    );
   };
 
   return (
