@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ButtonSaveCustomForm from "./server/ButtonSave";
+import ButtonSaveCustomForm from "./button/ButtonSave";
 import { getSession } from "@/app/hook/supabase-server";
 
 const CustomFormNavbar = async () => {
