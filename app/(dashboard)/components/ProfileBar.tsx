@@ -10,9 +10,14 @@ const ProfileBar = async () => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  
+
+  const removeMail = (email: string) => {
+    const [name, domain] = email.split("@");
+    return name;
+  };
+
   return (
-    <Card className="p-3">
+    <Card className="p-3 overflow-hidden">
       <div className="flex items-center">
         <Avatar>
           <AvatarImage src={session?.user?.user_metadata?.avatar_url} />
@@ -20,7 +25,9 @@ const ProfileBar = async () => {
         </Avatar>
         <div className="ml-3">
           <p className="font-bold text-lg">Hello</p>
-          <p className="text-gray-500 text-sm">{session?.user?.email}</p>
+          <p className="text-gray-500 text-sm capitalize">
+            {removeMail(session?.user?.email || "UncleLife")}
+          </p>
         </div>
       </div>
       <div className="mt-5">

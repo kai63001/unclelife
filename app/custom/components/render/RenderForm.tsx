@@ -33,6 +33,10 @@ const RenderFormComponent = ({ data }: any) => {
         return <MultiSelectRender data={data} />;
       case "checkbox":
         return <CheckBoxRender data={data} />;
+      case "relation":
+        return <></>;
+      case "created_time":
+        return <></>;
       default:
         return <TitleRendert data={data} type={data.type} />;
     }

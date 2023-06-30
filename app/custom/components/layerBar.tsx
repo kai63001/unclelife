@@ -22,7 +22,6 @@ const LayerBar = () => {
     let newTable: any = [];
     // table of database is array of object
     Object.keys(tableOfDatabase).map((item, index): any => {
-      console.log(item);
       newTable.push({
         id: index + 1,
         name: item,
@@ -32,6 +31,12 @@ const LayerBar = () => {
         label: item,
       });
     });
+
+    //filter type not relation and created_time
+    newTable = newTable.filter(
+      (item: any) => item.type !== "relation" && item.type !== "created_time"
+    );
+    
     //reverse
     newTable = newTable.reverse();
     console.log("newTable", newTable);
