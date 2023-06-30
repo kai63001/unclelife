@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
     // notion.users.retrieve({ user_id: response.properties.Author.people }).then((user) => {
     //   console.log(user);
     // });
+
     const properties = response.properties;
 
     return NextResponse.json(await properties);
