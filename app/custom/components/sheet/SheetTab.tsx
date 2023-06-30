@@ -1,17 +1,26 @@
+"use client";
 import {
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
   Sheet,
-  SheetClose,
-  SheetFooter,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import { useAppSelector } from "@/app/redux/hook";
+import { useEffect, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const SheetTab = () => {
+const SheetTab = ({ id }: any) => {
+  const [data, setData] = useState<any>({});
+  const { layer } = useAppSelector((state) => state.formReducer);
+
+  useEffect(() => {
+    const layerFilter = layer.filter((item: any) => item.id === id);
+    setData(layerFilter[0]);
+  }, [id, layer]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -23,10 +32,38 @@ const SheetTab = () => {
 
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Update Setting</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+          <SheetTitle>Update {data.name} Setting</SheetTitle>
+          <SheetDescription className="text-primary select-none">
+            <p className="text-lg font-medium">General</p>
+            <div className="mt-2 flex flex-col space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="required" />
+                <label
+                  htmlFor="required"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Required
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="disable" />
+                <label
+                  htmlFor="disable"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Disable
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="hidden" />
+                <label
+                  htmlFor="hidden"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Hidden
+                </label>
+              </div>
+            </div>
           </SheetDescription>
         </SheetHeader>
       </SheetContent>

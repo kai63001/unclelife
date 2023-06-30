@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { SortableList } from "./layer";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
@@ -13,7 +13,6 @@ const LayerBar = () => {
   const { form, tableOfDatabase, layer }: any = useAppSelector(
     (state) => state.formReducer
   );
-  const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   //hook for init
@@ -64,7 +63,7 @@ const LayerBar = () => {
                   <p className="text-xs text-[#9E9E9E]">{item.type}</p>
                 </div>
                 <div className="flex">
-                  <SheetTab />
+                  <SheetTab id={item.id} />
                   <SortableList.DragHandle />
                 </div>
               </SortableList.Item>
