@@ -6,8 +6,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { setInformation } from "@/app/redux/slice/formController.slice";
+import { useToast } from "@/components/ui/use-toast";
 
 const CustomFormNavbar = () => {
+  const { toast } = useToast();
+
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const { layer, infomation } = useAppSelector((state) => state.formReducer);
@@ -28,6 +31,10 @@ const CustomFormNavbar = () => {
         console.log(error);
       }
       setLoading(false);
+      toast({
+        title: "Success",
+        description: "Your form has been saved",
+      });
       return;
     }
     const { data, error } = await supabase
@@ -47,6 +54,11 @@ const CustomFormNavbar = () => {
         id: data[0].id,
       })
     );
+    //toast success
+    toast({
+      title: "Success",
+      description: "Your form has been saved",
+    });
   };
 
   return (

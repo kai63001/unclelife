@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/provider";
 import NextNProgressbar from "@/components/NextProgressbar";
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextNProgressbar />
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
