@@ -1,6 +1,9 @@
 import dynamic from "next/dynamic";
 const LayerBar = dynamic(() => import("./components/layerBar"), { ssr: false });
 const ToolsBar = dynamic(() => import("./components/toolsBar"), { ssr: false });
+const CustomFormNavbar = dynamic(() => import("./components/navBar"), {
+  ssr: false,
+});
 
 //layout
 export const metadata = {
@@ -14,9 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
+    <div className="flex h-screen bg-[#EFF1F3]">
+      <CustomFormNavbar />
       <ToolsBar />
-      <div className="flex-grow flex justify-center p-4 w-full max-w-6xl mx-auto mt-14">
+      <div className="flex-grow flex justify-center p-4 w-full max-w-6xl mx-auto mt-20">
         {children}
       </div>
       <LayerBar />

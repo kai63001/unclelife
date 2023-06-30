@@ -6,11 +6,14 @@ import { SortableList } from "./layer";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
 import { setLayer } from "@/app/redux/slice/formController.slice";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import dynamic from "next/dynamic";
+const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
 const LayerBar = () => {
   const { form, tableOfDatabase, layer }: any = useAppSelector(
     (state) => state.formReducer
   );
+  const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   //hook for init
@@ -42,23 +45,28 @@ const LayerBar = () => {
   };
 
   return (
-    <div className="text-[#3d3d3d] bg-[#FBFBFA] h-screen w-96 flex flex-col border-r px-3 fixed right-0">
-      <b className="mt-5 mb-5">LAYER</b>
-      <ScrollArea>
-        <SortableList
-          items={layer}
-          onChange={setLayerHook}
-          renderItem={(item: any) => (
-            <SortableList.Item id={item.id}>
-              <div className="flex flex-col">
-                <p>{item.name}</p>
-                <p className="text-xs text-[#9E9E9E]">{item.type}</p>
-              </div>
-              <SortableList.DragHandle />
-            </SortableList.Item>
-          )}
-        />
-      </ScrollArea>
+    <div className="text-[#3d3d3d] h-screen w-96 fixed right-0 pb-5 pt-20 pr-5">
+      <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-white">
+        <b className="mt-5 mb-5">LAYER</b>
+        <ScrollArea>
+          <SortableList
+            items={layer}
+            onChange={setLayerHook}
+            renderItem={(item: any) => (
+              <SortableList.Item id={item.id}>
+                <div className="flex flex-col">
+                  <p>{item.name}</p>
+                  <p className="text-xs text-[#9E9E9E]">{item.type}</p>
+                </div>
+                <div className="flex">
+                  <SheetTab />
+                  <SortableList.DragHandle />
+                </div>
+              </SortableList.Item>
+            )}
+          />
+        </ScrollArea>
+      </div>
     </div>
   );
 };
