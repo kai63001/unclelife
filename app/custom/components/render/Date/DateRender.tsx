@@ -23,11 +23,13 @@ import { Label } from "@/components/ui/label";
 
 const DateRender = ({ data }: any) => {
   const [date, setDate] = React.useState<Date>();
-  return (
+  return data.hidden ? (
+    <></>
+  ) : (
     <div>
       <Label className="">{data.label}</Label>
       <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger disabled={data.disable} asChild>
           <Button
             variant={"outline"}
             className={cn(
@@ -41,6 +43,7 @@ const DateRender = ({ data }: any) => {
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
           <Select
+            required={data.required}
             onValueChange={(value) =>
               setDate(addDays(new Date(), parseInt(value)))
             }
