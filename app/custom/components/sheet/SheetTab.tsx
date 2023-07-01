@@ -8,11 +8,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Settings } from "lucide-react";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { setLayer, setLayerWithId } from "@/app/redux/slice/formController.slice";
 
 const SheetTab = ({ id }: any) => {
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<any>({});
   const { layer } = useAppSelector((state) => state.formReducer);
 
@@ -20,6 +22,20 @@ const SheetTab = ({ id }: any) => {
     const layerFilter = layer.filter((item: any) => item.id === id);
     setData(layerFilter[0]);
   }, [id, layer]);
+
+  const inputOnChange = (e:any,name:string) => {
+    console.log(e,name)
+    dispatch(setLayerWithId({
+      id:id,
+      value:{
+        ...data,
+        required:e //? true : false
+      }
+    }))
+
+    console.log('result :', data)
+
+  }
 
   return (
     <Sheet>
@@ -37,7 +53,9 @@ const SheetTab = ({ id }: any) => {
             <p className="text-lg font-medium">General</p>
             <div className="mt-2 flex flex-col space-y-2">
               <div className="flex items-center space-x-2">
-                <Checkbox id="required" />
+                <Checkbox onCheckedChange={(e)=>{
+                  inputOnChange(e,'required')
+                }} id="required" />
                 <label
                   htmlFor="required"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

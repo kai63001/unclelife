@@ -38,6 +38,14 @@ export const formSlice = createSlice({
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
     },
+    setLayerWithId: (state, action: PayloadAction<any>) => {
+      // state.layer[action.payload.id] = action.payload.value;
+      // id find index
+      const index = state.layer.findIndex((item) => item.id === action.payload.id);
+      // update value
+      state.layer[index] = action.payload.value;
+    }
+
   },
 });
 
@@ -47,6 +55,7 @@ export const {
   setForm,
   setLayer,
   setInformation,
+  setLayerWithId
 } = formSlice.actions;
 
 export default formSlice.reducer;
