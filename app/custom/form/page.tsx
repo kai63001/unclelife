@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useAppSelector } from "@/app/redux/hook";
 import RenderFormComponent from "../components/render/RenderForm";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,9 @@ const CreateFormCustomPage = () => {
     <div className="max-w-2xl w-full h-fit bg-background rounded-sm">
       <div className="border-2 border-dashed p-5 w-full rounded-sm">
         <h1 className="text-2xl font-bold">{form.title}</h1>
+        {form.description && (
+          <p className="text-gray-400 text-sm">{form.description}</p>
+        )}
         {layer.map((item: any, index: number) => {
           return <RenderFormComponent data={item} key={index} />;
         })}

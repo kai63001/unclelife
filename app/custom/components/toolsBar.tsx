@@ -34,7 +34,12 @@ const ToolsBar = () => {
         </div>
         <div>
           <p className="text-xs font-bold">DESCRIPTION</p>
-          <Textarea className="focus:outline-none focus-visible:ring-0 bg-white text-black" />
+          <Textarea
+            onChange={(e) => {
+              onChangeHook(e, "description");
+            }}
+            className="focus:outline-none focus-visible:ring-0 bg-white text-black"
+          />
         </div>
       </div>
     </div>
