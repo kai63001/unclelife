@@ -11,7 +11,7 @@ import { Settings } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { setLayer, setLayerWithId } from "@/app/redux/slice/formController.slice";
+import { setLayerWithId } from "@/app/redux/slice/formController.slice";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -23,19 +23,19 @@ const SheetTab = ({ id }: any) => {
     setData(layerFilter[0]);
   }, [id, layer]);
 
-  const inputOnChange = (e:any,name:string) => {
-    console.log(e,name)
-    dispatch(setLayerWithId({
-      id:id,
-      value:{
-        ...data,
-        required:e //? true : false
-      }
-    }))
+  const inputOnChange = (e: any, name: string) => {
+    dispatch(
+      setLayerWithId({
+        id: id,
+        value: {
+          ...data,
+          [name]: e, //? true : false
+        },
+      })
+    );
 
-    console.log('result :', data)
-
-  }
+    console.log("result :", data);
+  };
 
   return (
     <Sheet>
@@ -53,9 +53,12 @@ const SheetTab = ({ id }: any) => {
             <p className="text-lg font-medium">General</p>
             <div className="mt-2 flex flex-col space-y-2">
               <div className="flex items-center space-x-2">
-                <Checkbox onCheckedChange={(e)=>{
-                  inputOnChange(e,'required')
-                }} id="required" />
+                <Checkbox
+                  onCheckedChange={(e) => {
+                    inputOnChange(e, "required");
+                  }}
+                  id="required"
+                />
                 <label
                   htmlFor="required"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -64,7 +67,12 @@ const SheetTab = ({ id }: any) => {
                 </label>
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="disable" />
+                <Checkbox
+                  onCheckedChange={(e) => {
+                    inputOnChange(e, "diable");
+                  }}
+                  id="disable"
+                />
                 <label
                   htmlFor="disable"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -73,7 +81,12 @@ const SheetTab = ({ id }: any) => {
                 </label>
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="hidden" />
+                <Checkbox
+                  onCheckedChange={(e) => {
+                    inputOnChange(e, "hidden");
+                  }}
+                  id="hidden"
+                />
                 <label
                   htmlFor="hidden"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
