@@ -69,7 +69,7 @@ const SheetTab = ({ id }: any) => {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   onCheckedChange={(e) => {
-                    inputOnChange(e, "diable");
+                    inputOnChange(e, "disable");
                   }}
                   id="disable"
                 />

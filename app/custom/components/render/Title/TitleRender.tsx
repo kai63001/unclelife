@@ -1,11 +1,18 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const TitleRender = ({ data,type='text' }: any) => {
-  return (
+const TitleRender = ({ data, type = "text" }: any) => {
+  return data.hidden ? (
+    <></>
+  ) : (
     <div>
       <Label className="">{data.label}</Label>
-      <Input className="" type={type} />
+      <Input
+        className=""
+        disabled={data.disable}
+        required={data.required}
+        type={type}
+      />
     </div>
   );
 };
