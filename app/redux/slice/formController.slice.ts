@@ -39,7 +39,6 @@ export const formSlice = createSlice({
       state.infomation = action.payload;
     },
     setLayerWithId: (state, action: PayloadAction<any>) => {
-      // state.layer[action.payload.id] = action.payload.value;
       // id find index
       const index = state.layer.findIndex((item) => item.id === action.payload.id);
       // update value
