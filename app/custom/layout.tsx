@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen bg-[#EFF1F3]">
+    <div className="flex h-full bg-[#EFF1F3]">
       <CustomFormNavbar />
       <ToolsBar />
       <div className="flex-grow flex justify-center p-4 w-full max-w-6xl mx-auto mt-20">

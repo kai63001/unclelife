@@ -83,3 +83,7 @@
 .shadow-me {
   box-shadow: rgba(0, 0, 0, 0.04) -2px 0px 6px, rgba(0, 0, 0, 0.04) -2px 0px 15px;
 }
+
+html,body {
+  height: 100%;
+}
