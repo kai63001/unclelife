@@ -2,6 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import RequiredStar from "../RequireStar";
 
 const MultiSelectRender = ({ data }: any) => {
   const [selected, setSelected]: any = useState([]);
@@ -50,7 +51,7 @@ const MultiSelectRender = ({ data }: any) => {
   return (
     data.hidden ? <></> :
     <div className="relative inline-block text-left w-full">
-      <Label className="">{data.label}</Label>
+      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
       <div className="w-full">
         <button
           ref={buttonRef}

@@ -7,12 +7,13 @@ import {
   SelectGroup,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import RequiredStar from "../RequireStar";
 
 const SelectionRender = ({ data }: any) => {
   return (
     data.hidden ? <></> :
     <div className="">
-      <Label className="">{data.label}</Label>
+      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
       <Select required={data.required}>
         <SelectTrigger disabled={data.disable} className="w-full">
           <SelectValue placeholder={data.placeholder || data.label} />

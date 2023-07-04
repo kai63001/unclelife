@@ -4,8 +4,10 @@ import RenderFormComponent from "../components/render/RenderForm";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormMainBox = ({ id = null }: { id?: string | null }) => {
+  const { toast } = useToast();
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
   const [dataLayer, setDataLayer] = useState<any>([]);
@@ -15,19 +17,32 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     //supabase
     if (id != null) {
       if (!supabase) return;
-      supabase
-        .from("form")
-        .select("layer")
-        .eq("id", id)
-        .then((res:any) => {
-            console.log(res.data[0].layer)
-            setDataLayer(res.data[0].layer)
-        });
+      try {
+        supabase
+          .from("form")
+          .select("layer")
+          .eq("id", id)
+          .then((res: any) => {
+            if (res?.error?.message) {
+              toast({
+                title: "Error",
+                description: res?.error?.message,
+                variant: "destructive",
+              });
+              return;
+            }
+            console.log(res.data[0].layer);
+            setDataLayer(res.data[0].layer);
+          });
+      } catch (error) {
+        console.log(error);
+      }
 
       return;
     }
     setDataForm(form);
     setDataLayer(layer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, layer, supabase]);
 
   return (

@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import RequiredStar from "../RequireStar";
 
 const DateRender = ({ data }: any) => {
   const [date, setDate] = React.useState<Date>();
@@ -27,7 +28,7 @@ const DateRender = ({ data }: any) => {
     <></>
   ) : (
     <div>
-      <Label className="">{data.label}</Label>
+      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
