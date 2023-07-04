@@ -2,16 +2,41 @@
 import { useAppSelector } from "@/app/redux/hook";
 import RenderFormComponent from "../components/render/RenderForm";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-const FormMainBox = () => {
+const FormMainBox = ({ id = null }: { id?: string | null }) => {
+  const supabase = createClientComponentClient();
+  const [dataForm, setDataForm] = useState<any>({});
+  const [dataLayer, setDataLayer] = useState<any>([]);
   const { form, layer } = useAppSelector((state) => state.formReducer);
+
+  useEffect(() => {
+    //supabase
+    if (id != null) {
+      if (!supabase) return;
+      supabase
+        .from("form")
+        .select("layer")
+        .eq("id", id)
+        .then((res:any) => {
+            console.log(res.data[0].layer)
+            setDataLayer(res.data[0].layer)
+        });
+
+      return;
+    }
+    setDataForm(form);
+    setDataLayer(layer);
+  }, [form, id, layer, supabase]);
+
   return (
     <>
       <h1 className="text-2xl font-bold">{form.title}</h1>
       {form.description && (
         <p className="text-gray-400 text-sm">{form.description}</p>
       )}
-      {layer.map((item: any, index: number) => {
+      {dataLayer.map((item: any, index: number) => {
         return <RenderFormComponent data={item} key={index} />;
       })}
       <div className="mt-3">
