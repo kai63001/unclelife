@@ -6,13 +6,23 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ToastAction } from "@/components/ui/toast";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { layer, infomation, databaseId,form } = useAppSelector((state) => state.formReducer);
+  const { layer, infomation, databaseId, form } = useAppSelector(
+    (state) => state.formReducer
+  );
+
+  const copyLink = () => {
+    console.log("copy link")
+    navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${infomation.id}`
+    );
+  };
   const supabase = createClientComponentClient();
   const saveLayer = async () => {
     //log user id
@@ -34,6 +44,11 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       toast({
         title: "Success",
         description: "Your form has been saved",
+        action: (
+          <ToastAction onClick={copyLink} altText="Goto schedule to undo">
+            Copy Link
+          </ToastAction>
+        ),
       });
       return;
     }
@@ -43,7 +58,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         layer: layer,
         user: session?.user?.id || "",
         detail: form,
-        databaseId
+        databaseId,
       })
       .select();
     if (error) {
@@ -61,6 +76,11 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     toast({
       title: "Success",
       description: "Your form has been saved",
+      action: (
+        <ToastAction onClick={copyLink} altText="Goto schedule to undo">
+          Copy Link
+        </ToastAction>
+      ),
     });
   };
 
