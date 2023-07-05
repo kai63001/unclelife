@@ -23,6 +23,7 @@ const LoginPage = () => {
   const supabase = createClientComponentClient<Database>();
 
   async function signInWithNotion() {
+    console.log("sign in with notion", window.location.origin)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "notion",
       options: {
