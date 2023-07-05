@@ -22,9 +22,11 @@ const LoginPage = () => {
   const supabase = createClientComponentClient<Database>();
 
   async function signInWithNotion() {
+    console.log("sign in with notion env", process.env.NEXT_PUBLIC_FRONT_END_URL)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "notion",
       options: {
+        skipBrowserRedirect: true,
         redirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
       },
     });
