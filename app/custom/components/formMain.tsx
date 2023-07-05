@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useToast } from "@/components/ui/use-toast";
 import { updateDatabase } from "@/lib/notionApi";
+import { Icons } from "@/components/Icons";
 
 const FormMainBox = ({ id = null }: { id?: string | null }) => {
   const { toast } = useToast();
@@ -14,6 +15,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
   const [dataLayer, setDataLayer] = useState<any>([]);
   const [databaseId, setDatabaseId] = useState<string>("");
   const { form, layer } = useAppSelector((state) => state.formReducer);
+  const [loading, setLoading] = useState(false);
 
   const [inputForm, setInputForm]: any = useState<any>({});
 
@@ -67,12 +69,12 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     if (databaseId == null) {
       return;
     }
+    setLoading(true);
     //loop get all value
     console.log("submit form");
 
     //loop inputForm create object properties for notion page body
     let properties: any = {};
-    console.log(inputForm);
     for (const [key, value] of Object.entries(inputForm) as any) {
       if (value.type === "title" || value.type === "rich_text") {
         properties[key] = {
@@ -130,8 +132,10 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
         };
       }
     }
-    console.log(properties);
-    updateDatabase(databaseId, properties);
+
+    updateDatabase(databaseId, properties).finally(() => {
+      setLoading(false);
+    });
   };
 
   return (
@@ -151,7 +155,10 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
           );
         })}
         <div className="mt-3">
-          <Button className="px-10">Submit</Button>
+          <Button disabled={loading} className="px-10">
+            {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
+            Submit
+          </Button>
         </div>
       </form>
       {/* power by */}

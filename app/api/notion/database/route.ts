@@ -44,10 +44,8 @@ export async function PUT(req: NextRequest) {
       properties: properties,
     });
 
-    console.log(JSON.stringify(response));
+    return NextResponse.json(await response);
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
   }
-
-  return NextResponse.json({ message: "success" });
 }
