@@ -33,7 +33,7 @@ const LayerBar = () => {
 
     //filter type not relation and created_time
     newTable = newTable.filter(
-      (item: any) => item.type !== "relation" && item.type !== "created_time"
+      (item: any) => item.type !== "relation" && item.type !== "created_time" && item.type !== "people"
     );
     
     //reverse

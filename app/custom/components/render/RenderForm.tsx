@@ -26,19 +26,33 @@ const RenderFormComponent = ({ data, updateInputForm }: any) => {
       case "date":
         return <DateRender updateInputForm={updateInputForm} data={data} />;
       case "select":
-        return <SelectionRender updateInputForm={updateInputForm} data={data} />;
+        return (
+          <SelectionRender updateInputForm={updateInputForm} data={data} />
+        );
       case "status":
-        return <SelectionRender updateInputForm={updateInputForm} data={data} />;
+        return (
+          <SelectionRender updateInputForm={updateInputForm} data={data} />
+        );
       case "multi_select":
-        return <MultiSelectRender updateInputForm={updateInputForm} data={data} />;
+        return (
+          <MultiSelectRender updateInputForm={updateInputForm} data={data} />
+        );
       case "checkbox":
         return <CheckBoxRender updateInputForm={updateInputForm} data={data} />;
       case "relation":
         return <></>;
       case "created_time":
         return <></>;
+      case "people":
+        return <></>;
       default:
-        return <TitleRendert updateInputForm={updateInputForm} data={data} type={data.type} />;
+        return (
+          <TitleRendert
+            updateInputForm={updateInputForm}
+            data={data}
+            type={data.type}
+          />
+        );
     }
   };
   return <div>{renderCase()}</div>;

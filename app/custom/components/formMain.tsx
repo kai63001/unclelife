@@ -92,6 +92,13 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
           },
           type: value.type,
         };
+      } else if (value.type === "date") {
+        properties[key] = {
+          [value.type]: {
+            start: value.value as string,
+          },
+          type: value.type,
+        };
       } else {
         properties[key] = {
           [value.type]: value.value,
