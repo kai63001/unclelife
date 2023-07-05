@@ -15,6 +15,14 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
   const [databaseId, setDatabaseId] = useState<string>("");
   const { form, layer } = useAppSelector((state) => state.formReducer);
 
+  const [inputForm, setInputForm] = useState<any>({});
+
+  const updateInputForm = (key: string, value: string) => {
+    setInputForm((prev: any) => {
+      return { ...prev, [key]: value };
+    });
+  };
+
   useEffect(() => {
     //supabase
     if (id != null) {
@@ -37,7 +45,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
             console.log(res.data);
             setDataLayer(res.data.layer);
             setDataForm(res.data.detail);
-            setDatabaseId(res.data.databaseId)
+            setDatabaseId(res.data.databaseId);
           });
       } catch (error) {
         console.log(error);
@@ -47,14 +55,16 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     }
     setDataForm(form);
     setDataLayer(layer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, layer, supabase]);
 
-  const submitForm = async () => {
+  const submitForm = async (e: any) => {
+    e.preventDefault();
     if (databaseId == null) {
-        return
+      return;
     }
-    console.log("submit form")
+    //loop get all value
+    console.log("submit form");
     // updateDatabase(databaseId)
   };
 
@@ -64,12 +74,20 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       {dataForm.description && (
         <p className="text-gray-400 text-sm">{dataForm.description}</p>
       )}
-      {dataLayer.map((item: any, index: number) => {
-        return <RenderFormComponent data={item} key={index} />;
-      })}
-      <div className="mt-3">
-        <Button onClick={submitForm} className="px-10">Submit</Button>
-      </div>
+      <form onSubmit={submitForm}>
+        {dataLayer.map((item: any, index: number) => {
+          return (
+            <RenderFormComponent
+              updateInputForm={updateInputForm}
+              data={item}
+              key={index}
+            />
+          );
+        })}
+        <div className="mt-3">
+          <Button className="px-10">Submit</Button>
+        </div>
+      </form>
       {/* power by */}
       <div className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
         <p>

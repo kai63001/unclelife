@@ -1,7 +1,8 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
-const CheckBoxRender = ({ data }: any) => {
+const CheckBoxRender = ({ data, updateInputForm }: any) => {
   return data.hidden ? (
     <></>
   ) : (
@@ -9,15 +10,18 @@ const CheckBoxRender = ({ data }: any) => {
       <Checkbox
         disabled={data.disable}
         required={data.required}
-        id={data.label}
-        className="mr-1"
+        id={data.name}
+        onCheckedChange={(e) => {
+          updateInputForm(e, data.name);
+        }}
+        className="mr-1 select-none"
       />
-      <label
-        htmlFor={data.label}
+      <Label
+        htmlFor={data.name}
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {data.label}
-      </label>
+      </Label>
     </div>
   );
 };

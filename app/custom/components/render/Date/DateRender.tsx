@@ -22,13 +22,16 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const DateRender = ({ data }: any) => {
+const DateRender = ({ data, updateInputForm }: any) => {
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
   ) : (
     <div>
-      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
+      <Label htmlFor={data.name} className="">
+        {data.label}
+        {data.required && <RequiredStar />}
+      </Label>
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
@@ -45,9 +48,9 @@ const DateRender = ({ data }: any) => {
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
           <Select
             required={data.required}
-            onValueChange={(value) =>
-              setDate(addDays(new Date(), parseInt(value)))
-            }
+            onValueChange={(value) => {
+              setDate(addDays(new Date(), parseInt(value)));
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -60,7 +63,14 @@ const DateRender = ({ data }: any) => {
             </SelectContent>
           </Select>
           <div className="rounded-md border">
-            <Calendar mode="single" selected={date} onSelect={setDate} />
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(e) => {
+                setDate(e);
+                updateInputForm(e, data.name);
+              }}
+            />
           </div>
         </PopoverContent>
       </Popover>

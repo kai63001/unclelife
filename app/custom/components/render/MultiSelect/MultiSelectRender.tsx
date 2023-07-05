@@ -4,7 +4,7 @@ import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import RequiredStar from "../RequireStar";
 
-const MultiSelectRender = ({ data }: any) => {
+const MultiSelectRender = ({ data, updateInputForm }: any) => {
   const [selected, setSelected]: any = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -16,6 +16,7 @@ const MultiSelectRender = ({ data }: any) => {
         return [...prevSelected, id];
       }
     });
+    updateInputForm(selected, data.name);
   };
 
   const handleButtonClick = () => {
@@ -51,7 +52,7 @@ const MultiSelectRender = ({ data }: any) => {
   return (
     data.hidden ? <></> :
     <div className="relative inline-block text-left w-full">
-      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
+      <Label htmlFor={data.name} className="">{data.label}{data.required && <RequiredStar />}</Label>
       <div className="w-full">
         <button
           ref={buttonRef}
