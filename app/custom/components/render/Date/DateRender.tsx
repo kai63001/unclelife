@@ -68,7 +68,7 @@ const DateRender = ({ data, updateInputForm }: any) => {
               selected={date}
               onSelect={(e) => {
                 setDate(e);
-                updateInputForm(e, data.name);
+                updateInputForm(e, data.name, data.type);
               }}
             />
           </div>

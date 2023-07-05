@@ -16,7 +16,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
         return [...prevSelected, id];
       }
     });
-    updateInputForm(selected, data.name);
+    updateInputForm(selected, data.name, data.type);
   };
 
   const handleButtonClick = () => {

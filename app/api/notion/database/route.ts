@@ -30,33 +30,18 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "No id provided" });
   }
 
+  const body = await req.json();
+  const properties = body.properties;
+
   try {
     const notion = new Client({
       auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
     });
-    const title = {
-      type: "title",
-      title: {
-        text: {
-          content: "Buy groceries",
-        },
-      },
-    };
     const response: any = await notion.pages.create({
       parent: {
         database_id: req.nextUrl.searchParams.get("id") as string,
       },
-      properties: {
-        "Task name": {
-          title: [
-            {
-              text: {
-                content: "Buy groceries",
-              },
-            },
-          ],
-        },
-      },
+      properties: properties,
     });
 
     console.log(JSON.stringify(response));

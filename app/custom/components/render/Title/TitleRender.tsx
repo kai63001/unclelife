@@ -13,7 +13,7 @@ const TitleRender = ({ data, type = "text", updateInputForm }: any) => {
       </Label>
       <Input
         className=""
-        onChange={(e) => updateInputForm(e.target.value, data.name)}
+        onChange={(e) => updateInputForm(e.target.value, data.name, data.type)}
         name={data.name}
         id={data.name}
         disabled={data.disable}

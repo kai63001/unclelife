@@ -15,11 +15,15 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
   const [databaseId, setDatabaseId] = useState<string>("");
   const { form, layer } = useAppSelector((state) => state.formReducer);
 
-  const [inputForm, setInputForm] = useState<any>({});
+  const [inputForm, setInputForm]: any = useState<any>({});
 
-  const updateInputForm = (key: string, value: string) => {
-    setInputForm((prev: any) => {
-      return { ...prev, [key]: value };
+  const updateInputForm = (value: string, name: string, type: string) => {
+    setInputForm({
+      ...inputForm,
+      [name]: {
+        value,
+        type,
+      },
     });
   };
 
@@ -65,7 +69,38 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     }
     //loop get all value
     console.log("submit form");
-    // updateDatabase(databaseId)
+
+    //loop inputForm create object properties for notion page body
+    let properties: any = {};
+    console.log(inputForm);
+    for (const [key, value] of Object.entries(inputForm) as any) {
+      if (value.type === "title" || value.type === "rich_text") {
+        properties[key] = {
+          [value.type]: [
+            {
+              text: {
+                content: value.value as string,
+              },
+            },
+          ],
+          type: value.type,
+        };
+      } else if (value.type === "select" || value.type === "status") {
+        properties[key] = {
+          [value.type]: {
+            id: value.value as string,
+          },
+          type: value.type,
+        };
+      } else {
+        properties[key] = {
+          [value.type]: value.value,
+          type: value.type,
+        };
+      }
+    }
+    console.log(properties);
+    updateDatabase(databaseId, properties);
   };
 
   return (

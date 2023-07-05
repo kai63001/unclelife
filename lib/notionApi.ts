@@ -13,6 +13,8 @@ export const getDatabase = async (id: string) => {
 };
 
 export const updateDatabase = async (id: string, properties: any) => {
-  const response = await notionApi.put(`/api/notion/database?id=${id}`);
+  const response = await notionApi.put(`/api/notion/database?id=${id}`, {
+    properties,
+  });
   return response.data;
 };

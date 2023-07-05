@@ -12,7 +12,7 @@ const CheckBoxRender = ({ data, updateInputForm }: any) => {
         required={data.required}
         id={data.name}
         onCheckedChange={(e) => {
-          updateInputForm(e, data.name);
+          updateInputForm(e, data.name, data.type);
         }}
         className="mr-1 select-none"
       />
