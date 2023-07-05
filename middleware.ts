@@ -25,7 +25,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/home","/api/notion/database",],
+  matcher: ["/", "/home"],
 };
 
 export const dynamic = 'force-dynamic';
