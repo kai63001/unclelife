@@ -1,4 +1,5 @@
 "use client";
+
 import { Label } from "@/components/ui/label";
 import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
@@ -8,15 +9,20 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
   const [selected, setSelected]: any = useState([]);
   const [open, setOpen] = useState(false);
 
-  const handleSelectChange = (id: number) => {
-    setSelected((prevSelected: any): any => {
+  const handleSelectChange = async (id: number) => {
+    await setSelected((prevSelected: any): any => {
       if (prevSelected.includes(id)) {
+        updateInputForm(
+          prevSelected.filter((i: any) => i !== id),
+          data.name,
+          data.type
+        );
         return prevSelected.filter((i: any) => i !== id);
       } else {
+        updateInputForm([...prevSelected, id], data.name, data.type);
         return [...prevSelected, id];
       }
     });
-    updateInputForm(selected, data.name, data.type);
   };
 
   const handleButtonClick = () => {
@@ -49,10 +55,14 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
     return option ? option.name : "";
   };
 
-  return (
-    data.hidden ? <></> :
+  return data.hidden ? (
+    <></>
+  ) : (
     <div className="relative inline-block text-left w-full">
-      <Label htmlFor={data.name} className="">{data.label}{data.required && <RequiredStar />}</Label>
+      <Label htmlFor={data.name} className="">
+        {data.label}
+        {data.required && <RequiredStar />}
+      </Label>
       <div className="w-full">
         <button
           ref={buttonRef}

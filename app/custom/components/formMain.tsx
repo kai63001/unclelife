@@ -99,6 +99,17 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
           },
           type: value.type,
         };
+      } else if (value.type === "multi_select") {
+        properties[key] = {
+          [value.type]: [
+            ...value.value.map((item: any) => {
+              return {
+                id: item,
+              };
+            }),
+          ],
+          type: value.type,
+        };
       } else {
         properties[key] = {
           [value.type]: value.value,
@@ -112,12 +123,12 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{dataForm.title}</h1>
-      {dataForm.description && (
-        <p className="text-gray-400 text-sm">{dataForm.description}</p>
+      <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+      {dataForm?.description && (
+        <p className="text-gray-400 text-sm">{dataForm?.description}</p>
       )}
       <form onSubmit={submitForm}>
-        {dataLayer.map((item: any, index: number) => {
+        {dataLayer?.map((item: any, index: number) => {
           return (
             <RenderFormComponent
               updateInputForm={updateInputForm}
@@ -132,12 +143,12 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       </form>
       {/* power by */}
       <div className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
-        <p>
+        <div>
           Power by{" "}
           <a href="" target="_blank" className="text-blue-500 hover:underline">
             Uncle Life
           </a>
-        </p>
+        </div>
       </div>
     </>
   );

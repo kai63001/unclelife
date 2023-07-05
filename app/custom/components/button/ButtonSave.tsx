@@ -17,7 +17,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
   const saveLayer = async () => {
     //log user id
     setLoading(true);
-    console.log(layer);
+    console.log("user", session);
     if (infomation.id) {
       const { data, error } = await supabase
         .from("form")
