@@ -16,5 +16,5 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  return NextResponse.redirect(new URL('/', req.url))
+  return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_FRONT_END_URL))
 }
