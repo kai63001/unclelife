@@ -57,6 +57,7 @@ const SheetTab = ({ id }: any) => {
                   onCheckedChange={(e) => {
                     inputOnChange(e, "required");
                   }}
+                  checked={data.required}
                   id="required"
                 />
                 <label
@@ -71,6 +72,7 @@ const SheetTab = ({ id }: any) => {
                   onCheckedChange={(e) => {
                     inputOnChange(e, "disable");
                   }}
+                  checked={data.disable}
                   id="disable"
                 />
                 <label
@@ -85,6 +87,7 @@ const SheetTab = ({ id }: any) => {
                   onCheckedChange={(e) => {
                     inputOnChange(e, "hidden");
                   }}
+                  checked={data.hidden}
                   id="hidden"
                 />
                 <label

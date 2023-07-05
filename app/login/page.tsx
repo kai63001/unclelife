@@ -1,14 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+// import {
+//   Form,
+//   FormControl,
+//   FormField,
+//   FormItem,
+//   FormLabel,
+//   FormMessage,
+// } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 
 const LoginPage = () => {
-  const form = useForm();
+  // const form = useForm();
   const supabase = createClientComponentClient<Database>();
 
   async function signInWithNotion() {
@@ -46,7 +46,7 @@ const LoginPage = () => {
           One account for
           {"\n"}All your Notion pages
         </h2>
-        <Form {...form}>
+        {/* <Form {...form}>
           <form className="space-y-2">
             <FormField
               control={form.control}
@@ -78,7 +78,7 @@ const LoginPage = () => {
               Sign in
             </Button>
           </form>
-        </Form>
+        </Form> */}
         <div className="border-b my-4"></div>
         {/* notion login */}
         <div className="flex justify-center items-center">

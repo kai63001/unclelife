@@ -17,10 +17,10 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     (state) => state.formReducer
   );
 
-  const copyLink = () => {
-    console.log("copy link")
+  const copyLink = (idData = infomation.id) => {
+    console.log("copy link");
     navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${infomation.id}`
+      `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
     );
   };
   const supabase = createClientComponentClient();
@@ -45,7 +45,10 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         title: "Success",
         description: "Your form has been saved",
         action: (
-          <ToastAction onClick={copyLink} altText="Goto schedule to undo">
+          <ToastAction
+            onClick={() => copyLink()}
+            altText="Goto schedule to undo"
+          >
             Copy Link
           </ToastAction>
         ),
@@ -77,7 +80,10 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       title: "Success",
       description: "Your form has been saved",
       action: (
-        <ToastAction onClick={copyLink} altText="Goto schedule to undo">
+        <ToastAction
+          onClick={() => copyLink(data[0].id)}
+          altText="Goto schedule to undo"
+        >
           Copy Link
         </ToastAction>
       ),
