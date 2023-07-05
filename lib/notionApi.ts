@@ -7,7 +7,12 @@ const notionApi = axios.create({
   },
 });
 
-export const getDatabase = async (id:string) => {
+export const getDatabase = async (id: string) => {
   const response = await notionApi.get(`/api/notion/database?id=${id}`);
+  return response.data;
+};
+
+export const updateDatabase = async (id: string, properties: any) => {
+  const response = await notionApi.put(`/api/notion/database?id=${id}`);
   return response.data;
 };

@@ -24,3 +24,45 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message });
   }
 }
+
+export async function PUT(req: NextRequest) {
+  if (req.nextUrl.searchParams.get("id") === null) {
+    return NextResponse.json({ error: "No id provided" });
+  }
+
+  try {
+    const notion = new Client({
+      auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
+    });
+    const title = {
+      type: "title",
+      title: {
+        text: {
+          content: "Buy groceries",
+        },
+      },
+    };
+    const response: any = await notion.pages.create({
+      parent: {
+        database_id: req.nextUrl.searchParams.get("id") as string,
+      },
+      properties: {
+        "Task name": {
+          title: [
+            {
+              text: {
+                content: "Buy groceries",
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    console.log(JSON.stringify(response));
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message });
+  }
+
+  return NextResponse.json({ message: "success" });
+}
