@@ -99,6 +99,19 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
           },
           type: value.type,
         };
+      } else if (value.type === "files") {
+        properties[key] = {
+          [value.type]: [
+            {
+              //random file name
+              name: `${Math.random().toString(36).substring(2, 15)}`,
+              external: {
+                url: value.value as string,
+              },
+            },
+          ],
+          type: value.type,
+        };
       } else if (value.type === "multi_select") {
         properties[key] = {
           [value.type]: [
