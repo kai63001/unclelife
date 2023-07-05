@@ -16,18 +16,16 @@ import { Icons } from "@/components/Icons";
 import { Database } from "@/lib/types_db";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const form = useForm();
   const supabase = createClientComponentClient<Database>();
 
   async function signInWithNotion() {
-    console.log("sign in with notion", window.location.origin)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "notion",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
       },
     });
     if (error) console.log(error);
