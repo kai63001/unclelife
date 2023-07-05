@@ -1,6 +1,7 @@
 "use client";
 import { useAppDispatch } from "@/app/redux/hook";
 import {
+  setDatabaseId,
   setSelectedForm,
   setTableOfDatabase,
 } from "@/app/redux/slice/formController.slice";
@@ -33,6 +34,7 @@ const CreateFormSearchDB = () => {
     }
     const database = await getDatabase(databaseId);
     dispatch(setTableOfDatabase(database));
+    dispatch(setDatabaseId(databaseId))
     setLoading(false);
     // redirect to custom/form
     router.push("/custom/form");

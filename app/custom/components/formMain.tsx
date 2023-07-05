@@ -20,8 +20,9 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       try {
         supabase
           .from("form")
-          .select("layer")
+          .select("layer,detail")
           .eq("id", id)
+          .single()
           .then((res: any) => {
             if (res?.error?.message) {
               toast({
@@ -31,8 +32,9 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
               });
               return;
             }
-            console.log(res.data[0].layer);
-            setDataLayer(res.data[0].layer);
+            console.log(res.data);
+            setDataLayer(res.data.layer);
+            setDataForm(res.data.detail);
           });
       } catch (error) {
         console.log(error);
@@ -47,9 +49,9 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{form.title}</h1>
-      {form.description && (
-        <p className="text-gray-400 text-sm">{form.description}</p>
+      <h1 className="text-2xl font-bold">{dataForm.title}</h1>
+      {dataForm.description && (
+        <p className="text-gray-400 text-sm">{dataForm.description}</p>
       )}
       {dataLayer.map((item: any, index: number) => {
         return <RenderFormComponent data={item} key={index} />;

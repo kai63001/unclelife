@@ -2,6 +2,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface FormState {
+  databaseId: string;
   selectedForm: "DB" | "";
   tableOfDatabase: any[];
   form: any;
@@ -10,6 +11,7 @@ export interface FormState {
 }
 
 const initialState: FormState = {
+  databaseId: "",
   selectedForm: "",
   tableOfDatabase: [],
   form: {
@@ -28,6 +30,9 @@ export const formSlice = createSlice({
     },
     setTableOfDatabase: (state, action: PayloadAction<any>) => {
       state.tableOfDatabase = action.payload;
+    },
+    setDatabaseId: (state, action: PayloadAction<any>) => {
+      state.databaseId = action.payload;
     },
     setForm: (state, action: PayloadAction<any>) => {
       state.form[action.payload.name] = action.payload.value;
@@ -54,7 +59,8 @@ export const {
   setForm,
   setLayer,
   setInformation,
-  setLayerWithId
+  setLayerWithId,
+  setDatabaseId
 } = formSlice.actions;
 
 export default formSlice.reducer;

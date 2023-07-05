@@ -12,10 +12,9 @@ const ButtonSaveCustomForm = ({ session }: any) => {
 
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { layer, infomation } = useAppSelector((state) => state.formReducer);
+  const { layer, infomation, databaseId,form } = useAppSelector((state) => state.formReducer);
   const supabase = createClientComponentClient();
   const saveLayer = async () => {
-    console.log("session", session?.user?.id);
     //log user id
     setLoading(true);
     console.log(layer);
@@ -24,6 +23,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         .from("form")
         .upsert({
           id: infomation.id,
+          detail: form,
           layer: layer,
         })
         .select();
@@ -42,6 +42,8 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       .insert({
         layer: layer,
         user: session?.user?.id || "",
+        detail: form,
+        databaseId
       })
       .select();
     if (error) {
