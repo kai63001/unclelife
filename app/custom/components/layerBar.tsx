@@ -7,10 +7,11 @@ import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
 import { setLayer } from "@/app/redux/slice/formController.slice";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import dynamic from "next/dynamic";
+import ModalAddLayer from "./modal/addLayer";
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
 const LayerBar = () => {
-  const { form, tableOfDatabase, layer }: any = useAppSelector(
+  const { tableOfDatabase, layer }: any = useAppSelector(
     (state) => state.formReducer
   );
   const dispatch = useAppDispatch();
@@ -33,9 +34,12 @@ const LayerBar = () => {
 
     //filter type not relation and created_time
     newTable = newTable.filter(
-      (item: any) => item.type !== "relation" && item.type !== "created_time" && item.type !== "people"
+      (item: any) =>
+        item.type !== "relation" &&
+        item.type !== "created_time" &&
+        item.type !== "people"
     );
-    
+
     //reverse
     newTable = newTable.reverse();
     console.log("newTable", newTable);
@@ -51,7 +55,10 @@ const LayerBar = () => {
   return (
     <div className="text-[#3d3d3d] h-screen w-96 fixed right-0 pb-5 pt-20 pr-5">
       <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-white">
-        <b className="mt-5 mb-5">LAYER</b>
+        <div className="flex items-center justify-between">
+          <b className="mt-5 mb-5">LAYER</b>
+          <ModalAddLayer />
+        </div>
         <ScrollArea>
           <SortableList
             items={layer}
