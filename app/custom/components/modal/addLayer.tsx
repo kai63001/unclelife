@@ -1,3 +1,5 @@
+import { useAppDispatch } from "@/app/redux/hook";
+import { addMoreLayer } from "@/app/redux/slice/formController.slice";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +25,20 @@ import { useState } from "react";
 
 const ModalAddLayer = () => {
   const [open, setOpen] = useState(false);
+  const [layer, setLayer] = useState<any>({
+    label: "Title",
+    name: "title",
+    type: "",
+  });
+
+  const handleChangeLayer = (e: any) => {
+    setLayer({
+      ...layer,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const dispatch = useAppDispatch();
   const typeOfLayerSelection = [
     {
       id: "title",
@@ -71,8 +87,10 @@ const ModalAddLayer = () => {
   ];
 
   const saveLayer = () => {
-    setOpen(false);
+    console.log(layer);
     console.log("saveLayer");
+    dispatch(addMoreLayer(layer));
+    setOpen(false);
   };
   return (
     <div>
@@ -98,19 +116,44 @@ const ModalAddLayer = () => {
               <Label htmlFor="label" className="text-right">
                 Label
               </Label>
-              <Input id="label" value="Title" className="col-span-3" />
+              <Input
+                onChange={(e) => {
+                  handleChangeLayer(e);
+                }}
+                id="label"
+                name="label"
+                value={
+                  layer.label === "Title" ? "Title" : layer.label || "Title"
+                }
+                className="col-span-3"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input id="name" value="title" className="col-span-3" />
+              <Input
+                onChange={(e) => {
+                  handleChangeLayer(e);
+                }}
+                id="name"
+                name="name"
+                value={layer.name === "title" ? "title" : layer.name || "title"}
+                className="col-span-3"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="selectionType" className="text-right">
                 Type
               </Label>
-              <Select>
+              <Select
+                onValueChange={(e) => {
+                  setLayer({
+                    ...layer,
+                    type: e,
+                  });
+                }}
+              >
                 <SelectTrigger id="selectionType" className="w-full col-span-3">
                   <SelectValue placeholder="Select a Type" />
                 </SelectTrigger>
@@ -121,7 +164,7 @@ const ModalAddLayer = () => {
                         {item.name}
                       </SelectItem>
                     ))}
-                    <SelectLabel>Pro</SelectLabel>
+                    <SelectLabel>Pro Feature</SelectLabel>
                     <SelectItem disabled={true} value="pineapple">
                       File
                     </SelectItem>
@@ -131,7 +174,9 @@ const ModalAddLayer = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={saveLayer} type="submit">Save</Button>
+            <Button onClick={saveLayer} type="submit">
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

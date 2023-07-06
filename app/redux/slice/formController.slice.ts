@@ -40,6 +40,9 @@ export const formSlice = createSlice({
     setLayer: (state, action: PayloadAction<any>) => {
       state.layer = action.payload;
     },
+    addMoreLayer: (state, action: PayloadAction<any>) => {
+      state.layer.push(action.payload);
+    },
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
     },
@@ -60,7 +63,8 @@ export const {
   setLayer,
   setInformation,
   setLayerWithId,
-  setDatabaseId
+  setDatabaseId,
+  addMoreLayer
 } = formSlice.actions;
 
 export default formSlice.reducer;
