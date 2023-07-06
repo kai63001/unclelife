@@ -66,8 +66,12 @@ const LayerBar = () => {
             renderItem={(item: any) => (
               <SortableList.Item id={item.id}>
                 <div className="flex flex-col">
-                  <p>{item.name}</p>
-                  <p className="text-xs text-[#9E9E9E]">{item.type}</p>
+                  <p>{item.label}</p>
+                  <div className="flex items-center space-x-1">
+                    <p className="text-xs text-[#9E9E9E]">{item.name}</p>
+                    <p className="text-xs text-[#9E9E9E]">·</p>
+                    <p className="text-xs text-[#9E9E9E]">{item.type}</p>
+                  </div>
                 </div>
                 <div className="flex">
                   <SheetTab id={item.id} />

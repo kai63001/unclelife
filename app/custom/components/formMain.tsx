@@ -133,9 +133,20 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       }
     }
 
-    updateDatabase(databaseId, properties).finally(() => {
-      setLoading(false);
-    });
+    updateDatabase(databaseId, properties)
+      .then((e) => {
+        if (e?.error) {
+          //toast error
+          toast({
+            title: "Error",
+            description: e?.error,
+            variant: "destructive",
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
