@@ -126,7 +126,7 @@ const SheetTab = ({ id }: any) => {
               </div>
             </div>
             <div className="">
-              <Button onClick={confrimationDelete}>
+              <Button variant={"destructive"} onClick={confrimationDelete}>
                 <Trash className="w-4 h-4" />
               </Button>
               {open && (
