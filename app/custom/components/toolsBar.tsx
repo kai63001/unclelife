@@ -22,9 +22,9 @@ const ToolsBar = () => {
       <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-white">
         <b className="mt-5 mb-5">INFORMATION</b>
         <div className="mb-3">
-          <p className="text-xs font-bold">
+          <div className="text-xs font-bold">
             TITLE OF YOUR FORM <span className="text-red-500">*</span>
-          </p>
+          </div>
           <Input
             placeholder="Contact Form"
             className="focus:outline-none focus-visible:ring-0 text-black"

@@ -6,18 +6,28 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ToastAction } from "@/components/ui/toast";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { layer, infomation, databaseId,form } = useAppSelector((state) => state.formReducer);
+  const { layer, infomation, databaseId, form } = useAppSelector(
+    (state) => state.formReducer
+  );
+
+  const copyLink = (idData = infomation.id) => {
+    console.log("copy link");
+    navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
+    );
+  };
   const supabase = createClientComponentClient();
   const saveLayer = async () => {
     //log user id
     setLoading(true);
-    console.log(layer);
+    console.log("user", session);
     if (infomation.id) {
       const { data, error } = await supabase
         .from("form")
@@ -34,6 +44,14 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       toast({
         title: "Success",
         description: "Your form has been saved",
+        action: (
+          <ToastAction
+            onClick={() => copyLink()}
+            altText="Goto schedule to undo"
+          >
+            Copy Link
+          </ToastAction>
+        ),
       });
       return;
     }
@@ -43,7 +61,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         layer: layer,
         user: session?.user?.id || "",
         detail: form,
-        databaseId
+        databaseId,
       })
       .select();
     if (error) {
@@ -61,6 +79,14 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     toast({
       title: "Success",
       description: "Your form has been saved",
+      action: (
+        <ToastAction
+          onClick={() => copyLink(data[0].id)}
+          altText="Goto schedule to undo"
+        >
+          Copy Link
+        </ToastAction>
+      ),
     });
   };
 

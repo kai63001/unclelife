@@ -2,13 +2,22 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import RequiredStar from "../RequireStar";
 
-const RichTextRender = ({ data }: any) => {
+const RichTextRender = ({ data, updateInputForm }: any) => {
   return data.hidden ? (
     <></>
   ) : (
     <div>
-      <Label className="">{data.label}{data.required && <RequiredStar />}</Label>
-      <Textarea disabled={data.disable} required={data.required} />
+      <Label htmlFor={data.name} className="">
+        {data.label}
+        {data.required && <RequiredStar />}
+      </Label>
+      <Textarea
+        onChange={(e) => updateInputForm(e.target.value, data.name, data.type)}
+        name={data.name}
+        id={data.name}
+        disabled={data.disable}
+        required={data.required}
+      />
     </div>
   );
 };

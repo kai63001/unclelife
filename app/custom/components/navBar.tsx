@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ButtonSaveCustomForm from "./button/ButtonSave";
 import { getSession } from "@/app/hook/supabase-server";
+import ButtonMapInput from "./button/ButtonMapInput";
 
 const CustomFormNavbar = async () => {
   const [session] = await Promise.all([getSession()]);
@@ -15,7 +16,10 @@ const CustomFormNavbar = async () => {
           Custom Form
         </div>
       </div>
-      <ButtonSaveCustomForm session={session} />
+      <div className="flex space-x-3">
+        <ButtonMapInput />
+        <ButtonSaveCustomForm session={session} />
+      </div>
     </div>
   );
 };

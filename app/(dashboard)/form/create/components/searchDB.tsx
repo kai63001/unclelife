@@ -81,7 +81,7 @@ const CreateFormSearchDB = () => {
         {<p className="text-red-500 text-sm mt-2">{error && error}</p>}
         <p className="text-xs text-muted-foreground mt-1">
           example:
-          https://www.notion.so/workspace/my-todo-63ffb0d41fe94cada5215c113dcdd9d9?pvs=4
+          https://www.notion.so/ee18e4c2e30d47da81fdcc3a609a4dee?v=d6d25fb69e1c43858a5dee8761dfd0cf
         </p>
       </div>
     </div>
