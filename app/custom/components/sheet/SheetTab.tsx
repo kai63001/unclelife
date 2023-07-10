@@ -58,8 +58,12 @@ const SheetTab = ({ id }: any) => {
   };
 
   const handleDelete = () => {
-    setOpen(false)
-    dispatch(deleteLayerWithId(id));
+    setOpen(false);
+    dispatch(
+      deleteLayerWithId({
+        id: id,
+      })
+    );
   };
 
   return (
@@ -138,8 +142,7 @@ const SheetTab = ({ id }: any) => {
                       </AlertDialogTitle>
                       <AlertDialogDescription>
                         This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
+                        delete your layer.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
