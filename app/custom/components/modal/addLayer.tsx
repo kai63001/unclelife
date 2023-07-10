@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { addMoreLayer } from "@/app/redux/slice/formController.slice";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +39,7 @@ const ModalAddLayer = () => {
   };
 
   const dispatch = useAppDispatch();
+  const { tableOfDatabase }:any = useAppSelector((state) => state.formReducer);
   const typeOfLayerSelection = [
     {
       id: "title",
@@ -92,6 +93,14 @@ const ModalAddLayer = () => {
     dispatch(addMoreLayer(layer));
     setOpen(false);
   };
+
+  const filterTableFromType = (type: string) => {
+    const filter = Object.keys(tableOfDatabase).filter((item) => {
+      return tableOfDatabase[item].type === type;
+    });
+    return filter;
+  };
+
   return (
     <div>
       <Dialog
