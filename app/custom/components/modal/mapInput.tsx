@@ -98,9 +98,9 @@ const ModalMapInput = () => {
           <div className="flex flex-col space-y-3 py-4 px-10 ">
             {/* loop layer map listObejectTable */}
             {layer.map((item: any, index: number) => (
-              <div key={index} className="grid grid-cols-3 items-center gap-4">
+              <div key={index} className="grid grid-cols-5 items-center gap-4">
                 <Input
-                  className="w-full"
+                  className="w-full col-span-2"
                   disabled
                   value={`${item.label} (${item.type})`}
                 />
@@ -116,8 +116,9 @@ const ModalMapInput = () => {
                     onValueChange={(e) => {
                       onMapChange(e, item.id);
                     }}
+                    defaultValue={item.map}
                   >
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-full col-span-2">
                       <SelectValue placeholder="Select Column" />
                     </SelectTrigger>
                     <SelectContent>
