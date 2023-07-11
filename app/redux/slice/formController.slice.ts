@@ -61,6 +61,14 @@ export const formSlice = createSlice({
       // update value
       state.layer[index] = action.payload.value;
     },
+    setMapFromLayerWithId: (state, action: PayloadAction<any>) => {
+      // id find index
+      const index = state.layer.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      // update value
+      state.layer[index].map = action.payload.value;
+    },
     deleteLayerWithId: (state, action: PayloadAction<any>) => {
       // id find index
       const index = state.layer.findIndex(
@@ -82,6 +90,7 @@ export const {
   setDatabaseId,
   addMoreLayer,
   deleteLayerWithId,
+  setMapFromLayerWithId,
 } = formSlice.actions;
 
 export default formSlice.reducer;

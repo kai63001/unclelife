@@ -1,5 +1,5 @@
 "use client";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -26,10 +26,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { setMapFromLayerWithId } from "@/app/redux/slice/formController.slice";
 
 const ModalMapInput = () => {
   const [open, setOpen] = useState(false);
   const [listObjectTable, setListObjectTable] = useState<any>({});
+  const dispatch = useAppDispatch();
   const { databaseId, layer, tableOfDatabase } = useAppSelector(
     (state) => state.formReducer
   );
@@ -64,6 +66,11 @@ const ModalMapInput = () => {
         {listObjectTable[item].name} ({listObjectTable[item].type})
       </SelectItem>
     ));
+  };
+
+  const onMapChange = (e: any, id: any) => {
+    console.log(e, id);
+    dispatch(setMapFromLayerWithId({ id, value: e }));
   };
 
   return (
@@ -105,14 +112,16 @@ const ModalMapInput = () => {
                     <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
                   </div>
                 ) : (
-                  <Select>
+                  <Select
+                    onValueChange={(e) => {
+                      onMapChange(e, item.id);
+                    }}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select Column" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
-                        {renderSelection()}
-                      </SelectGroup>
+                      <SelectGroup>{renderSelection()}</SelectGroup>
                     </SelectContent>
                   </Select>
                 )}
