@@ -49,8 +49,6 @@ export const formSlice = createSlice({
         id: state.layer.length + 1,
         ...action.payload,
       });
-
-      console.log(state.layer);
     },
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
