@@ -8,7 +8,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { updateDatabase } from "@/lib/notionApi";
 import { Icons } from "@/components/Icons";
 
-const FormMainBox = ({ id = null }: { id?: string | null }) => {
+const FormMainBox = ({
+  id = null,
+  testMode = false,
+}: {
+  id?: string | null;
+  testMode?: boolean;
+}) => {
   const { toast } = useToast();
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
@@ -18,6 +24,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
   const [loading, setLoading] = useState(false);
 
   const [inputForm, setInputForm]: any = useState<any>({});
+  const [error, setError] = useState<any>({});
 
   const updateInputForm = (value: string, data: any) => {
     console.log(data);
@@ -67,8 +74,32 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, layer, supabase]);
 
+  const checkRequire = () => {
+    let error: any = {};
+    let check = true;
+    for (const [key, value] of Object.entries(inputForm) as any) {
+      if (value.require && value.value === "") {
+        error[key] = "This field is required";
+        check = false;
+      }
+    }
+    console.log(error);
+    setError(error);
+    return check;
+  };
+
   const submitForm = async (e: any) => {
     e.preventDefault();
+    if (!checkRequire()) {
+      return;
+    }
+
+
+    if (testMode) {
+      console.log("test mode");
+      return;
+    }
+
     if (databaseId == null) {
       return;
     }
@@ -157,7 +188,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     <>
       <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
       {dataForm?.description && (
-        <p className="text-gray-400 text-sm">{dataForm?.description}</p>
+        <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">{dataForm?.description}</p>
       )}
       <form onSubmit={submitForm}>
         {dataLayer?.map((item: any, index: number) => {

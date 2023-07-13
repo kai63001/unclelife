@@ -1,3 +1,3 @@
-const RequiredStar = () => <span className="required-star">*</span>;
+const RequiredStar = () => <span className="required-star text-red-500"> *</span>;
 
 export default RequiredStar;
