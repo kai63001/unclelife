@@ -19,14 +19,17 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
 
   const [inputForm, setInputForm]: any = useState<any>({});
 
-  const updateInputForm = (value: string, name: string, type: string) => {
-    setInputForm({
-      ...inputForm,
-      [name]: {
-        value,
-        type,
-      },
-    });
+  const updateInputForm = (value: string, data: any) => {
+    console.log(data);
+    if (data.mapTo != undefined) {
+      setInputForm({
+        ...inputForm,
+        [data.mapTo]: {
+          value,
+          type: data.mapType,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -75,6 +78,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
 
     //loop inputForm create object properties for notion page body
     let properties: any = {};
+    console.log(inputForm);
     for (const [key, value] of Object.entries(inputForm) as any) {
       if (value.type === "title" || value.type === "rich_text") {
         properties[key] = {

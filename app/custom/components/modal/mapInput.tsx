@@ -68,8 +68,9 @@ const ModalMapInput = () => {
     ));
   };
 
-  const onMapChange = (e: any, id: any, type: any) => {
+  const onMapChange = (e: any, id: any) => {
     console.log(e, id);
+    const type = listObjectTable[e].type;
     dispatch(setMapFromLayerWithId({ id, mapTo: e, mapType: type }));
   };
 
@@ -78,6 +79,7 @@ const ModalMapInput = () => {
       onOpenChange={() => {
         setOpen(!open);
       }}
+      open={open}
     >
       <DialogTrigger asChild>
         <Button variant="outline" className="h-full px-10 py-3 font-medium">
@@ -114,7 +116,7 @@ const ModalMapInput = () => {
                 ) : (
                   <Select
                     onValueChange={(e) => {
-                      onMapChange(e, item.id, item.type);
+                      onMapChange(e, item.id);
                     }}
                     defaultValue={item.mapTo}
                   >
@@ -131,7 +133,13 @@ const ModalMapInput = () => {
           </div>
         </ScrollArea>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            Close
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

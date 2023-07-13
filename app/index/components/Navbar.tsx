@@ -17,6 +17,9 @@ const IndexNavbar = async () => {
       <div className="font-bold text-xl">UncleLife</div>
       <nav className="">
         <ul className="flex space-x-4 items-center">
+          <Link href="https://blog.unclelife.co">
+            <li className="text-gray-500 hover:text-gray-900">Blog</li>
+          </Link>
           <Link href="/">
             <li className="text-gray-500 hover:text-gray-900">Pricing</li>
           </Link>
@@ -28,13 +31,10 @@ const IndexNavbar = async () => {
             </Link>
           ) : (
             <>
-              <Link href="/">
-                <li className="text-gray-500 hover:text-gray-900">Sign Up</li>
-              </Link>
               <Link href="/login">
                 <li>
                   <Button>
-                    <LogIn className="mr-2" size={20} /> Login
+                    <LogIn className="mr-2" size={20} /> Continue
                   </Button>
                 </li>
               </Link>

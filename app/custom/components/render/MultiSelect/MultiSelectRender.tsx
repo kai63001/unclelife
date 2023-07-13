@@ -14,12 +14,11 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
       if (prevSelected.includes(id)) {
         updateInputForm(
           prevSelected.filter((i: any) => i !== id),
-          data.name,
-          data.type
+          data
         );
         return prevSelected.filter((i: any) => i !== id);
       } else {
-        updateInputForm([...prevSelected, id], data.name, data.type);
+        updateInputForm([...prevSelected, id], data);
         return [...prevSelected, id];
       }
     });
