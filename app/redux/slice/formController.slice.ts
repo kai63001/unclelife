@@ -67,7 +67,9 @@ export const formSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       // update value
-      state.layer[index].map = action.payload.value;
+      state.layer[index].mapTo = action.payload.mapTo;
+      // map type
+      state.layer[index].mapType = action.payload.mapType;
     },
     deleteLayerWithId: (state, action: PayloadAction<any>) => {
       // id find index

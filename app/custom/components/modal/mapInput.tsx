@@ -68,9 +68,9 @@ const ModalMapInput = () => {
     ));
   };
 
-  const onMapChange = (e: any, id: any) => {
+  const onMapChange = (e: any, id: any, type: any) => {
     console.log(e, id);
-    dispatch(setMapFromLayerWithId({ id, value: e }));
+    dispatch(setMapFromLayerWithId({ id, mapTo: e, mapType: type }));
   };
 
   return (
@@ -114,9 +114,9 @@ const ModalMapInput = () => {
                 ) : (
                   <Select
                     onValueChange={(e) => {
-                      onMapChange(e, item.id);
+                      onMapChange(e, item.id, item.type);
                     }}
-                    defaultValue={item.map}
+                    defaultValue={item.mapTo}
                   >
                     <SelectTrigger className="w-full col-span-2">
                       <SelectValue placeholder="Select Column" />
