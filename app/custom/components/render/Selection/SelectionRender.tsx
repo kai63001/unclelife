@@ -33,7 +33,7 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
           <SelectGroup>
             {data.options.map((item: any, index: number) => {
               return (
-                <SelectItem key={index} value={item.id}>
+                <SelectItem key={index} value={item.name}>
                   {item.name}
                 </SelectItem>
               );

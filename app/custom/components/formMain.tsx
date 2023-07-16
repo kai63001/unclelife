@@ -7,6 +7,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useToast } from "@/components/ui/use-toast";
 import { updateDatabase } from "@/lib/notionApi";
 import { Icons } from "@/components/Icons";
+import Link from "next/link";
 
 const FormMainBox = ({
   id = null,
@@ -125,7 +126,7 @@ const FormMainBox = ({
       } else if (value.type === "select" || value.type === "status") {
         properties[key] = {
           [value.type]: {
-            id: value.value as string,
+            name: value.value as string,
           },
           type: value.type,
         };
@@ -154,10 +155,15 @@ const FormMainBox = ({
           [value.type]: [
             ...value.value.map((item: any) => {
               return {
-                id: item,
+                name: item,
               };
             }),
           ],
+          type: value.type,
+        };
+      } else if (value.type === "number"){
+        properties[key] = {
+          [value.type]: parseInt(value.value),
           type: value.type,
         };
       } else {
@@ -211,9 +217,9 @@ const FormMainBox = ({
       <div className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
         <div>
           Power by{" "}
-          <a href="" target="_blank" className="text-blue-500 hover:underline">
+          <Link href="https://unclelife.co" target="_blank" className="text-blue-500 hover:underline">
             Uncle Life
-          </a>
+          </Link>
         </div>
       </div>
     </>

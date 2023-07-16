@@ -98,10 +98,10 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
                 key={index}
                 className="px-4 py-1.5 text-sm text-gray-700 rounded-sm hover:bg-input hover:text-gray-900 flex cursor-pointer items-center w-full select-none"
                 role="menuitem"
-                onClick={() => handleSelectChange(option.id)}
+                onClick={() => handleSelectChange(option.name)}
               >
                 <span className="absolute left-2 flex h-5 w-5 items-center justify-center">
-                  {selected.includes(option.id) && (
+                  {selected.includes(option.name) && (
                     <Check className="h-4 w-4" />
                   )}
                 </span>
