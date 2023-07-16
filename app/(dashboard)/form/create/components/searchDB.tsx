@@ -33,6 +33,12 @@ const CreateFormSearchDB = () => {
       return;
     }
     const database = await getDatabase(databaseId);
+    console.log(database)
+    if(database?.error) {
+      setError(database.error);
+      setLoading(false);
+      return;
+    }
     dispatch(setTableOfDatabase(database));
     dispatch(setDatabaseId(databaseId))
     setLoading(false);
