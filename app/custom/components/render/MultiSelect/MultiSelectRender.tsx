@@ -77,7 +77,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
                   key={index}
                   className="flex items-center justify-center px-2 py-1 m-1 bg-primary text-secondary rounded-sm text-xs"
                 >
-                  {renderNameOptionWithId(item)}
+                  {item}
                 </div>
               ))}
             </div>
