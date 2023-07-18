@@ -56,6 +56,7 @@ const ModalMapInput = () => {
       setLoading(false);
     } catch (error) {
       console.log("error :", error);
+      setListObjectTable(tableOfDatabase);
     }
   };
 

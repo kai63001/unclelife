@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ModalAddLayer = () => {
   const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ const ModalAddLayer = () => {
   };
 
   const dispatch = useAppDispatch();
-  const { tableOfDatabase }:any = useAppSelector((state) => state.formReducer);
+  const { tableOfDatabase }: any = useAppSelector((state) => state.formReducer);
   const typeOfLayerSelection = [
     {
       id: "title",
@@ -100,6 +100,16 @@ const ModalAddLayer = () => {
     });
     return filter;
   };
+
+  useEffect(()=>{
+    if (open) {
+      setLayer({
+        label: "Title",
+        name: "title",
+        type: "",
+      })
+    }
+  },[open])
 
   return (
     <div>
@@ -181,6 +191,14 @@ const ModalAddLayer = () => {
                 </SelectContent>
               </Select>
             </div>
+            {(layer.type === "select" || layer.type === "multi_select") && (
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="selectionType" className="text-right">
+                  Options
+                </Label>
+                
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button onClick={saveLayer} type="submit">
