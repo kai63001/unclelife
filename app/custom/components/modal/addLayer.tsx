@@ -90,18 +90,26 @@ const ModalAddLayer = () => {
   ];
 
   const saveLayer = () => {
-    console.log(layer);
+    let newLayer = layer
+    if (layer.type === "select" || layer.type === "multi_select") {
+      newLayer = {
+        ...layer,
+        options: selectOptionList,
+      };
+    }
+    console.log(newLayer);
     console.log("saveLayer");
-    dispatch(addMoreLayer(layer));
+
+    dispatch(addMoreLayer(newLayer));
     setOpen(false);
   };
 
-  const filterTableFromType = (type: string) => {
-    const filter = Object.keys(tableOfDatabase).filter((item) => {
-      return tableOfDatabase[item].type === type;
-    });
-    return filter;
-  };
+  // const filterTableFromType = (type: string) => {
+  //   const filter = Object.keys(tableOfDatabase).filter((item) => {
+  //     return tableOfDatabase[item].type === type;
+  //   });
+  //   return filter;
+  // };
 
   //reset state when open
   useEffect(() => {
