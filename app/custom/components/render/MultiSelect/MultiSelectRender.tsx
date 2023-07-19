@@ -14,12 +14,11 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
       if (prevSelected.includes(id)) {
         updateInputForm(
           prevSelected.filter((i: any) => i !== id),
-          data.name,
-          data.type
+          data
         );
         return prevSelected.filter((i: any) => i !== id);
       } else {
-        updateInputForm([...prevSelected, id], data.name, data.type);
+        updateInputForm([...prevSelected, id], data);
         return [...prevSelected, id];
       }
     });
@@ -78,7 +77,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
                   key={index}
                   className="flex items-center justify-center px-2 py-1 m-1 bg-primary text-secondary rounded-sm text-xs"
                 >
-                  {renderNameOptionWithId(item)}
+                  {item}
                 </div>
               ))}
             </div>
@@ -99,10 +98,10 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
                 key={index}
                 className="px-4 py-1.5 text-sm text-gray-700 rounded-sm hover:bg-input hover:text-gray-900 flex cursor-pointer items-center w-full select-none"
                 role="menuitem"
-                onClick={() => handleSelectChange(option.id)}
+                onClick={() => handleSelectChange(option.name)}
               >
                 <span className="absolute left-2 flex h-5 w-5 items-center justify-center">
-                  {selected.includes(option.id) && (
+                  {selected.includes(option.name) && (
                     <Check className="h-4 w-4" />
                   )}
                 </span>

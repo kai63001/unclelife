@@ -1,5 +1,5 @@
 "use client";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import RenderFormComponent from "../components/render/RenderForm";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -7,27 +7,80 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useToast } from "@/components/ui/use-toast";
 import { updateDatabase } from "@/lib/notionApi";
 import { Icons } from "@/components/Icons";
+import Link from "next/link";
+import { setAllForm, setDatabaseId, setInformation, setLayer } from "@/app/redux/slice/formController.slice";
+import { useSearchParams } from "next/navigation";
 
-const FormMainBox = ({ id = null }: { id?: string | null }) => {
+const FormMainBox = ({
+  id = null,
+  testMode = false,
+}: {
+  id?: string | null;
+  testMode?: boolean;
+}) => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
   const [dataLayer, setDataLayer] = useState<any>([]);
-  const [databaseId, setDatabaseId] = useState<string>("");
+  const [databaseId, setDatabaseIdState] = useState<string>("");
   const { form, layer } = useAppSelector((state) => state.formReducer);
   const [loading, setLoading] = useState(false);
 
   const [inputForm, setInputForm]: any = useState<any>({});
+  const [error, setError] = useState<any>({});
 
-  const updateInputForm = (value: string, name: string, type: string) => {
-    setInputForm({
-      ...inputForm,
-      [name]: {
-        value,
-        type,
-      },
-    });
+  const updateInputForm = (value: string, data: any) => {
+    console.log(data);
+    if (data.mapTo != undefined) {
+      setInputForm({
+        ...inputForm,
+        [data.mapTo]: {
+          value,
+          type: data.mapType,
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    const _id = searchParams.get("id");
+    if (_id && testMode) {
+      dispatch(
+        setInformation({
+          id: _id,
+        })
+      );
+      if (!supabase) return;
+      try {
+        supabase
+          .from("form")
+          .select("layer,detail,databaseId")
+          .eq("id", _id)
+          .single()
+          .then((res: any) => {
+            if (res?.error?.message) {
+              toast({
+                title: "Error",
+                description: res?.error?.message,
+                variant: "destructive",
+              });
+              return;
+            }
+            console.log(res.data);
+            setDataLayer(res.data.layer);
+            setDataForm(res.data.detail);
+            setDatabaseIdState(res.data.databaseId);
+            dispatch(setLayer(res.data.layer))
+            dispatch(setDatabaseId(res.data.databaseId))
+            dispatch(setAllForm(res.data.detail))
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [dispatch, searchParams, supabase, testMode, toast]);
 
   useEffect(() => {
     //supabase
@@ -51,7 +104,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
             console.log(res.data);
             setDataLayer(res.data.layer);
             setDataForm(res.data.detail);
-            setDatabaseId(res.data.databaseId);
+            setDatabaseIdState(res.data.databaseId);
           });
       } catch (error) {
         console.log(error);
@@ -64,8 +117,32 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, layer, supabase]);
 
+  const checkRequire = () => {
+    let error: any = {};
+    let check = true;
+    for (const [key, value] of Object.entries(inputForm) as any) {
+      if (value.require && value.value === "") {
+        error[key] = "This field is required";
+        check = false;
+      }
+    }
+    console.log(error);
+    setError(error);
+    return check;
+  };
+
   const submitForm = async (e: any) => {
     e.preventDefault();
+    if (!checkRequire()) {
+      return;
+    }
+
+
+    if (testMode) {
+      console.log("test mode");
+      return;
+    }
+
     if (databaseId == null) {
       return;
     }
@@ -75,6 +152,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
 
     //loop inputForm create object properties for notion page body
     let properties: any = {};
+    console.log(inputForm);
     for (const [key, value] of Object.entries(inputForm) as any) {
       if (value.type === "title" || value.type === "rich_text") {
         properties[key] = {
@@ -90,7 +168,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       } else if (value.type === "select" || value.type === "status") {
         properties[key] = {
           [value.type]: {
-            id: value.value as string,
+            name: value.value as string,
           },
           type: value.type,
         };
@@ -119,10 +197,15 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
           [value.type]: [
             ...value.value.map((item: any) => {
               return {
-                id: item,
+                name: item,
               };
             }),
           ],
+          type: value.type,
+        };
+      } else if (value.type === "number"){
+        properties[key] = {
+          [value.type]: parseInt(value.value),
           type: value.type,
         };
       } else {
@@ -153,7 +236,7 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
     <>
       <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
       {dataForm?.description && (
-        <p className="text-gray-400 text-sm">{dataForm?.description}</p>
+        <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">{dataForm?.description}</p>
       )}
       <form onSubmit={submitForm}>
         {dataLayer?.map((item: any, index: number) => {
@@ -176,9 +259,9 @@ const FormMainBox = ({ id = null }: { id?: string | null }) => {
       <div className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
         <div>
           Power by{" "}
-          <a href="" target="_blank" className="text-blue-500 hover:underline">
+          <Link href="https://unclelife.co" target="_blank" className="text-blue-500 hover:underline">
             Uncle Life
-          </a>
+          </Link>
         </div>
       </div>
     </>

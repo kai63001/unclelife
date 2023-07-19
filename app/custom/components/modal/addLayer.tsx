@@ -21,7 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Plus, Trash } from "lucide-react";
 
 const ModalAddLayer = () => {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ const ModalAddLayer = () => {
     name: "title",
     type: "",
   });
+  const [selectOptionList, setSelectOptionList] = useState<any>([]);
 
   const handleChangeLayer = (e: any) => {
     setLayer({
@@ -39,7 +41,7 @@ const ModalAddLayer = () => {
   };
 
   const dispatch = useAppDispatch();
-  const { tableOfDatabase }:any = useAppSelector((state) => state.formReducer);
+  const { tableOfDatabase }: any = useAppSelector((state) => state.formReducer);
   const typeOfLayerSelection = [
     {
       id: "title",
@@ -88,17 +90,50 @@ const ModalAddLayer = () => {
   ];
 
   const saveLayer = () => {
-    console.log(layer);
+    let newLayer = layer
+    if (layer.type === "select" || layer.type === "multi_select") {
+      newLayer = {
+        ...layer,
+        options: selectOptionList,
+      };
+    }
+    console.log(newLayer);
     console.log("saveLayer");
-    dispatch(addMoreLayer(layer));
+
+    dispatch(addMoreLayer(newLayer));
     setOpen(false);
   };
 
-  const filterTableFromType = (type: string) => {
-    const filter = Object.keys(tableOfDatabase).filter((item) => {
-      return tableOfDatabase[item].type === type;
-    });
-    return filter;
+  // const filterTableFromType = (type: string) => {
+  //   const filter = Object.keys(tableOfDatabase).filter((item) => {
+  //     return tableOfDatabase[item].type === type;
+  //   });
+  //   return filter;
+  // };
+
+  //reset state when open
+  useEffect(() => {
+    if (open) {
+      setLayer({
+        label: "Title",
+        name: "title",
+        type: "",
+      });
+      setSelectOptionList([]);
+    }
+  }, [open]);
+
+  const addSelectOption = () => {
+    setSelectOptionList([...selectOptionList, {
+      name: "",
+      color: "gray",
+    }]);
+  };
+
+  const deleteSelectOption = (index: number) => {
+    console.log(index)
+    const newList = selectOptionList.filter((item:any, i:number) => i !== index);
+    setSelectOptionList(newList);
   };
 
   return (
@@ -112,7 +147,7 @@ const ModalAddLayer = () => {
         <DialogTrigger asChild>
           <Button variant="outline">Add Layer</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>
             <DialogTitle>Add Input Form</DialogTitle>
             <DialogDescription>
@@ -181,6 +216,49 @@ const ModalAddLayer = () => {
                 </SelectContent>
               </Select>
             </div>
+            {(layer.type === "select" || layer.type === "multi_select") && (
+              <div className="border-t py-3">
+                <Label htmlFor="selectionType" className="text-right mb-2">
+                  Select Options
+                </Label>
+                {/* input and add btn */}
+                <div className="col-span-3 space-y-2">
+                  {selectOptionList.map((item:any, index:any) => (
+                    <div key={index} className="flex gap-4">
+                      <Input
+                        id="options"
+                        name="options"
+                        className="w-full"
+                        placeholder="Add Option"
+                        value={item.name}
+                        onChange={(e:any) => {
+                          const newList = selectOptionList.map((item:any, i:number) => {
+                            if (i === index) {
+                              return {
+                                ...item,
+                                name: e.target.value
+                              }
+                            }
+                            return item;
+                          });
+                          setSelectOptionList(newList);
+                        }}
+                      />
+                      <div>
+                        <Button onClick={()=>deleteSelectOption(index)} variant="secondary">
+                          <Trash className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-start w-full col-span-4 mt-2">
+                  <Button onClick={addSelectOption} variant="secondary" className="h-8">
+                    <Plus className="h-4 w-4 mr-1" /> Add Option
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button onClick={saveLayer} type="submit">

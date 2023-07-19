@@ -19,7 +19,7 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
         {data.required && <RequiredStar />}
       </Label>
       <Select name={data.name} onValueChange={(e)=>{
-        updateInputForm(e, data.name, data.type)
+        updateInputForm(e, data)
       }} required={data.required}>
         <SelectTrigger
           id={data.name}
@@ -33,7 +33,7 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
           <SelectGroup>
             {data.options.map((item: any, index: number) => {
               return (
-                <SelectItem key={index} value={item.id}>
+                <SelectItem key={index} value={item.name}>
                   {item.name}
                 </SelectItem>
               );

@@ -34,6 +34,9 @@ export const formSlice = createSlice({
     setDatabaseId: (state, action: PayloadAction<any>) => {
       state.databaseId = action.payload;
     },
+    setAllForm: (state, action: PayloadAction<any>) => {
+      state.form = action.payload;
+    },
     setForm: (state, action: PayloadAction<any>) => {
       state.form[action.payload.name] = action.payload.value;
     },
@@ -49,8 +52,6 @@ export const formSlice = createSlice({
         id: state.layer.length + 1,
         ...action.payload,
       });
-
-      console.log(state.layer);
     },
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
@@ -62,6 +63,16 @@ export const formSlice = createSlice({
       );
       // update value
       state.layer[index] = action.payload.value;
+    },
+    setMapFromLayerWithId: (state, action: PayloadAction<any>) => {
+      // id find index
+      const index = state.layer.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      // update value
+      state.layer[index].mapTo = action.payload.mapTo;
+      // map type
+      state.layer[index].mapType = action.payload.mapType;
     },
     deleteLayerWithId: (state, action: PayloadAction<any>) => {
       // id find index
@@ -84,6 +95,8 @@ export const {
   setDatabaseId,
   addMoreLayer,
   deleteLayerWithId,
+  setMapFromLayerWithId,
+  setAllForm
 } = formSlice.actions;
 
 export default formSlice.reducer;

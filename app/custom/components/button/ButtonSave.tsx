@@ -7,9 +7,11 @@ import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast";
+import { useRouter } from "next/navigation";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -23,6 +25,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
     );
   };
+
   const supabase = createClientComponentClient();
   const saveLayer = async () => {
     //log user id
@@ -75,6 +78,10 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         id: data[0].id,
       })
     );
+
+    //update fake path
+    router.replace(`/custom/form?id=${data[0].id}`);
+
     //toast success
     toast({
       title: "Success",
