@@ -1,5 +1,5 @@
 "use client";
-import { useAppSelector } from "@/app/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import RenderFormComponent from "../components/render/RenderForm";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -8,6 +8,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { updateDatabase } from "@/lib/notionApi";
 import { Icons } from "@/components/Icons";
 import Link from "next/link";
+import { setAllForm, setDatabaseId, setInformation, setLayer } from "@/app/redux/slice/formController.slice";
+import { useSearchParams } from "next/navigation";
 
 const FormMainBox = ({
   id = null,
@@ -17,10 +19,12 @@ const FormMainBox = ({
   testMode?: boolean;
 }) => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
   const [dataLayer, setDataLayer] = useState<any>([]);
-  const [databaseId, setDatabaseId] = useState<string>("");
+  const [databaseId, setDatabaseIdState] = useState<string>("");
   const { form, layer } = useAppSelector((state) => state.formReducer);
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +43,44 @@ const FormMainBox = ({
       });
     }
   };
+
+  useEffect(() => {
+    const _id = searchParams.get("id");
+    if (_id && testMode) {
+      dispatch(
+        setInformation({
+          id: _id,
+        })
+      );
+      if (!supabase) return;
+      try {
+        supabase
+          .from("form")
+          .select("layer,detail,databaseId")
+          .eq("id", _id)
+          .single()
+          .then((res: any) => {
+            if (res?.error?.message) {
+              toast({
+                title: "Error",
+                description: res?.error?.message,
+                variant: "destructive",
+              });
+              return;
+            }
+            console.log(res.data);
+            setDataLayer(res.data.layer);
+            setDataForm(res.data.detail);
+            setDatabaseIdState(res.data.databaseId);
+            dispatch(setLayer(res.data.layer))
+            dispatch(setDatabaseId(res.data.databaseId))
+            dispatch(setAllForm(res.data.detail))
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [dispatch, searchParams, supabase, testMode, toast]);
 
   useEffect(() => {
     //supabase
@@ -62,7 +104,7 @@ const FormMainBox = ({
             console.log(res.data);
             setDataLayer(res.data.layer);
             setDataForm(res.data.detail);
-            setDatabaseId(res.data.databaseId);
+            setDatabaseIdState(res.data.databaseId);
           });
       } catch (error) {
         console.log(error);

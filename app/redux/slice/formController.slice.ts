@@ -34,6 +34,9 @@ export const formSlice = createSlice({
     setDatabaseId: (state, action: PayloadAction<any>) => {
       state.databaseId = action.payload;
     },
+    setAllForm: (state, action: PayloadAction<any>) => {
+      state.form = action.payload;
+    },
     setForm: (state, action: PayloadAction<any>) => {
       state.form[action.payload.name] = action.payload.value;
     },
@@ -93,6 +96,7 @@ export const {
   addMoreLayer,
   deleteLayerWithId,
   setMapFromLayerWithId,
+  setAllForm
 } = formSlice.actions;
 
 export default formSlice.reducer;
