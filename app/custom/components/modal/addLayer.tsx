@@ -145,7 +145,7 @@ const ModalAddLayer = () => {
         }}
       >
         <DialogTrigger asChild>
-          <Button variant="outline">Add Layer</Button>
+          <Button variant="outline">Add Custom Block</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>
