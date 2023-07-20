@@ -133,35 +133,14 @@ const ButtonSaveCustomForm = ({ session }: any) => {
   };
   return (
     <>
-      {checkHasMoreThanOneMap() ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className="cursor-help">
-              <Button
-                disabled={true}
-                className="h-full px-10 py-3 font-medium cursor-not-allowed"
-              >
-                {loading && (
-                  <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
-                )}
-                SAVE
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>You should first map the field input.</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <Button
-          onClick={checkAllInputIsMaped}
-          disabled={loading}
-          className="h-full px-10 py-3 font-medium"
-        >
-          {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
-          SAVE
-        </Button>
-      )}
+      <Button
+        onClick={checkAllInputIsMaped}
+        disabled={loading}
+        className="h-full px-10 py-3 font-medium"
+      >
+        {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
+        SAVE
+      </Button>
       <Dialog
         open={warning}
         onOpenChange={(e) => {
