@@ -26,16 +26,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { setMapFromLayerWithId } from "@/app/redux/slice/formController.slice";
+import { setMapFromLayerWithId, updateModalMapInputOpen } from "@/app/redux/slice/formController.slice";
 
 const ModalMapInput = () => {
   const [open, setOpen] = useState(false);
   const [listObjectTable, setListObjectTable] = useState<any>({});
   const dispatch = useAppDispatch();
-  const { databaseId, layer, tableOfDatabase } = useAppSelector(
+  const { databaseId, layer, tableOfDatabase,modalMapInputOpen } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
+
+  //useEffect listen modalMapInputOpen
+  useEffect(() => {
+    setOpen(modalMapInputOpen);
+  }, [modalMapInputOpen]);
 
   useEffect(() => {
     if (open) {
@@ -77,8 +82,9 @@ const ModalMapInput = () => {
 
   return (
     <Dialog
-      onOpenChange={() => {
+      onOpenChange={(e) => {
         setOpen(!open);
+        dispatch(updateModalMapInputOpen(e))
       }}
       open={open}
     >

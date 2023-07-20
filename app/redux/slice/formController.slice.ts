@@ -8,6 +8,7 @@ export interface FormState {
   form: any;
   layer: any[];
   infomation: any;
+  modalMapInputOpen: boolean;
 }
 
 const initialState: FormState = {
@@ -19,6 +20,7 @@ const initialState: FormState = {
   },
   infomation: {},
   layer: [],
+  modalMapInputOpen: false,
 };
 
 export const formSlice = createSlice({
@@ -82,6 +84,9 @@ export const formSlice = createSlice({
       // update value
       state.layer.splice(index, 1);
     },
+    updateModalMapInputOpen: (state, action: PayloadAction<any>) => {
+      state.modalMapInputOpen = action.payload;
+    }
   },
 });
 
@@ -96,7 +101,8 @@ export const {
   addMoreLayer,
   deleteLayerWithId,
   setMapFromLayerWithId,
-  setAllForm
+  setAllForm,
+  updateModalMapInputOpen
 } = formSlice.actions;
 
 export default formSlice.reducer;

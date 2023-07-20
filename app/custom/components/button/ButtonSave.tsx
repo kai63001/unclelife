@@ -1,13 +1,21 @@
 "use client";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Icons } from "@/components/Icons";
-import { setInformation } from "@/app/redux/slice/formController.slice";
+import { setInformation, updateModalMapInputOpen } from "@/app/redux/slice/formController.slice";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ArrowLeftRight } from "lucide-react";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
@@ -18,6 +26,8 @@ const ButtonSaveCustomForm = ({ session }: any) => {
   const { layer, infomation, databaseId, form } = useAppSelector(
     (state) => state.formReducer
   );
+  const [warning, setWarning] = useState(false);
+  const [mapLength, setMapLength] = useState(0);
 
   const copyLink = (idData = infomation.id) => {
     console.log("copy link");
@@ -26,11 +36,22 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     );
   };
 
+  const checkAllInputIsMaped = () => {
+    const inputForm = layer.filter((item: any) => item.mapTo);
+    console.log(layer.length, inputForm.length);
+    if (layer.length != inputForm.length) {
+      setWarning(true);
+      setMapLength(layer.length - inputForm.length);
+      return;
+    }
+    return saveLayer();
+  };
+
   const supabase = createClientComponentClient();
   const saveLayer = async () => {
     //log user id
     setLoading(true);
-    console.log("user", session);
+    setWarning(false);
     if (infomation.id) {
       const { data, error } = await supabase
         .from("form")
@@ -98,14 +119,43 @@ const ButtonSaveCustomForm = ({ session }: any) => {
   };
 
   return (
-    <Button
-      onClick={saveLayer}
-      disabled={loading}
-      className="h-full px-10 py-3 font-medium"
-    >
-      {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
-      SAVE
-    </Button>
+    <>
+      <Button
+        onClick={checkAllInputIsMaped}
+        disabled={loading}
+        className="h-full px-10 py-3 font-medium"
+      >
+        {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
+        SAVE
+      </Button>
+      <Dialog
+        open={warning}
+        onOpenChange={(e) => {
+          setWarning(e);
+        }}
+      >
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle className="text-red-600">Column Map Alert</DialogTitle>
+            <div>
+              A notification that occurs when there are unassigned inputs in a
+              mapping process. This alert is a cautionary prompt, advising the
+              user that they have not yet associated three inputs with their
+              corresponding columns in a notion layout. It provides the option
+              for the user to either map the inputs or to proceed with the
+              existing mapping configuration.
+            </div>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={()=>{
+              dispatch(updateModalMapInputOpen(true))
+              setWarning(false)
+            }}><ArrowLeftRight className="h-4 w-4 mr-3" />Map Input</Button>
+            <Button onClick={saveLayer} variant={"outline"}>Continue</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
