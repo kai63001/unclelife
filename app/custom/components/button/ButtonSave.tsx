@@ -1,7 +1,10 @@
 "use client";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Icons } from "@/components/Icons";
-import { setInformation, updateModalMapInputOpen } from "@/app/redux/slice/formController.slice";
+import {
+  setInformation,
+  updateModalMapInputOpen,
+} from "@/app/redux/slice/formController.slice";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
@@ -16,6 +19,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ArrowLeftRight } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
@@ -118,16 +127,41 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     });
   };
 
+  const checkHasMoreThanOneMap = () => {
+    const inputForm = layer.filter((item: any) => item.mapTo);
+    return !(inputForm.length >= 1);
+  };
   return (
     <>
-      <Button
-        onClick={checkAllInputIsMaped}
-        disabled={loading}
-        className="h-full px-10 py-3 font-medium"
-      >
-        {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
-        SAVE
-      </Button>
+      {checkHasMoreThanOneMap() ? (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="cursor-help">
+              <Button
+                disabled={true}
+                className="h-full px-10 py-3 font-medium cursor-not-allowed"
+              >
+                {loading && (
+                  <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                )}
+                SAVE
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>You should first map the field input.</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        <Button
+          onClick={checkAllInputIsMaped}
+          disabled={loading}
+          className="h-full px-10 py-3 font-medium"
+        >
+          {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
+          SAVE
+        </Button>
+      )}
       <Dialog
         open={warning}
         onOpenChange={(e) => {
@@ -147,11 +181,18 @@ const ButtonSaveCustomForm = ({ session }: any) => {
             </div>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={()=>{
-              dispatch(updateModalMapInputOpen(true))
-              setWarning(false)
-            }}><ArrowLeftRight className="h-4 w-4 mr-3" />Map Input</Button>
-            <Button onClick={saveLayer} variant={"outline"}>Continue</Button>
+            <Button
+              onClick={() => {
+                dispatch(updateModalMapInputOpen(true));
+                setWarning(false);
+              }}
+            >
+              <ArrowLeftRight className="h-4 w-4 mr-3" />
+              Map Fields
+            </Button>
+            <Button onClick={saveLayer} variant={"outline"}>
+              Continue
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

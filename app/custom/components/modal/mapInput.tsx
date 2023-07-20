@@ -91,7 +91,7 @@ const ModalMapInput = () => {
       <DialogTrigger asChild>
         <Button variant="outline" className="h-full px-10 py-3 font-medium">
           <ArrowLeftRight className="h-4 w-4 mr-3" />
-          Map Input
+          Map Fields
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
