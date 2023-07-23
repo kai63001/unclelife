@@ -262,11 +262,17 @@ const FormMainBox = ({
               );
             })}
             <div className="mt-3">
-              <Button disabled={loading} className="px-10">
+              <Button
+                disabled={loading}
+                style={{
+                  backgroundColor: dataForm?.button?.color,
+                }}
+                className="px-10"
+              >
                 {loading && (
                   <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
                 )}
-                {dataForm?.button.text || "Submit"}
+                {dataForm?.button?.text || "Submit"}
               </Button>
             </div>
           </form>

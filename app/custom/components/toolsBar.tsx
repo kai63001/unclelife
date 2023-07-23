@@ -68,6 +68,23 @@ const ToolsBar = () => {
                   }
                   value={form.button.text}
                 />
+                <div className="text-xs font-bold">
+                  BUTTON COLOR <span className="text-red-500">*</span>
+                </div>
+                <Input
+                  placeholder="Submit"
+                  type="color"
+                  className="focus:outline-none focus-visible:ring-0 text-black p-0 w-10 border-0"
+                  onChange={(e) =>
+                    onChangeHook(
+                      {
+                        color: e.target.value,
+                      },
+                      "button"
+                    )
+                  }
+                  value={form.button.text}
+                />
               </div>
             </AccordionContent>
           </AccordionItem>

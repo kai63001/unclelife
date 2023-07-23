@@ -19,6 +19,7 @@ const initialState: FormState = {
     title: "Contact Form",
     button: {
       text: "Submit",
+      color: "#000000",
     }
   },
   infomation: {},
