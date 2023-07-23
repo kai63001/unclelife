@@ -3,7 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 
 const ProfileBar = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -32,9 +32,13 @@ const ProfileBar = async () => {
         </div>
       </div>
       <div className="mt-5 flex">
-        <Button className="w-full mr-2">Profile</Button>
+        <Button className="w-full mr-2" variant={"outline"}>
+          <Settings className="w-4 h-4" />
+        </Button>
         <form action="/auth/signout" method="post">
-          <Button className="w-full" variant={"outline"}><LogOut className="w-4 h-4" /></Button>
+          <Button className="w-full">
+            <LogOut className="w-4 h-4" />
+          </Button>
         </form>
       </div>
     </Card>

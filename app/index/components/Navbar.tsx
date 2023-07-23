@@ -14,7 +14,10 @@ const IndexNavbar = async () => {
 
   return (
     <div className="max-w-6xl m-auto w-full flex justify-between pt-8 items-center">
-      <div className="font-bold text-xl">UncleLife</div>
+      <Link href="/" className="font-bold text-xl">
+        UncleLife
+        <span className="ml-2 text-xs">BETA</span>
+      </Link>
       <nav className="">
         <ul className="flex space-x-4 items-center">
           <Link href="https://blog.unclelife.co" target="_blank">
