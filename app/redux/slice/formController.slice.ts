@@ -17,6 +17,9 @@ const initialState: FormState = {
   tableOfDatabase: [],
   form: {
     title: "Contact Form",
+    button: {
+      text: "Submit",
+    }
   },
   infomation: {},
   layer: [],

@@ -266,7 +266,7 @@ const FormMainBox = ({
                 {loading && (
                   <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
                 )}
-                Submit
+                {dataForm?.button.text || "Submit"}
               </Button>
             </div>
           </form>
