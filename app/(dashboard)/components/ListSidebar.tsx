@@ -20,21 +20,21 @@ const ListSideBar = () => {
         },
       ],
     },
-    {
-      group: "WIDGETS",
-      items: [
-        {
-          path: "/pomodoro",
-          name: "Pomodoro",
-          icon: <Timer className="mr-1 h-5" />,
-        },
-        {
-          path: "/clock",
-          name: "Clock",
-          icon: <Clock className="mr-1 h-5" />,
-        },
-      ],
-    },
+    // {
+    //   group: "WIDGETS",
+    //   items: [
+    //     {
+    //       path: "/pomodoro",
+    //       name: "Pomodoro",
+    //       icon: <Timer className="mr-1 h-5" />,
+    //     },
+    //     {
+    //       path: "/clock",
+    //       name: "Clock",
+    //       icon: <Clock className="mr-1 h-5" />,
+    //     },
+    //   ],
+    // },
   ];
   return (
     <div className="flex-grow p-4">
