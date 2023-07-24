@@ -1,9 +1,10 @@
 import {Suspense} from "react";
 import RenderMyForm from "@/app/(dashboard)/form/my/RenderMyForm";
+import RenderMyFormLoading from "@/app/(dashboard)/form/my/RenderMyFormLoading";
 
 const MyFormPage = () => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<RenderMyFormLoading/>}>
             <RenderMyForm/>
         </Suspense>
     )

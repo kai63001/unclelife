@@ -66,7 +66,7 @@ const ToolsBar = () => {
                       "button"
                     )
                   }
-                  value={form.button.text}
+                  value={form?.button?.text}
                 />
                 <div className="text-xs font-bold">
                   BUTTON COLOR <span className="text-red-500">*</span>
@@ -83,7 +83,7 @@ const ToolsBar = () => {
                       "button"
                     )
                   }
-                  value={form.button.color}
+                  value={form?.button?.color}
                 />
               </div>
             </AccordionContent>
