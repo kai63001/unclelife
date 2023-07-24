@@ -1,23 +1,36 @@
 import {createServerSupabaseClient} from "@/app/hook/supabase-server";
+import {
+    Card,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import Link from "next/link"
+import dayjs from "@/lib/dayjs";
 
 const RenderMyForm = async () => {
-    const supabase = createServerSupabaseClient();
     //get user id
     //get all forms with user id
-    const {data:session} = await supabase.auth.getSession();
-    const userId = session?.session?.user?.id;
-    const {data, error} = await supabase.from('form').select('*').eq('user', userId)
-    ;
+    const supabase = createServerSupabaseClient(), {data: session} = await supabase.auth.getSession(),
+        userId = session?.session?.user?.id, {
+            data,
+            error
+        } = await supabase.from('form').select('id,detail,created_at').eq('user', userId).order('created_at', {ascending: false});
     if (error) {
-        throw error;
+        console.log(error)
     }
 
     return (
-        <div>
-            {data?.map((form: any) => (
-                <div key={form.id}>
-                    <h1>{form.id}</h1>
-                </div>
+        <div className={`grid grid-cols-4 gap-4`}>
+            {data?.map((form: any, index: number) => (
+                <Link key={index} href={`/custom/form?id=${form.id}`}>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>{form?.detail?.title || 'Form'}</CardTitle>
+                            <CardDescription>{dayjs().fromNow(form.created_at)}</CardDescription>
+                        </CardHeader>
+                    </Card>
+                </Link>
             ))}
         </div>
     )
