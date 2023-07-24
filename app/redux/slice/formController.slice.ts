@@ -59,6 +59,12 @@ export const formSlice = createSlice({
         ...action.payload,
       });
     },
+    clearAllData: (state) => {
+        state.form = initialState.form;
+        state.layer = [];
+        state.infomation = initialState.infomation;
+        state.selectedForm = initialState.selectedForm;
+    },
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
     },
@@ -106,7 +112,8 @@ export const {
   deleteLayerWithId,
   setMapFromLayerWithId,
   setAllForm,
-  updateModalMapInputOpen
+  updateModalMapInputOpen,
+  clearAllData
 } = formSlice.actions;
 
 export default formSlice.reducer;

@@ -6,11 +6,10 @@ import ListSideBar from "./ListSidebar";
 const Slidebars = async () => {
   //get auth data
 
-  
   return (
     <div className="text-black h-screen w-64 flex flex-col border-r">
       <div className="p-4">
-        <Link href="/home">
+        <Link href="/">
           <p className="text-2xl font-bold">UncleLife</p>
         </Link>
       </div>

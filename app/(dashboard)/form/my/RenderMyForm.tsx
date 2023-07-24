@@ -8,6 +8,7 @@ import {
 import Link from "next/link"
 import dayjs from "@/lib/dayjs";
 
+export const revalidate = 60
 const RenderMyForm = async () => {
     //get user id
     //get all forms with user id
@@ -36,5 +37,4 @@ const RenderMyForm = async () => {
     )
 }
 
-export const revalidate = 60
 export default RenderMyForm
