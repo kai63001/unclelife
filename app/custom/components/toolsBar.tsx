@@ -83,7 +83,7 @@ const ToolsBar = () => {
                       "button"
                     )
                   }
-                  value={form.button.text}
+                  value={form.button.color}
                 />
               </div>
             </AccordionContent>

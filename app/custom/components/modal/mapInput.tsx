@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { getDatabase } from "@/lib/notionApi";
 import { ArrowLeftRight, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -22,7 +21,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -105,7 +103,7 @@ const ModalMapInput = () => {
         </DialogHeader>
         <ScrollArea className="h-[500px]">
           <div className="flex flex-col space-y-3 py-4 px-10 ">
-            {/* loop layer map listObejectTable */}
+            {/* loop layer map list Object Table */}
             {layer.map((item: any, index: number) => (
               <div key={index} className="grid grid-cols-5 items-center gap-4">
                 <Input
