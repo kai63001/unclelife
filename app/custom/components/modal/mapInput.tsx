@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { getDatabase } from "@/lib/notionApi";
 import { ArrowLeftRight, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -22,20 +21,24 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { setMapFromLayerWithId } from "@/app/redux/slice/formController.slice";
+import { setMapFromLayerWithId, updateModalMapInputOpen } from "@/app/redux/slice/formController.slice";
 
 const ModalMapInput = () => {
   const [open, setOpen] = useState(false);
   const [listObjectTable, setListObjectTable] = useState<any>({});
   const dispatch = useAppDispatch();
-  const { databaseId, layer, tableOfDatabase } = useAppSelector(
+  const { databaseId, layer, tableOfDatabase,modalMapInputOpen } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
+
+  //useEffect listen modalMapInputOpen
+  useEffect(() => {
+    setOpen(modalMapInputOpen);
+  }, [modalMapInputOpen]);
 
   useEffect(() => {
     if (open) {
@@ -77,15 +80,16 @@ const ModalMapInput = () => {
 
   return (
     <Dialog
-      onOpenChange={() => {
+      onOpenChange={(e) => {
         setOpen(!open);
+        dispatch(updateModalMapInputOpen(e))
       }}
       open={open}
     >
       <DialogTrigger asChild>
         <Button variant="outline" className="h-full px-10 py-3 font-medium">
           <ArrowLeftRight className="h-4 w-4 mr-3" />
-          Map Input
+          Map Fields
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
@@ -99,7 +103,7 @@ const ModalMapInput = () => {
         </DialogHeader>
         <ScrollArea className="h-[500px]">
           <div className="flex flex-col space-y-3 py-4 px-10 ">
-            {/* loop layer map listObejectTable */}
+            {/* loop layer map list Object Table */}
             {layer.map((item: any, index: number) => (
               <div key={index} className="grid grid-cols-5 items-center gap-4">
                 <Input

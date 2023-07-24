@@ -25,8 +25,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/home","/form/create"],
+  matcher: ["/", "/home","/form/create","/form/my"],
 };
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
