@@ -15,6 +15,7 @@ const RichTextRender = ({ data, updateInputForm }: any) => {
         onChange={(e) => updateInputForm(e.target.value, data)}
         name={data.name}
         id={data.name}
+        placeholder={data?.placeholder}
         disabled={data.disable}
         required={data.required}
       />

@@ -15,6 +15,7 @@ const TitleRender = ({ data, type = "text", updateInputForm }: any) => {
         className=""
         onChange={(e) => updateInputForm(e.target.value, data)}
         name={data.name}
+        placeholder={data?.placeholder}
         id={data.name}
         disabled={data.disable}
         required={data.required}

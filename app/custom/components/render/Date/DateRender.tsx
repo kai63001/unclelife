@@ -42,7 +42,7 @@ const DateRender = ({ data, updateInputForm }: any) => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {date ? format(date, "PPP") : <span>{data?.placeholder || 'Pick a date'}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">

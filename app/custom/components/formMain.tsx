@@ -51,6 +51,39 @@ const FormMainBox = ({
         }
     };
 
+    useEffect(() => {
+        if (layer.length === 0) {
+            setDefaultInputFormLayer()
+            return;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [layer])
+
+    const setDefaultInputFormLayer = () => {
+        let defaultLayer = [
+            {
+                id: 1,
+                label: "Subject",
+                name: "Subject",
+                type: "title",
+            },
+            {
+                id: 2,
+                label: "Email",
+                name: "Email",
+                type: "email",
+            },
+            {
+                id: 3,
+                label: "Description",
+                name: "Description",
+                type: "rich_text",
+            }
+        ]
+        dispatch(setLayer(defaultLayer))
+    }
+
+
     const saveDataState = (res: any) => {
         if (res?.error?.message) {
             toast({

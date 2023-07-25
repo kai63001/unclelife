@@ -9,7 +9,6 @@ const notionApi = axios.create({
 
 export const getDatabase = async (id: string) => {
   const response = await notionApi.get(`/api/notion/database?id=${id}`);
-  let data = response.data;
   return response.data;
 };
 
