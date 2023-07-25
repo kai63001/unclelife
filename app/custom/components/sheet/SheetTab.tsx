@@ -85,7 +85,7 @@ const SheetTab = ({id}: any) => {
                                 {['required', 'disable', 'hidden'].map((item, index) => (
                                     <div key={index} className="flex items-center space-x-2">
                                         <Switch
-                                            onCheckedChange={(e) => {
+                                            onCheckedChange={(e:any) => {
                                                 inputOnChange(e, item);
                                             }}
                                             checked={data[item]}
