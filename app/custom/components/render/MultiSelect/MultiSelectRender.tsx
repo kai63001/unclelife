@@ -49,11 +49,6 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
     };
   }, [modalRef]);
 
-  const renderNameOptionWithId = (id: number) => {
-    const option = data.options.find((option: any) => option.id === id);
-    return option ? option.name : "";
-  };
-
   return data.hidden ? (
     <></>
   ) : (
@@ -67,7 +62,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
           ref={buttonRef}
           disabled={data.disable}
           type="button"
-          className="flex h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
+          className="flex min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
           onClick={handleButtonClick}
         >
           {selected.length > 0 ? (
@@ -82,7 +77,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
               ))}
             </div>
           ) : (
-            <div>Select Items</div>
+            <div>{data?.placeholder || 'Select Items'}</div>
           )}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </button>
@@ -93,7 +88,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
           className="origin-top-right z-50 absolute right-0 mt-2 w-full px-1 rounded-md bg-background shadow-lg text-black ring-1 ring-black ring-opacity-5"
         >
           <div className="py-1" role="menu">
-            {data.options.map((option: any, index: any) => (
+            {data?.options?.map((option: any, index: any) => (
               <div
                 key={index}
                 className="px-4 py-1.5 text-sm text-gray-700 rounded-sm hover:bg-input hover:text-gray-900 flex cursor-pointer items-center w-full select-none"

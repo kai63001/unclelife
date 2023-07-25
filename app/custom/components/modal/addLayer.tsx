@@ -1,274 +1,155 @@
-import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
-import { addMoreLayer } from "@/app/redux/slice/formController.slice";
-import { Button } from "@/components/ui/button";
+import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
+import {addMoreLayer} from "@/app/redux/slice/formController.slice";
+import {Button} from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useEffect, useState } from "react";
-import { Plus, Trash } from "lucide-react";
+import {useState} from "react";
+import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash} from "lucide-react";
 
 const ModalAddLayer = () => {
-  const [open, setOpen] = useState(false);
-  const [layer, setLayer] = useState<any>({
-    label: "Title",
-    name: "title",
-    type: "",
-  });
-  const [selectOptionList, setSelectOptionList] = useState<any>([]);
+    const [open, setOpen] = useState(false);
 
-  const handleChangeLayer = (e: any) => {
-    setLayer({
-      ...layer,
-      [e.target.name]: e.target.value,
-    });
-  };
+    const dispatch = useAppDispatch();
+    const {layer}: any = useAppSelector((state) => state.formReducer);
 
-  const dispatch = useAppDispatch();
-  const { tableOfDatabase }: any = useAppSelector((state) => state.formReducer);
-  const typeOfLayerSelection = [
-    {
-      id: "title",
-      name: "Title",
-    },
-    {
-      id: "rich_text",
-      name: "Rich Text",
-    },
-    {
-      id: "number",
-      name: "Number",
-    },
-    {
-      id: "select",
-      name: "Select",
-    },
-    {
-      id: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      id: "status",
-      name: "Status",
-    },
-    {
-      id: "multi_select",
-      name: "Multi Select",
-    },
-    {
-      id: "date",
-      name: "Date",
-    },
-    {
-      id: "phone_number",
-      name: "Phone Number",
-    },
-    {
-      id: "email",
-      name: "Email",
-    },
-    {
-      id: "url",
-      name: "URL",
-    },
-  ];
+    const typeOfLayerSelection = [
+        {
+            name: "Text",
+            icon: <FormInput className="h-10 w-10"/>,
+            type: "title"
+        },
+        {
+            name: "Long",
+            icon: <AlignLeft className="h-10 w-10"/>,
+            type: "rich_text"
+        },
+        {
+            name: "Email",
+            icon: <AtSign className="h-10 w-10"/>,
+            type: "email"
+        },
+        {
+            name: "Number",
+            icon: <Hash className="h-10 w-10"/>,
+            type: "number"
+        },
+        {
+            name: "Select",
+            icon: <ArrowBigDown className="h-10 w-10"/>,
+            type: "select"
+        },
+        {
+            name: "Multi Select",
+            icon: <AlignJustify className="h-10 w-10"/>,
+            type: "multi_select"
+        },
+        {
+            name: "Date",
+            icon: <Calendar className="h-10 w-10"/>,
+            type: "date"
+        },
+        {
+            name: "Checkbox",
+            icon: <CheckSquare className="h-10 w-10"/>,
+            type: "checkbox"
+        }
+    ];
 
-  const saveLayer = () => {
-    let newLayer = layer
-    if (layer.type === "select" || layer.type === "multi_select") {
-      newLayer = {
-        ...layer,
-        options: selectOptionList,
-      };
+    const randomTitleWithType = (type: string) => {
+        let titles: string[] = [];
+        switch(type) {
+            case "title":
+                titles = ["Main Title", "Sub Title", "Article Title", "Header", "Footer"];
+                break;
+            case "rich_text":
+                titles = ["Long Text", "Description", "Detailed Information", "Additional Notes", "Extended Details"];
+                break;
+            case "email":
+                titles = ["Email Address", "Contact Email", "Business Email", "Personal Email", "Alternate Email"];
+                break;
+            case "number":
+                titles = ["Age", "Quantity", "Rank", "Score", "Height", "Weight"];
+                break;
+            case "select":
+                titles = ["Option", "Choice", "Selection", "Pick", "Decision"];
+                break;
+            case "multi_select":
+                titles = ["Multiple Choices", "Selections", "Options", "Preferences", "Picks"];
+                break;
+            case "date":
+                titles = ["Created Date", "Updated Date", "Accessed Date", "Modified Date", "Birth Date"];
+                break;
+            case "checkbox":
+                titles = ["Selection", "Confirmation", "Approval", "Acceptance", "Verification"];
+                break;
+            default:
+                titles = ["Default Title"];
+        }
+        return titles[Math.floor(Math.random() * titles.length)];
     }
-    console.log(newLayer);
-    console.log("saveLayer");
 
-    dispatch(addMoreLayer(newLayer));
-    setOpen(false);
-  };
-
-  // const filterTableFromType = (type: string) => {
-  //   const filter = Object.keys(tableOfDatabase).filter((item) => {
-  //     return tableOfDatabase[item].type === type;
-  //   });
-  //   return filter;
-  // };
-
-  //reset state when open
-  useEffect(() => {
-    if (open) {
-      setLayer({
-        label: "Title",
-        name: "title",
-        type: "",
-      });
-      setSelectOptionList([]);
+    const addLayer = (type: string) => {
+        const labelName = randomTitleWithType(type);
+        const newLayer = {
+            id: layer.length + 1,
+            name: labelName,
+            type: type,
+            label: labelName
+        }
+        dispatch(addMoreLayer(newLayer));
+        //close modal
+        setOpen(false);
     }
-  }, [open]);
 
-  const addSelectOption = () => {
-    setSelectOptionList([...selectOptionList, {
-      name: "",
-      color: "gray",
-    }]);
-  };
-
-  const deleteSelectOption = (index: number) => {
-    console.log(index)
-    const newList = selectOptionList.filter((item:any, i:number) => i !== index);
-    setSelectOptionList(newList);
-  };
-
-  return (
-    <div>
-      <Dialog
-        open={open}
-        onOpenChange={(e) => {
-          setOpen(e);
-        }}
-      >
-        <DialogTrigger asChild>
-          <Button variant="outline">Add Custom Block</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[625px]">
-          <DialogHeader>
-            <DialogTitle>Add Input Form</DialogTitle>
-            <DialogDescription>
-              Develop and Structure Data Collection Fields for a Notion-Based
-              Form
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="label" className="text-right">
-                Label
-              </Label>
-              <Input
-                onChange={(e) => {
-                  handleChangeLayer(e);
+    return (
+        <div>
+            <Dialog
+                open={open}
+                onOpenChange={(e) => {
+                    setOpen(e);
                 }}
-                id="label"
-                name="label"
-                value={
-                  layer.label === "Title" ? "Title" : layer.label || "Title"
-                }
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                onChange={(e) => {
-                  handleChangeLayer(e);
-                }}
-                id="name"
-                name="name"
-                value={layer.name === "title" ? "title" : layer.name || "title"}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="selectionType" className="text-right">
-                Type
-              </Label>
-              <Select
-                onValueChange={(e) => {
-                  setLayer({
-                    ...layer,
-                    type: e,
-                  });
-                }}
-              >
-                <SelectTrigger id="selectionType" className="w-full col-span-3">
-                  <SelectValue placeholder="Select a Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {typeOfLayerSelection.map((item, index) => (
-                      <SelectItem key={index} value={item.id}>
-                        {item.name}
-                      </SelectItem>
-                    ))}
-                    <SelectLabel>Pro Feature</SelectLabel>
-                    <SelectItem disabled={true} value="pineapple">
-                      File
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            {(layer.type === "select" || layer.type === "multi_select") && (
-              <div className="border-t py-3">
-                <Label htmlFor="selectionType" className="text-right mb-2">
-                  Select Options
-                </Label>
-                {/* input and add btn */}
-                <div className="col-span-3 space-y-2">
-                  {selectOptionList.map((item:any, index:any) => (
-                    <div key={index} className="flex gap-4">
-                      <Input
-                        id="options"
-                        name="options"
-                        className="w-full"
-                        placeholder="Add Option"
-                        value={item.name}
-                        onChange={(e:any) => {
-                          const newList = selectOptionList.map((item:any, i:number) => {
-                            if (i === index) {
-                              return {
-                                ...item,
-                                name: e.target.value
-                              }
-                            }
-                            return item;
-                          });
-                          setSelectOptionList(newList);
-                        }}
-                      />
-                      <div>
-                        <Button onClick={()=>deleteSelectOption(index)} variant="secondary">
-                          <Trash className="h-3 w-3" />
-                        </Button>
-                      </div>
+            >
+                <DialogTrigger asChild>
+                    <Button variant="outline">Add Custom Block</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[725px]">
+                    <DialogHeader>
+                        <DialogTitle>Add Input Form</DialogTitle>
+                        <DialogDescription>
+                            Develop and Structure Data Collection Fields for a Notion-Based
+                            Form
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-4 gap-4 py-4">
+                        {
+                            typeOfLayerSelection.map((item: any, index) => (
+                                <div
+                                    key={index}
+                                    className={`border rounded-sm h-32 flex cursor-pointer hover:bg-gray-300`}
+                                    onClick={() => {
+                                        addLayer(item.type)
+                                    }}
+                                >
+                                    <div className={`m-auto`}>
+                                        <div className={`flex justify-center`}>
+                                            {item.icon}
+                                        </div>
+                                        <strong className="block">{item.name}</strong>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
-                  ))}
-                </div>
-                <div className="flex justify-start w-full col-span-4 mt-2">
-                  <Button onClick={addSelectOption} variant="secondary" className="h-8">
-                    <Plus className="h-4 w-4 mr-1" /> Add Option
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-          <DialogFooter>
-            <Button onClick={saveLayer} type="submit">
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
 };
 
 export default ModalAddLayer;
