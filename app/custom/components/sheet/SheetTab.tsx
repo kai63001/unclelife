@@ -9,11 +9,11 @@ import {
 import {Settings, Trash} from "lucide-react";
 import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import {useEffect, useState} from "react";
-import {Checkbox} from "@/components/ui/checkbox";
 import {
     deleteLayerWithId,
     setLayerWithId,
 } from "@/app/redux/slice/formController.slice";
+import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {
     AlertDialog,
@@ -25,7 +25,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Switch } from "@/components/ui/switch"
+import {Switch} from "@/components/ui/switch"
+import {Input} from "@/components/ui/input";
 
 
 const SheetTab = ({id}: any) => {
@@ -77,15 +78,42 @@ const SheetTab = ({id}: any) => {
 
             <SheetContent>
                 <SheetHeader className="h-full">
-                    <SheetTitle>Update {data.name} Setting</SheetTitle>
+                    <SheetTitle>Update {data.name} Field</SheetTitle>
                     <div className="text-primary select-none flex flex-col justify-between h-full">
                         <div>
                             <span className="text-lg font-medium">General</span>
-                            <div className="mt-2 flex flex-col space-y-2">
+                            <div className={"mt-2 flex flex-col space-y-3"}>
+                                <div>
+                                    <Label
+                                        htmlFor={'label'}
+                                    >Helper Text (Label) :</Label>
+                                    <Input
+                                        id={"label"}
+                                        name={"label"}
+                                        value={data.label}
+                                        onChange={(e) => {
+                                            inputOnChange(e.target.value, 'label')
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor={'placeholder'}>Placeholder :</Label>
+                                    <Input
+                                        id={"placeholder"}
+                                        name={"placeholder"}
+                                        value={data.placeholder}
+                                        onChange={(e) => {
+                                            inputOnChange(e.target.value, 'placeholder')
+                                        }}
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="mt-2 grid grid-cols-2 gap-4">
                                 {['required', 'disable', 'hidden'].map((item, index) => (
                                     <div key={index} className="flex items-center space-x-2">
                                         <Switch
-                                            onCheckedChange={(e:any) => {
+                                            onCheckedChange={(e: any) => {
                                                 inputOnChange(e, item);
                                             }}
                                             checked={data[item]}

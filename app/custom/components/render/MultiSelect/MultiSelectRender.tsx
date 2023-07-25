@@ -77,7 +77,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
               ))}
             </div>
           ) : (
-            <div>Select Items</div>
+            <div>{data?.placeholder || 'Select Items'}</div>
           )}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </button>
