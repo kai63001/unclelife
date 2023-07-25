@@ -53,7 +53,6 @@ const FormMainBox = ({
 
     useEffect(() => {
         if (layer.length === 0) {
-            console.log("layer is empty")
             setDefaultInputFormLayer()
             return;
         }
@@ -64,9 +63,21 @@ const FormMainBox = ({
         let defaultLayer = [
             {
                 id: 1,
-                label: "Title",
-                name: "title",
+                label: "Subject",
+                name: "Subject",
                 type: "title",
+            },
+            {
+                id: 2,
+                label: "Email",
+                name: "Email",
+                type: "email",
+            },
+            {
+                id: 3,
+                label: "Description",
+                name: "Description",
+                type: "rich_text",
             }
         ]
         dispatch(setLayer(defaultLayer))
