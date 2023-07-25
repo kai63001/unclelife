@@ -25,6 +25,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Switch } from "@/components/ui/switch"
+
 
 const SheetTab = ({id}: any) => {
     const dispatch = useAppDispatch();
@@ -80,51 +82,23 @@ const SheetTab = ({id}: any) => {
                         <div>
                             <span className="text-lg font-medium">General</span>
                             <div className="mt-2 flex flex-col space-y-2">
-                                <div className="flex items-center space-x-2">
-                                    <Checkbox
-                                        onCheckedChange={(e) => {
-                                            inputOnChange(e, "required");
-                                        }}
-                                        checked={data.required}
-                                        id="required"
-                                    />
-                                    <label
-                                        htmlFor="required"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Required
-                                    </label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <Checkbox
-                                        onCheckedChange={(e) => {
-                                            inputOnChange(e, "disable");
-                                        }}
-                                        checked={data.disable}
-                                        id="disable"
-                                    />
-                                    <label
-                                        htmlFor="disable"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Disable
-                                    </label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <Checkbox
-                                        onCheckedChange={(e) => {
-                                            inputOnChange(e, "hidden");
-                                        }}
-                                        checked={data.hidden}
-                                        id="hidden"
-                                    />
-                                    <label
-                                        htmlFor="hidden"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Hidden
-                                    </label>
-                                </div>
+                                {['required', 'disable', 'hidden'].map((item, index) => (
+                                    <div key={index} className="flex items-center space-x-2">
+                                        <Switch
+                                            onCheckedChange={(e) => {
+                                                inputOnChange(e, item);
+                                            }}
+                                            checked={data[item]}
+                                            id={item}
+                                        />
+                                        <label
+                                            htmlFor={item}
+                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
+                                        >
+                                            {item}
+                                        </label>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
