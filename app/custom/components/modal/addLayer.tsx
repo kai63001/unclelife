@@ -9,8 +9,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
-import { FormInput, ArrowBigDown, AlignJustify, Calendar, CheckSquare, Hash, AlignLeft, AtSign } from "lucide-react";
+import {useState} from "react";
+import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash} from "lucide-react";
 
 const ModalAddLayer = () => {
     const [open, setOpen] = useState(false);
@@ -22,12 +22,12 @@ const ModalAddLayer = () => {
         {
             name: "Text",
             icon: <FormInput className="h-10 w-10"/>,
-            type: "text"
+            type: "title"
         },
         {
             name: "Long",
             icon: <AlignLeft className="h-10 w-10"/>,
-            type: "long"
+            type: "rich_text"
         },
         {
             name: "Email",
@@ -52,38 +52,55 @@ const ModalAddLayer = () => {
         {
             name: "Date",
             icon: <Calendar className="h-10 w-10"/>,
+            type: "date"
         },
         {
             name: "Checkbox",
             icon: <CheckSquare className="h-10 w-10"/>,
+            type: "checkbox"
         }
     ];
 
     const randomTitleWithType = (type: string) => {
-        switch (type) {
-            case "text":
-                return "Text";
-            case "long":
-                return "Long Text";
+        let titles: string[] = [];
+        switch(type) {
+            case "title":
+                titles = ["Main Title", "Sub Title", "Article Title", "Header", "Footer"];
+                break;
+            case "rich_text":
+                titles = ["Long Text", "Description", "Detailed Information", "Additional Notes", "Extended Details"];
+                break;
             case "email":
-                return "Email";
+                titles = ["Email Address", "Contact Email", "Business Email", "Personal Email", "Alternate Email"];
+                break;
             case "number":
-                return "Number";
+                titles = ["Age", "Quantity", "Rank", "Score", "Height", "Weight"];
+                break;
             case "select":
-                return "Select";
+                titles = ["Option", "Choice", "Selection", "Pick", "Decision"];
+                break;
             case "multi_select":
-                return "Multi Select";
+                titles = ["Multiple Choices", "Selections", "Options", "Preferences", "Picks"];
+                break;
+            case "date":
+                titles = ["Created Date", "Updated Date", "Accessed Date", "Modified Date", "Birth Date"];
+                break;
+            case "checkbox":
+                titles = ["Selection", "Confirmation", "Approval", "Acceptance", "Verification"];
+                break;
             default:
-                return "Text";
+                titles = ["Default Title"];
         }
+        return titles[Math.floor(Math.random() * titles.length)];
     }
 
     const addLayer = (type: string) => {
+        const labelName = randomTitleWithType(type);
         const newLayer = {
             id: layer.length + 1,
-            name: "New Layer",
+            name: labelName,
             type: type,
-            label: randomTitleWithType(type)
+            label: labelName
         }
         dispatch(addMoreLayer(newLayer));
         //close modal

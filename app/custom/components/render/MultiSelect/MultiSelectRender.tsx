@@ -49,11 +49,6 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
     };
   }, [modalRef]);
 
-  const renderNameOptionWithId = (id: number) => {
-    const option = data.options.find((option: any) => option.id === id);
-    return option ? option.name : "";
-  };
-
   return data.hidden ? (
     <></>
   ) : (
@@ -67,7 +62,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
           ref={buttonRef}
           disabled={data.disable}
           type="button"
-          className="flex h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
+          className="flex min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
           onClick={handleButtonClick}
         >
           {selected.length > 0 ? (
