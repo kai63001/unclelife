@@ -9,44 +9,45 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import {useEffect, useState} from "react";
-import {FormInput, ArrowBigDown, AlignJustify, Calendar, CheckSquare, Hash, AlignLeft,AtSign} from "lucide-react";
+import { useState } from "react";
+import { FormInput, ArrowBigDown, AlignJustify, Calendar, CheckSquare, Hash, AlignLeft, AtSign } from "lucide-react";
 
 const ModalAddLayer = () => {
     const [open, setOpen] = useState(false);
-    const [layer, setLayer] = useState<any>({
-        label: "Title",
-        name: "title",
-        type: "",
-    });
-    const [selectOptionList, setSelectOptionList] = useState<any>([]);
 
     const dispatch = useAppDispatch();
-    const {tableOfDatabase}: any = useAppSelector((state) => state.formReducer);
+    const {layer}: any = useAppSelector((state) => state.formReducer);
+
     const typeOfLayerSelection = [
         {
             name: "Text",
             icon: <FormInput className="h-10 w-10"/>,
+            type: "text"
         },
         {
             name: "Long",
             icon: <AlignLeft className="h-10 w-10"/>,
+            type: "long"
         },
         {
             name: "Email",
             icon: <AtSign className="h-10 w-10"/>,
+            type: "email"
         },
         {
             name: "Number",
             icon: <Hash className="h-10 w-10"/>,
+            type: "number"
         },
         {
             name: "Select",
             icon: <ArrowBigDown className="h-10 w-10"/>,
+            type: "select"
         },
         {
             name: "Multi Select",
             icon: <AlignJustify className="h-10 w-10"/>,
+            type: "multi_select"
         },
         {
             name: "Date",
@@ -58,52 +59,36 @@ const ModalAddLayer = () => {
         }
     ];
 
-    const saveLayer = () => {
-        let newLayer = layer
-        if (layer.type === "select" || layer.type === "multi_select") {
-            newLayer = {
-                ...layer,
-                options: selectOptionList,
-            };
+    const randomTitleWithType = (type: string) => {
+        switch (type) {
+            case "text":
+                return "Text";
+            case "long":
+                return "Long Text";
+            case "email":
+                return "Email";
+            case "number":
+                return "Number";
+            case "select":
+                return "Select";
+            case "multi_select":
+                return "Multi Select";
+            default:
+                return "Text";
         }
-        console.log(newLayer);
-        console.log("saveLayer");
+    }
 
+    const addLayer = (type: string) => {
+        const newLayer = {
+            id: layer.length + 1,
+            name: "New Layer",
+            type: type,
+            label: randomTitleWithType(type)
+        }
         dispatch(addMoreLayer(newLayer));
+        //close modal
         setOpen(false);
-    };
-
-    // const filterTableFromType = (type: string) => {
-    //   const filter = Object.keys(tableOfDatabase).filter((item) => {
-    //     return tableOfDatabase[item].type === type;
-    //   });
-    //   return filter;
-    // };
-
-    //reset state when open
-    useEffect(() => {
-        if (open) {
-            setLayer({
-                label: "Title",
-                name: "title",
-                type: "",
-            });
-            setSelectOptionList([]);
-        }
-    }, [open]);
-
-    // const addSelectOption = () => {
-    //   setSelectOptionList([...selectOptionList, {
-    //     name: "",
-    //     color: "gray",
-    //   }]);
-    // };
-    //
-    // const deleteSelectOption = (index: number) => {
-    //   console.log(index)
-    //   const newList = selectOptionList.filter((item:any, i:number) => i !== index);
-    //   setSelectOptionList(newList);
-    // };
+    }
 
     return (
         <div>
@@ -126,15 +111,12 @@ const ModalAddLayer = () => {
                     </DialogHeader>
                     <div className="grid grid-cols-4 gap-4 py-4">
                         {
-                            typeOfLayerSelection.map((item, index) => (
+                            typeOfLayerSelection.map((item: any, index) => (
                                 <div
                                     key={index}
-                                    className={`border rounded-sm h-24 flex cursor-pointer hover:bg-gray-300`}
+                                    className={`border rounded-sm h-32 flex cursor-pointer hover:bg-gray-300`}
                                     onClick={() => {
-                                        setLayer({
-                                            ...layer,
-                                            type: item.name,
-                                        });
+                                        addLayer(item.type)
                                     }}
                                 >
                                     <div className={`m-auto`}>

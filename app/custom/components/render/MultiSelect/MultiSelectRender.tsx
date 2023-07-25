@@ -93,7 +93,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
           className="origin-top-right z-50 absolute right-0 mt-2 w-full px-1 rounded-md bg-background shadow-lg text-black ring-1 ring-black ring-opacity-5"
         >
           <div className="py-1" role="menu">
-            {data.options.map((option: any, index: any) => (
+            {data?.options?.map((option: any, index: any) => (
               <div
                 key={index}
                 className="px-4 py-1.5 text-sm text-gray-700 rounded-sm hover:bg-input hover:text-gray-900 flex cursor-pointer items-center w-full select-none"

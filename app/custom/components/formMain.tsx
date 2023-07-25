@@ -51,6 +51,28 @@ const FormMainBox = ({
         }
     };
 
+    useEffect(() => {
+        if (layer.length === 0) {
+            console.log("layer is empty")
+            setDefaultInputFormLayer()
+            return;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [layer])
+
+    const setDefaultInputFormLayer = () => {
+        let defaultLayer = [
+            {
+                id: 1,
+                label: "Title",
+                name: "title",
+                type: "title",
+            }
+        ]
+        dispatch(setLayer(defaultLayer))
+    }
+
+
     const saveDataState = (res: any) => {
         if (res?.error?.message) {
             toast({
