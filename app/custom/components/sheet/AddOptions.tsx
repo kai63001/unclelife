@@ -1,8 +1,9 @@
 "use client"
-import {Plus} from "lucide-react";
+import {Plus,Trash} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {useAppDispatch} from "@/app/redux/hook";
 import {setLayerWithId} from "@/app/redux/slice/formController.slice";
+import {useCallback} from "react";
 
 const AddOptions = ({
                         data
@@ -11,29 +12,28 @@ const AddOptions = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const addOption = () => {
-        console.log('add option');
+    const addOption = useCallback(() => {
+        console.log("add option");
         const newOption = {
             name: `Option ${data?.options?.length + 1 || 1}`,
-            color: 'gray'
-        }
-        const listOptions: any = []
+            color: "gray"
+        };
+        const listOptions: any = [];
         data?.options?.map((item: any) => {
-            listOptions.push(item)
-        })
-        listOptions.push(newOption)
+            listOptions.push(item);
+        });
+        listOptions.push(newOption);
         const newData = {
             ...data,
-            ['options']: listOptions
-        }
-        console.log('newData :', newData)
+            ["options"]: listOptions
+        };
         dispatch(setLayerWithId({
             id: data?.id,
             value: {
                 ...newData
             }
-        }))
-    }
+        }));
+    }, [data, dispatch]);
 
     const updateNameWithId = (e: any, index: number) => {
         const listOptions: any = []
@@ -51,7 +51,25 @@ const AddOptions = ({
             ...data,
             ['options']: listOptions
         }
-        console.log('newData :', newData)
+        dispatch(setLayerWithId({
+            id: data?.id,
+            value: {
+                ...newData
+            }
+        }))
+    }
+
+    const removeOptionById = (index: number) => {
+        const listOptions: any = []
+        data?.options?.map((item: any, i: number) => {
+            if (i !== index) {
+                listOptions.push(item)
+            }
+        })
+        const newData = {
+            ...data,
+            ['options']: listOptions
+        }
         dispatch(setLayerWithId({
             id: data?.id,
             value: {
@@ -67,7 +85,7 @@ const AddOptions = ({
             <div className={'mt-2 flex flex-col space-y-2'}>
                 {/* List Options */}
                 {data?.options?.map((item: any, index: number) => (
-                    <div key={index}>
+                    <div key={index} className={'flex space-x-2'}>
                         <Input
                             key={index}
                             onChange={(e) => {
@@ -77,6 +95,7 @@ const AddOptions = ({
                             value={
                                 item?.name
                             }/>
+                        <button onClick={()=>removeOptionById(index)} className={'bg-gray-100 px-3 rounded-md'}><Trash className={'w-4 h-4'}/></button>
                     </div>
                 ))}
                 <button
