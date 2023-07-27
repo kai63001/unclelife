@@ -21,6 +21,11 @@ const RenderMyForm = async () => {
         console.log(error)
     }
 
+    const renderDate = async (date: any) => {
+        const newDate = new Date(date)
+        return dayjs().to(newDate)
+    }
+
     return (
         <div className={`grid grid-cols-4 gap-4`}>
             {data?.map((form: any, index: number) => (
@@ -28,7 +33,7 @@ const RenderMyForm = async () => {
                     <Card>
                         <CardHeader>
                             <CardTitle>{form?.detail?.title || 'Form'}</CardTitle>
-                            <CardDescription>{dayjs().fromNow(form.created_at)}</CardDescription>
+                            <CardDescription>{renderDate(form?.created_at)}</CardDescription>
                         </CardHeader>
                     </Card>
                 </Link>

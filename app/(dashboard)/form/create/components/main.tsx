@@ -54,7 +54,7 @@ const CreateFormMainPage = () => {
                         <Database className="h-20 w-20 mx-auto"/>
                     </CardContent>
                     <CardHeader className="text-center">
-                        <CardTitle>I {`don't`} have a Notion database</CardTitle>
+                        <CardTitle>Create a Notion database</CardTitle>
                         <CardDescription>
                             The form will be create database.
                         </CardDescription>
