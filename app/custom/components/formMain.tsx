@@ -289,11 +289,14 @@ const FormMainBox = ({
                                 />
                             );
                         })}
-                        <div className="mt-3">
+                        <div className="mt-3 flex" style={{
+                            justifyContent: dataForm?.button?.position
+                        }}>
                             <Button
                                 disabled={loading}
                                 style={{
                                     backgroundColor: dataForm?.button?.color,
+                                //     position
                                 }}
                                 className="px-10"
                             >
