@@ -28,7 +28,7 @@ const DateRender = ({ data, updateInputForm }: any) => {
     <></>
   ) : (
     <div>
-      <Label htmlFor={data.name} className="">
+      <Label htmlFor={data.label} className="">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>

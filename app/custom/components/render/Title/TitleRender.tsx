@@ -7,16 +7,16 @@ const TitleRender = ({ data, type = "text", updateInputForm }: any) => {
     <></>
   ) : (
     <div>
-      <Label htmlFor={data.name} className="">
+      <Label htmlFor={data.label} className="">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
       <Input
         className=""
         onChange={(e) => updateInputForm(e.target.value, data)}
-        name={data.name}
+        name={data.label}
         placeholder={data?.placeholder}
-        id={data.name}
+        id={data.label}
         disabled={data.disable}
         required={data.required}
         type={type}

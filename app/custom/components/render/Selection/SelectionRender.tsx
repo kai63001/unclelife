@@ -14,16 +14,16 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
     <></>
   ) : (
     <div className="">
-      <Label htmlFor={data.name} className="">
+      <Label htmlFor={data.label} className="">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
-      <Select name={data.name} onValueChange={(e)=>{
+      <Select name={data.label} onValueChange={(e)=>{
         updateInputForm(e, data)
       }} required={data.required}>
         <SelectTrigger
-          id={data.name}
-          name={data.name}
+          id={data.label}
+          name={data.label}
           disabled={data.disable}
           className="w-full"
         >

@@ -53,7 +53,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
     <></>
   ) : (
     <div className="relative inline-block text-left w-full">
-      <Label htmlFor={data.name} className="">
+      <Label htmlFor={data.label} className="">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
