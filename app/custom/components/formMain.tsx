@@ -283,7 +283,7 @@ const FormMainBox = ({
     }
 
     const hexToRgb = (hex: string) => {
-        if (hex.length === 4) {
+        if (hex?.length === 4) {
             hex = "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
         }
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
