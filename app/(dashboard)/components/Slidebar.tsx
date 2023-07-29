@@ -10,7 +10,7 @@ const Slidebars = async () => {
         <div className="text-black h-screen w-64 flex flex-col border-r">
             <div className="p-4">
                 <Link href="/">
-                    <p className="text-2xl font-bold">UncleLife
+                    <p className="text-2xl font-bold text-primary">UncleLife
                         <span className={'text-xs ml-2'}>BETA</span>
                     </p>
                 </Link>

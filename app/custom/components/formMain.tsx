@@ -267,6 +267,37 @@ const FormMainBox = ({
             });
     };
 
+    //calculate color if color is dark change text color to white
+    const calculateColor = (color: string) => {
+        const rgb: any = hexToRgb(color);
+        if (rgb) {
+            const o = Math.round(
+                (parseInt(rgb.r) * 299 +
+                    parseInt(rgb.g) * 587 +
+                    parseInt(rgb.b) * 114) /
+                1000
+            );
+            return o > 125 ? "black" : "white";
+        }
+        return "black";
+    }
+
+    const hexToRgb = (hex: string) => {
+        if (hex.length === 4) {
+            hex = "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+        }
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+        return result
+            ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16),
+            }
+            : null;
+    }
+
+
     return (
         <>
             {successSubmit ? (
@@ -296,7 +327,8 @@ const FormMainBox = ({
                                 disabled={loading}
                                 style={{
                                     backgroundColor: dataForm?.button?.color,
-                                //     position
+                                    color: calculateColor(dataForm?.button?.color),
+                                    //     position
                                 }}
                                 className="px-10"
                             >

@@ -19,12 +19,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ArrowLeftRight } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const ButtonSaveCustomForm = ({ session }: any) => {
   const { toast } = useToast();
@@ -127,16 +121,12 @@ const ButtonSaveCustomForm = ({ session }: any) => {
     });
   };
 
-  const checkHasMoreThanOneMap = () => {
-    const inputForm = layer.filter((item: any) => item.mapTo);
-    return !(inputForm.length >= 1);
-  };
   return (
     <>
       <Button
         onClick={checkAllInputIsMaped}
         disabled={loading}
-        className="h-full px-10 py-3 font-medium"
+        className="h-full px-10 py-3 font-medium bg-background text-primary hover:bg-secondary-hover hover:text-primary-hover rounded-md"
       >
         {loading && <Icons.spinner className="animate-spin mr-2 h-5 w-5" />}
         SAVE

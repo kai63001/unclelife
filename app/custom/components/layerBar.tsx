@@ -66,7 +66,7 @@ const LayerBar = () => {
 
     return (
         <div className="text-[#3d3d3d] h-screen w-96 fixed right-0 pb-5 pt-20 pr-5">
-            <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-white">
+            <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-background text-primary">
                 <div className="flex items-center justify-between">
                     <b className="mt-5 mb-5 uppercase">Structure</b>
                     <ModalAddLayer/>

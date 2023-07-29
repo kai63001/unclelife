@@ -26,7 +26,7 @@ const ToolsBar = () => {
 
     return (
         <div className="text-[#3d3d3d] h-screen w-96 fixed left-0 pb-5 pt-20 pl-5 z-40">
-            <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-white">
+            <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-background text-primary">
                 <b className="mt-5 mb-5">INFORMATION</b>
                 <div className="mb-3">
                     <div className="text-xs font-bold">
@@ -34,7 +34,7 @@ const ToolsBar = () => {
                     </div>
                     <Input
                         placeholder="Contact Form"
-                        className="focus:outline-none focus-visible:ring-0 text-black"
+                        className="focus:outline-none focus-visible:ring-0 text-primary"
                         onChange={(e) => onChangeHook(e.target.value, "title")}
                         value={form.title}
                     />
@@ -45,7 +45,7 @@ const ToolsBar = () => {
                         onChange={(e) => {
                             onChangeHook(e.target.value, "description");
                         }}
-                        className="focus:outline-none focus-visible:ring-0 bg-white text-black"
+                        className="focus:outline-none focus-visible:ring-0"
                     />
                 </div>
                 <Accordion type="single" collapsible className="w-full">
@@ -58,7 +58,7 @@ const ToolsBar = () => {
                                 </div>
                                 <Input
                                     placeholder="Submit"
-                                    className="focus:outline-none focus-visible:ring-0 text-black"
+                                    className="focus:outline-none focus-visible:ring-0 text-primary"
                                     onChange={(e) =>
                                         onChangeHook(
                                             {
