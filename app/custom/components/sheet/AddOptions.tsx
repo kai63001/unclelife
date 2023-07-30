@@ -95,7 +95,7 @@ const AddOptions = ({
                             value={
                                 item?.name
                             }/>
-                        <button onClick={()=>removeOptionById(index)} className={'bg-gray-100 px-3 rounded-md'}><Trash className={'w-4 h-4'}/></button>
+                        <button onClick={()=>removeOptionById(index)} className={'bg-secondary px-3 rounded-md'}><Trash className={'w-4 h-4 '}/></button>
                     </div>
                 ))}
                 <button

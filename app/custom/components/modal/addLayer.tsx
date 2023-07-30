@@ -131,7 +131,7 @@ const ModalAddLayer = () => {
                             typeOfLayerSelection.map((item: any, index) => (
                                 <div
                                     key={index}
-                                    className={`border rounded-sm h-32 flex cursor-pointer hover:bg-gray-300`}
+                                    className={`border rounded-sm h-32 flex cursor-pointer hover:bg-primary hover:text-secondary`}
                                     onClick={() => {
                                         addLayer(item.type)
                                     }}

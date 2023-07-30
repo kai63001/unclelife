@@ -85,13 +85,13 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
       {open && (
         <div
           ref={modalRef}
-          className="origin-top-right z-50 absolute right-0 mt-2 w-full px-1 rounded-md bg-background shadow-lg text-black ring-1 ring-black ring-opacity-5"
+          className="origin-top-right z-50 absolute right-0 mt-2 w-full px-1 rounded-md bg-background shadow-lg text-black ring-1 ring-black ring-opacity-5 border"
         >
           <div className="py-1" role="menu">
             {data?.options?.map((option: any, index: any) => (
               <div
                 key={index}
-                className="px-4 py-1.5 text-sm text-gray-700 rounded-sm hover:bg-input hover:text-gray-900 flex cursor-pointer items-center w-full select-none"
+                className="px-4 py-1.5 text-sm text-primary rounded-sm hover:bg-input hover:text-primary flex cursor-pointer items-center w-full select-none bor-d"
                 role="menuitem"
                 onClick={() => handleSelectChange(option.name)}
               >
