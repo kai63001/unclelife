@@ -18,9 +18,9 @@ const OpenFormBtn = () => {
       </Button>
     </Link>
   ) : (
-    <div className="bg-background text-gray-600 px-5 py-3 rounded-md shadow-me font-medium cursor-not-allowed flex items-center">
+    <Button className="bg-background px-5 py-3 rounded-md shadow-me font-medium flex items-center h-12 border-0 text-md" disabled variant={'outline'}>
       <FileSymlink className="mr-2 h-4 w-4" /> Open Form
-    </div>
+    </Button>
   );
 };
 
