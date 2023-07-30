@@ -10,14 +10,14 @@ const CheckBoxRender = ({ data, updateInputForm }: any) => {
       <Checkbox
         disabled={data.disable}
         required={data.required}
-        id={data.name}
+        id={data.label}
         onCheckedChange={(e) => {
           updateInputForm(e, data);
         }}
         className="mr-1 select-none"
       />
       <Label
-        htmlFor={data.name}
+        htmlFor={data.label}
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {data.label}

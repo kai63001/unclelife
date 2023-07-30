@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { LogOut, Settings } from "lucide-react";
+import Link from "next/link"
+import {ModeToggle} from "@/components/ModeToggle";
 
 const ProfileBar = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -13,7 +15,7 @@ const ProfileBar = async () => {
   } = await supabase.auth.getSession();
 
   const removeMail = (email: string) => {
-    const [name, domain] = email.split("@");
+    const [name, _domain] = email.split("@");
     return name;
   };
 
@@ -31,10 +33,16 @@ const ProfileBar = async () => {
           </p>
         </div>
       </div>
+
       <div className="mt-5 flex">
-        <Button className="w-full mr-2" variant={"outline"}>
-          <Settings className="w-4 h-4" />
-        </Button>
+        <div className={'w-2/6 mr-2'}>
+          <ModeToggle/>
+        </div>
+        <Link href={"/setting"} className="w-full mr-2">
+          <Button className={'w-full '} variant={"outline"} >
+            <Settings className="w-4 h-4" />
+          </Button>
+        </Link>
         <form action="/auth/signout" method="post">
           <Button className="w-full">
             <LogOut className="w-4 h-4" />

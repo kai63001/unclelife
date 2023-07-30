@@ -55,7 +55,7 @@ const ListSideBar = () => {
         <div className="flex-grow p-4">
             {pathList.map((group) => (
                 <div key={group.group} className="mb-5">
-                    <span className="font-bold text-xs">{group.group}</span>
+                    <span className="font-bold text-xs text-primary">{group.group}</span>
                     <ul className="space-y-2 mt-2">
                         {group.items.map((item) => (
                             <li key={item.path}>
@@ -63,8 +63,8 @@ const ListSideBar = () => {
                                     href={item.path}
                                     className={`${
                                         pathname === item.path
-                                            ? "bg-primary text-white"
-                                            : "hover:bg-primary hover:text-white duration-300"
+                                            ? "bg-primary text-secondary"
+                                            : "hover:bg-primary hover:text-secondary text-primary duration-300"
                                     } rounded-sm py-2 flex items-center space-x-2 px-3`}
                                 >
                                     {item.icon}

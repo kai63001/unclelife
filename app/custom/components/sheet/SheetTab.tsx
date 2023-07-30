@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {Switch} from "@/components/ui/switch"
 import {Input} from "@/components/ui/input";
+import AddOptions from "@/app/custom/components/sheet/AddOptions";
 
 
 const SheetTab = ({id}: any) => {
@@ -66,6 +67,17 @@ const SheetTab = ({id}: any) => {
             })
         );
     };
+
+    const checkThisTypeIsOption = () => {
+        switch (data.type) {
+            case 'select':
+                return true;
+            case 'multi_select':
+                return true;
+            default:
+                return false;
+        }
+    }
 
     return (
         <Sheet>
@@ -128,6 +140,13 @@ const SheetTab = ({id}: any) => {
                                     </div>
                                 ))}
                             </div>
+                            {
+                                checkThisTypeIsOption() && (
+                                    <div className={"mt-2"}>
+                                        <AddOptions data={data}/>
+                                    </div>
+                                )
+                            }
                         </div>
 
                         {/*Delete*/}

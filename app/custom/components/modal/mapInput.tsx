@@ -66,7 +66,12 @@ const ModalMapInput = () => {
     };
 
     const renderSelection = () => {
-        const list = Object.keys(listObjectTable);
+        let list = Object.keys(listObjectTable);
+        //filter list
+        list = list.filter((item: any) => {
+            return listObjectTable[item].type !== "relation" && listObjectTable[item].type !== "created_time" && listObjectTable[item].type !== "people"
+        })
+
         return list.reverse().map((item: any, index: number) => (
             <SelectItem key={index} value={item}>
                 {listObjectTable[item].name} ({listObjectTable[item].type})
@@ -79,6 +84,19 @@ const ModalMapInput = () => {
         const type = listObjectTable[e].type;
         dispatch(setMapFromLayerWithId({id, mapTo: e, mapType: type}));
     };
+
+    const filterRenderLabel = (type:string) =>{
+        switch (type) {
+            case "title":
+                return "Text"
+            case "rich_text":
+                return "Long"
+            default:
+                //capitalize first letter
+                return (type.charAt(0).toUpperCase() + type.slice(1)).replaceAll('_',' ');
+        }
+
+    }
 
     return (
         <Dialog
@@ -111,7 +129,7 @@ const ModalMapInput = () => {
                                 <Input
                                     className="w-full col-span-2"
                                     disabled
-                                    value={`${item.label} (${item.type})`}
+                                    value={`${item.label} (${filterRenderLabel(item.type)})`}
                                 />
                                 <div className="flex justify-center">
                                     <ArrowRight className="h-4 w-10"/>

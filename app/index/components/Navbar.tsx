@@ -4,6 +4,7 @@ import { LogIn } from "lucide-react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Database } from "@/lib/types_db";
+import {ModeToggle} from "@/components/ModeToggle";
 
 const IndexNavbar = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -43,6 +44,9 @@ const IndexNavbar = async () => {
               </Link>
             </>
           )}
+          <li>
+            <ModeToggle/>
+          </li>
         </ul>
       </nav>
     </div>

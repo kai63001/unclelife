@@ -7,14 +7,14 @@ const RichTextRender = ({ data, updateInputForm }: any) => {
     <></>
   ) : (
     <div>
-      <Label htmlFor={data.name} className="">
+      <Label htmlFor={data.label} className="">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
       <Textarea
         onChange={(e) => updateInputForm(e.target.value, data)}
-        name={data.name}
-        id={data.name}
+        name={data.label}
+        id={data.label}
         placeholder={data?.placeholder}
         disabled={data.disable}
         required={data.required}
