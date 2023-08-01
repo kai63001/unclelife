@@ -13,6 +13,7 @@ import {useState} from "react";
 import FormInNotion from "@/app/custom/components/button/embed/FormInNotion";
 import {useAppSelector} from "@/app/redux/hook";
 import FormInWebsite from "@/app/custom/components/button/embed/FormInWebsite";
+import FormInQRCode from "@/app/custom/components/button/embed/FormInQrCode";
 
 
 const ButtonEmbed = () => {
@@ -25,6 +26,8 @@ const ButtonEmbed = () => {
                 return <FormInNotion/>
             case 'formInWebsite':
                 return <FormInWebsite/>
+            case 'formInQRCode':
+                return <FormInQRCode/>
             default:
                 return <>
                     <DialogHeader>
@@ -42,7 +45,9 @@ const ButtonEmbed = () => {
                              className={'border rounded-md px-4 py-2 cursor-pointer hover:bg-secondary'}>
                             Embed Form in Website
                         </div>
-                        <div className={'border rounded-md px-4 py-2 cursor-pointer hover:bg-secondary'}>
+                        <div
+                            onClick={() => setSelection('formInQRCode')}
+                            className={'border rounded-md px-4 py-2 cursor-pointer hover:bg-secondary'}>
                             QR Code
                         </div>
                     </div>
