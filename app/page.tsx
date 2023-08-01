@@ -10,7 +10,6 @@ export default function Home() {
       <header>
         <IndexNavbar />
       </header>
-      {/* image heic */}
       <section className="max-w-2xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
         <h1 className="text-center text-5xl font-extrabold mt-28">
           Level up your Notion docs with Forms and Widgets
