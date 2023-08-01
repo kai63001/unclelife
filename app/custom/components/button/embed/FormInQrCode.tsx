@@ -19,7 +19,7 @@ const FormInQRCode = () => {
             </DialogHeader>
             <div className={'flex justify-center border py-5 rounded-md'}>
                 <Canvas
-                    text={'https://github.com/bunlong/next-qrcode'}
+                    text={`${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${infomation.id}`}
                     options={{
                         level: 'M',
                         margin: 2,
