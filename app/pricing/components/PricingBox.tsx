@@ -4,6 +4,7 @@ import {useState} from "react";
 import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button";
 import {Check} from "lucide-react";
+import Link from "next/link"
 
 const PricingBox = () => {
     const [yearly, setYearly] = useState(true)
@@ -42,7 +43,7 @@ const PricingBox = () => {
         },
         enterprise: {
             monthly: 16.99,
-            yearly: 14.99
+            yearly: 12.99
         }
     }
     return (
@@ -50,7 +51,7 @@ const PricingBox = () => {
             <div className={'flex justify-center space-x-3 my-10'}>
                 <span className={'font-bold'}>Monthly</span>
                 <span className={''}><Switch checked={yearly} onCheckedChange={(e) => setYearly(e)} id="airplane-mode"/></span>
-                <span className={'font-bold'}>Yearly <Badge variant="destructive">-12%</Badge></span>
+                <span className={'font-bold'}>Yearly <Badge variant="destructive">~ 25%</Badge></span>
             </div>
             <div className={'flex items-center'}>
                 <div className={'flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative'}>
@@ -68,9 +69,11 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button className={'w-full'}>
-                            Try Now
-                        </Button>
+                        <Link href={'/home'} className={'w-full'}>
+                            <Button className={'w-full'}>
+                                Try Now
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <div className={'flex-1 border h-[500px] rounded-md shadow-lg bg-primary text-secondary p-5 relative'}>
@@ -80,7 +83,8 @@ const PricingBox = () => {
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         <div>
                             <span className={'text-3xl font-bold'}>$</span>
-                            <span className={'text-3xl font-bold'}>{yearly ?priceMonthlyAndYearly.pro.yearly:priceMonthlyAndYearly.pro.monthly}</span>
+                            <span
+                                className={'text-3xl font-bold'}>{yearly ? priceMonthlyAndYearly.pro.yearly : priceMonthlyAndYearly.pro.monthly}</span>
                             <span className={'text-lg font-bold'}>/mo</span>
                         </div>
                     </h3>
@@ -104,7 +108,8 @@ const PricingBox = () => {
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         <div>
                             <span className={'text-3xl font-bold'}>$</span>
-                            <span className={'text-3xl font-bold'}>{yearly ?priceMonthlyAndYearly.enterprise.yearly:priceMonthlyAndYearly.enterprise.monthly}</span>
+                            <span
+                                className={'text-3xl font-bold'}>{yearly ? priceMonthlyAndYearly.enterprise.yearly : priceMonthlyAndYearly.enterprise.monthly}</span>
                             <span className={'text-lg font-bold'}>/mo</span>
                         </div>
                     </h3>
@@ -117,9 +122,12 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button className={'w-full'}>Start Trial</Button>
+                        <Button disabled={true} className={'w-full'}>Start Trial</Button>
                     </div>
                 </div>
+            </div>
+            <div className={'flex justify-center'}>
+                <p className={'text-center text-md text-gray-500 my-5'}>All plans include a 14-day free trial. Cancel anytime</p>
             </div>
         </>
     )
