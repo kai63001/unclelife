@@ -102,9 +102,8 @@ const PricingBox = () => {
 
                 </div>
                 <div className={'flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative'}>
-                    <h2 className={'text-3xl font-bold'}>Enterprise</h2>
-                    <p className={'my-2'}>Collaborate, and connect multiple
-                        workspaces.</p>
+                    <h2 className={'text-3xl font-bold'}>Advanced</h2>
+                    <p className={'my-2'}>Unlock advanced tools for exquisite form creation.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         <div>
                             <span className={'text-3xl font-bold'}>$</span>
