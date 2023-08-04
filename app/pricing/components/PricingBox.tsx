@@ -7,12 +7,13 @@ import {Check} from "lucide-react";
 import Link from "next/link"
 import axios from "axios";
 import {Skeleton} from "@/components/ui/skeleton";
-// @ts-ignore
 import {loadStripe} from "@stripe/stripe-js";
-import {ca} from "date-fns/locale";
 import {Icons} from "@/components/Icons";
+import {useSupabase} from "@/app/hook/supabase-provider";
 
 const PricingBox = () => {
+    const {user, isLoading} = useSupabase()
+    console.log("user", user, isLoading)
     const [yearly, setYearly] = useState(true)
     const [loading, setLoading] = useState(false)
     const PriceDetailList = {
@@ -77,7 +78,6 @@ const PricingBox = () => {
         setLoading(true)
         try {
             const {data} = await axios.post('/api/stripe/subscription', {priceId})
-            console.log(data)
             const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string)
             await stripe?.redirectToCheckout({sessionId: data.id})
             setLoading(false)
@@ -185,11 +185,21 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button disabled={!checkDataIsExist() || loading}
-                                onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
-                                className={'w-full'} variant={'secondary'}>
-                            {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5"/> : 'Start Trail'}
-                        </Button>
+                        {isLoading ? (
+                            <Button disabled={true}
+                                    className={'w-full'} variant={'secondary'}>
+                                <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                            </Button>
+                        ) : user.is_subscribed ? (
+                            <Button
+                                className={'w-full'} variant={'secondary'}>Manage Subscription</Button>
+                        ) : (
+                            <Button disabled={!checkDataIsExist() || loading}
+                                    onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
+                                    className={'w-full'} variant={'secondary'}>
+                                {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5"/> : 'Start Trail'}
+                            </Button>
+                        )}
                     </div>
 
                 </div>

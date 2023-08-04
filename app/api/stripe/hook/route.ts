@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import Stripe from "stripe";
-import {cookies, headers} from "next/headers"
+import {headers} from "next/headers"
 import {supabase as supabaseBypass} from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
                 is_subscribed: true,
                 interval: event.data.object.items.data[0].plan.interval,
                 plan: event.data.object.items.data[0].plan.product,
-                trail_end: event.data.object.trial_end,
-                plan_end: event.data.object.current_period_end
+                trail_end: event.data.object.trial_end * 1000,
+                plan_end: event.data.object.current_period_end * 1000
             }).eq('stripe_customer', event.data.object.customer)
             break;
         case "customer.subscription.updated":
@@ -40,8 +40,7 @@ export async function POST(req: NextRequest) {
                 is_subscribed: true,
                 interval: event.data.object.items.data[0].plan.interval,
                 plan: event.data.object.items.data[0].plan.product,
-                trail_end: event.data.object.trial_end,
-                plan_end: event.data.object.current_period_end
+                plan_end: event.data.object.current_period_end * 1000
             }).eq('stripe_customer', event.data.object.customer)
             break;
         case "customer.subscription.deleted":
