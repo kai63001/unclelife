@@ -7,10 +7,14 @@ import {Check} from "lucide-react";
 import Link from "next/link"
 import axios from "axios";
 import {Skeleton} from "@/components/ui/skeleton";
+// @ts-ignore
 import {loadStripe} from "@stripe/stripe-js";
+import {ca} from "date-fns/locale";
+import {Icons} from "@/components/Icons";
 
 const PricingBox = () => {
     const [yearly, setYearly] = useState(true)
+    const [loading, setLoading] = useState(false)
     const PriceDetailList = {
         basic: [
             '1 Notion Workspace',
@@ -65,14 +69,22 @@ const PricingBox = () => {
     })
 
     useEffect(() => {
+        setLoading(true)
         getPriceList().then(r => mapPriceToList(r.plans))
     }, [])
 
     const subscribe = async (priceId: any) => {
-        const {data} = await axios.post('/api/stripe/subscription', {priceId})
-        console.log(data)
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
-        await stripe?.redirectToCheckout({sessionId: data.id})
+        setLoading(true)
+        try {
+            const {data} = await axios.post('/api/stripe/subscription', {priceId})
+            console.log(data)
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
+            await stripe?.redirectToCheckout({sessionId: data.id})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
     }
 
     const getPriceList = async () => {
@@ -108,6 +120,7 @@ const PricingBox = () => {
         })
         console.log(data)
         setPriceMonthlyAndYearly(data)
+        setLoading(false)
     }
 
     const checkDataIsExist = (plan: any = 'pro') => {
@@ -172,10 +185,11 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button disabled={!checkDataIsExist()}
+                        <Button disabled={!checkDataIsExist() || loading}
                                 onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
-                                className={'w-full'} variant={'secondary'}>Start
-                            Trial</Button>
+                                className={'w-full'} variant={'secondary'}>
+                            {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5" /> : 'Start Trail'}
+                        </Button>
                     </div>
 
                 </div>
