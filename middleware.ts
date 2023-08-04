@@ -27,4 +27,3 @@ export const config = {
   matcher: ["/home","/form/create","/form/my", '/setting'],
 };
 
-export const dynamic = 'force-dynamic';
