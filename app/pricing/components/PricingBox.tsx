@@ -1,10 +1,13 @@
 "use client"
 import {Switch} from "@/components/ui/switch"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button";
 import {Check} from "lucide-react";
 import Link from "next/link"
+import axios from "axios";
+import {Skeleton} from "@/components/ui/skeleton";
+import {loadStripe} from "@stripe/stripe-js";
 
 const PricingBox = () => {
     const [yearly, setYearly] = useState(true)
@@ -32,20 +35,86 @@ const PricingBox = () => {
             'Priority support',
         ]
     }
-    const priceMonthlyAndYearly = {
+    const [priceMonthlyAndYearly, setPriceMonthlyAndYearly]: any = useState({
         basic: {
-            monthly: 0,
-            yearly: 0
+            id: "",
+            month: 0,
+            year: 0
         },
         pro: {
-            monthly: 7.99,
-            yearly: 5.99
+            month: {
+                id: "",
+                price: 0
+            },
+            year: {
+                id: "",
+                price: 0
+            }
         },
         enterprise: {
-            monthly: 16.99,
-            yearly: 12.99
+            id: "",
+            month: {
+                id: "",
+                price: 0
+            },
+            year: {
+                id: "",
+                price: 0
+            }
         }
+    })
+
+    useEffect(() => {
+        getPriceList().then(r => mapPriceToList(r.plans))
+    }, [])
+
+    const subscribe = async (priceId: any) => {
+        const {data} = await axios.post('/api/stripe/subscription', {priceId})
+        console.log(data)
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
+        await stripe?.redirectToCheckout({sessionId: data.id})
     }
+
+    const getPriceList = async () => {
+        const data = await axios.get('/api/stripe/price')
+        return data?.data
+    }
+
+    const mapPriceToList = (price: any) => {
+        let data: any = {
+            enterprise: {
+                month: {
+                    id: "",
+                    price: 16.99
+                },
+                year: {
+                    id: "",
+                    price: 12.99 * 12
+                }
+            }
+        }
+        //loop
+        price.map((item: any) => {
+            data = {
+                ...data,
+                [item.name.toLowerCase()]: {
+                    ...data[item.name.toLowerCase()],
+                    [item.interval]: {
+                        id: item.id,
+                        price: item.price / 100
+                    }
+                }
+            }
+        })
+        console.log(data)
+        setPriceMonthlyAndYearly(data)
+    }
+
+    const checkDataIsExist = (plan: any = 'pro') => {
+        const interval = yearly ? 'year' : 'month'
+        return !!priceMonthlyAndYearly[plan][interval].id;
+    }
+
     return (
         <>
             <div className={'flex justify-center space-x-3 my-10'}>
@@ -81,12 +150,18 @@ const PricingBox = () => {
                     <p className={'my-2'}>Everything you need to create
                         beautiful and professional forms.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
-                        <div>
-                            <span className={'text-3xl font-bold'}>$</span>
-                            <span
-                                className={'text-3xl font-bold'}>{yearly ? priceMonthlyAndYearly.pro.yearly : priceMonthlyAndYearly.pro.monthly}</span>
-                            <span className={'text-lg font-bold'}>/mo</span>
-                        </div>
+                        {priceMonthlyAndYearly.pro.month.price === 0 ? (
+                            <div className={'flex justify-center'}>
+                                <Skeleton className="w-[130px] h-[40px] rounded-full"/>
+                            </div>
+                        ) : (
+                            <div>
+                                <span className={'text-3xl font-bold'}>$</span>
+                                <span
+                                    className={'text-3xl font-bold'}>{yearly ? (priceMonthlyAndYearly.pro.year.price / 12).toFixed(2) : priceMonthlyAndYearly.pro.month.price}</span>
+                                <span className={'text-lg font-bold'}>/mo</span>
+                            </div>
+                        )}
                     </h3>
                     <div className={'flex flex-col space-y-1'}>
                         {PriceDetailList.pro.map((item, index) => (
@@ -97,7 +172,10 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button className={'w-full'} variant={'secondary'}>Start Trial</Button>
+                        <Button disabled={!checkDataIsExist()}
+                                onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
+                                className={'w-full'} variant={'secondary'}>Start
+                            Trial</Button>
                     </div>
 
                 </div>
@@ -108,7 +186,7 @@ const PricingBox = () => {
                         <div>
                             <span className={'text-3xl font-bold'}>$</span>
                             <span
-                                className={'text-3xl font-bold'}>{yearly ? priceMonthlyAndYearly.enterprise.yearly : priceMonthlyAndYearly.enterprise.monthly}</span>
+                                className={'text-3xl font-bold'}>{yearly ? (priceMonthlyAndYearly.enterprise.year.price / 12).toFixed(2) : priceMonthlyAndYearly.enterprise.month.price}</span>
                             <span className={'text-lg font-bold'}>/mo</span>
                         </div>
                     </h3>
@@ -126,7 +204,8 @@ const PricingBox = () => {
                 </div>
             </div>
             <div className={'flex justify-center'}>
-                <p className={'text-center text-md text-gray-500 my-5'}>All plans include a 14-day free trial. Cancel anytime</p>
+                <p className={'text-center text-md text-gray-500 my-5'}>All plans include a 14-day free trial. Cancel
+                    anytime</p>
             </div>
         </>
     )
