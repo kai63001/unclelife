@@ -21,7 +21,7 @@ const IndexNavbar = async () => {
       </Link>
       <nav className="">
         <ul className="flex space-x-4 items-center">
-          <Link href="https://blog.unclelife.co" target="_blank">
+          <Link href={'/blog'}>
             <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">Blog</li>
           </Link>
           <Link href={'/pricing'}>
