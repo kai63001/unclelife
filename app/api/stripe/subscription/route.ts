@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         )
     }
 
-    const {data: {stripe_customer}}: any = await supabase.from('profiles').select('stripe_customer').eq('id', session.user.id).single();
+    const {data: {stripe_customer,trail_end}}: any = await supabase.from('profiles').select('stripe_customer,trail_end').eq('id', session.user.id).single();
     console.log(stripe_customer)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
         apiVersion: '2022-11-15',
@@ -57,6 +57,13 @@ export async function POST(req: NextRequest) {
         }
     ]
 
+    let subscriptionData = {}
+    if (trail_end == null) {
+        subscriptionData = {
+            trial_period_days: 14,
+        }
+    }
+
     const sessionStripe = await stripe.checkout.sessions.create({
         customer: newStripe_customer,
         mode: 'subscription',
@@ -64,6 +71,7 @@ export async function POST(req: NextRequest) {
         line_items: listItems,
         success_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/cancel`,
+        subscription_data: subscriptionData
     });
 
 

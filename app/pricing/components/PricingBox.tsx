@@ -78,11 +78,11 @@ const PricingBox = () => {
         try {
             const {data} = await axios.post('/api/stripe/subscription', {priceId})
             console.log(data)
-            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string)
             await stripe?.redirectToCheckout({sessionId: data.id})
+            setLoading(false)
         } catch (e) {
             console.log(e)
-        } finally {
             setLoading(false)
         }
     }
@@ -188,7 +188,7 @@ const PricingBox = () => {
                         <Button disabled={!checkDataIsExist() || loading}
                                 onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
                                 className={'w-full'} variant={'secondary'}>
-                            {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5" /> : 'Start Trail'}
+                            {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5"/> : 'Start Trail'}
                         </Button>
                     </div>
 
