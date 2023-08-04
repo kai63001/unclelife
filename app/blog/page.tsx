@@ -12,7 +12,9 @@ export default async function Page() {
             </header>
             <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
                 <h1 className="text-center text-5xl font-extrabold mt-8">
-                    Blogs
+                    Your Hub for Notion <span
+                    className={'bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent'}>Forms</span> and <span
+                    className={'bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent'}>Widgets</span> Insights
                 </h1>
                 <ul>
                     {posts.map(post => {
