@@ -13,7 +13,6 @@ import {useSupabase} from "@/app/hook/supabase-provider";
 
 const PricingBox = () => {
     const {user, isLoading} = useSupabase()
-    console.log("user", user, isLoading)
     const [yearly, setYearly] = useState(true)
     const [loading, setLoading] = useState(false)
     const PriceDetailList = {
@@ -80,6 +79,22 @@ const PricingBox = () => {
             const {data} = await axios.post('/api/stripe/subscription', {priceId})
             const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY as string)
             await stripe?.redirectToCheckout({sessionId: data.id})
+            setLoading(false)
+        } catch (e) {
+            console.log(e)
+            setLoading(false)
+        }
+    }
+
+    const portal = async () => {
+        setLoading(true)
+        try {
+            const {data} = await axios.get('/api/stripe/portal')
+            if (data?.data?.url) {
+                window.location.href = data.data.url
+            }
+            //new tab
+
             setLoading(false)
         } catch (e) {
             console.log(e)
@@ -192,7 +207,7 @@ const PricingBox = () => {
                             </Button>
                         ) : user.is_subscribed ? (
                             <Button
-                                className={'w-full'} variant={'secondary'}>Manage Subscription</Button>
+                                className={'w-full'} onClick={portal} variant={'secondary'}>Manage Subscription</Button>
                         ) : (
                             <Button disabled={!checkDataIsExist() || loading}
                                     onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
