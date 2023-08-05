@@ -52,7 +52,15 @@ export async function POST(req: NextRequest) {
                 plan_end: null,
             }).eq('stripe_customer', event.data.object.customer)
             break;
-
+        case "invoice.payment_failed":
+            console.log('invoice.payment_failed')
+            await supabaseBypass.from('profiles').update({
+                is_subscribed: false,
+                interval: null,
+                plan: null,
+                plan_end: null,
+            }).eq('stripe_customer', event.data.object.customer)
+            break;
     }
 
     return NextResponse.json({
