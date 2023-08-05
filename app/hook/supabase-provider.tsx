@@ -2,10 +2,11 @@
 
 import {createContext, useContext, useEffect, useState} from 'react';
 import {createPagesBrowserClient} from '@supabase/auth-helpers-nextjs';
-import {useRouter} from 'next/navigation';
 
 import type {SupabaseClient} from '@supabase/auth-helpers-nextjs';
 import type {Database} from '@/lib/types_db';
+import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
+import {setUserData} from "@/app/redux/slice/userController.slice";
 
 type SupabaseContext = {
     supabase: SupabaseClient<Database>;
@@ -21,8 +22,9 @@ export default function SupabaseProvider({
     children: React.ReactNode;
 }) {
     const [supabase] = useState(() => createPagesBrowserClient());
-    const router = useRouter();
-    const [user, setUser] = useState<any>(null);
+    // const [user, setUser] = useState<any>(null);
+    const {data:userData} = useAppSelector(state => state.userReducer)
+    const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -30,16 +32,22 @@ export default function SupabaseProvider({
             const {
                 data: {session},
             } = await supabase.auth.getSession();
-            if (session) {
+            console.log("user data lock")
+            if (session && userData === null) {
                 const {data} = await supabase
                     .from('profiles')
                     .select('*')
                     .eq('id', session.user.id)
                     .single();
-                setUser({
+                console.info('search data')
+                // setUser({
+                //     ...session,
+                //     ...data
+                // });
+                dispatch(setUserData({
                     ...session,
                     ...data
-                });
+                }))
                 setIsLoading(false);
 
             }
@@ -51,17 +59,16 @@ export default function SupabaseProvider({
             data: {subscription}
         } = supabase.auth.onAuthStateChange(() => {
             getUserData().then(r => r);
-            router.refresh();
         });
 
         return () => {
             subscription.unsubscribe();
         };
-    }, [router, supabase]);
+    }, [dispatch, supabase, userData]);
 
     const value = {
         supabase,
-        user,
+        user: userData,
         isLoading
     }
 

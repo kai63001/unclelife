@@ -91,7 +91,11 @@ const PricingBox = () => {
         try {
             const {data} = await axios.get('/api/stripe/portal')
             if (data?.data?.url) {
-                window.location.href = data.data.url
+                // window.location.href = data.data.url
+                window.open(
+                    data.data.url,
+                    '_blank'
+                );
             }
             //new tab
 
