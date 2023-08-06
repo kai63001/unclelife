@@ -5,7 +5,7 @@ const NextNProgressbar = () => {
   return (
     <ProgressBar
       height="4px"
-      color="#000000"
+      color="#e52b50"
       options={{ showSpinner: false }}
       shallowRouting
       appDirectory
