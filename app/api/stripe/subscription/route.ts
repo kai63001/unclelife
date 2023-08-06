@@ -69,8 +69,8 @@ export async function POST(req: NextRequest) {
         mode: 'subscription',
         payment_method_types: ['card'],
         line_items: listItems,
-        success_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/cancel`,
+        success_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/subscription/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/subscription/cancel`,
         subscription_data: subscriptionData
     });
 
