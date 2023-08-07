@@ -21,7 +21,7 @@ const FormInNotion = () => {
     const {infomation} = useAppSelector((state) => state.formReducer);
     const copyLink = (idData = infomation.id) => {
         navigator.clipboard.writeText(
-            `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}${theme != 'system' ? '?theme='+theme : ''}`
+            `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}${theme != 'system' ? '?theme=' + theme : ''}`
         ).then(() => (
             toast({
                 title: "Copied",
@@ -46,7 +46,7 @@ const FormInNotion = () => {
             <div>
                 <div className={'border rounded-md px-5 py-2 flex items-center justify-between'}>
                     <span className={'text-sm'}>
-                        {`${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${infomation.id}${theme != 'system' ? '?theme='+theme : ''}`}
+                        {`${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${infomation.id}${theme != 'system' ? '?theme=' + theme : ''}`}
                     </span>
                     <Button onClick={() => copyLink()}>
                         COPY

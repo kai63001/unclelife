@@ -28,7 +28,9 @@ const RenderMyForm = async ({limit = 1000}: { limit?: number }) => {
 
     return (
         <>
-            <h2 className={'text-2xl font-bold mb-2'}>My From</h2>
+            {limit != 1000 && (
+                <h2 className={'text-2xl font-bold mb-2'}>My Form</h2>
+            )}
             <div className={`grid grid-cols-4 gap-4`}>
                 {data?.map((form: any, index: number) => (
                     <Link key={index} href={`/custom/form?id=${form.id}`}>
