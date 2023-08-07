@@ -14,10 +14,10 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import ManageSubscrptionComponent from "@/app/(dashboard)/setting/components/ManageSubscrption";
+import {useAppSelector} from "@/app/redux/hook";
 
 
 const SettingPage = () => {
-
 
     return (
         <div>
@@ -51,15 +51,16 @@ const SettingPage = () => {
                 </TabsContent>
                 <TabsContent value="subscription">
                     <Card>
+                        {}
                         <CardHeader>
                             <CardTitle>Manage Subscription</CardTitle>
                             <CardDescription>
                                 Subscription management: control, customize, pay, cancel.
                             </CardDescription>
                         </CardHeader>
-                        <CardFooter>
+                        <CardContent>
                             <ManageSubscrptionComponent/>
-                        </CardFooter>
+                        </CardContent>
                     </Card>
                 </TabsContent>
             </Tabs>
