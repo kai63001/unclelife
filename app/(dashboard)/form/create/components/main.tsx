@@ -47,8 +47,9 @@ const CreateFormMainPage = () => {
                     </CardHeader>
                 </Card>
                 <Card
-                    onClick={handleCreateDatabase}
-                    className="cursor-pointer hover:bg-primary hover:text-secondary duration-300"
+                    // onClick={handleCreateDatabase}
+                    // className="cursor-pointer hover:bg-primary hover:text-secondary duration-300"
+                    className="cursor-not-allowed opacity-50"
                 >
                     <CardContent className="w-full text-center p-0 mt-5">
                         <Database className="h-20 w-20 mx-auto"/>
