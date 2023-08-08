@@ -29,7 +29,7 @@ const RenderMyForm = async ({limit = 1000}: { limit?: number }) => {
     return (
         <>
             {limit != 1000 && (
-                <h2 className={'text-2xl font-bold mb-2'}>My Form</h2>
+                <h2 className={'text-2xl font-bold mb-2'}>Recent Forms</h2>
             )}
             <div className={`grid grid-cols-4 gap-4`}>
                 {data?.map((form: any, index: number) => (
