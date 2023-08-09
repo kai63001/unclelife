@@ -12,24 +12,27 @@ import {
 import {
     Button
 } from "@/components/ui/button";
+import Link from "next/link"
 
 const DashboardPage = () => {
     return (
         <div>
             <div className={'mb-4'}>
-                <h2 className={'text-2xl font-bold mb-3'}>All Widget</h2>
-                <div className={'grid grid-cols-4 gap-4'}>
-                    <Card className="w-[350px]">
+                <h2 className={'text-2xl font-bold mb-3'}>Featured Widget</h2>
+                <div className={'grid grid-cols-3 gap-4'}>
+                    <Card className="w-full">
                         <CardHeader>
                             <CardTitle>Create Form</CardTitle>
                             <CardDescription>Start building your custom Notion form with just a few clicks.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            asd
+                            Tutorial
                         </CardContent>
                         <CardFooter className="flex justify-between">
-                            <Button variant="outline">Cancel</Button>
-                            <Button>Deploy</Button>
+                            <Button variant={"outline"}>Help</Button>
+                            <Link href={"/form/create"}>
+                                <Button>Create</Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </div>
