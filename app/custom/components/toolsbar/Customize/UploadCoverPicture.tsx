@@ -6,7 +6,6 @@ import {checkKeyForm, convertImageToWebp} from "@/lib/utils";
 
 const UploadCoverPicture = ({onChangeHook, form}: any) => {
 
-
     const uploadCoverPicture = (e: any) => {
         const key = checkKeyForm(onChangeHook, form)
         console.log(key)
@@ -19,17 +18,23 @@ const UploadCoverPicture = ({onChangeHook, form}: any) => {
             const {data:uriImage} = await convertImageToWebp(base64data, key)
             console.log(uriImage.data.publicURL)
             onChangeHook({
-                ...form?.customizations,
-                ['coverPicture']: uriImage.data.publicURL
-            }, 'customizations')
+                ...form?.pro,
+                customizations: {
+                    ...form?.pro?.customizations,
+                    ['coverPicture']: uriImage.data.publicURL
+                }
+            }, 'pro')
         }
     }
 
     const removeCoverPicture = () => {
         onChangeHook({
-            ...form?.customizations,
-            ['coverPicture']: ''
-        }, 'customizations')
+            ...form?.pro,
+            customizations: {
+                ...form?.pro?.customizations,
+                ['coverPicture']: null
+            }
+        }, 'pro')
     }
 
     return (
@@ -37,7 +42,7 @@ const UploadCoverPicture = ({onChangeHook, form}: any) => {
             <p className="text-xs font-bold">
                 COVER PICTURE
             </p>
-            {form?.customizations?.coverPicture ? (
+            {form?.pro?.customizations?.coverPicture ? (
                 <Button onClick={removeCoverPicture}>
                     Remove Image Cover
                     <Trash className={'w-4 h-4 ml-2'}/>

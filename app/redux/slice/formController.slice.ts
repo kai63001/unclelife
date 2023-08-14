@@ -22,8 +22,10 @@ const initialState: FormState = {
       color: "#000000",
       position: "flex-start"
     },
-    customizations: {
+    pro: {
+      customizations :{
 
+      }
     }
   },
   infomation: {},

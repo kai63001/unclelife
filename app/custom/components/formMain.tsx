@@ -306,9 +306,9 @@ const FormMainBox = ({
             ) : (
                 <>
                     {/*cover image*/}
-                    {dataForm?.customizations?.coverPicture && (
+                    {dataForm?.pro?.customizations?.coverPicture && (
                         <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
-                            <Image src={dataForm?.customizations?.coverPicture as string} alt={'cover image'}
+                            <Image src={dataForm?.pro?.customizations?.coverPicture as string} alt={'cover image'}
                                    fill
                                    className={'w-full h-full object-cover'}/>
                         </div>

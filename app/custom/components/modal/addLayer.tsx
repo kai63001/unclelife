@@ -11,6 +11,14 @@ import {
 } from "@/components/ui/dialog";
 import {useState} from "react";
 import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash} from "lucide-react";
+import {RocketIcon} from "@radix-ui/react-icons"
+
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+
 
 const ModalAddLayer = () => {
     const [open, setOpen] = useState(false);
@@ -63,7 +71,7 @@ const ModalAddLayer = () => {
 
     const randomTitleWithType = (type: string) => {
         let titles: string[] = [];
-        switch(type) {
+        switch (type) {
             case "title":
                 titles = ["Main Title", "Sub Title", "Article Title", "Header", "Footer"];
                 break;
@@ -126,6 +134,16 @@ const ModalAddLayer = () => {
                             Form
                         </DialogDescription>
                     </DialogHeader>
+                    <Alert>
+                        <RocketIcon className="h-4 w-4"/>
+                        <AlertTitle>Updating Form Structure & Fields!</AlertTitle>
+                        <AlertDescription>
+                            Use this to incorporate layout blocks into your forms. To introduce more fields, expand the
+                            columns in your Notion database. Ensure you select the appropriate type for your new
+                            database column in Notion
+                            {/*, and then refresh the form's layout.*/}
+                        </AlertDescription>
+                    </Alert>
                     <div className="grid grid-cols-4 gap-4 py-4">
                         {
                             typeOfLayerSelection.map((item: any, index) => (
