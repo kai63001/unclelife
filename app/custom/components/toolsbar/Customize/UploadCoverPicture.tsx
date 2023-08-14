@@ -2,22 +2,27 @@ import {Button} from "@/components/ui/button";
 import {Upload} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
+import {checkKeyForm, convertImageToWebp} from "@/lib/utils";
 
 const UploadCoverPicture = ({onChangeHook, form}: any) => {
+
+
     const uploadCoverPicture = (e: any) => {
-        console.log(e)
+        const key = checkKeyForm(onChangeHook, form)
+        console.log(key)
         // convert to blob
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onloadend = function () {
+        reader.onloadend = async function () {
             const base64data = reader.result;
+            const {data:uriImage} = await convertImageToWebp(base64data, key)
+            console.log(uriImage.data.publicURL)
             onChangeHook({
                 ...form?.customizations,
-                ['coverPicture']: base64data
+                ['coverPicture']: uriImage.data.publicURL
             }, 'customizations')
         }
-
     }
 
     return (
