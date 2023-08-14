@@ -121,7 +121,7 @@ const SheetTab = ({id}: any) => {
                                 </div>
 
                             </div>
-                            <div className="mt-2 grid grid-cols-2 gap-4">
+                            <div className="mt-5 grid grid-cols-2 gap-4">
                                 {['required', 'disable', 'hidden'].map((item, index) => (
                                     <div key={index} className="flex items-center space-x-2">
                                         <Switch
