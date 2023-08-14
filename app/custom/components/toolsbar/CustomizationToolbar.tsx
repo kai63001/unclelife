@@ -1,7 +1,6 @@
 import {AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
-import {Button} from "@/components/ui/button";
-import {Upload} from "lucide-react";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
+import UploadCoverPicture from "@/app/custom/components/toolsbar/Customize/UploadCoverPicture";
 
 const CustomizationToolbar = ({onChangeHook, form}: any) => {
     return (
@@ -13,13 +12,7 @@ const CustomizationToolbar = ({onChangeHook, form}: any) => {
             </AccordionTrigger>
             <AccordionContent>
                 <div className="flex flex-col space-y-2">
-                    <p className="text-xs font-bold">
-                        COVER PICTURE
-                    </p>
-                    <Button>
-                        Upload Image
-                        <Upload className={'w-4 h-4 ml-2'}/>
-                    </Button>
+                    <UploadCoverPicture/>
                 </div>
             </AccordionContent>
         </AccordionItem>
