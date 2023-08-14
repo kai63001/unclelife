@@ -16,6 +16,7 @@ import {
 } from "@/app/redux/slice/formController.slice";
 import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
+import Image from "next/image";
 
 const FormMainBox = ({
                          id = null,
@@ -304,53 +305,63 @@ const FormMainBox = ({
                 <SuccessPageComponent/>
             ) : (
                 <>
-                    <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
-                    {dataForm?.description && (
-                        <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
-                            {dataForm?.description}
-                        </p>
-                    )}
-                    <form onSubmit={submitForm}>
-                        {dataLayer?.map((item: any, index: number) => {
-                            return (
-                                <RenderFormComponent
-                                    updateInputForm={updateInputForm}
-                                    data={item}
-                                    key={index}
-                                />
-                            );
-                        })}
-                        <div className="mt-3 flex" style={{
-                            justifyContent: dataForm?.button?.position
-                        }}>
-                            <Button
-                                disabled={loading}
-                                style={{
-                                    backgroundColor: dataForm?.button?.color,
-                                    color: calculateColor(dataForm?.button?.color),
-                                    //     position
-                                }}
-                                className="px-10"
-                            >
-                                {loading && (
-                                    <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
-                                )}
-                                {dataForm?.button?.text || "Submit"}
-                            </Button>
+                    {/*cover image*/}
+                    {dataForm?.customizations?.coverPicture && (
+                        <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
+                            <Image src={dataForm?.customizations?.coverPicture as string} alt={'cover image'}
+                                   fill
+                                   className={'w-full h-full object-cover'}/>
                         </div>
-                    </form>
-                    {/* power by */}
-                    <div
-                        className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
-                        <div>
-                            Power by{" "}
-                            <Link
-                                href="https://unclelife.co"
-                                target="_blank"
-                                className="text-blue-500 hover:underline"
-                            >
-                                Uncle Life
-                            </Link>
+                    )}
+                    <div className={'p-5'}>
+                        <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+                        {dataForm?.description && (
+                            <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
+                                {dataForm?.description}
+                            </p>
+                        )}
+                        <form onSubmit={submitForm}>
+                            {dataLayer?.map((item: any, index: number) => {
+                                return (
+                                    <RenderFormComponent
+                                        updateInputForm={updateInputForm}
+                                        data={item}
+                                        key={index}
+                                    />
+                                );
+                            })}
+                            <div className="mt-3 flex" style={{
+                                justifyContent: dataForm?.button?.position
+                            }}>
+                                <Button
+                                    disabled={loading}
+                                    style={{
+                                        backgroundColor: dataForm?.button?.color,
+                                        color: calculateColor(dataForm?.button?.color),
+                                        //     position
+                                    }}
+                                    className="px-10"
+                                >
+                                    {loading && (
+                                        <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                                    )}
+                                    {dataForm?.button?.text || "Submit"}
+                                </Button>
+                            </div>
+                        </form>
+                        {/* power by */}
+                        <div
+                            className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
+                            <div>
+                                Power by{" "}
+                                <Link
+                                    href="https://unclelife.co"
+                                    target="_blank"
+                                    className="text-blue-500 hover:underline"
+                                >
+                                    Uncle Life
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </>

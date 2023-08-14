@@ -12,7 +12,7 @@ const CustomizationToolbar = ({onChangeHook, form}: any) => {
             </AccordionTrigger>
             <AccordionContent>
                 <div className="flex flex-col space-y-2">
-                    <UploadCoverPicture/>
+                    <UploadCoverPicture onChangeHook={onChangeHook} form={form}/>
                 </div>
             </AccordionContent>
         </AccordionItem>
