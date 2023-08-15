@@ -10,6 +10,10 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const {imageBase64} = body;
+    //check file type
+    if (!imageBase64.startsWith('data:image')) {
+        return NextResponse.json({error: "Invalid file type"});
+    }
     const uri = imageBase64.split(';base64,').pop();
     //convert image
     const webpBase64 = await sharp(Buffer.from(uri, 'base64'))
@@ -33,7 +37,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({error: error.message});
     }
     const publicURL = supabase.storage.from('cover').getPublicUrl(`cover-form-${req.nextUrl.searchParams.get("id")}.webp`)
-    console.log(publicURL)
 
     return NextResponse.json({
         data: {
