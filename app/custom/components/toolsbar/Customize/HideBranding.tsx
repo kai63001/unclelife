@@ -15,7 +15,7 @@ const HideBranding = ({onChangeHook, form}: any) => {
 
     return (
         <div className="flex items-center space-x-2 pt-4">
-            <Switch onCheckedChange={hideBranding} id="airplane-mode"/>
+            <Switch checked={form?.pro?.customizations?.hideBranding} onCheckedChange={hideBranding} id="airplane-mode"/>
             <Label htmlFor="airplane-mode">
                 Remove UncleLife Branding</Label>
         </div>
