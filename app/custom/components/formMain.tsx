@@ -31,6 +31,7 @@ const FormMainBox = ({
     const supabase = createClientComponentClient();
     const [dataForm, setDataForm] = useState<any>({});
     const [dataLayer, setDataLayer] = useState<any>([]);
+    const [dataUser, setDataUser] = useState<any>({});
     const [databaseId, setDatabaseIdState] = useState<string>("");
     const {form, layer} = useAppSelector((state) => state.formReducer);
     const [loading, setLoading] = useState(false);
@@ -40,7 +41,6 @@ const FormMainBox = ({
     const [successSubmit, setSuccessSubmit] = useState(false);
 
     const updateInputForm = (value: string, data: any) => {
-        console.log(data);
         if (data.mapTo != undefined) {
             setInputForm({
                 ...inputForm,
@@ -94,10 +94,16 @@ const FormMainBox = ({
             });
             return;
         }
-        console.log(res.data);
         setDataLayer(res.data.layer);
         setDataForm(res.data.detail);
         setDatabaseIdState(res.data.databaseId);
+        if (testMode) {
+            setDataUser({
+                is_subscribed: true
+            })
+            return
+        }
+        setDataUser(res.data.user);
     }
 
 
@@ -113,10 +119,11 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId")
+                    .select("layer,detail,databaseId,user")
                     .eq("id", _id)
                     .single()
                     .then((res: any) => {
+                        console.log("supabase", res)
                         saveDataState(res)
                         dispatch(setLayer(res.data.layer));
                         dispatch(setDatabaseId(res.data.databaseId));
@@ -136,10 +143,11 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId")
+                    .select("layer,detail,databaseId,user (is_subscribed)")
                     .eq("id", id)
                     .single()
                     .then((res: any) => {
+                        console.log(res)
                         saveDataState(res)
                     });
             } catch (error) {
@@ -306,7 +314,7 @@ const FormMainBox = ({
             ) : (
                 <>
                     {/*cover image*/}
-                    {dataForm?.pro?.customizations?.coverPicture && (
+                    {(dataForm?.pro?.customizations?.coverPicture && dataUser?.is_subscribed) && (
                         <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
                             <Image src={dataForm?.pro?.customizations?.coverPicture as string} alt={'cover image'}
                                    fill
@@ -351,7 +359,7 @@ const FormMainBox = ({
                         </form>
                         {/* power by */}
                         {
-                            !dataForm?.pro?.customizations?.hideBranding && (
+                            !(dataForm?.pro?.customizations?.hideBranding && dataUser?.is_subscribed) && (
                                 <div
                                     className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
                                     <div>
