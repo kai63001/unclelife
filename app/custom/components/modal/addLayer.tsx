@@ -10,14 +10,15 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {useState} from "react";
-import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash} from "lucide-react";
-import {RocketIcon} from "@radix-ui/react-icons"
+import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash, Upload} from "lucide-react";
+import {RocketIcon} from "@radix-ui/react-icons";
 
 import {
     Alert,
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
+import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 
 
 const ModalAddLayer = () => {
@@ -66,6 +67,12 @@ const ModalAddLayer = () => {
             name: "Checkbox",
             icon: <CheckSquare className="h-10 w-10"/>,
             type: "checkbox"
+        },
+        {
+            name: "File Upload",
+            icon: <Upload className="h-10 w-10"/>,
+            type: "file",
+            pro: true
         }
     ];
 
@@ -154,11 +161,14 @@ const ModalAddLayer = () => {
                                         addLayer(item.type)
                                     }}
                                 >
-                                    <div className={`m-auto`}>
+                                    <div className={`m-auto text-center`}>
                                         <div className={`flex justify-center`}>
                                             {item.icon}
                                         </div>
                                         <strong className="block">{item.name}</strong>
+                                        {item?.pro && (
+                                            <ProBadge/>
+                                        )}
                                     </div>
                                 </div>
                             ))
