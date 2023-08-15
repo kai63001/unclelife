@@ -350,19 +350,23 @@ const FormMainBox = ({
                             </div>
                         </form>
                         {/* power by */}
-                        <div
-                            className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
-                            <div>
-                                Power by{" "}
-                                <Link
-                                    href="https://unclelife.co"
-                                    target="_blank"
-                                    className="text-blue-500 hover:underline"
-                                >
-                                    Uncle Life
-                                </Link>
-                            </div>
-                        </div>
+                        {
+                            !dataForm?.pro?.customizations?.hideBranding && (
+                                <div
+                                    className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
+                                    <div>
+                                        Power by{" "}
+                                        <Link
+                                            href="https://unclelife.co"
+                                            target="_blank"
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            Uncle Life
+                                        </Link>
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 </>
             )}
