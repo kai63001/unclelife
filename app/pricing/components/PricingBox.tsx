@@ -204,20 +204,27 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        {isLoading ? (
-                            <Button disabled={true}
-                                    className={'w-full'} variant={'secondary'}>
-                                <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
-                            </Button>
-                        ) : user.is_subscribed ? (
-                            <Button
-                                className={'w-full'} onClick={portal} variant={'secondary'}>Manage Subscription</Button>
-                        ) : (
-                            <Button disabled={!checkDataIsExist() || loading}
-                                    onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
-                                    className={'w-full'} variant={'secondary'}>
-                                {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5"/> : 'Start Trail'}
-                            </Button>
+                        {user ? (
+                            isLoading ? (
+                                <Button disabled={true}
+                                        className={'w-full'} variant={'secondary'}>
+                                    <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                                </Button>
+                            ) : user.is_subscribed ? (
+                                <Button
+                                    className={'w-full'} onClick={portal} variant={'secondary'}>Manage
+                                    Subscription</Button>
+                            ) : (
+                                <Button disabled={!checkDataIsExist() || loading}
+                                        onClick={() => subscribe(yearly ? priceMonthlyAndYearly.pro.year.id : priceMonthlyAndYearly.pro.month.id)}
+                                        className={'w-full'} variant={'secondary'}>
+                                    {loading ? <Icons.spinner className="animate-spin mr-2 h-5 w-5"/> : 'Start Trial'}
+                                </Button>
+                            )) : (
+                            <Link href={'/login'} className={'w-full'}>
+                                <Button
+                                    className={'w-full'} onClick={portal} variant={'secondary'}>Start Trial</Button>
+                            </Link>
                         )}
                     </div>
 
