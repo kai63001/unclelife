@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import MultiSelectRender from "./MultiSelect/MultiSelectRender";
 import CheckBoxRender from "./CheckBox/CheckBoxRender";
+import FileRender from "@/app/custom/components/render/File/FileRender";
 
 const TitleRendert = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -39,6 +40,8 @@ const RenderFormComponent = ({ data, updateInputForm }: any) => {
         );
       case "checkbox":
         return <CheckBoxRender updateInputForm={updateInputForm} data={data} />;
+      case "file":
+        return <FileRender updateInputForm={updateInputForm} data={data}/>;
       case "relation":
         return <></>;
       case "created_time":

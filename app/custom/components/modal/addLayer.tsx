@@ -10,7 +10,16 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {useState} from "react";
-import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash} from "lucide-react";
+import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash, Upload} from "lucide-react";
+import {RocketIcon} from "@radix-ui/react-icons";
+
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
+
 
 const ModalAddLayer = () => {
     const [open, setOpen] = useState(false);
@@ -58,12 +67,18 @@ const ModalAddLayer = () => {
             name: "Checkbox",
             icon: <CheckSquare className="h-10 w-10"/>,
             type: "checkbox"
+        },
+        {
+            name: "File Upload",
+            icon: <Upload className="h-10 w-10"/>,
+            type: "file",
+            pro: true,
         }
     ];
 
     const randomTitleWithType = (type: string) => {
         let titles: string[] = [];
-        switch(type) {
+        switch (type) {
             case "title":
                 titles = ["Main Title", "Sub Title", "Article Title", "Header", "Footer"];
                 break;
@@ -87,6 +102,9 @@ const ModalAddLayer = () => {
                 break;
             case "checkbox":
                 titles = ["Selection", "Confirmation", "Approval", "Acceptance", "Verification"];
+                break;
+            case "file":
+                titles = ["File Upload", "File", "Upload", "Document", "Attachment"];
                 break;
             default:
                 titles = ["Default Title"];
@@ -126,6 +144,16 @@ const ModalAddLayer = () => {
                             Form
                         </DialogDescription>
                     </DialogHeader>
+                    <Alert>
+                        <RocketIcon className="h-4 w-4"/>
+                        <AlertTitle>Updating Form Structure & Fields!</AlertTitle>
+                        <AlertDescription>
+                            Use this to incorporate layout blocks into your forms. To introduce more fields, expand the
+                            columns in your Notion database. Ensure you select the appropriate type for your new
+                            database column in Notion
+                            {/*, and then refresh the form's layout.*/}
+                        </AlertDescription>
+                    </Alert>
                     <div className="grid grid-cols-4 gap-4 py-4">
                         {
                             typeOfLayerSelection.map((item: any, index) => (
@@ -136,11 +164,14 @@ const ModalAddLayer = () => {
                                         addLayer(item.type)
                                     }}
                                 >
-                                    <div className={`m-auto`}>
+                                    <div className={`m-auto text-center`}>
                                         <div className={`flex justify-center`}>
                                             {item.icon}
                                         </div>
                                         <strong className="block">{item.name}</strong>
+                                        {item?.pro && (
+                                            <ProBadge/>
+                                        )}
                                     </div>
                                 </div>
                             ))

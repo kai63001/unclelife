@@ -12,16 +12,16 @@ const ButtonSubmitTab = () => {
 
     const handleClickChangePosition = (e: any) => {
         const value = (e.target?.outerText).toLowerCase();
+        dispatch(setForm({
+            name: "button",
+            value: {
+                ...form?.button,
+                ['position']: 'flex-start'
+            }
+        }))
         switch (value) {
             case "left":
                 console.log("left")
-                dispatch(setForm({
-                    name: "button",
-                    value: {
-                        ...form?.button,
-                        ['position']: 'flex-start'
-                    }
-                }))
                 break;
             case "center":
                 dispatch(setForm({
@@ -40,7 +40,6 @@ const ButtonSubmitTab = () => {
                         ['position']: 'flex-end'
                     }
                 }))
-                console.log("right");
                 break;
             default:
                 break;
@@ -50,7 +49,7 @@ const ButtonSubmitTab = () => {
     return (
         <Tabs onClick={(e: any) => {
             handleClickChangePosition(e)
-        }} defaultValue="left" className="w-full">
+        }} defaultValue={'left'} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="left">Left</TabsTrigger>
                 <TabsTrigger value="center">Center</TabsTrigger>

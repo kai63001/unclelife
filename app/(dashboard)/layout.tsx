@@ -1,4 +1,5 @@
 import Slidebars from "./components/Slidebar";
+import React from "react";
 
 //layout
 export const metadata = {

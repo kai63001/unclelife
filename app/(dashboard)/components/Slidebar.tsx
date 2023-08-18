@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import ProfileBar from "./ProfileBar";
 import ListSideBar from "./ListSidebar";
+import UpgradePlan from "@/app/(dashboard)/components/UpgradePlan";
 
 const Slidebars = async () => {
     //get auth data
@@ -17,6 +18,7 @@ const Slidebars = async () => {
             </div>
             <ListSideBar/>
             <div className="p-4">
+                <UpgradePlan/>
                 <ProfileBar/>
             </div>
         </div>

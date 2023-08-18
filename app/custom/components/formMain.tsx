@@ -16,6 +16,7 @@ import {
 } from "@/app/redux/slice/formController.slice";
 import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
+import Image from "next/image";
 
 const FormMainBox = ({
                          id = null,
@@ -30,6 +31,7 @@ const FormMainBox = ({
     const supabase = createClientComponentClient();
     const [dataForm, setDataForm] = useState<any>({});
     const [dataLayer, setDataLayer] = useState<any>([]);
+    const [dataUser, setDataUser] = useState<any>({});
     const [databaseId, setDatabaseIdState] = useState<string>("");
     const {form, layer} = useAppSelector((state) => state.formReducer);
     const [loading, setLoading] = useState(false);
@@ -39,7 +41,6 @@ const FormMainBox = ({
     const [successSubmit, setSuccessSubmit] = useState(false);
 
     const updateInputForm = (value: string, data: any) => {
-        console.log(data);
         if (data.mapTo != undefined) {
             setInputForm({
                 ...inputForm,
@@ -93,10 +94,16 @@ const FormMainBox = ({
             });
             return;
         }
-        console.log(res.data);
         setDataLayer(res.data.layer);
         setDataForm(res.data.detail);
         setDatabaseIdState(res.data.databaseId);
+        if (testMode) {
+            setDataUser({
+                is_subscribed: true
+            })
+            return
+        }
+        setDataUser(res.data.user);
     }
 
 
@@ -112,10 +119,11 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId")
+                    .select("layer,detail,databaseId,user")
                     .eq("id", _id)
                     .single()
                     .then((res: any) => {
+                        console.log("supabase", res)
                         saveDataState(res)
                         dispatch(setLayer(res.data.layer));
                         dispatch(setDatabaseId(res.data.databaseId));
@@ -135,10 +143,11 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId")
+                    .select("layer,detail,databaseId,user (is_subscribed)")
                     .eq("id", id)
                     .single()
                     .then((res: any) => {
+                        console.log(res)
                         saveDataState(res)
                     });
             } catch (error) {
@@ -304,54 +313,68 @@ const FormMainBox = ({
                 <SuccessPageComponent/>
             ) : (
                 <>
-                    <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
-                    {dataForm?.description && (
-                        <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
-                            {dataForm?.description}
-                        </p>
+                    {/*cover image*/}
+                    {(dataForm?.pro?.customizations?.coverPicture && dataUser?.is_subscribed) && (
+                        <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
+                            <Image src={dataForm?.pro?.customizations?.coverPicture as string} alt={'cover image'}
+                                   fill
+                                   className={'w-full h-full object-cover'}/>
+                        </div>
                     )}
-                    <form onSubmit={submitForm}>
-                        {dataLayer?.map((item: any, index: number) => {
-                            return (
-                                <RenderFormComponent
-                                    updateInputForm={updateInputForm}
-                                    data={item}
-                                    key={index}
-                                />
-                            );
-                        })}
-                        <div className="mt-3 flex" style={{
-                            justifyContent: dataForm?.button?.position
-                        }}>
-                            <Button
-                                disabled={loading}
-                                style={{
-                                    backgroundColor: dataForm?.button?.color,
-                                    color: calculateColor(dataForm?.button?.color),
-                                    //     position
-                                }}
-                                className="px-10"
-                            >
-                                {loading && (
-                                    <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
-                                )}
-                                {dataForm?.button?.text || "Submit"}
-                            </Button>
-                        </div>
-                    </form>
-                    {/* power by */}
-                    <div
-                        className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
-                        <div>
-                            Power by{" "}
-                            <Link
-                                href="https://unclelife.co"
-                                target="_blank"
-                                className="text-blue-500 hover:underline"
-                            >
-                                Uncle Life
-                            </Link>
-                        </div>
+                    <div className={'p-5'}>
+                        <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+                        {dataForm?.description && (
+                            <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
+                                {dataForm?.description}
+                            </p>
+                        )}
+                        <form onSubmit={submitForm}>
+                            {dataLayer?.map((item: any, index: number) => {
+                                return (
+                                    <RenderFormComponent
+                                        updateInputForm={updateInputForm}
+                                        data={item}
+                                        key={index}
+                                    />
+                                );
+                            })}
+                            <div className="mt-3 flex" style={{
+                                justifyContent: dataForm?.button?.position
+                            }}>
+                                <Button
+                                    disabled={loading}
+                                    style={{
+                                        backgroundColor: dataForm?.button?.color,
+                                        color: calculateColor(dataForm?.button?.color),
+                                        //     position
+                                    }}
+                                    className="px-10"
+                                >
+                                    {loading && (
+                                        <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                                    )}
+                                    {dataForm?.button?.text || "Submit"}
+                                </Button>
+                            </div>
+                        </form>
+                        {/* power by */}
+                        {
+                            !(dataForm?.pro?.customizations?.hideBranding && dataUser?.is_subscribed) && (
+                                <div
+                                    className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
+                                    <div>
+                                        Power by{" "}
+                                        <Link
+                                            href="https://unclelife.co"
+                                            target="_blank"
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            Uncle Life
+                                        </Link>
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 </>
             )}

@@ -21,6 +21,11 @@ const initialState: FormState = {
       text: "Submit",
       color: "#000000",
       position: "flex-start"
+    },
+    pro: {
+      customizations :{
+
+      }
     }
   },
   infomation: {},

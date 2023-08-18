@@ -33,8 +33,8 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="h-screen w-screen bg-[#F2F2F2] flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <div className="h-screen w-screen bg-customMode flex justify-center items-center">
+      <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full">
         {/* close */}
         <div className="flex justify-end">
           <Link href="/">
