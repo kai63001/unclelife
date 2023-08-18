@@ -2,6 +2,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 import {Button} from "@/components/ui/button";
+import {Upload} from "lucide-react";
 
 const FileRender = ({data, updateInputForm}: any) => {
     return data.hidden ? (
@@ -17,6 +18,7 @@ const FileRender = ({data, updateInputForm}: any) => {
             <Button asChild>
                 <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2 mt-2 cursor-pointer">
                     Upload File
+                    <Upload className="ml-2 h-4 w-4"/>
                 </Label>
             </Button>
             <Input

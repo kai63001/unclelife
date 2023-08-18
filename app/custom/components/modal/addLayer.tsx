@@ -73,7 +73,6 @@ const ModalAddLayer = () => {
             icon: <Upload className="h-10 w-10"/>,
             type: "file",
             pro: true,
-            disable: true
         }
     ];
 
@@ -103,6 +102,9 @@ const ModalAddLayer = () => {
                 break;
             case "checkbox":
                 titles = ["Selection", "Confirmation", "Approval", "Acceptance", "Verification"];
+                break;
+            case "file":
+                titles = ["File Upload", "File", "Upload", "Document", "Attachment"];
                 break;
             default:
                 titles = ["Default Title"];
