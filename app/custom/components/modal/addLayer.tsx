@@ -71,7 +71,7 @@ const ModalAddLayer = () => {
         {
             name: "File Upload",
             icon: <Upload className="h-10 w-10"/>,
-            type: "file",
+            type: "files",
             pro: true,
         }
     ];

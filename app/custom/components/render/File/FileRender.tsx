@@ -1,3 +1,4 @@
+"use client"
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
@@ -31,6 +32,7 @@ const FileRender = ({data, updateInputForm}: any) => {
                 required={data.required}
                 type={'file'}
             />
+            <span className={'text-xs text-muted-foreground'}>File size should be less than 5MB. </span>
         </div>
     );
 };

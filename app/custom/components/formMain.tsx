@@ -334,6 +334,7 @@ const FormMainBox = ({
                                     <RenderFormComponent
                                         updateInputForm={updateInputForm}
                                         data={item}
+                                        dataUser={dataUser}
                                         key={index}
                                     />
                                 );
