@@ -246,14 +246,18 @@ const FormMainBox = ({
                     });
                     return;
                 }
-                console.log(data)
+                //get url
+                const uri = data?.path;
+                const bucket = 'files';
+                const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${uri}`;
+
                 properties[key] = {
                     [value.type]: [
                         {
                             //random file name
                             name: `${Math.random().toString(36).substring(2, 15)}`,
                             external: {
-                                url: value.value as string,
+                                url: url as string,
                             },
                         },
                     ],
