@@ -6,6 +6,28 @@ import {Button} from "@/components/ui/button";
 import {Upload} from "lucide-react";
 
 const FileRender = ({data, updateInputForm}: any) => {
+
+    const onFileChange = (e: any) => {
+        const file = e.target.files[0];
+        //limit file size 5mb
+        if (file.size > 5000000) {
+            alert("File size should be less than 5MB.");
+            return;
+        }
+        if (file) {
+            const reader = new FileReader();
+            // to base64
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const base64 = reader.result;
+                console.log("base64", base64);
+                const name = file.name;
+                updateInputForm(`${base64}__name__${name}`, data);
+            }
+        }
+    }
+
+
     return data.hidden ? (
         <></>
     ) : (
@@ -24,7 +46,7 @@ const FileRender = ({data, updateInputForm}: any) => {
             </Button>
             <Input
                 className="hidden"
-                onChange={(e) => updateInputForm(e.target.value, data)}
+                onChange={onFileChange}
                 name={data.label}
                 placeholder={data?.placeholder}
                 id={'uploadFileForm'}

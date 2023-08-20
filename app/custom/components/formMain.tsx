@@ -17,6 +17,8 @@ import {
 import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
 import Image from "next/image";
+import { decode } from 'base64-arraybuffer'
+
 
 const FormMainBox = ({
                          id = null,
@@ -223,6 +225,28 @@ const FormMainBox = ({
                     type: value.type,
                 };
             } else if (value.type === "files") {
+                // value.value is base64 upload to supabase
+                const base64 = value.value.split('__name__')[0]
+                const file = base64.split(',')[1]
+                console.log(base64)
+                const name = value.value.split('__name__')[1]
+                const contentType = base64.split(';')[0].split(':')[1]
+                console.log(contentType)
+                const {data, error} = await supabase.storage
+                    .from("files")
+                    .upload(`${Math.random().toString(36).substring(2, 15)}_${name}`, decode(file), {
+                        cacheControl: "3600",
+                        contentType: contentType,
+                    });
+                if (error) {
+                    toast({
+                        title: "Error",
+                        description: error.message,
+                        variant: "destructive",
+                    });
+                    return;
+                }
+                console.log(data)
                 properties[key] = {
                     [value.type]: [
                         {

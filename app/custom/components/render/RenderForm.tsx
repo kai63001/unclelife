@@ -17,7 +17,6 @@ const SelectionRender = dynamic(() => import("./Selection/SelectionRender"), {
 });
 
 const RenderFormComponent = ({data, updateInputForm, dataUser}: any) => {
-    console.log(dataUser);
     const renderCase = () => {
         //return SwitchCase
         switch (data.type) {
