@@ -79,6 +79,16 @@ const ModalMapInput = () => {
         ));
     };
 
+    const listSelection = () => {
+        let list = Object.keys(listObjectTable);
+        //filter list
+        list = list.filter((item: any) => {
+            return listObjectTable[item].type !== "relation" && listObjectTable[item].type !== "created_time" && listObjectTable[item].type !== "people"
+        })
+
+        return list.reverse()
+    }
+
     const onMapChange = (e: any, id: any) => {
         console.log(e, id);
         const type = listObjectTable[e].type;
@@ -92,7 +102,7 @@ const ModalMapInput = () => {
             case "rich_text":
                 return "Long"
             default:
-                //capitalize first letter
+                //capitalize a first letter
                 return (type.charAt(0).toUpperCase() + type.slice(1)).replaceAll('_',' ');
         }
 
