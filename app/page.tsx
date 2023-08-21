@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import {Button} from "@/components/ui/button";
+import Link from "next/link"
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
     ssr: true,
@@ -19,6 +21,21 @@ export default function Home() {
                 <p className="text-muted-foreground my-4 text-center text-lg">
                     Create beautiful forms and widget connected to your Notion pages
                 </p>
+                <div className={'flex space-x-3 justify-center py-4'}>
+                    <Button asChild>
+                        <Link href={'/home'}>
+                            Create a form
+                        </Link>
+                    </Button>
+                    <Button variant={'secondary'} asChild>
+                        <Link target={'_blank'} href={'/home'}>
+                            See Live Example
+                        </Link>
+                    </Button>
+                </div>
+                <div className={'text-center pt-2'}>
+                    <p className={'text-muted-foreground'}>Free 14-day trial - Cancel anytime</p>
+                </div>
             </section>
         </main>
     );
