@@ -5,16 +5,22 @@ import RequiredStar from "../RequireStar";
 import {Button} from "@/components/ui/button";
 import {Upload, Trash} from "lucide-react";
 import {useState} from "react";
+import {useToast} from "@/components/ui/use-toast";
 
 
 const FileRender = ({data, updateInputForm}: any) => {
     const [file, setFile] = useState<any>(null);
+    const {toast} = useToast();
 
     const onFileChange = (e: any) => {
         const file = e.target.files[0];
         //limit file size 5mb
         if (file.size > 5000000) {
-            alert("File size should be less than 5MB.");
+            toast({
+                description: "File size should be less than 5MB.",
+                title: "File size too large",
+                variant: "destructive",
+            })
             return;
         }
         if (file) {
