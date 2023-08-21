@@ -225,13 +225,15 @@ const FormMainBox = ({
                     type: value.type,
                 };
             } else if (value.type === "files") {
+                let url = ''
+                if (value.value === '') {
+                    return;
+                }
                 // value.value is base64 upload to supabase
                 const base64 = value.value.split('__name__')[0]
                 const file = base64.split(',')[1]
-                console.log(base64)
                 const name = value.value.split('__name__')[1]
                 const contentType = base64.split(';')[0].split(':')[1]
-                console.log(contentType)
                 const {data, error} = await supabase.storage
                     .from("files")
                     .upload(`${Math.random().toString(36).substring(2, 15)}_${name}`, decode(file), {
@@ -249,7 +251,7 @@ const FormMainBox = ({
                 //get url
                 const uri = data?.path;
                 const bucket = 'files';
-                const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${uri}`;
+                url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${uri}`;
 
                 properties[key] = {
                     [value.type]: [

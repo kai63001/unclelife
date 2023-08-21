@@ -3,9 +3,12 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 import {Button} from "@/components/ui/button";
-import {Upload} from "lucide-react";
+import {Upload, Trash} from "lucide-react";
+import {useState} from "react";
+
 
 const FileRender = ({data, updateInputForm}: any) => {
+    const [file, setFile] = useState<any>(null);
 
     const onFileChange = (e: any) => {
         const file = e.target.files[0];
@@ -20,9 +23,10 @@ const FileRender = ({data, updateInputForm}: any) => {
             reader.readAsDataURL(file);
             reader.onload = () => {
                 const base64 = reader.result;
-                console.log("base64", base64);
                 const name = file.name;
                 updateInputForm(`${base64}__name__${name}`, data);
+                //set file name
+                setFile(name);
             }
         }
     }
@@ -38,22 +42,42 @@ const FileRender = ({data, updateInputForm}: any) => {
                     {data.required && <RequiredStar/>}
                 </div>
             </Label>
-            <Button asChild>
-                <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2 mt-2 cursor-pointer">
-                    Upload File
-                    <Upload className="ml-2 h-4 w-4"/>
-                </Label>
-            </Button>
-            <Input
-                className="hidden"
-                onChange={onFileChange}
-                name={data.label}
-                placeholder={data?.placeholder}
-                id={'uploadFileForm'}
-                disabled={data.disable}
-                required={data.required}
-                type={'file'}
-            />
+            {file ? (
+                <div>
+                    <div className="flex items-center space-x-2 mt-1">
+                        <div className="flex w-full border px-3 py-2 rounded-md flex-col">
+                            <p>{file}</p>
+                        </div>
+                        <Button asChild onClick={() => {
+                            setFile(null);
+                            updateInputForm(null, data);
+                        }}>
+                            <Label className="flex flex-col space-y-2 cursor-pointer">
+                                <Trash className="h-4 w-4"/>
+                            </Label>
+                        </Button>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <Button asChild>
+                        <Label htmlFor={'uploadFileForm'} className="flex space-x-2 mt-2 cursor-pointer">
+                            Upload File
+                            <Upload className="ml-2 h-4 w-4"/>
+                        </Label>
+                    </Button>
+                    <Input
+                        className="hidden"
+                        onChange={onFileChange}
+                        name={data.label}
+                        placeholder={data?.placeholder}
+                        id={'uploadFileForm'}
+                        disabled={data.disable}
+                        required={data.required}
+                        type={'file'}
+                    />
+                </>
+            )}
             <span className={'text-xs text-muted-foreground'}>File size should be less than 5MB. </span>
         </div>
     );
