@@ -51,8 +51,8 @@ const FileRender = ({data, updateInputForm}: any) => {
             {file ? (
                 <div>
                     <div className="flex items-center space-x-2 mt-1">
-                        <div className="flex w-full border px-3 py-2 rounded-md flex-col">
-                            <p>{file}</p>
+                        <div className="flex w-full border px-3 py-2 rounded-md overflow-hidden">
+                            <p className={'text-ellipsis overflow-hidden max-w-[370px] whitespace-nowrap'}>{file}</p>
                         </div>
                         <Button asChild onClick={() => {
                             setFile(null);

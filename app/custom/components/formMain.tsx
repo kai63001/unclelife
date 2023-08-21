@@ -234,9 +234,10 @@ const FormMainBox = ({
                 const file = base64.split(',')[1]
                 const name = value.value.split('__name__')[1]
                 const contentType = base64.split(';')[0].split(':')[1]
+                const randomName = `${Math.random().toString(36).substring(2, 15)}_${name}`
                 const {data, error} = await supabase.storage
                     .from("files")
-                    .upload(`${Math.random().toString(36).substring(2, 15)}_${name}`, decode(file), {
+                    .upload(randomName, decode(file), {
                         cacheControl: "3600",
                         contentType: contentType,
                     });
@@ -257,7 +258,7 @@ const FormMainBox = ({
                     [value.type]: [
                         {
                             //random file name
-                            name: `${Math.random().toString(36).substring(2, 15)}`,
+                            name: randomName,
                             external: {
                                 url: url as string,
                             },
