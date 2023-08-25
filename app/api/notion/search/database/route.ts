@@ -1,11 +1,13 @@
 import {NextRequest, NextResponse} from "next/server";
 import {Client} from "@notionhq/client";
-import {cookies} from "next/headers";
 import {supabase as supabaseBypass} from "@/lib/supabase";
 
 export async function GET(req: NextRequest) {
     try {
-        const userId = cookies().get('userId')?.value
+        if (req.nextUrl.searchParams.get("userId") === null) {
+            return NextResponse.json({error: "No userId provided"});
+        }
+        const userId = req.nextUrl.searchParams.get("userId") as string
 
         const {data: profile, error} = await supabaseBypass
             .from('decrypted_profiles').select('decrypted_provider_token').eq('id', userId).single();
