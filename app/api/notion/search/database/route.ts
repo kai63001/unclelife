@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
         });
 
         const databases = searched.results;
+        console.log(databases)
 
         return NextResponse.json(
             databases.map((database: any) => {
@@ -25,6 +26,7 @@ export async function GET(req: NextRequest) {
                     properties: database.properties,
                     icon: database.icon,
                     description: database.description,
+                    url: database.url,
                 }
             })
         );

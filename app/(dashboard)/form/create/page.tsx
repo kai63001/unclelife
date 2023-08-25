@@ -1,5 +1,6 @@
 import ListMyDatabase from "@/app/(dashboard)/form/create/components/ListMyDatabase";
 import {Suspense} from "react";
+import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/ListMyDatabaseLoading";
 
 const CreateFormPage = () => {
     return (
@@ -8,7 +9,7 @@ const CreateFormPage = () => {
             <p className={'text-muted-foreground'}>
                 Choose a database to create a form from it.
             </p>
-            <Suspense fallback={'Loading'}>
+            <Suspense fallback={<ListMyDatabaseLoading/>}>
                 <ListMyDatabase/>
             </Suspense>
         </div>
