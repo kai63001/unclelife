@@ -49,27 +49,3 @@ export async function GET(req: NextRequest) {
     }
 }
 
-export async function PUT(req: NextRequest) {
-    if (req.nextUrl.searchParams.get("id") === null) {
-        return NextResponse.json({error: "No id provided"});
-    }
-
-    const body = await req.json();
-    const properties = body.properties;
-
-    try {
-        const notion = new Client({
-            auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
-        });
-        const response: any = await notion.pages.create({
-            parent: {
-                database_id: req.nextUrl.searchParams.get("id") as string,
-            },
-            properties: properties,
-        });
-
-        return NextResponse.json(await response);
-    } catch (error: any) {
-        return NextResponse.json({error: error.message});
-    }
-}
