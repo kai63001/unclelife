@@ -37,6 +37,20 @@ export default function Home() {
                     <p className={'text-muted-foreground'}>Free 14-day trial - Cancel anytime</p>
                 </div>
             </section>
+            <h2 className="text-center text-3xl font-bold mt-12">How-to: Create Forms the Way You Want</h2>
+            <p className={'text-center text-muted-foreground'}>Creating custom forms for your Notion workspace has never been easier. Follow these steps:</p>
+            <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 items-center relative">
+                <ol>
+                    <li className={'flex flex-col'}>
+                        <h2 className={'text-2xl font-medium'}>1. Register and Connect Your Notion Workspace</h2>
+                        <ul className={'text-muted-foreground p-0 m-0'}>
+                            <li>Sign up on our platform.</li>
+                            <li>Connect to Notion from the {`'`}Integrations{`'`} section.</li>
+                            <li>Grant the necessary permissions.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
         </main>
     );
 }

@@ -3,17 +3,11 @@ import {Client} from "@notionhq/client";
 import {cookies} from "next/headers";
 
 export async function GET(req: NextRequest) {
-    if (req.nextUrl.searchParams.get("id") === null) {
-        return NextResponse.json({error: "No id provided"});
-    }
     try {
-        const id = req.nextUrl.searchParams.get("id") as string
-
         const notion = new Client({
             auth: cookies().get('tokenCode')?.value,
         })
 
-        //search all databases
         const searched = await notion.search({
             filter: {
                 value: "database",
@@ -22,23 +16,18 @@ export async function GET(req: NextRequest) {
         });
 
         const databases = searched.results;
-        console.log(databases);
 
-        console.log('gogog')
-
-        const response: any = await notion.databases.retrieve({
-            database_id: id.trim().toString()
-        }).catch((error) => {
-            console.log(error)
-        });
-        // //this code for gets user retrieves and will be used in the future
-        // notion.users.retrieve({ user_id: response.properties.Author.people }).then((user) => {
-        //   console.log(user);
-        // });
-
-        const properties = response.properties;
-
-        return NextResponse.json(await properties);
+        return NextResponse.json(
+            databases.map((database: any) => {
+                return {
+                    id: database.id,
+                    title: database.title,
+                    properties: database.properties,
+                    icon: database.icon,
+                    description: database.description,
+                }
+            })
+        );
     } catch (error: any) {
         return NextResponse.json({error: error.message});
     }
