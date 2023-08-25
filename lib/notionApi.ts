@@ -14,7 +14,7 @@ export const getDatabase = async (id: string) => {
 };
 
 export const getListDatabase = async (userId: string) => {
-    const response = await notionApi.get(`/api/notion/search/database?userId=${userId}`);
+    const response = await notionApi.get(`/api/notion/search/database?userid=${userId}`);
     return response.data;
 }
 

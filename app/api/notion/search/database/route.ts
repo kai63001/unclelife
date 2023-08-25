@@ -2,12 +2,13 @@ import {NextRequest, NextResponse} from "next/server";
 import {Client} from "@notionhq/client";
 import {supabase as supabaseBypass} from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
     try {
-        if (req.nextUrl.searchParams.get("userId") === null) {
+        if (req.nextUrl.searchParams.get("userid") === null) {
             return NextResponse.json({error: "No userId provided"});
         }
-        const userId = req.nextUrl.searchParams.get("userId") as string
+        const userId = req.nextUrl.searchParams.get("userid") as string
 
         const {data: profile, error} = await supabaseBypass
             .from('decrypted_profiles').select('decrypted_provider_token').eq('id', userId).single();
