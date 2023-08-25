@@ -8,6 +8,7 @@ import {setLayer} from "@/app/redux/slice/formController.slice";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import dynamic from "next/dynamic";
 import ModalAddLayer from "./modal/addLayer";
+import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), {ssr: false});
 
@@ -64,6 +65,15 @@ const LayerBar = () => {
         }
     }
 
+    const checkTypeIsPro = (type: string) => {
+        switch (type) {
+            case "files":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     return (
         <div className="text-[#3d3d3d] h-screen w-96 fixed right-0 pb-5 pt-20 pr-5">
             <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-background text-primary">
@@ -77,13 +87,20 @@ const LayerBar = () => {
                         onChange={setLayerHook}
                         renderItem={(item: any) => (
                             <SortableList.Item id={item.id}>
-                                <div className="flex flex-col">
-                                    <p>{item.label}</p>
-                                    <div className="flex items-center space-x-1">
-                                        {/*<p className="text-xs text-[#9E9E9E]">{item.name}</p>*/}
-                                        {/*<p className="text-xs text-[#9E9E9E]">·</p>*/}
-                                        <p className="text-xs text-[#9E9E9E] capitalize">{renderFilterTypeWording(item.type)}</p>
+                                <div className="flex space-x-3">
+                                    <div className="flex flex-col">
+                                        <p>{item.label}</p>
+                                        <div className="flex items-center space-x-1">
+                                            {/*<p className="text-xs text-[#9E9E9E]">{item.name}</p>*/}
+                                            {/*<p className="text-xs text-[#9E9E9E]">·</p>*/}
+                                            <p className="text-xs text-[#9E9E9E] capitalize">{renderFilterTypeWording(item.type)}</p>
+                                        </div>
                                     </div>
+                                    {checkTypeIsPro(item.type) && (
+                                        <div className="flex items-center space-x-1">
+                                            <ProBadge/>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="flex">
                                     <SheetTab id={item.id}/>

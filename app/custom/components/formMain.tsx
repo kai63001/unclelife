@@ -17,6 +17,8 @@ import {
 import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
 import Image from "next/image";
+import {decode} from 'base64-arraybuffer'
+
 
 const FormMainBox = ({
                          id = null,
@@ -143,7 +145,7 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId,user (is_subscribed)")
+                    .select("layer,detail,databaseId,user (is_subscribed,id)")
                     .eq("id", id)
                     .single()
                     .then((res: any) => {
@@ -223,13 +225,42 @@ const FormMainBox = ({
                     type: value.type,
                 };
             } else if (value.type === "files") {
+                let url = ''
+                if (value.value === '') {
+                    return;
+                }
+                // value.value is base64 upload to supabase
+                const base64 = value.value.split('__name__')[0]
+                const file = base64.split(',')[1]
+                const name = value.value.split('__name__')[1]
+                const contentType = base64.split(';')[0].split(':')[1]
+                const randomName = `${Math.random().toString(36).substring(2, 15)}_${name}`
+                const {data, error} = await supabase.storage
+                    .from("files")
+                    .upload(randomName, decode(file), {
+                        cacheControl: "3600",
+                        contentType: contentType,
+                    });
+                if (error) {
+                    toast({
+                        title: "Error",
+                        description: error.message,
+                        variant: "destructive",
+                    });
+                    return;
+                }
+                //get url
+                const uri = data?.path;
+                const bucket = 'files';
+                url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${uri}`;
+
                 properties[key] = {
                     [value.type]: [
                         {
                             //random file name
-                            name: `${Math.random().toString(36).substring(2, 15)}`,
+                            name: randomName,
                             external: {
-                                url: value.value as string,
+                                url: url as string,
                             },
                         },
                     ],
@@ -259,7 +290,7 @@ const FormMainBox = ({
             }
         }
 
-        updateDatabase(databaseId, properties)
+        updateDatabase(databaseId, properties, dataUser.id)
             .then((e) => {
                 if (e?.error) {
                     //toast error
@@ -334,6 +365,7 @@ const FormMainBox = ({
                                     <RenderFormComponent
                                         updateInputForm={updateInputForm}
                                         data={item}
+                                        dataUser={dataUser}
                                         key={index}
                                     />
                                 );

@@ -22,6 +22,9 @@ export async function GET() {
         )
     }
 
+    console.log('helo')
+
+
     const {data: {stripe_customer}}: any = await supabase.from('profiles').select('stripe_customer').eq('id', session.user.id).single();
     if (!stripe_customer) {
         return NextResponse.json(
@@ -30,6 +33,7 @@ export async function GET() {
             }
         )
     }
+
 
     const dataSession = await stripe.billingPortal.sessions.create({
         customer: stripe_customer,

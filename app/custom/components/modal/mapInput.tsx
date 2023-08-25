@@ -92,7 +92,7 @@ const ModalMapInput = () => {
             case "rich_text":
                 return "Long"
             default:
-                //capitalize first letter
+                //capitalize a first letter
                 return (type.charAt(0).toUpperCase() + type.slice(1)).replaceAll('_',' ');
         }
 
