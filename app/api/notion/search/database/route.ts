@@ -1,11 +1,26 @@
 import {NextRequest, NextResponse} from "next/server";
 import {Client} from "@notionhq/client";
 import {cookies} from "next/headers";
+import {supabase as supabaseBypass} from "@/lib/supabase";
 
 export async function GET(req: NextRequest) {
     try {
+        const userId = cookies().get('userId')?.value
+
+        const {data: profile, error} = await supabaseBypass
+            .from('decrypted_profiles').select('decrypted_provider_token').eq('id', userId).single();
+        if (error) {
+            return NextResponse.json(
+                {
+                    'message': 'error',
+                    'error': error
+                }
+            )
+        }
+        const token = profile.decrypted_provider_token
+
         const notion = new Client({
-            auth: cookies().get('tokenCode')?.value,
+            auth: token,
         })
 
         const searched = await notion.search({
@@ -16,7 +31,6 @@ export async function GET(req: NextRequest) {
         });
 
         const databases = searched.results;
-        console.log(databases)
 
         return NextResponse.json(
             databases.map((database: any) => {

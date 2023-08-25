@@ -17,7 +17,7 @@ import {
 import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
 import Image from "next/image";
-import { decode } from 'base64-arraybuffer'
+import {decode} from 'base64-arraybuffer'
 
 
 const FormMainBox = ({
@@ -145,7 +145,7 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId,user (is_subscribed)")
+                    .select("layer,detail,databaseId,user (is_subscribed,id)")
                     .eq("id", id)
                     .single()
                     .then((res: any) => {
@@ -290,7 +290,7 @@ const FormMainBox = ({
             }
         }
 
-        updateDatabase(databaseId, properties)
+        updateDatabase(databaseId, properties, dataUser.id)
             .then((e) => {
                 if (e?.error) {
                     //toast error

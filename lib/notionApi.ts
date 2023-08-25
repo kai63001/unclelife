@@ -13,19 +13,22 @@ export const getDatabase = async (id: string) => {
     return response.data;
 };
 
-export const getListDatabase = async (token:string) => {
-    console.log(token)
+export const getListDatabase = async (userId:string) => {
     const response = await notionApi.get(`/api/notion/search/database`, {
         headers: {
-            cookie: `tokenCode=${token}`,
+            cookie: `userId=${userId}`,
         }
     });
     return response.data;
 }
 
-export const updateDatabase = async (id: string, properties: any) => {
+export const updateDatabase = async (id: string, properties: any,userId: any) => {
     const response = await notionApi.put(`/api/notion/database?id=${id}`, {
         properties,
+    }, {
+        headers: {
+            cookie: `tokenCode=${userId}`,
+        }
     });
     return response.data;
 };

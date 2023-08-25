@@ -17,9 +17,7 @@ export async function GET(req: NextRequest) {
             //insert token to database profile
             await supabaseBypass.from('profiles').update({
                 provider_token: token
-            }).eq('id', user).then((res) => {
-                console.log(res)
-            })
+            }).eq('id', user)
 
             // const {data: profile, error} = await supabaseBypass
             //     .from('decrypted_profiles').select('*')
@@ -27,10 +25,7 @@ export async function GET(req: NextRequest) {
 
 
             //save code to local storage
-            cookies().set('tokenCode', token, {
-                path: '/',
-                maxAge: 60 * 60 * 24 * 7,
-            })
+            cookies().set('tokenCode', token)
         } catch (e) {
             console.log(e)
             return NextResponse.redirect(new URL('/auth/login', process.env.NEXT_PUBLIC_FRONT_END_URL))

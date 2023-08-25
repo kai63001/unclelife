@@ -13,19 +13,6 @@ export async function GET(req: NextRequest) {
             auth: cookies().get('tokenCode')?.value,
         })
 
-        //search all databases
-        const searched = await notion.search({
-            filter: {
-                value: "database",
-                property: "object"
-            },
-        });
-
-        const databases = searched.results;
-        console.log(databases);
-
-        console.log('gogog')
-
         const response: any = await notion.databases.retrieve({
             database_id: id.trim().toString()
         }).catch((error) => {
@@ -54,8 +41,9 @@ export async function PUT(req: NextRequest) {
 
     try {
         const notion = new Client({
-            auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
-        });
+            auth: cookies().get('tokenCode')?.value,
+        })
+
         const response: any = await notion.pages.create({
             parent: {
                 database_id: req.nextUrl.searchParams.get("id") as string,

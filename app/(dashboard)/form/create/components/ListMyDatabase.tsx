@@ -6,7 +6,7 @@ const ListMyDatabase = async () => {
 
     const supabase = createServerSupabaseClient(), {data: session} = await supabase.auth.getSession()
 
-    const listDatabase = await getListDatabase(session?.session?.provider_token as string).then((data) => {
+    const listDatabase = await getListDatabase(session?.session?.user?.id as string).then((data) => {
         if (data.error) {
             return []
         }
