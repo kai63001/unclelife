@@ -19,12 +19,8 @@ export const getListDatabase = async (userId: string) => {
 }
 
 export const updateDatabase = async (id: string, properties: any, userId: any) => {
-    const response = await notionApi.put(`/api/notion/database?id=${id}`, {
+    const response = await notionApi.put(`/api/notion/database?id=${id}&userid=${userId}`, {
         properties,
-    }, {
-        headers: {
-            cookie: `tokenCode=${userId}`,
-        }
     });
     return response.data;
 };

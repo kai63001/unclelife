@@ -2,6 +2,10 @@ import {NextRequest, NextResponse} from "next/server";
 import {Client} from "@notionhq/client";
 import {cookies} from "next/headers";
 
+import {supabase as supabaseBypass} from "@/lib/supabase";
+
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
     if (req.nextUrl.searchParams.get("id") === null) {
         return NextResponse.json({error: "No id provided"});
@@ -36,12 +40,31 @@ export async function PUT(req: NextRequest) {
         return NextResponse.json({error: "No id provided"});
     }
 
+    if (req.nextUrl.searchParams.get("userid") === null) {
+        return NextResponse.json({error: "No userId provided"});
+    }
+
+    const userId = req.nextUrl.searchParams.get("userid") as string
+
+    const {data: profile, error} = await supabaseBypass
+        .from('decrypted_profiles').select('decrypted_provider_token').eq('id', userId).single();
+    if (error) {
+        return NextResponse.json(
+            {
+                'message': 'error',
+                'error': error
+            }
+        )
+    }
+    const token = profile.decrypted_provider_token
+
+
     const body = await req.json();
     const properties = body.properties;
 
     try {
         const notion = new Client({
-            auth: cookies().get('tokenCode')?.value,
+            auth: token,
         })
 
         const response: any = await notion.pages.create({
