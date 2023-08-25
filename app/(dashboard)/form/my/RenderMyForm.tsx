@@ -16,7 +16,7 @@ const RenderMyForm = async ({limit = 1000}: { limit?: number }) => {
         userId = session?.session?.user?.id, {
             data,
             error
-        } = await supabase.from('form').select('id,detail,created_at').eq('user', userId).limit(limit).order('created_at', {ascending: false});
+        } = await supabase.from('form').select('id,detail,created_at').eq('user_id', userId).limit(limit).order('created_at', {ascending: false});
     if (error) {
         console.log(error)
     }

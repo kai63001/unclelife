@@ -105,7 +105,7 @@ const FormMainBox = ({
             })
             return
         }
-        setDataUser(res.data.user);
+        setDataUser(res.data.user_id);
     }
 
 
@@ -121,7 +121,7 @@ const FormMainBox = ({
             try {
                 supabase
                     .from("form")
-                    .select("layer,detail,databaseId,user")
+                    .select("layer,detail,databaseId,user_id")
                     .eq("id", _id)
                     .single()
                     .then((res: any) => {
