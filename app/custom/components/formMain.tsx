@@ -23,9 +23,11 @@ import {decode} from 'base64-arraybuffer'
 const FormMainBox = ({
                          id = null,
                          testMode = false,
+                         responseData = null
                      }: {
     id?: string | null;
     testMode?: boolean;
+    responseData?: any;
 }) => {
     const {toast} = useToast();
     const dispatch = useAppDispatch();
@@ -140,22 +142,9 @@ const FormMainBox = ({
 
     useEffect(() => {
         //supabase
-        if (id != null) {
-            if (!supabase) return;
-            try {
-                supabase
-                    .from("form")
-                    .select("layer,detail,databaseId,user_id (is_subscribed,id)")
-                    .eq("id", id)
-                    .single()
-                    .then((res: any) => {
-                        console.log(res)
-                        saveDataState(res)
-                    });
-            } catch (error) {
-                console.log(error);
-            }
-
+        // this is production mode
+        if (id != null && responseData != null) {
+            saveDataState(responseData)
             return;
         }
         setDataForm(form);
