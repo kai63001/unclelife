@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import {getAllPosts} from '@/lib/apiMarkdown'
 import IndexNavbar from "@/app/index/components/Navbar";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Uncle Life Blog - Insights on Notion Forms & Widgets',
+    description: 'Dive into the Uncle Life Blog for expert insights, tips, and articles on maximizing Notion with our specialized forms and widgets. Stay updated and enhance your Notion journey with us.',
+}
 
 export default async function Page() {
     const posts = await getAllPosts()
