@@ -1,95 +1,34 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { Icons } from "@/components/Icons";
-import { Database } from "@/lib/types_db";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {X} from "lucide-react";
 import Link from "next/link";
+import Login from "@/app/login/components/login";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Uncle Life - Login to Access Notion Tools',
+    description: 'Sign in to Uncle Life and unlock the power of Notion forms and widgets. Streamline your workflow and enhance your Notion experience with our specialized tools.',
+}
 
 const LoginPage = () => {
-  // const form = useForm();
-  const supabase = createClientComponentClient<Database>();
-
-  async function signInWithNotion() {
-    console.log("sign in with notion env 2", process.env.NEXT_PUBLIC_FRONT_END_URL)
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "notion",
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
-      },
-    });
-    if (error) console.log(error);
-  }
-
-  return (
-    <div className="h-screen w-screen bg-customMode flex justify-center items-center">
-      <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full">
-        {/* close */}
-        <div className="flex justify-end">
-          <Link href="/">
-            <X size={24} />
-          </Link>
+    return (
+        <div className="h-screen w-screen bg-customMode flex justify-center items-center">
+            <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full">
+                {/* close */}
+                <div className="flex justify-end">
+                    <Link href="/">
+                        <X size={24}/>
+                    </Link>
+                </div>
+                <h1 className="text-center text-3xl font-bold">UncleLife</h1>
+                <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
+                    One account for
+                    {"\n"}All your Notion pages
+                </h2>
+                <div className="border-b my-4"></div>
+                {/* notion login */}
+                <Login/>
+            </div>
         </div>
-        <h1 className="text-center text-3xl font-bold">UncleLife</h1>
-        <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
-          One account for
-          {"\n"}All your Notion pages
-        </h2>
-        {/* <Form {...form}>
-          <form className="space-y-2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>E-mail address:</FormLabel>
-                  <FormControl>
-                    <Input placeholder="uncle@life.co" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full" style={{ marginTop: 20 }}>
-              Sign in
-            </Button>
-          </form>
-        </Form> */}
-        <div className="border-b my-4"></div>
-        {/* notion login */}
-        <div className="flex justify-center items-center">
-          <Button onClick={signInWithNotion} className="w-full ">
-            <Icons.notion className="mr-2 h-5 w-5" />
-            Login with Notion
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LoginPage;

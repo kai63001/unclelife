@@ -10,6 +10,7 @@ import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeShiki from '@leafac/rehype-shiki'
 import * as shiki from 'shiki'
+import {cache} from "react";
 
 // building of the blog from ~60s->~10s
 let p: ReturnType<typeof getParserPre> | undefined
@@ -47,7 +48,7 @@ function getParser() {
     return p
 }
 
-export async function getPostById(id: string) {
+export const getPostById = cache(async (id: string) => {
     const realId = id.replace(/\.md$/, '')
     const fullPath = join('_posts', `${realId}.md`)
     const { data, content } = matter(await fs.promises.readFile(fullPath, 'utf8'))
@@ -61,12 +62,13 @@ export async function getPostById(id: string) {
         id: realId,
         date: `${data.date?.toISOString().slice(0, 10)}`,
         html: html.value.toString(),
+        cover: data.cover,
     }
-}
+});
 
-export async function getAllPosts() {
+export const getAllPosts = cache(async () => {
     const posts = await Promise.all(
         fs.readdirSync('_posts').map(id => getPostById(id)),
     )
     return posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
-}
+});

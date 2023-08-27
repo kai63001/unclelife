@@ -4,6 +4,11 @@ import RenderMyFormLoading from "@/app/(dashboard)/form/my/RenderMyFormLoading";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
+export const metadata = {
+    title: "Uncle Life Form Builder - Craft Your Notion Forms",
+    description: "Step into Uncle Life's Form Builder, where creating and managing your Notion forms becomes a breeze. Design, customize, and integrate forms seamlessly with your Notion workspace.",
+};
+
 const MyFormPage = () => {
     return (
         <div>

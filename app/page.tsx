@@ -5,6 +5,13 @@ import Link from "next/link"
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
     ssr: true,
 });
+import type {Metadata} from 'next'
+
+export const metadata: Metadata = {
+    title: 'Uncle Life - Notion Forms & Widgets Simplified',
+    description: 'Welcome to Uncle Life, your go-to platform for seamless Notion forms and widgets. Elevate your productivity and organization with our intuitive tools tailored for Notion enthusiasts.',
+}
+
 
 export default function Home() {
     return (
@@ -38,7 +45,8 @@ export default function Home() {
                 </div>
             </section>
             <h2 className="text-center text-3xl font-bold mt-12">How-to: Create Forms the Way You Want</h2>
-            <p className={'text-center text-muted-foreground'}>Creating custom forms for your Notion workspace has never been easier. Follow these steps:</p>
+            <p className={'text-center text-muted-foreground'}>Creating custom forms for your Notion workspace has never
+                been easier. Follow these steps:</p>
             <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 items-center relative">
                 <ol>
                     <li className={'flex flex-col'}>
