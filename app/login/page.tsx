@@ -26,6 +26,14 @@ const LoginPage = () => {
                 <div className="border-b my-4"></div>
                 {/* notion login */}
                 <Login/>
+                <p className="text-muted-foreground text-xs text-center mt-3 whitespace-pre-line">
+                    By continuing, you are indicating that you accept our{' \n'}
+                    <Link href={'/privacy-policy'} className={'text-red-600'} target={'_blank'}
+                          rel={'noopener noreferrer'}>Privacy Policy</Link>
+                    {' and '}
+                    <Link href={'/terms-conditions'} className={'text-red-600'} target={'_blank'} rel={'noopener noreferrer'}>Terms of
+                        Service</Link>
+                </p>
             </div>
         </div>
     );
