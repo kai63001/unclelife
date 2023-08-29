@@ -17,9 +17,10 @@ export default async function Post({
                 <h1 className={'text-2xl font-bold'}>{title}</h1>
                 <h4>{date}</h4>
                 <div className={'w-full h-[250px] md:h-[500px] relative'}>
-                    <Image src={cover} alt={`Cover Image for ${title}`} className={'object-cover'} fill />
+                    <Image src={cover} alt={`Cover Image for ${title}`} className={'object-cover'} fill/>
                 </div>
-                <div className={'prose lg:prose-xl max-w-full prose-red dark:prose-emerald dark:prose-invert mt-5'} dangerouslySetInnerHTML={{__html: html}}/>
+                <div className={'prose lg:prose-xl max-w-full prose-red dark:prose-emerald dark:prose-invert mt-5'}
+                     dangerouslySetInnerHTML={{__html: html}}/>
             </article>
         </main>
     )
@@ -41,8 +42,9 @@ export async function generateMetadata({
                                        }: {
     params: { id: string }
 }) {
-    const {title} = await getPostById(id)
+    const {title, description} = await getPostById(id)
     return {
         title,
+        description
     }
 }
