@@ -10,7 +10,10 @@ import {Skeleton} from "@/components/ui/skeleton";
 import {loadStripe} from "@stripe/stripe-js";
 import {Icons} from "@/components/Icons";
 import {useSupabase} from "@/app/hook/supabase-provider";
+import {cache} from "react";
 
+
+export const revalidate = 3600 // 1 hour
 const PricingBox = () => {
     const {user, isLoading} = useSupabase()
     const [yearly, setYearly] = useState(true)
@@ -106,10 +109,10 @@ const PricingBox = () => {
         }
     }
 
-    const getPriceList = async () => {
+    const getPriceList = cache(async () => {
         const data = await axios.get('/api/stripe/price')
         return data?.data
-    }
+    })
 
     const mapPriceToList = (price: any) => {
         let data: any = {
@@ -149,7 +152,7 @@ const PricingBox = () => {
 
     return (
         <>
-            <div className={'flex justify-center space-x-3 my-10'}>
+            <div className={'flex justify-center space-x-3 mt-7 mb-5'}>
                 <span className={'font-bold'}>Monthly</span>
                 <span className={''}><Switch checked={yearly} onCheckedChange={(e) => setYearly(e)} id="airplane-mode"/></span>
                 <span className={'font-bold'}>Yearly <Badge variant="destructive">~ 25%</Badge></span>

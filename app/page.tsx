@@ -7,6 +7,7 @@ const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
 });
 import type {Metadata} from 'next'
 import PricingBox from "@/app/pricing/components/PricingBox";
+import FeatureIndex from "@/app/index/components/Feature";
 
 export const metadata: Metadata = {
     title: 'Uncle Life - Notion Forms & Widgets Simplified',
@@ -45,13 +46,16 @@ export default function Home() {
                     <p className={'text-muted-foreground'}>Free 14-day trial - Cancel anytime</p>
                 </div>
             </section>
-            <span className={'mx-auto px-3 py-1 bg-red-600 rounded-full text-sm font-bold mt-12'}>2 min</span>
+            <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">
+                <FeatureIndex/>
+            </section>
+            <span className={'mx-auto px-3 py-1 bg-red-600 rounded-full text-sm font-bold mt-12 text-white'}>2 min</span>
             <h2 className="text-center text-3xl font-bold ">Create Forms the Way You Want</h2>
             <p className={'text-center text-muted-foreground'}>Creating custom forms for your Notion workspace has never
                 been easier. Follow these steps:</p>
             <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 items-center relative">
                 <ol className={''}>
-                    <li className={'grid grid-cols-2 gap-4'}>
+                    <li className={'grid grid-cols-1 md:grid-cols-2 gap-4'}>
                         <div>
                             <h2 className={'text-2xl font-medium'}>1. Sign Up & Connect to Notion</h2>
                             <ul className={'text-muted-foreground p-0 m-0'}>
