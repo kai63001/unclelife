@@ -67,6 +67,21 @@ export const getPostById = cache(async (id: string) => {
     }
 });
 
+export const getMarkdownInFolderMarkDown = cache(async (file: string) => {
+    const realId = file.replace(/\.md$/, '')
+    const fullPath = join('_markdown', `${realId}.md`)
+    const { data, content } = matter(await fs.promises.readFile(fullPath, 'utf8'))
+
+    const parser = await getParser()
+    const html = await parser.process(content)
+
+    return {
+        ...data,
+        id: realId,
+        html: html.value.toString(),
+    }
+})
+
 export const getAllPosts = cache(async () => {
     const posts = await Promise.all(
         fs.readdirSync('_posts').map(id => getPostById(id)),
