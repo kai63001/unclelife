@@ -10,7 +10,10 @@ import {Skeleton} from "@/components/ui/skeleton";
 import {loadStripe} from "@stripe/stripe-js";
 import {Icons} from "@/components/Icons";
 import {useSupabase} from "@/app/hook/supabase-provider";
+import {cache} from "react";
 
+
+export const revalidate = 3600 // 1 hour
 const PricingBox = () => {
     const {user, isLoading} = useSupabase()
     const [yearly, setYearly] = useState(true)
@@ -106,10 +109,10 @@ const PricingBox = () => {
         }
     }
 
-    const getPriceList = async () => {
+    const getPriceList = cache(async () => {
         const data = await axios.get('/api/stripe/price')
         return data?.data
-    }
+    })
 
     const mapPriceToList = (price: any) => {
         let data: any = {
@@ -149,13 +152,13 @@ const PricingBox = () => {
 
     return (
         <>
-            <div className={'flex justify-center space-x-3 my-10'}>
+            <div className={'flex justify-center space-x-3 mt-7 mb-5'}>
                 <span className={'font-bold'}>Monthly</span>
                 <span className={''}><Switch checked={yearly} onCheckedChange={(e) => setYearly(e)} id="airplane-mode"/></span>
                 <span className={'font-bold'}>Yearly <Badge variant="destructive">~ 25%</Badge></span>
             </div>
-            <div className={'flex items-center'}>
-                <div className={'flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative'}>
+            <div className={'flex items-center flex-col md:flex-row space-y-3'}>
+                <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Basic</h2>
                     <p className={'my-2'}>All the basics tools to create beautiful forms.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
@@ -177,7 +180,7 @@ const PricingBox = () => {
                         </Link>
                     </div>
                 </div>
-                <div className={'flex-1 border h-[500px] rounded-md shadow-lg bg-primary text-secondary p-5 relative'}>
+                <div className={'md:flex-1 border h-[500px] rounded-md shadow-lg bg-primary text-secondary p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Pro</h2>
                     <p className={'my-2'}>Everything you need to create
                         beautiful and professional forms.</p>
@@ -229,7 +232,7 @@ const PricingBox = () => {
                     </div>
 
                 </div>
-                <div className={'flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative'}>
+                <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Advanced</h2>
                     <p className={'my-2'}>Unlock advanced tools for exquisite form creation.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>

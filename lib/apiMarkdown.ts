@@ -63,6 +63,7 @@ export const getPostById = cache(async (id: string) => {
         date: `${data.date?.toISOString().slice(0, 10)}`,
         html: html.value.toString(),
         cover: data.cover,
+        description: data.description,
     }
 });
 
