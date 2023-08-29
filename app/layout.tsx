@@ -4,6 +4,7 @@ import {Providers} from "./redux/provider";
 import NextNProgressbar from "@/components/NextProgressbar";
 import {Toaster} from "@/components/ui/toaster";
 import type {Metadata} from 'next'
+import Script from 'next/script'
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -18,40 +19,14 @@ export const metadata: Metadata = {
         locale: "en_IE",
         url: "https://unclelife.co",
         siteName: "Uncle Life",
-        images: [
-            {
-                url: "https://unclelife.co/og.png",
-                width: 1200,
-                height: 630,
-                alt: "Uncle Life",
-            },
-            {
-                url: "https://unclelife.co/og.png",
-                width: 800,
-                height: 600,
-                alt: "Uncle Life",
-            },
-            {url: "https://unclelife.co/og.png"},
-        ],
+        images: '/og.png',
     },
     twitter: {
         title: "Uncle Life",
         card: "summary_large_image",
         site: "@unclelife",
         creator: "@unclelife",
-        images: [
-            {
-                url: "https://unclelife.co/og.png",
-                width: 1200,
-                height: 630,
-            },
-            {
-                url: "https://unclelife.co/og.png",
-                width: 800,
-                height: 600,
-            },
-            {url: "https://unclelife.co/og.png"},
-        ],
+        images: '/og.png',
     },
 };
 
@@ -66,6 +41,16 @@ export default function RootLayout({
         <NextNProgressbar/>
         <Providers>{children}</Providers>
         <Toaster/>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-C7BSJTQDVY"/>
+        <Script id="google-analytics">
+            {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-C7BSJTQDVY');
+        `}
+        </Script>
         </body>
         </html>
     );
