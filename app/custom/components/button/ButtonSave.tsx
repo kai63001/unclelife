@@ -33,7 +33,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
     const [mapLength, setMapLength] = useState(0);
 
     const copyLink = (idData = infomation.id) => {
-        console.log("copy link");
+        // console.log("copy link");
         navigator.clipboard.writeText(
             `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
         );
@@ -41,7 +41,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
 
     const checkAllInputIsMaped = () => {
         const inputForm = layer.filter((item: any) => item.mapTo);
-        console.log(layer.length, inputForm.length);
+        // console.log(layer.length, inputForm.length);
         if (layer.length != inputForm.length) {
             setWarning(true);
             setMapLength(layer.length - inputForm.length);

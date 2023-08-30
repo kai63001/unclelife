@@ -54,7 +54,7 @@ const ModalMapInput = () => {
         setLoading(true);
         try {
             const databaseList = await getDatabase(databaseId);
-            console.log("databaseList :", databaseList);
+            // console.log("databaseList :", databaseList);
             setListObjectTable(databaseList);
             if (databaseList?.error) {
                 setListObjectTable(tableOfDatabase);
@@ -81,7 +81,7 @@ const ModalMapInput = () => {
     };
 
     const onMapChange = (e: any, id: any) => {
-        console.log(e, id);
+        // console.log(e, id);
         const type = listObjectTable[e].type;
         dispatch(setMapFromLayerWithId({id, mapTo: e, mapType: type}));
     };

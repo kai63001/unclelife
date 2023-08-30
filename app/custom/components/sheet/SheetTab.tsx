@@ -52,7 +52,7 @@ const SheetTab = ({id}: any) => {
             })
         );
 
-        console.log("result :", data);
+        // console.log("result :", data);
     };
 
     const confirmationDelete = () => {

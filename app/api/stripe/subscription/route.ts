@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
 
     const {data: {stripe_customer, trail_end}}: any = await supabase.from('profiles').select('stripe_customer,trail_end').eq('id', session.user.id).single();
-    console.log(stripe_customer)
+    // console.log(stripe_customer)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
         apiVersion: '2022-11-15',
     });

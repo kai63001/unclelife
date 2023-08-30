@@ -21,7 +21,7 @@ const ButtonSubmitTab = () => {
         }))
         switch (value) {
             case "left":
-                console.log("left")
+                // console.log("left")
                 break;
             case "center":
                 dispatch(setForm({

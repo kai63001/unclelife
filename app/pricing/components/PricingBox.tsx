@@ -140,7 +140,7 @@ const PricingBox = () => {
                 }
             }
         })
-        console.log(data)
+        // console.log(data)
         setPriceMonthlyAndYearly(data)
         setLoading(false)
     }

@@ -13,6 +13,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import ManageSubscrptionComponent from "@/app/(dashboard)/setting/components/ManageSubscrption";
+import DeleteAccount from "@/app/(dashboard)/setting/components/DeleteAccount";
 
 export const metadata = {
     title: "Uncle Life Dashboard - Manage Your Notion Tools",
@@ -42,7 +43,7 @@ const SettingPage = () => {
                                 <b>Danger Zone</b>
                                 <br/>
                                 <br/>
-                                <Button variant={'destructive'}>Delete account</Button>
+                                <DeleteAccount/>
                                 <p className={'text-sm'}>
                                     Once you delete your account, there is no going back. Please be
                                     certain.

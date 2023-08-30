@@ -127,7 +127,7 @@ const FormMainBox = ({
                     .eq("id", _id)
                     .single()
                     .then((res: any) => {
-                        console.log("supabase", res)
+                        // console.log("supabase", res)
                         saveDataState(res)
                         dispatch(setLayer(res.data.layer));
                         dispatch(setDatabaseId(res.data.databaseId));
@@ -173,7 +173,7 @@ const FormMainBox = ({
         }
 
         if (testMode) {
-            console.log("test mode");
+            // console.log("test mode");
             return;
         }
 
@@ -182,11 +182,11 @@ const FormMainBox = ({
         }
         setLoading(true);
         //loop get all value
-        console.log("submit form");
+        // console.log("submit form");
 
         //loop inputForm create object properties for notion page body
         let properties: any = {};
-        console.log(inputForm);
+        // console.log(inputForm);
         for (const [key, value] of Object.entries(inputForm) as any) {
             if (value.type === "title" || value.type === "rich_text") {
                 properties[key] = {
