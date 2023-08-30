@@ -86,13 +86,18 @@ const ButtonSaveCustomForm = ({session}: any) => {
             .from("form")
             .insert({
                 layer: layer,
-                user: session?.user?.id || "",
+                user_id: session?.user?.id || "",
                 detail: form,
                 databaseId,
             })
             .select();
         if (error) {
             console.log(error);
+            toast({
+                title: "Error",
+                description: error?.message?.toString(),
+                variant: "destructive"
+            })
             setLoading(false);
             return;
         }
