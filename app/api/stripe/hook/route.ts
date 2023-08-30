@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     switch (event.type) {
         case "customer.subscription.created":
-            console.log('customer.subscription.created')
+            // console.log('customer.subscription.created')
             await supabaseBypass.from('profiles').update({
                 is_subscribed: true,
                 interval: event.data.object.items.data[0].plan.interval,
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
             }).eq('stripe_customer', event.data.object.customer)
             break;
         case "customer.subscription.updated":
-            console.log('customer.subscription.updated')
+            // console.log('customer.subscription.updated')
             await supabaseBypass.from('profiles').update({
                 is_subscribed: true,
                 interval: event.data.object.items.data[0].plan.interval,
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
             }).eq('stripe_customer', event.data.object.customer)
             break;
         case "customer.subscription.deleted":
-            console.log('customer.subscription.deleted')
+            // console.log('customer.subscription.deleted')
             await supabaseBypass.from('profiles').update({
                 is_subscribed: false,
                 interval: null,
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
             }).eq('stripe_customer', event.data.object.customer)
             break;
         case "invoice.payment_failed":
-            console.log('invoice.payment_failed')
+            // console.log('invoice.payment_failed')
             await supabaseBypass.from('profiles').update({
                 is_subscribed: false,
                 interval: null,

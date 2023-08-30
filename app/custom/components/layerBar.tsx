@@ -20,7 +20,7 @@ const LayerBar = () => {
 
     //hook for init
     useEffect(() => {
-        console.log("tableOfDatabase change", tableOfDatabase);
+        // console.log("tableOfDatabase change", tableOfDatabase);
         let newTable: any = [];
         // table of database is array of object
         Object.keys(tableOfDatabase).map((item, index): any => {
@@ -44,7 +44,7 @@ const LayerBar = () => {
 
         //reverse
         newTable = newTable.reverse();
-        console.log("newTable", newTable);
+        // console.log("newTable", newTable);
 
         dispatch(setLayer(newTable));
         // eslint-disable-next-line react-hooks/exhaustive-deps

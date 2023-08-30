@@ -34,7 +34,7 @@ const CreateFormSearchDB = () => {
       return;
     }
     const database = await getDatabase(databaseId);
-    console.log(database);
+    // console.log(database);
     if (database?.error) {
       setError(database.error);
       setLoading(false);

@@ -13,7 +13,7 @@ const AddOptions = ({
     const dispatch = useAppDispatch();
 
     const addOption = useCallback(() => {
-        console.log("add option");
+        // console.log("add option");
         const newOption = {
             name: `Option ${data?.options?.length + 1 || 1}`,
             color: "gray"

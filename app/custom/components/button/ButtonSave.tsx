@@ -33,7 +33,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
     const [mapLength, setMapLength] = useState(0);
 
     const copyLink = (idData = infomation.id) => {
-        console.log("copy link");
+        // console.log("copy link");
         navigator.clipboard.writeText(
             `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
         );
@@ -41,7 +41,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
 
     const checkAllInputIsMaped = () => {
         const inputForm = layer.filter((item: any) => item.mapTo);
-        console.log(layer.length, inputForm.length);
+        // console.log(layer.length, inputForm.length);
         if (layer.length != inputForm.length) {
             setWarning(true);
             setMapLength(layer.length - inputForm.length);
@@ -103,7 +103,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
             })
         );
 
-        //update fake path
+        //update a fake path
         router.replace(`/custom/form?id=${data[0].id}`);
 
         //toast success
@@ -143,15 +143,11 @@ const ButtonSaveCustomForm = ({session}: any) => {
                 <DialogContent className="sm:max-w-[625px]">
                     <DialogHeader>
                         <DialogTitle className="text-red-600">Column Map Alert</DialogTitle>
-                        <div>
-                            A notification that occurs when there are unassigned inputs in a
-                            mapping process. This alert is a cautionary prompt, advising the
-                            user that they have not yet associated three inputs with their
-                            corresponding columns in a notion layout. It provides the option
-                            for the user to either map the inputs or to proceed with the
-                            existing mapping configuration.
-                        </div>
                     </DialogHeader>
+                    <div>
+                        <p>{'Please ensure you\'ve linked the fields to the database columns before moving on.'}</p>
+                        <p>{`You have ${mapLength} fields that haven't been mapped.`}</p>
+                    </div>
                     <DialogFooter>
                         <Button
                             onClick={() => {

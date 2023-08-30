@@ -22,7 +22,7 @@ export async function GET() {
         )
     }
 
-    console.log('helo')
+    // console.log('helo')
 
 
     const {data: {stripe_customer}}: any = await supabase.from('profiles').select('stripe_customer').eq('id', session.user.id).single();

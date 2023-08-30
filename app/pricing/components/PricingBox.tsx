@@ -20,14 +20,14 @@ const PricingBox = () => {
     const [loading, setLoading] = useState(false)
     const PriceDetailList = {
         basic: [
-            '1 Notion Workspace',
-            'As many forms as you like',
             'Unlimited Responses',
+            'Unlimited Fields',
+            'As many forms as you like',
             'Embed your form anywhere',
         ],
         pro: [
             'Everything in Basic',
-            '5 Notion Workspace',
+            'Multi step form',
             'Full customization',
             'Remove branding',
             'Multiple Integrations',
@@ -140,7 +140,7 @@ const PricingBox = () => {
                 }
             }
         })
-        console.log(data)
+        // console.log(data)
         setPriceMonthlyAndYearly(data)
         setLoading(false)
     }

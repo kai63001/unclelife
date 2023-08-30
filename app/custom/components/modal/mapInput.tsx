@@ -49,11 +49,12 @@ const ModalMapInput = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
+
     const getDatabaseList = async () => {
         setLoading(true);
         try {
             const databaseList = await getDatabase(databaseId);
-            console.log("databaseList :", databaseList);
+            // console.log("databaseList :", databaseList);
             setListObjectTable(databaseList);
             if (databaseList?.error) {
                 setListObjectTable(tableOfDatabase);
@@ -80,7 +81,7 @@ const ModalMapInput = () => {
     };
 
     const onMapChange = (e: any, id: any) => {
-        console.log(e, id);
+        // console.log(e, id);
         const type = listObjectTable[e].type;
         dispatch(setMapFromLayerWithId({id, mapTo: e, mapType: type}));
     };

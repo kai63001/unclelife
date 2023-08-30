@@ -5,7 +5,7 @@ import {Database} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Icons} from "@/components/Icons";
 import {useCallback} from "react";
-import {setDatabaseId, setTableOfDatabase} from "@/app/redux/slice/formController.slice";
+import {setDatabaseId, setDatabaseName, setTableOfDatabase} from "@/app/redux/slice/formController.slice";
 import {useAppDispatch} from "@/app/redux/hook";
 import {useRouter} from "next/navigation";
 import {motion} from "framer-motion"
@@ -24,6 +24,8 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
         e.preventDefault();
         dispatch(setTableOfDatabase(database.properties));
         dispatch(setDatabaseId(database.id));
+        const databaseName = database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'
+        dispatch(setDatabaseName(databaseName));
         // redirect to custom/form
         router.push("/custom/form");
     }, [dispatch, router]);

@@ -32,7 +32,7 @@ export default function SupabaseProvider({
             const {
                 data: {session},
             } = await supabase.auth.getSession();
-            console.log("user data lock")
+            // console.log("user data lock")
             if (session && userData === null) {
                 const {data} = await supabase
                     .from('profiles')
