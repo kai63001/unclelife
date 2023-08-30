@@ -61,6 +61,12 @@ const FormMainBox = ({
             setDefaultInputFormLayer()
             return;
         }
+        if (testMode) {
+            setDataUser({
+                is_subscribed: true
+            })
+            return
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [layer])
 
