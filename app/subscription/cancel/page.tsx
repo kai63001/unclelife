@@ -33,7 +33,7 @@ const SubscriptionCancel = () => {
                         </div>
                     </div>
                     <div className={'flex justify-center'}>
-                        <Link href={'/feedback'}>
+                        <Link href={'https://uncle-life.canny.io/feedback/'} target={'_blank'}>
                             <Button variant={'outline'} className={'mt-5'}>
                                 Share Feedback
                             </Button>
