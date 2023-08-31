@@ -1,29 +1,67 @@
+"use client"
 import {getListDatabase} from "@/lib/notionApi"
-import {createServerSupabaseClient} from "@/app/hook/supabase-server";
 // import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
 import dynamic from "next/dynamic";
+import {Button} from "@/components/ui/button";
 const CardDatabaseList = dynamic(() => import('@/app/(dashboard)/form/create/components/CardDatabaseList'), {ssr: false})
+import {RefreshCw} from "lucide-react";
+import {useEffect, useState} from "react";
+import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/ListMyDatabaseLoading";
 
-const ListMyDatabase = async () => {
+const ListMyDatabase = ({session}:any) => {
+    const [listDatabase, setListDatabase] = useState<any>([])
+    const [loading, setLoading] = useState(true)
 
-    const supabase = createServerSupabaseClient(), {data: session} = await supabase.auth.getSession()
-
-    const listDatabase = await getListDatabase(session?.session?.user?.id as string).then((data) => {
-        if (data.error) {
-            return []
+    useEffect(() => {
+        const getListData = async () => {
+            const listDatabase = await getListDatabase(session?.session?.user?.id as string).then((data) => {
+                setLoading(false)
+                if (data.error) {
+                    return []
+                }
+                return data
+            }).catch((error) => {
+                console.log(error)
+                return []
+            })
+            setListDatabase(listDatabase)
         }
-        return data
-    }).catch((error) => {
-        console.log(error)
-        return []
-    })
+        getListData().then(r => console.log(r))
+    },[session?.session?.user?.id]);
+
+    const refreshListDatabase = async () => {
+        setLoading(true)
+        const listDatabase = await getListDatabase(session?.session?.user?.id as string).then((data) => {
+            setLoading(false)
+            if (data.error) {
+                return []
+            }
+            return data
+        }).catch((error) => {
+            console.log(error)
+            return []
+        })
+        setListDatabase(listDatabase)
+    }
 
 
     return (
         <div className={'mt-4'}>
-            <div className={'grid grid-cols-3 gap-4'}>
-                <CardDatabaseList listDatabase={listDatabase} />
+            <div className={"flex justify-between mb-3"}>
+                <div>
+                {/* search */}
+                </div>
+                <div>
+                    <Button>
+                        <RefreshCw onClick={refreshListDatabase} className={'w-6 h-6'}/>
+                    </Button>
+                </div>
             </div>
+            {loading ? (<ListMyDatabaseLoading/>) : (
+                <div className={'grid grid-cols-3 gap-4'}>
+                    <CardDatabaseList listDatabase={listDatabase} />
+                </div>
+            )}
         </div>
     )
 }
