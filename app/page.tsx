@@ -40,7 +40,7 @@ export default function Home() {
                             </Link>
                         </Button>
                         <Button variant={'secondary'} asChild>
-                            <Link target={'_blank'} href={'/home'}>
+                            <Link target={'_blank'} href={'https://pickle-shift-ee6.notion.site/Test-Example-658245953b8e457ba0e230e0c3dab8a8'}>
                                 See Live Example
                             </Link>
                         </Button>

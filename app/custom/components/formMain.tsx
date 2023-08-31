@@ -262,9 +262,16 @@ const FormMainBox = ({
                     type: value.type,
                 };
             } else if (value.type === "multi_select") {
+                let newValue = value.value;
+                if (typeof value.value === "string") {
+                    newValue = [value.value];
+                }
+                console.log("typeOf", typeof value.value);
+                console.log("newValue", newValue);
+
                 properties[key] = {
                     [value.type]: [
-                        ...value.value.map((item: any) => {
+                        ...newValue?.map((item: any) => {
                             return {
                                 name: item,
                             };

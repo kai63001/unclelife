@@ -34,6 +34,10 @@ const CreateFormFAQs = () => {
         {
             question: "Who can I contact if I continue to face issues?",
             answer: "Our dedicated support team is here to help! Navigate to the 'Contact' or 'Support' section on our website and provide details about the issue you're facing. We'll get back to you as soon as possible."
+        },
+        {
+            question: "I encountered an error when submitting my form related to 'mismatched mapping' or 'body error...'. What does this mean?",
+            answer: "This error typically arises when there's a discrepancy between the type of input field in your form and the corresponding column type in your Notion database. For instance, if you've set up a multi-selection input in your form but are trying to map it to a single selection column in Notion, a mismatch occurs. To resolve this, ensure that the input fields in your form align with the column types in your Notion database. You might need to adjust either the form input or the database column to ensure they match."
         }
     ];
 
