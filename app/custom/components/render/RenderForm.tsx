@@ -3,7 +3,7 @@ import MultiSelectRender from "./MultiSelect/MultiSelectRender";
 import CheckBoxRender from "./CheckBox/CheckBoxRender";
 import FileRender from "@/app/custom/components/render/File/FileRender";
 
-const TitleRendert = dynamic(() => import("./Title/TitleRender"), {
+const TitleRender = dynamic(() => import("./Title/TitleRender"), {
     ssr: false,
 });
 const RichTextRender = dynamic(() => import("./RichText/RichText"), {
@@ -21,7 +21,7 @@ const RenderFormComponent = ({data, updateInputForm, dataUser}: any) => {
         //return SwitchCase
         switch (data.type) {
             case "title":
-                return <TitleRendert updateInputForm={updateInputForm} data={data}/>;
+                return <TitleRender updateInputForm={updateInputForm} data={data}/>;
             case "rich_text":
                 return <RichTextRender updateInputForm={updateInputForm} data={data}/>;
             case "date":
@@ -53,7 +53,7 @@ const RenderFormComponent = ({data, updateInputForm, dataUser}: any) => {
                 return <></>;
             default:
                 return (
-                    <TitleRendert
+                    <TitleRender
                         updateInputForm={updateInputForm}
                         data={data}
                         type={data.type}

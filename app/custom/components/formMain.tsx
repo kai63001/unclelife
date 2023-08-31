@@ -70,6 +70,14 @@ const FormMainBox = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [layer])
 
+    useEffect(() => {
+        //check Using pro-plan
+        if (dataForm?.pro?.customizations?.hideBranding == true) {
+            console.log('use pro')
+        }
+
+    }, [dataForm])
+
     const setDefaultInputFormLayer = () => {
         let defaultLayer = [
             {
@@ -266,9 +274,6 @@ const FormMainBox = ({
                 if (typeof value.value === "string") {
                     newValue = [value.value];
                 }
-                console.log("typeOf", typeof value.value);
-                console.log("newValue", newValue);
-
                 properties[key] = {
                     [value.type]: [
                         ...newValue?.map((item: any) => {
