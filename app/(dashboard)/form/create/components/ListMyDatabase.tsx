@@ -1,6 +1,8 @@
 import {getListDatabase} from "@/lib/notionApi"
 import {createServerSupabaseClient} from "@/app/hook/supabase-server";
-import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
+// import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
+import dynamic from "next/dynamic";
+const CardDatabaseList = dynamic(() => import('@/app/(dashboard)/form/create/components/CardDatabaseList'), {ssr: false})
 
 const ListMyDatabase = async () => {
 
