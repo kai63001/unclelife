@@ -1,6 +1,7 @@
 import ListMyDatabase from "@/app/(dashboard)/form/create/components/ListMyDatabase";
 import {Suspense} from "react";
 import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/ListMyDatabaseLoading";
+import CreateFormFAQs from "@/app/(dashboard)/form/create/components/FAQs";
 
 export const metadata = {
     title: "Uncle Life - Design Your Custom Notion Form",
@@ -17,6 +18,10 @@ const CreateFormPage = () => {
             <Suspense fallback={<ListMyDatabaseLoading/>}>
                 <ListMyDatabase/>
             </Suspense>
+            <div className={'flex flex-col justify-center mt-10 w-full items-center'}>
+                <h2 className={'text-2xl font-bold text-center'}>Frequently Asked Questions</h2>
+                <CreateFormFAQs/>
+            </div>
         </div>
     );
 };

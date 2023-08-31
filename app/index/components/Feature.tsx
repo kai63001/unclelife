@@ -1,4 +1,4 @@
-import {TextCursorInput, AlarmClock, Palmtree} from "lucide-react";
+import {TextCursorInput, AlarmClock, Music} from "lucide-react";
 
 const FeatureIndex = () => {
     return (
@@ -43,7 +43,7 @@ const FeatureIndex = () => {
                 </div>
                 <div className={'border shadow-md rounded-md overflow-hidden cursor-pointer'}>
                     <div className={'h-44 bg-gradient-to-r from-lime-400 to-lime-500 flex justify-center items-center'}>
-                        <Palmtree size={64} className={'text-white'}/>
+                        <Music size={64} className={'text-white'}/>
                     </div>
                     <div className="p-4">
                         <h3 className="text-xl font-bold flex items-center">Ambient Sound

@@ -53,10 +53,11 @@ const FAQs = () => {
         <Accordion type="single" collapsible className="w-full my-10">
             {listFaq.map((faq, index) => (
                     <AccordionItem key={index} value={`faq-${index}`}>
-                        <AccordionTrigger className="w-full">{faq.question}
+                        <AccordionTrigger className="w-full">
+                            {faq.question}
                         </AccordionTrigger>
                         <AccordionContent className="w-full">
-                            <p className="text-muted-foreground">{faq.answer}</p>
+                            {faq.answer}
                         </AccordionContent>
                     </AccordionItem>
                 )
