@@ -3,10 +3,11 @@ import {getListDatabase} from "@/lib/notionApi"
 // import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
 import dynamic from "next/dynamic";
 import {Button} from "@/components/ui/button";
-const CardDatabaseList = dynamic(() => import('@/app/(dashboard)/form/create/components/CardDatabaseList'), {ssr: false})
 import {RefreshCw} from "lucide-react";
 import {useEffect, useState} from "react";
 import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/ListMyDatabaseLoading";
+
+const CardDatabaseList = dynamic(() => import('@/app/(dashboard)/form/create/components/CardDatabaseList'), {ssr: false})
 
 const ListMyDatabase = ({session}:any) => {
     const [listDatabase, setListDatabase] = useState<any>([])
@@ -26,7 +27,7 @@ const ListMyDatabase = ({session}:any) => {
             })
             setListDatabase(listDatabase)
         }
-        getListData().then(r => console.log(r))
+        getListData()
     },[session?.session?.user?.id]);
 
     const refreshListDatabase = async () => {
