@@ -9,7 +9,7 @@ import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/List
 
 const CardDatabaseList = dynamic(() => import('@/app/(dashboard)/form/create/components/CardDatabaseList'), {ssr: false})
 
-const ListMyDatabase = ({session}:any) => {
+const ListMyDatabase = ({session}: any) => {
     const [listDatabase, setListDatabase] = useState<any>([])
     const [loading, setLoading] = useState(true)
 
@@ -28,7 +28,7 @@ const ListMyDatabase = ({session}:any) => {
             setListDatabase(listDatabase)
         }
         getListData()
-    },[session?.session?.user?.id]);
+    }, [session?.session?.user?.id]);
 
     const refreshListDatabase = async () => {
         setLoading(true)
@@ -50,17 +50,19 @@ const ListMyDatabase = ({session}:any) => {
         <div className={'mt-4'}>
             <div className={"flex justify-between mb-3"}>
                 <div>
-                {/* search */}
+                    {/* search */}
                 </div>
                 <div>
-                    <Button>
-                        <RefreshCw onClick={refreshListDatabase} className={'w-6 h-6'}/>
+                    <Button
+                        onClick={refreshListDatabase}
+                    >
+                        <RefreshCw className={`w-6 h-6 ${loading && 'animate-spin'}`}/>
                     </Button>
                 </div>
             </div>
             {loading ? (<ListMyDatabaseLoading/>) : (
                 <div className={'grid grid-cols-3 gap-4'}>
-                    <CardDatabaseList listDatabase={listDatabase} />
+                    <CardDatabaseList listDatabase={listDatabase}/>
                 </div>
             )}
         </div>
