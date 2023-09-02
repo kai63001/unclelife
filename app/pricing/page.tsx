@@ -1,6 +1,8 @@
 import IndexNavbar from "@/app/index/components/Navbar";
 import PricingBox from "@/app/pricing/components/PricingBox";
 import {Metadata} from "next";
+import PricingFaq from "@/app/pricing/components/FAQs";
+import FooterIndex from "@/app/index/components/FooterIndex";
 
 export const metadata: Metadata = {
     title: 'Uncle Life - Affordable Plans for Notion Tools',
@@ -23,6 +25,11 @@ const PricingPage = () => {
                 </p>
                 <PricingBox/>
             </section>
+            <section className={'max-w-5xl mx-auto w-full flex-col justify-center pt-16 items-center relative'}>
+                <h2 className={'text-2xl font-bold text-center'}>Frequently Asked Questions</h2>
+                <PricingFaq/>
+            </section>
+            <FooterIndex/>
         </main>
     )
 }

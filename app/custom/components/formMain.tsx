@@ -70,10 +70,18 @@ const FormMainBox = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [layer])
 
+    // ! check pro-plan
     useEffect(() => {
-        //check Using pro-plan
-        if (dataForm?.pro?.customizations?.hideBranding == true) {
-            console.log('use pro')
+        console.log(dataForm?.pro)
+        // dataForm?.pro.customizations is object filter true
+        const filterCustomization = Object.keys(dataForm?.pro?.customizations || {}).filter((key) => {
+            return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined
+        })
+        console.log(filterCustomization)
+
+        // if filter is empty
+        if (filterCustomization.length === 0) {
+            return;
         }
 
     }, [dataForm])
@@ -398,7 +406,7 @@ const FormMainBox = ({
                         </form>
                         {/* power by */}
                         {
-                            !(dataForm?.pro?.customizations?.hideBranding && dataUser?.is_subscribed) && (
+                            !(dataForm?.pro?.customizations?.hideBranding_pro && dataUser?.is_subscribed) && (
                                 <div
                                     className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
                                     <div>
