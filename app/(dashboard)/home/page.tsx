@@ -26,7 +26,7 @@ const DashboardPage = () => {
                             <CardDescription>Start building your custom Notion form with just a few clicks.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            Tutorial
+                            Tutorial soon...
                         </CardContent>
                         <CardFooter className="flex justify-between">
                             <Button variant={"outline"}>Help</Button>

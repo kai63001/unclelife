@@ -12,6 +12,10 @@ const CreateFormFAQs = () => {
             answer: "This message indicates that we couldn't find any databases associated with your Notion account. Please ensure you've properly connected your Notion account to UncleLife.co and that you have databases set up in Notion."
         },
         {
+            question: "I'm trying to create a form, but I can't see my database. What should I do?",
+            answer: "1. **Check Your Connection:** Ensure you're connected to the internet and that there are no network disruptions.\n2. **Re-integration:** Sometimes, re-integrating can help. Try logging out of UncleLife.co and then logging back in.\n3. **Wait a Bit:** After re-integrating, please wait for 3-5 minutes. Some databases might take a short while to appear due to syncing delays.\n4. **Still Not Working?** If you're certain you've connected your Notion account and the database still doesn't appear, please contact our admin support team for further assistance."
+        },
+        {
             question: "How do I connect my Notion account to UncleLife.co?",
             answer: "Navigate to the 'Account Settings' or 'Integrations' section on UncleLife.co and follow the instructions to integrate with Notion. You might need to grant certain permissions for the integration to work seamlessly."
         },
@@ -47,7 +51,7 @@ const CreateFormFAQs = () => {
                     <AccordionItem key={index} value={`faq-${index}`}>
                         <AccordionTrigger className="w-full">{faq.question}
                         </AccordionTrigger>
-                        <AccordionContent className="w-full">
+                        <AccordionContent className="w-full whitespace-pre-line">
                            {faq.answer}
                         </AccordionContent>
                     </AccordionItem>
