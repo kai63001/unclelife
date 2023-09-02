@@ -9,6 +9,7 @@ import {updateDatabase} from "@/lib/notionApi";
 import {Icons} from "@/components/Icons";
 import Link from "next/link";
 import {
+    setAlert,
     setAllForm,
     setDatabaseId,
     setInformation,
@@ -79,12 +80,9 @@ const FormMainBox = ({
         })
         console.log(filterCustomization)
 
-        // if filter is empty
-        if (filterCustomization.length === 0) {
-            return;
-        }
+        dispatch(setAlert(filterCustomization))
 
-    }, [dataForm])
+    }, [dataForm, dispatch])
 
     const setDefaultInputFormLayer = () => {
         let defaultLayer = [

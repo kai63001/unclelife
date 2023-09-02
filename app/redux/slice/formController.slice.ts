@@ -9,6 +9,7 @@ export interface FormState {
     form: any;
     layer: any[];
     infomation: any;
+    alertPro: any[];
     modalMapInputOpen: boolean;
 }
 
@@ -29,6 +30,7 @@ const initialState: FormState = {
     },
     infomation: {},
     layer: [],
+    alertPro: [],
     modalMapInputOpen: false,
 };
 
@@ -104,6 +106,9 @@ export const formSlice = createSlice({
         },
         updateModalMapInputOpen: (state, action: PayloadAction<any>) => {
             state.modalMapInputOpen = action.payload;
+        },
+        setAlert: (state, action: PayloadAction<any>) => {
+            state.alertPro = action.payload;
         }
     },
 });
@@ -122,7 +127,8 @@ export const {
     setAllForm,
     updateModalMapInputOpen,
     clearAllData,
-    setDatabaseName
+    setDatabaseName,
+    setAlert
 } = formSlice.actions;
 
 export default formSlice.reducer;
