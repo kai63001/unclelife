@@ -28,6 +28,9 @@ export const metadata: Metadata = {
         creator: "@unclelife",
         images: 'https://unclelife.co/og.png',
     },
+    alternates: {
+        canonical: `https://unclelife.co${window.location.pathname}${window.location.search}`
+    }
 };
 
 export default function RootLayout({
