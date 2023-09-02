@@ -25,7 +25,6 @@ const initialState: FormState = {
             position: "flex-start"
         },
         pro: {
-            customizations: {}
         }
     },
     infomation: {},

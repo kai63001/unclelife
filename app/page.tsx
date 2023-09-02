@@ -13,7 +13,7 @@ import FAQs from "@/app/index/components/FAQs";
 
 export const metadata: Metadata = {
     title: 'Uncle Life - Notion Forms & Widgets Simplified',
-    description: 'Welcome to Uncle Life, your go-to platform for seamless Notion forms and widgets. Elevate your productivity and organization with our intuitive tools tailored for Notion enthusiasts.',
+    description: 'Platform for seamless Notion forms and widgets. Elevate your productivity and organization with our intuitive tools tailored for Notion enthusiasts.',
 }
 
 
