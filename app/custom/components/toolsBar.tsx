@@ -47,7 +47,9 @@ const ToolsBar = () => {
                                 onChangeHook(e.target.value, "description");
                             }}
                             className="focus:outline-none focus-visible:ring-0"
-                        />
+                            value={form.description}
+                        >
+                        </Textarea>
                     </div>
 
                     <Accordion type="multiple" defaultValue={['buttonSubmit', 'customization']} className="w-full">
