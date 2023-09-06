@@ -22,7 +22,7 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const DateRender = ({ data, updateInputForm }: any) => {
+const DateRender = ({ data, updateInputForm, error }: any) => {
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
@@ -38,11 +38,14 @@ const DateRender = ({ data, updateInputForm }: any) => {
             variant={"outline"}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
+                error && "border border-red-500"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>{data?.placeholder || 'Pick a date'}</span>}
+            {(date || data?.placeholder) && (
+                <CalendarIcon className="mr-2 h-4 w-4" />
+            )}
+            {date ? format(date, "PPP") : <span>{data?.placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
@@ -74,6 +77,11 @@ const DateRender = ({ data, updateInputForm }: any) => {
           </div>
         </PopoverContent>
       </Popover>
+      {error && (
+          <div className="text-red-500 text-xs mt-1">
+            {error}
+          </div>
+      )}
     </div>
   );
 };

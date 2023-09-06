@@ -45,6 +45,10 @@ const FormMainBox = ({
     const [successSubmit, setSuccessSubmit] = useState(false);
 
     const updateInputForm = (value: string, data: any) => {
+        setError({
+            ...error,
+            [data.mapTo]: "",
+        })
         if (data.mapTo != undefined) {
             setInputForm({
                 ...inputForm,
@@ -388,6 +392,7 @@ const FormMainBox = ({
                                     <RenderFormComponent
                                         updateInputForm={updateInputForm}
                                         data={item}
+                                        error={error[item?.mapTo]}
                                         dataUser={dataUser}
                                         key={index}
                                     />
