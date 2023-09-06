@@ -172,13 +172,16 @@ const FormMainBox = ({
     const checkRequire = () => {
         let error: any = {};
         let check = true;
-        for (const [key, value] of Object.entries(inputForm) as any) {
-            if (value.require && value.value === "") {
-                error[key] = "This field is required";
-                check = false;
+
+        dataLayer?.map((item: any) => {
+            if (item?.required) {
+                if (inputForm[item?.mapTo]?.value?.length === 0 || inputForm[item?.mapTo]?.value === '' || inputForm[item?.mapTo]?.value === null || inputForm[item?.mapTo]?.value === undefined) {
+                    error[item?.mapTo] = 'This field is required';
+                    check = false;
+                }
             }
-        }
-        console.log(error);
+        })
+
         setError(error);
         return check;
     };
@@ -379,7 +382,7 @@ const FormMainBox = ({
                                 {dataForm?.description}
                             </p>
                         )}
-                        <form onSubmit={submitForm}>
+                        <form onSubmit={submitForm} noValidate>
                             {dataLayer?.map((item: any, index: number) => {
                                 return (
                                     <RenderFormComponent
