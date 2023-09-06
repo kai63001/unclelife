@@ -10,7 +10,18 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {useState} from "react";
-import {AlignJustify, AlignLeft, ArrowBigDown, AtSign, Calendar, CheckSquare, FormInput, Hash, Upload} from "lucide-react";
+import {
+    AlignJustify,
+    AlignLeft,
+    ArrowBigDown,
+    AtSign,
+    Calendar,
+    CheckSquare,
+    FormInput,
+    Hash,
+    ListChecks,
+    Upload
+} from "lucide-react";
 import {RocketIcon} from "@radix-ui/react-icons";
 
 import {
@@ -69,6 +80,11 @@ const ModalAddLayer = () => {
             type: "checkbox"
         },
         {
+            name: "Radio",
+            icon: <ListChecks className="h-10 w-10"/>,
+            type: "radio"
+        },
+        {
             name: "File Upload",
             icon: <Upload className="h-10 w-10"/>,
             type: "files",
@@ -77,7 +93,7 @@ const ModalAddLayer = () => {
     ];
 
     const randomTitleWithType = (type: string) => {
-        let titles: string[] = [];
+        let titles: string[];
         switch (type) {
             case "title":
                 titles = ["Main Title", "Sub Title", "Article Title", "Header", "Footer"];
@@ -106,6 +122,9 @@ const ModalAddLayer = () => {
             case "file":
                 titles = ["File Upload", "File", "Upload", "Document", "Attachment"];
                 break;
+            case "radio":
+                titles = ["Radio", "Radio Button", "Radio Selection", "Radio Option", "Radio Choice"];
+                break;
             default:
                 titles = ["Default Title"];
         }
@@ -114,11 +133,26 @@ const ModalAddLayer = () => {
 
     const addLayer = (type: string) => {
         const labelName = randomTitleWithType(type);
-        const newLayer = {
+        let newLayer:any = {
             id: layer.length + 1,
             name: labelName,
             type: type,
             label: labelName
+        }
+        if(type === 'select' || type === 'multi_select' || type === 'radio'){
+            newLayer = {
+                ...newLayer,
+                options: [
+                    {
+                        id: 1,
+                        name: 'Option 1'
+                    },
+                    {
+                        id: 2,
+                        name: 'Option 2'
+                    }
+                ]
+            }
         }
         dispatch(addMoreLayer(newLayer));
         //close modal

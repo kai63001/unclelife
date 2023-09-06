@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import MultiSelectRender from "./MultiSelect/MultiSelectRender";
 import CheckBoxRender from "./CheckBox/CheckBoxRender";
 import FileRender from "@/app/custom/components/render/File/FileRender";
+import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
     ssr: false,
@@ -45,6 +46,9 @@ const RenderFormComponent = ({data, updateInputForm, dataUser}: any) => {
                     return <FileRender updateInputForm={updateInputForm} data={data}/>;
                 else
                     return (<></>)
+            case "radio":
+                return <RadioRender updateInputForm={updateInputForm} data={data}/>
+
             case "relation":
                 return <></>;
             case "created_time":
