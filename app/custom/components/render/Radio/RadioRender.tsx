@@ -7,7 +7,7 @@ const RadioRender = ({ data, updateInputForm }: any) => {
     const [selected, setSelected] = useState<any>(null);
 
     const inputOnChange = (e: any) => {
-        console.log("e :", e)
+        if(data.disable) return
         setSelected(e);
         updateInputForm(e, data);
     }
@@ -23,7 +23,7 @@ const RadioRender = ({ data, updateInputForm }: any) => {
             <div className="mt-1 flex space-y-2 flex-col">
                 {data?.options?.map((item: any, index: number) => {
                     return (
-                        <div key={index} onClick={()=>inputOnChange(item.name)} className={`flex items-center w-full ${selected == item.name ? 'bg-primary' : 'bg-secondary'} py-3 rounded-sm cursor-pointer select-none`}>
+                        <div key={index} onClick={()=>inputOnChange(item.name)} className={`flex ${data.disable ? 'cursor-not-allowed' : 'cursor-pointer'} items-center w-full ${selected == item.name ? 'bg-primary' : 'bg-secondary'} py-3 rounded-sm select-none`}>
                             <label className={`ml-3 block text-sm font-medium ${selected == item.name ? 'text-white' : 'text-primary'} cursor-pointer`}>
                                 {item.name}
                             </label>

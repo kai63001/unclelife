@@ -292,6 +292,11 @@ const FormMainBox = ({
                     [value.type]: parseInt(value.value),
                     type: value.type,
                 };
+            } else if (value.type === 'radio_button') {
+                properties[key] = {
+                    [value.type]: value.value,
+                    type: value.type,
+                };
             } else {
                 properties[key] = {
                     [value.type]: value.value,

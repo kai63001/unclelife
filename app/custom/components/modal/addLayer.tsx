@@ -80,9 +80,9 @@ const ModalAddLayer = () => {
             type: "checkbox"
         },
         {
-            name: "Radio",
+            name: "Radio Button",
             icon: <ListChecks className="h-10 w-10"/>,
-            type: "radio"
+            type: "radio_button"
         },
         {
             name: "File Upload",
@@ -122,7 +122,7 @@ const ModalAddLayer = () => {
             case "file":
                 titles = ["File Upload", "File", "Upload", "Document", "Attachment"];
                 break;
-            case "radio":
+            case "radio_button":
                 titles = ["Radio", "Radio Button", "Radio Selection", "Radio Option", "Radio Choice"];
                 break;
             default:
@@ -139,7 +139,7 @@ const ModalAddLayer = () => {
             type: type,
             label: labelName
         }
-        if(type === 'select' || type === 'multi_select' || type === 'radio'){
+        if(type === 'select' || type === 'multi_select' || type === 'radio_button'){
             newLayer = {
                 ...newLayer,
                 options: [

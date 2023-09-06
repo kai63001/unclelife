@@ -46,9 +46,8 @@ const RenderFormComponent = ({data, updateInputForm, dataUser}: any) => {
                     return <FileRender updateInputForm={updateInputForm} data={data}/>;
                 else
                     return (<></>)
-            case "radio":
+            case "radio_button":
                 return <RadioRender updateInputForm={updateInputForm} data={data}/>
-
             case "relation":
                 return <></>;
             case "created_time":
