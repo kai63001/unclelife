@@ -24,7 +24,7 @@ const RadioRender = ({ data, updateInputForm }: any) => {
                 {data?.options?.map((item: any, index: number) => {
                     return (
                         <div key={index} onClick={()=>inputOnChange(item.name)} className={`flex ${data.disable ? 'cursor-not-allowed' : 'cursor-pointer'} items-center w-full ${selected == item.name ? 'bg-primary' : 'bg-secondary'} py-3 rounded-sm select-none`}>
-                            <label className={`ml-3 block text-sm font-medium ${selected == item.name ? 'text-white' : 'text-primary'} cursor-pointer`}>
+                            <label className={`ml-3 block text-sm font-medium ${selected == item.name ? 'text-secondary' : 'text-primary'} cursor-pointer`}>
                                 {item.name}
                             </label>
                         </div>
