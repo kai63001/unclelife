@@ -369,7 +369,6 @@ const FormMainBox = ({
                     )}
                     <div className={'p-5'}>
                         <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
-                        <div className={'notion-frame'}>wtf bro</div>
                         {dataForm?.description && (
                             <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
                                 {dataForm?.description}

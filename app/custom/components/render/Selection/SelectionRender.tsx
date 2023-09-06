@@ -27,7 +27,7 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
           disabled={data.disable}
           className="w-full"
         >
-          <SelectValue placeholder={data.placeholder || data.label} />
+          <SelectValue placeholder={data.placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
