@@ -27,7 +27,7 @@ const PricingBox = () => {
         ],
         pro: [
             'Everything in Basic',
-            'Multi step form',
+            'Multi step form [soon]',
             'Full customization',
             'Remove branding',
             'Multiple Integrations',

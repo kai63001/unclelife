@@ -20,7 +20,6 @@ import SuccessPageComponent from "./successPage";
 import Image from "next/image";
 import {decode} from 'base64-arraybuffer'
 
-
 const FormMainBox = ({
                          id = null,
                          testMode = false,
@@ -73,12 +72,10 @@ const FormMainBox = ({
 
     // ! check pro-plan
     useEffect(() => {
-        console.log(dataForm?.pro)
         // dataForm?.pro.customizations is object filter true
         const filterCustomization = Object.keys(dataForm?.pro?.customizations || {}).filter((key) => {
-            return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined
+            return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined && dataForm?.pro?.customizations[key].length != 0
         })
-        console.log(filterCustomization)
 
         dispatch(setAlert(filterCustomization))
 
@@ -353,6 +350,11 @@ const FormMainBox = ({
 
     return (
         <>
+            {(dataForm?.pro?.customizations?.css && dataUser?.is_subscribed) && (
+                <style jsx global>{`
+                  ${dataForm?.pro?.customizations?.css}
+                `}</style>
+            )}
             {successSubmit ? (
                 <SuccessPageComponent/>
             ) : (
@@ -367,6 +369,7 @@ const FormMainBox = ({
                     )}
                     <div className={'p-5'}>
                         <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+                        <div className={'notion-frame'}>wtf bro</div>
                         {dataForm?.description && (
                             <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
                                 {dataForm?.description}
