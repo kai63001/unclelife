@@ -9,7 +9,7 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const SelectionRender = ({ data, updateInputForm }: any) => {
+const SelectionRender = ({ data, updateInputForm, error }: any) => {
   return data.hidden ? (
     <></>
   ) : (
@@ -25,9 +25,9 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
           id={data.label}
           name={data.label}
           disabled={data.disable}
-          className="w-full"
+          className={`w-full ${error && 'border border-red-500'}`}
         >
-          <SelectValue placeholder={data.placeholder || data.label} />
+          <SelectValue placeholder={data.placeholder} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -41,6 +41,11 @@ const SelectionRender = ({ data, updateInputForm }: any) => {
           </SelectGroup>
         </SelectContent>
       </Select>
+        {error && (
+            <div className="text-red-500 text-xs mt-1">
+                {error}
+            </div>
+        )}
     </div>
   );
 };

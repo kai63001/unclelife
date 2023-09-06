@@ -5,13 +5,20 @@ import {Database} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Icons} from "@/components/Icons";
 import {useCallback} from "react";
-import {clearAllData, setDatabaseId, setDatabaseName, setTableOfDatabase} from "@/app/redux/slice/formController.slice";
-import {useAppDispatch} from "@/app/redux/hook";
+import {
+    clearAllData,
+    setDatabaseId,
+    setDatabaseName,
+    setForm,
+    setTableOfDatabase
+} from "@/app/redux/slice/formController.slice";
+import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import {useRouter} from "next/navigation";
 import {motion} from "framer-motion"
 
 const CardDatabaseList = ({listDatabase = []}: any) => {
     const dispatch = useAppDispatch();
+    const {form} = useAppSelector((state) => state.formReducer);
     const router = useRouter();
     const checkNotionImageUrl = (url: string) => {
         if (url.includes('notion.so')) {
@@ -27,9 +34,20 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
         dispatch(setDatabaseId(database.id));
         const databaseName = database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'
         dispatch(setDatabaseName(databaseName));
+        console.log(form)
+        dispatch(setForm({
+            name: 'title',
+            value: databaseName
+        }))
+        if (database?.description?.length > 0) {
+            dispatch(setForm({
+                name: 'description',
+                value: database?.description[0].plain_text
+            }))
+        }
         // redirect to custom/form
         router.push("/custom/form");
-    }, [dispatch, router]);
+    }, [dispatch, form, router]);
 
     const openNotion = (e: any, url: string) => {
         e.stopPropagation()
@@ -42,8 +60,8 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
                 <motion.div key={index}
                             whileHover={{scale: 1.05}}
                             whileTap={{scale: 0.9}}
-                            animate={{ opacity: 1, x: 0 }}
-                            initial={{ opacity: 0, x: 50 }}
+                            animate={{opacity: 1, x: 0}}
+                            initial={{opacity: 0, x: 50}}
                 >
                     <Card onClick={(e) => selectedDatabase(e, database)}
                           className={'hover:bg-secondary cursor-pointer'}>

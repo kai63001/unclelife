@@ -27,7 +27,7 @@ const PricingBox = () => {
         ],
         pro: [
             'Everything in Basic',
-            'Multi step form',
+            'Multi step form [soon]',
             'Full customization',
             'Remove branding',
             'Multiple Integrations',
@@ -180,10 +180,9 @@ const PricingBox = () => {
                         </Link>
                     </div>
                 </div>
-                <div className={'md:flex-1 border h-[500px] rounded-md shadow-lg bg-primary text-secondary p-5 relative w-full'}>
+                <div className={'md:flex-1 border h-[520px] rounded-md shadow-lg bg-primary text-secondary p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Pro</h2>
-                    <p className={'my-2'}>Everything you need to create
-                        beautiful and professional forms.</p>
+                    <p className={'my-2'}>Everything you need to create beautiful and professional forms, and support an indie dev.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         {priceMonthlyAndYearly.pro.month.price === 0 ? (
                             <div className={'flex justify-center'}>

@@ -5,7 +5,7 @@ import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import RequiredStar from "../RequireStar";
 
-const MultiSelectRender = ({ data, updateInputForm }: any) => {
+const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
   const [selected, setSelected]: any = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -62,7 +62,7 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
           ref={buttonRef}
           disabled={data.disable}
           type="button"
-          className="flex min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
+          className={`flex ${error && 'border border-red-500'} focus:ring-0 focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
           onClick={handleButtonClick}
         >
           {selected.length > 0 ? (
@@ -70,14 +70,14 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
               {selected.map((item: any, index: any) => (
                 <div
                   key={index}
-                  className="flex items-center justify-center px-2 py-1 m-1 bg-primary text-secondary rounded-sm text-xs"
+                  className="flex items-center justify-center px-2 m-1 bg-primary text-secondary rounded-sm text-xs h-5"
                 >
                   {item}
                 </div>
               ))}
             </div>
           ) : (
-            <div>{data?.placeholder || 'Select Items'}</div>
+            <div className={'h-5'}>{data?.placeholder}</div>
           )}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </button>
@@ -105,6 +105,11 @@ const MultiSelectRender = ({ data, updateInputForm }: any) => {
             ))}
           </div>
         </div>
+      )}
+      {error && (
+          <div className="text-red-500 text-xs mt-1">
+            {error}
+          </div>
       )}
     </div>
   );

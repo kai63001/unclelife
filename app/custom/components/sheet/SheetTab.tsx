@@ -74,6 +74,8 @@ const SheetTab = ({id}: any) => {
                 return true;
             case 'multi_select':
                 return true;
+            case 'radio_button':
+                return true;
             default:
                 return false;
         }

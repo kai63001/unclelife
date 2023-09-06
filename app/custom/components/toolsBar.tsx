@@ -9,6 +9,7 @@ import {
 import {ScrollArea} from "@/components/ui/scroll-area"
 import ButtonSubmit from "@/app/custom/components/toolsbar/ButtonSubmit";
 import CustomizationToolbar from "@/app/custom/components/toolsbar/CustomizationToolbar";
+import CustomCssToolBar from "@/app/custom/components/toolsbar/CustomCssToolBar";
 
 const ToolsBar = () => {
     const dispatch = useAppDispatch();
@@ -46,12 +47,15 @@ const ToolsBar = () => {
                                 onChangeHook(e.target.value, "description");
                             }}
                             className="focus:outline-none focus-visible:ring-0"
-                        />
+                            value={form.description}
+                        >
+                        </Textarea>
                     </div>
 
                     <Accordion type="multiple" defaultValue={['buttonSubmit', 'customization']} className="w-full">
                         <CustomizationToolbar onChangeHook={onChangeHook} form={form}/>
                         <ButtonSubmit onChangeHook={onChangeHook} form={form}/>
+                        <CustomCssToolBar onChangeHook={onChangeHook} form={form}/>
                     </Accordion>
                 </ScrollArea>
             </div>

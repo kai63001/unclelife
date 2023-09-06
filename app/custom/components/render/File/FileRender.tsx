@@ -6,9 +6,10 @@ import {Button} from "@/components/ui/button";
 import {Upload, Trash} from "lucide-react";
 import {useState} from "react";
 import {useToast} from "@/components/ui/use-toast";
+import * as React from "react";
 
 
-const FileRender = ({data, updateInputForm}: any) => {
+const FileRender = ({data, updateInputForm, error}: any) => {
     const [file, setFile] = useState<any>(null);
     const {toast} = useToast();
 
@@ -66,8 +67,8 @@ const FileRender = ({data, updateInputForm}: any) => {
                 </div>
             ) : (
                 <>
-                    <Button asChild>
-                        <Label htmlFor={'uploadFileForm'} className="flex space-x-2 mt-2 cursor-pointer">
+                    <Button className={error && 'bg-red-500 text-white'} asChild>
+                        <Label htmlFor={'uploadFileForm'} className={`flex space-x-2 mt-2 cursor-pointer`}>
                             Upload File
                             <Upload className="ml-2 h-4 w-4"/>
                         </Label>
@@ -84,7 +85,12 @@ const FileRender = ({data, updateInputForm}: any) => {
                     />
                 </>
             )}
-            <span className={'text-xs text-muted-foreground'}>File size should be less than 5MB. </span>
+            <div className={'text-xs text-muted-foreground mt-1'}>File size should be less than 5MB. </div>
+            {error && (
+                <div className="text-red-500 text-xs mt-1">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };

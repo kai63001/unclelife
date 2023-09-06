@@ -20,7 +20,6 @@ import SuccessPageComponent from "./successPage";
 import Image from "next/image";
 import {decode} from 'base64-arraybuffer'
 
-
 const FormMainBox = ({
                          id = null,
                          testMode = false,
@@ -46,6 +45,10 @@ const FormMainBox = ({
     const [successSubmit, setSuccessSubmit] = useState(false);
 
     const updateInputForm = (value: string, data: any) => {
+        setError({
+            ...error,
+            [data.mapTo]: "",
+        })
         if (data.mapTo != undefined) {
             setInputForm({
                 ...inputForm,
@@ -73,12 +76,10 @@ const FormMainBox = ({
 
     // ! check pro-plan
     useEffect(() => {
-        console.log(dataForm?.pro)
         // dataForm?.pro.customizations is object filter true
         const filterCustomization = Object.keys(dataForm?.pro?.customizations || {}).filter((key) => {
-            return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined
+            return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined && dataForm?.pro?.customizations[key].length != 0
         })
-        console.log(filterCustomization)
 
         dispatch(setAlert(filterCustomization))
 
@@ -175,13 +176,16 @@ const FormMainBox = ({
     const checkRequire = () => {
         let error: any = {};
         let check = true;
-        for (const [key, value] of Object.entries(inputForm) as any) {
-            if (value.require && value.value === "") {
-                error[key] = "This field is required";
-                check = false;
+
+        dataLayer?.map((item: any) => {
+            if (item?.required) {
+                if (inputForm[item?.mapTo]?.value?.length === 0 || inputForm[item?.mapTo]?.value === '' || inputForm[item?.mapTo]?.value === null || inputForm[item?.mapTo]?.value === undefined) {
+                    error[item?.mapTo] = 'This field is required';
+                    check = false;
+                }
             }
-        }
-        console.log(error);
+        })
+
         setError(error);
         return check;
     };
@@ -295,6 +299,11 @@ const FormMainBox = ({
                     [value.type]: parseInt(value.value),
                     type: value.type,
                 };
+            } else if (value.type === 'radio_button') {
+                properties[key] = {
+                    [value.type]: value.value,
+                    type: value.type,
+                };
             } else {
                 properties[key] = {
                     [value.type]: value.value,
@@ -353,6 +362,11 @@ const FormMainBox = ({
 
     return (
         <>
+            {(dataForm?.pro?.customizations?.css && dataUser?.is_subscribed) && (
+                <style jsx global>{`
+                  ${dataForm?.pro?.customizations?.css}
+                `}</style>
+            )}
             {successSubmit ? (
                 <SuccessPageComponent/>
             ) : (
@@ -372,12 +386,13 @@ const FormMainBox = ({
                                 {dataForm?.description}
                             </p>
                         )}
-                        <form onSubmit={submitForm}>
+                        <form onSubmit={submitForm} noValidate>
                             {dataLayer?.map((item: any, index: number) => {
                                 return (
                                     <RenderFormComponent
                                         updateInputForm={updateInputForm}
                                         data={item}
+                                        error={error[item?.mapTo]}
                                         dataUser={dataUser}
                                         key={index}
                                     />
