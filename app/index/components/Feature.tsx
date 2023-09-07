@@ -1,4 +1,5 @@
 import {TextCursorInput, AlarmClock, Music} from "lucide-react";
+import Link from "next/link";
 
 const FeatureIndex = () => {
     return (
@@ -6,7 +7,7 @@ const FeatureIndex = () => {
             <h2 className="text-2xl font-bold text-center mb-8">Our Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/*form*/}
-                <div className={'border shadow-md rounded-md overflow-hidden cursor-pointer'}>
+                <Link href={'/form/create'} className={'border shadow-md rounded-md overflow-hidden cursor-pointer'}>
                     <div className={'h-44 bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center'}>
                         <TextCursorInput size={64} className={'text-white'}/>
                     </div>
@@ -21,7 +22,7 @@ const FeatureIndex = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </Link>
                 <div className={'border shadow-md rounded-md overflow-hidden cursor-pointer'}>
                     <div className={'h-44 bg-gradient-to-r from-rose-400 to-red-500 flex justify-center items-center'}>
                         <AlarmClock size={64} className={'text-white'}/>

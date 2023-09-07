@@ -9,7 +9,7 @@ import {
 import dayjs from "@/lib/dayjs";
 import {Button} from "@/components/ui/button";
 import {Icons} from "@/components/Icons";
-import {FileEdit} from "lucide-react";
+import {FileEdit, FileSymlink} from "lucide-react";
 
 const CardMyForm = ({form}: any) => {
 
@@ -37,6 +37,11 @@ const CardMyForm = ({form}: any) => {
                 </Button>
                 <Button variant={'outline'} onClick={(e) => openNotion(e, form.databaseId)}>
                     <Icons.notion className={'w-6 h-6'}/>
+                </Button>
+                <Button variant={'outline'} asChild>
+                    <Link href={`/public/form/${form.id}`} target={'_blank'}>
+                        <FileSymlink className={'w-6 h-6'}/>
+                    </Link>
                 </Button>
             </CardFooter>
         </Card>

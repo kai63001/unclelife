@@ -2,8 +2,8 @@ import {getMarkdownInFolderMarkDown} from "@/lib/apiMarkdown";
 import IndexNavbar from "@/app/index/components/Navbar";
 import FooterIndex from "@/app/index/components/FooterIndex";
 
-const PrivacyPolicy = async () => {
-    const {html} = await getMarkdownInFolderMarkDown('privacy-policy')
+const About = async () => {
+    const {html} = await getMarkdownInFolderMarkDown('about')
     return (
         <>
             <main className="flex min-h-screen flex-col md:px-5 px-5">
@@ -20,4 +20,4 @@ const PrivacyPolicy = async () => {
     )
 }
 
-export default PrivacyPolicy
+export default About
