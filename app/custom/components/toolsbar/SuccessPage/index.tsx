@@ -10,9 +10,12 @@ import {EyeClosedIcon, EyeOpenIcon} from "@radix-ui/react-icons";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {useTheme} from "next-themes";
+import {Switch} from "@/components/ui/switch";
+import {useState} from "react";
 
 const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
     const {theme} = useTheme();
+    const [customRedirect, setCustomRedirect] = useState(false)
 
     const handleClickChangeIcon = (icon: any) => {
         onChangeHook({
@@ -70,7 +73,7 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                     <div className={"mt-2 flex space-x-2 items-center"}>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button disabled={form?.pro?.successPage?.icon === 'hide'} variant="outline"
+                                <Button disabled={form?.pro?.successPage?.icon === 'hide' || customRedirect} variant="outline"
                                         size="icon">
                                     {form?.pro?.successPage?.icon && form?.pro?.successPage?.icon !== 'hide' ? form?.pro?.successPage?.icon : '🎉'}
                                 </Button>
@@ -92,12 +95,12 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                             </PopoverContent>
                         </Popover>
                         {(form?.pro?.successPage?.icon && form?.pro?.successPage?.icon != 'hide') && (
-                            <Button onClick={clearIcon} size={'icon'} variant={'outline'}>
+                            <Button disabled={customRedirect} onClick={clearIcon} size={'icon'} variant={'outline'}>
                                 <Trash className={'w-4 h-4'}/>
                             </Button>
                         )}
                         {/*    hide*/}
-                        <Button onClick={hideIcon} variant="outline" size="icon">
+                        <Button disabled={customRedirect} onClick={hideIcon} variant="outline" size="icon">
                             {form?.pro?.successPage?.icon === 'hide' ? (
                                 <EyeClosedIcon className={'w-4 h-4'}/>
                             ) : (
@@ -111,6 +114,7 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                         </div>
                         <Input
                             placeholder="Thank you!"
+                            disabled={customRedirect}
                             className="focus:outline-none focus-visible:ring-0"
                             value={form?.pro?.successPage?.title}
                             onChange={(e) => {
@@ -130,6 +134,7 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                             DESCRIPTION
                         </div>
                         <Textarea
+                            disabled={customRedirect}
                             placeholder="Your form has been submitted."
                             className="focus:outline-none focus-visible:ring-0"
                             value={form?.pro?.successPage?.description}
@@ -144,6 +149,40 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
 
                             }}
                         />
+                    </div>
+                    <div>
+                        <div className={'flex space-x-3 items-center'}>
+                            <Switch
+                                onCheckedChange={(e) => {
+                                    setCustomRedirect(e)
+                                }}
+                            />
+                            <p className={"font-bold"}>
+                                Custom Redirect
+                            </p>
+                        </div>
+                        {customRedirect && (
+                            <div className={'mt-5'}>
+                                <div className="text-xs font-bold mb-2">
+                                    URL
+                                </div>
+                                <Input
+                                    placeholder="https://www.unclelife.co"
+                                    className="focus:outline-none focus-visible:ring-0"
+                                    value={form?.pro?.successPage?.redirect}
+                                    onChange={(e) => {
+                                        onChangeHook({
+                                            ...form?.pro,
+                                            successPage: {
+                                                ...form?.pro?.successPage,
+                                                ['redirect']: e.target.value
+                                            }
+                                        }, 'pro')
+
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </AccordionContent>

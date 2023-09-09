@@ -335,6 +335,10 @@ const FormMainBox = ({
             .finally(() => {
                 setSuccessSubmit(true);
                 setLoading(false);
+                //check redirect
+                if (dataForm?.pro?.successPage?.redirect && dataForm?.pro?.successPage?.redirect.length != 0) {
+                    window.location.href = dataForm?.pro?.successPage?.redirect;
+                }
             });
     };
 
