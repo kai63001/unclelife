@@ -112,6 +112,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
+  emoji-picker-react:
+    specifier: ^4.5.0
+    version: 4.5.0(react@18.2.0)
   encoding:
     specifier: ^0.1.13
     version: 0.1.13
@@ -2619,6 +2622,16 @@ packages:
 
   /electron-to-chromium@1.4.435:
     resolution: {integrity: sha512-B0CBWVFhvoQCW/XtjRzgrmqcgVWg6RXOEM/dK59+wFV93BFGR6AeNKc4OyhM+T3IhJaOOG8o/V+33Y2mwJWtzw==}
+    dev: false
+
+  /emoji-picker-react@4.5.0(react@18.2.0):
+    resolution: {integrity: sha512-eWAnQWwEU8mXWA0VU1fSpWgMEYsdswM5/JyqpWquoE23+vDGedunnLU2Z2KWDjXwiSI+pFB6v3I70veK7dHgvQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      clsx: 1.2.1
+      react: 18.2.0
     dev: false
 
   /emoji-regex@8.0.0:

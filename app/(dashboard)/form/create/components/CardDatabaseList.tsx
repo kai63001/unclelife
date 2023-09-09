@@ -30,11 +30,18 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
     const selectedDatabase = useCallback(async (e: any, database: any) => {
         e.preventDefault();
         dispatch(clearAllData());
+        // let properties: any = database?.properties;
+        //reverse properties.options
+        // for (let key in properties) {
+        //     const type = properties[key].type
+        //     if (properties[key][type].options != undefined) {
+        //         properties[key][type].options.reverse()
+        //     }
+        // }
         dispatch(setTableOfDatabase(database.properties));
         dispatch(setDatabaseId(database.id));
         const databaseName = database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'
         dispatch(setDatabaseName(databaseName));
-        console.log(form)
         dispatch(setForm({
             name: 'title',
             value: databaseName
