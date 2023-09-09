@@ -83,10 +83,15 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
                                 ) : (
                                     <Database size={24} className={'mr-2'}/>
                                 )}
-                                {database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'}
+
+                                <p className={'whitespace-nowrap overflow-hidden text-ellipsis'}>
+                                    {database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'}
+                                </p>
                             </CardTitle>
                             <CardDescription>
-                                {database?.description?.length > 0 ? database?.description[0].plain_text : 'No description'}
+                                <p className={'whitespace-nowrap overflow-hidden text-ellipsis'}>
+                                    {database?.description?.length > 0 ? database?.description[0].plain_text : 'No description'}
+                                </p>
                                 <div className={'mt-5'}>
                                     <Button variant={'outline'} onClick={(e) => openNotion(e, database.url)}>
                                         <Icons.notion className={'w-6 h-6'}/>
