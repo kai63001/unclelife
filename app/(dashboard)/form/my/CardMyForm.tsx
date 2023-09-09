@@ -10,8 +10,13 @@ import dayjs from "@/lib/dayjs";
 import {Button} from "@/components/ui/button";
 import {Icons} from "@/components/Icons";
 import {FileEdit, FileSymlink} from "lucide-react";
+import {useAppDispatch} from "@/app/redux/hook";
+import {clearAllData} from "@/app/redux/slice/formController.slice";
+import {useRouter} from "next/navigation"
 
 const CardMyForm = ({form}: any) => {
+    const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const renderDate = async (date: any) => {
         const newDate = new Date(date)
@@ -23,6 +28,13 @@ const CardMyForm = ({form}: any) => {
         window.open(`https://notion.so/${url.replaceAll('-','')}`, '_blank')
     }
 
+    const openForm = (e: any, url: string) => {
+        e.stopPropagation()
+        //clear
+        dispatch(clearAllData());
+        router.push(`/custom/form?id=${url}`)
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -30,10 +42,8 @@ const CardMyForm = ({form}: any) => {
                 <CardDescription>{renderDate(form?.created_at)}</CardDescription>
             </CardHeader>
             <CardFooter className={'space-x-3'}>
-                <Button variant={'outline'} asChild>
-                    <Link href={`/custom/form?id=${form.id}`}>
+                <Button variant={'outline'} onClick={(e)=>openForm(e,form.id)}>
                         <FileEdit className={'w-6 h-6'}/>
-                    </Link>
                 </Button>
                 <Button variant={'outline'} onClick={(e) => openNotion(e, form.databaseId)}>
                     <Icons.notion className={'w-6 h-6'}/>

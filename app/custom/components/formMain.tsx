@@ -130,6 +130,9 @@ const FormMainBox = ({
         setDataLayer(res.data.layer);
         setDataForm(res.data.detail);
         setDatabaseIdState(res.data.databaseId);
+        dispatch(setLayer(res.data.layer));
+        dispatch(setDatabaseId(res.data.databaseId));
+        dispatch(setAllForm(res.data.detail));
         if (testMode) {
             setDataUser({
                 is_subscribed: true
@@ -138,9 +141,6 @@ const FormMainBox = ({
         }
         setDataUser(res.data.user_id);
         dispatch(setUserData(res.data.user_id))
-        dispatch(setLayer(res.data.layer));
-        dispatch(setDatabaseId(res.data.databaseId));
-        dispatch(setAllForm(res.data.detail));
     }
 
 
