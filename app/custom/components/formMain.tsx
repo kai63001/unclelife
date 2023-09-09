@@ -19,6 +19,7 @@ import {useSearchParams} from "next/navigation";
 import SuccessPageComponent from "./successPage";
 import Image from "next/image";
 import {decode} from 'base64-arraybuffer'
+import {setUserData} from "@/app/redux/slice/userController.slice";
 
 const FormMainBox = ({
                          id = null,
@@ -77,11 +78,18 @@ const FormMainBox = ({
     // ! check pro-plan
     useEffect(() => {
         // dataForm?.pro.customizations is object filter true
+        let listAlert:any = []
         const filterCustomization = Object.keys(dataForm?.pro?.customizations || {}).filter((key) => {
             return dataForm?.pro?.customizations[key] !== false && dataForm?.pro?.customizations[key] !== null && dataForm?.pro?.customizations[key] !== undefined && dataForm?.pro?.customizations[key].length != 0
         })
 
-        dispatch(setAlert(filterCustomization))
+        const filterSuccessPage = Object.keys(dataForm?.pro?.successPage || {}).filter((key) => {
+            return dataForm?.pro?.successPage[key] !== false && dataForm?.pro?.successPage[key] !== null && dataForm?.pro?.successPage[key] !== undefined && dataForm?.pro?.successPage[key].length != 0
+        })
+        listAlert = [...filterCustomization, ...filterSuccessPage]
+
+
+        dispatch(setAlert(listAlert))
 
     }, [dataForm, dispatch])
 
@@ -129,6 +137,10 @@ const FormMainBox = ({
             return
         }
         setDataUser(res.data.user_id);
+        dispatch(setUserData(res.data.user_id))
+        dispatch(setLayer(res.data.layer));
+        dispatch(setDatabaseId(res.data.databaseId));
+        dispatch(setAllForm(res.data.detail));
     }
 
 
@@ -150,9 +162,6 @@ const FormMainBox = ({
                     .then((res: any) => {
                         // console.log("supabase", res)
                         saveDataState(res)
-                        dispatch(setLayer(res.data.layer));
-                        dispatch(setDatabaseId(res.data.databaseId));
-                        dispatch(setAllForm(res.data.detail));
                     });
             } catch (error) {
                 console.log(error);
@@ -368,7 +377,7 @@ const FormMainBox = ({
                 `}</style>
             )}
             {successSubmit ? (
-                <SuccessPageComponent/>
+                <SuccessPageComponent />
             ) : (
                 <>
                     {/*cover image*/}

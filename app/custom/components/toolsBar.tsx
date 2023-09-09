@@ -10,6 +10,7 @@ import {ScrollArea} from "@/components/ui/scroll-area"
 import ButtonSubmit from "@/app/custom/components/toolsbar/ButtonSubmit";
 import CustomizationToolbar from "@/app/custom/components/toolsbar/CustomizationToolbar";
 import CustomCssToolBar from "@/app/custom/components/toolsbar/CustomCssToolBar";
+import SuccessPageCustomComponent from "@/app/custom/components/toolsbar/SuccessPage";
 
 const ToolsBar = () => {
     const dispatch = useAppDispatch();
@@ -56,6 +57,7 @@ const ToolsBar = () => {
                         <CustomizationToolbar onChangeHook={onChangeHook} form={form}/>
                         <ButtonSubmit onChangeHook={onChangeHook} form={form}/>
                         <CustomCssToolBar onChangeHook={onChangeHook} form={form}/>
+                        <SuccessPageCustomComponent onChangeHook={onChangeHook} form={form}/>
                     </Accordion>
                 </ScrollArea>
             </div>

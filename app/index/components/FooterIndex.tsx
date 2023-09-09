@@ -6,7 +6,7 @@ const FooterIndex = () => {
             <div className={'pb-5 grid grid-cols-4 gap-4'}>
                 <ul className={'text-muted-foreground p-0 m-0'}>
                     <li>
-                        <h2 className={'font-bold text-2xl text-white'}>Uncle Life</h2>
+                        <h2 className={'font-bold text-2xl text-foreground'}>Uncle Life</h2>
                     </li>
                     <li>
                         <Link href={'https://uncle-life.canny.io/feedback'} target={'_blank'} rel={'noopener noreferrer'}>Feedback</Link>
