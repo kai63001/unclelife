@@ -27,9 +27,9 @@ const ToolsBar = () => {
 
     return (
         <div className="text-[#3d3d3d] h-screen w-96 fixed left-0 pb-5 pt-20 pl-5 z-40">
-            <div className="flex flex-col px-5 shadow-me h-full rounded-lg bg-background text-primary">
+            <div className="flex flex-col pl-5 shadow-me h-full rounded-lg bg-background text-primary">
                 <b className="mt-5 mb-5">INFORMATION</b>
-                <ScrollArea>
+                <ScrollArea className={'pr-5'}>
                     <div className="mb-3">
                         <div className="text-xs font-bold">
                             TITLE OF YOUR FORM <span className="text-red-500">*</span>

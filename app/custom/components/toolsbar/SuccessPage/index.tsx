@@ -9,8 +9,10 @@ import {Trash} from "lucide-react";
 import {EyeClosedIcon, EyeOpenIcon} from "@radix-ui/react-icons";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
+import {useTheme} from "next-themes";
 
 const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
+    const {theme} = useTheme();
 
     const handleClickChangeIcon = (icon: any) => {
         onChangeHook({
@@ -43,6 +45,16 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
         }, 'pro')
     }
 
+    const renderTheme = (): Theme => {
+        if (theme === 'dark') {
+            return Theme.DARK
+        }
+        if (theme === 'light') {
+            return Theme.LIGHT
+        }
+        return Theme.AUTO
+    }
+
     return (
         <AccordionItem value="customSuccessPage">
             <AccordionTrigger className={'hover:no-underline'}>
@@ -72,7 +84,7 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                                     <TabsContent value="emoji">
                                         <EmojiPicker
                                             onEmojiClick={handleClickChangeIcon}
-                                            theme={Theme.AUTO}
+                                            theme={renderTheme()}
                                         />
                                     </TabsContent>
                                     <TabsContent value="password">SOON</TabsContent>
