@@ -7,6 +7,8 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import EmojiPicker, {Theme} from "emoji-picker-react";
 import {Trash} from "lucide-react";
 import {EyeClosedIcon, EyeOpenIcon} from "@radix-ui/react-icons";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
 
@@ -52,43 +54,84 @@ const SuccessPageCustomComponent = ({onChangeHook, form}: any) => {
                 <div className="flex flex-col space-y-2">
                     <div className="text-xs font-bold">
                         ICON <span className="text-red-500">*</span>
-                        <div className={"mt-2 flex space-x-2 items-center"}>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button disabled={form?.pro?.successPage?.icon === 'hide'} variant="outline" size="icon">
-                                        {form?.pro?.successPage?.icon && form?.pro?.successPage?.icon !== 'hide' ? form?.pro?.successPage?.icon : '🎉'}
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className={'ml-10 w-11/12'}>
-                                    <Tabs defaultValue="emoji" className="w-full">
-                                        <TabsList>
-                                            <TabsTrigger value="emoji">Emoji</TabsTrigger>
-                                            <TabsTrigger value="password">GIFs</TabsTrigger>
-                                        </TabsList>
-                                        <TabsContent value="emoji">
-                                            <EmojiPicker
-                                                onEmojiClick={handleClickChangeIcon}
-                                                theme={Theme.AUTO}
-                                            />
-                                        </TabsContent>
-                                        <TabsContent value="password">SOON</TabsContent>
-                                    </Tabs>
-                                </PopoverContent>
-                            </Popover>
-                            {(form?.pro?.successPage?.icon && form?.pro?.successPage?.icon != 'hide') && (
-                                <Button onClick={clearIcon} size={'icon'} variant={'outline'}>
-                                    <Trash className={'w-4 h-4'}/>
+                    </div>
+                    <div className={"mt-2 flex space-x-2 items-center"}>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button disabled={form?.pro?.successPage?.icon === 'hide'} variant="outline"
+                                        size="icon">
+                                    {form?.pro?.successPage?.icon && form?.pro?.successPage?.icon !== 'hide' ? form?.pro?.successPage?.icon : '🎉'}
                                 </Button>
-                            )}
-                            {/*    hide*/}
-                            <Button onClick={hideIcon} variant="outline" size="icon">
-                                {form?.pro?.successPage?.icon === 'hide' ? (
-                                    <EyeClosedIcon className={'w-4 h-4'}/>
-                                ) : (
-                                    <EyeOpenIcon className={'w-4 h-4'}/>
-                                )}
+                            </PopoverTrigger>
+                            <PopoverContent className={'ml-10 w-11/12'}>
+                                <Tabs defaultValue="emoji" className="w-full">
+                                    <TabsList>
+                                        <TabsTrigger value="emoji">Emoji</TabsTrigger>
+                                        <TabsTrigger value="password">GIFs</TabsTrigger>
+                                    </TabsList>
+                                    <TabsContent value="emoji">
+                                        <EmojiPicker
+                                            onEmojiClick={handleClickChangeIcon}
+                                            theme={Theme.AUTO}
+                                        />
+                                    </TabsContent>
+                                    <TabsContent value="password">SOON</TabsContent>
+                                </Tabs>
+                            </PopoverContent>
+                        </Popover>
+                        {(form?.pro?.successPage?.icon && form?.pro?.successPage?.icon != 'hide') && (
+                            <Button onClick={clearIcon} size={'icon'} variant={'outline'}>
+                                <Trash className={'w-4 h-4'}/>
                             </Button>
+                        )}
+                        {/*    hide*/}
+                        <Button onClick={hideIcon} variant="outline" size="icon">
+                            {form?.pro?.successPage?.icon === 'hide' ? (
+                                <EyeClosedIcon className={'w-4 h-4'}/>
+                            ) : (
+                                <EyeOpenIcon className={'w-4 h-4'}/>
+                            )}
+                        </Button>
+                    </div>
+                    <div className={'mt-5'}>
+                        <div className="text-xs font-bold mb-2">
+                            TITLE <span className="text-red-500">*</span>
                         </div>
+                        <Input
+                            placeholder="Thank you!"
+                            className="focus:outline-none focus-visible:ring-0"
+                            value={form?.pro?.successPage?.title}
+                            onChange={(e) => {
+                                console.log(e.target.value)
+                                onChangeHook({
+                                    ...form?.pro,
+                                    successPage: {
+                                        ...form?.pro?.successPage,
+                                        ['title']: e.target.value
+                                    }
+                                }, 'pro')
+                            }}
+                        />
+                    </div>
+                    <div className={'mt-5'}>
+                        <div className="text-xs font-bold mb-2">
+                            DESCRIPTION
+                        </div>
+                        <Textarea
+                            placeholder="Your form has been submitted."
+                            className="focus:outline-none focus-visible:ring-0"
+                            value={form?.pro?.successPage?.description}
+                            onChange={(e) => {
+                                onChangeHook({
+                                    ...form?.pro,
+                                    successPage: {
+                                        ...form?.pro?.successPage,
+                                        ['description']: e.target.value
+                                    }
+                                }, 'pro')
+
+                            }}
+                        />
                     </div>
                 </div>
             </AccordionContent>

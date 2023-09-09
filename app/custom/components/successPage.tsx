@@ -17,8 +17,12 @@ const SuccessPageComponent = ({testMode = false}:any) => {
                     </div>
                 )}
                 <div className="flex flex-col items-center justify-center mt-5">
-                    <h1 className="text-3xl font-bold text-muted-foreground">Success!</h1>
-                    <p className="mt-2 text-gray-600">Your form has been submitted.</p>
+                    <h1 className="text-3xl font-bold text-muted-foreground">
+                        {dataForm?.pro?.successPage?.title != undefined ? dataForm?.pro?.successPage?.title : 'Thank you!'}
+                    </h1>
+                    <p className="mt-2 text-gray-600">
+                        {dataForm?.pro?.successPage?.description != undefined ? dataForm?.pro?.successPage?.description : 'Your form has been submitted.'}
+                    </p>
                     {!(dataForm?.pro?.customizations?.hideBranding_pro && dataUser?.is_subscribed) && (
                         <p className="mt-5 text-gray-400 text-sm">If you want to create your form, go to
                             <Link href="https://www.unclelife.co" className="ml-1 underline">
