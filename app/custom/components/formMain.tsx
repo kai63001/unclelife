@@ -193,6 +193,20 @@ const FormMainBox = ({
                     check = false;
                 }
             }
+            //check email
+            if (item?.type === 'email' && inputForm[item?.mapTo]?.value?.length != 0) {
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputForm[item?.mapTo]?.value)) {
+                    error[item?.mapTo] = 'Invalid email';
+                    check = false;
+                }
+            }
+            //validate phone number
+            if (item?.type === 'phone_number' && inputForm[item?.mapTo]?.value?.length != 0) {
+                if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
+                    error[item?.mapTo] = 'Invalid phone number';
+                    check = false;
+                }
+            }
         })
 
         setError(error);
