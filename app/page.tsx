@@ -40,7 +40,8 @@ export default function Home() {
                             </Link>
                         </Button>
                         <Button variant={'secondary'} asChild>
-                            <Link target={'_blank'} href={'https://pickle-shift-ee6.notion.site/Test-Example-658245953b8e457ba0e230e0c3dab8a8'}>
+                            <Link target={'_blank'}
+                                  href={'https://pickle-shift-ee6.notion.site/Test-Example-658245953b8e457ba0e230e0c3dab8a8'}>
                                 See Live Example
                             </Link>
                         </Button>
@@ -98,6 +99,12 @@ export default function Home() {
                             </div>
                         </li>
                     </ol>
+                    <div className={'flex justify-center mt-5'}>
+                        <iframe width="860" height="515" src="https://www.youtube.com/embed/tbdh1yYIkDk?si=EHlqS4x1zzba3ng6"
+                                title=""
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen></iframe>
+                    </div>
                 </section>
                 <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">
                     <h2 className="text-center text-3xl font-bold">Pricing</h2>

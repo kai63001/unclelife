@@ -13,6 +13,11 @@ import {FileEdit, FileSymlink} from "lucide-react";
 import {useAppDispatch} from "@/app/redux/hook";
 import {clearAllData} from "@/app/redux/slice/formController.slice";
 import {useRouter} from "next/navigation"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
 const CardMyForm = ({form}: any) => {
     const dispatch = useAppDispatch()
@@ -41,18 +46,28 @@ const CardMyForm = ({form}: any) => {
                 <CardTitle>{form?.detail?.title || 'Form'}</CardTitle>
                 <CardDescription>{renderDate(form?.created_at)}</CardDescription>
             </CardHeader>
-            <CardFooter className={'space-x-3'}>
-                <Button variant={'outline'} onClick={(e)=>openForm(e,form.id)}>
+            <CardFooter className={'space-x-1 flex justify-between items-center'}>
+                <div className={'flex space-x-2'}>
+                    <Button variant={'outline'} onClick={(e)=>openForm(e,form.id)}>
                         <FileEdit className={'w-6 h-6'}/>
-                </Button>
-                <Button variant={'outline'} onClick={(e) => openNotion(e, form.databaseId)}>
-                    <Icons.notion className={'w-6 h-6'}/>
-                </Button>
-                <Button variant={'outline'} asChild>
-                    <Link href={`/public/form/${form.id}`} target={'_blank'}>
-                        <FileSymlink className={'w-6 h-6'}/>
-                    </Link>
-                </Button>
+                    </Button>
+                    {/*<Button variant={'outline'} onClick={(e) => openNotion(e, form.databaseId)}>*/}
+                    {/*    <Icons.notion className={'w-6 h-6'}/>*/}
+                    {/*</Button>*/}
+                    <Button variant={'outline'} asChild>
+                        <Link href={`/public/form/${form.id}`} target={'_blank'}>
+                            <FileSymlink className={'w-6 h-6'}/>
+                        </Link>
+                    </Button>
+                </div>
+                <Popover>
+                    <PopoverTrigger>
+                        <Button variant={'outline'} >
+                            <Icons.dotdotdot className={'w-4 h-4 fill-primary'}/>
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>Place content for the popover here.</PopoverContent>
+                </Popover>
             </CardFooter>
         </Card>
     )
