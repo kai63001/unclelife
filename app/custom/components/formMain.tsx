@@ -192,16 +192,19 @@ const FormMainBox = ({
                     error[item?.mapTo] = 'This field is required';
                     check = false;
                 }
+                return
             }
             //check email
-            if (item?.type === 'email' && inputForm[item?.mapTo]?.value?.length != 0) {
+            if (item?.type === 'email' && inputForm[item?.mapTo]?.value?.length != 0 && inputForm[item?.mapTo]?.value != undefined) {
+                console.log(inputForm[item?.mapTo]?.value)
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputForm[item?.mapTo]?.value)) {
                     error[item?.mapTo] = 'Invalid email';
                     check = false;
                 }
             }
+            console.log(item)
             //validate phone number
-            if (item?.type === 'phone_number' && inputForm[item?.mapTo]?.value?.length != 0) {
+            if (item?.type === 'phone_number' && inputForm[item?.mapTo]?.value?.length != 0 && inputForm[item?.mapTo]?.value != undefined) {
                 if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
                     error[item?.mapTo] = 'Invalid phone number';
                     check = false;

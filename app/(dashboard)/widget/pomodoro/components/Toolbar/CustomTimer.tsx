@@ -1,7 +1,7 @@
 import {AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import {Input} from "@/components/ui/input";
 
-const CustomTimerPomodoro = () => {
+const CustomTimerPomodoroToolBar = () => {
     return (
         <AccordionItem value="customTimer">
             <AccordionTrigger>
@@ -20,4 +20,4 @@ const CustomTimerPomodoro = () => {
     )
 }
 
-export default CustomTimerPomodoro
+export default CustomTimerPomodoroToolBar
