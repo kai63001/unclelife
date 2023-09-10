@@ -61,8 +61,6 @@ const CardMyForm = ({form}: any) => {
         })
         //refresh
         window.location.reload()
-
-
     }
 
     return (

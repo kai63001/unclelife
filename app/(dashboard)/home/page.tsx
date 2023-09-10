@@ -23,10 +23,15 @@ const DashboardPage = () => {
                     <Card className="w-full">
                         <CardHeader>
                             <CardTitle>Create Form</CardTitle>
-                            <CardDescription>Start building your custom Notion form with just a few clicks.</CardDescription>
+                            <CardDescription>Start building your custom Notion form with just a few
+                                clicks.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            Tutorial soon...
+                            <iframe width="100%" height="240"
+                                    src="https://www.youtube.com/embed/s7g2LurUikU?si=2fORUwZ9qRXRRo4U"
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen></iframe>
                         </CardContent>
                         <CardFooter className="flex justify-between">
                             <Button variant={"outline"}>Help</Button>
