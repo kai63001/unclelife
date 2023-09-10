@@ -47,7 +47,7 @@ export default function Home() {
                         </Button>
                     </div>
                     <div className={'text-center pt-2'}>
-                        <p className={'text-muted-foreground'}>Free 14-day trial - Cancel anytime</p>
+                        <p className={'text-muted-foreground'}>Free 3-day trial - Cancel anytime</p>
                     </div>
                 </section>
                 <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">

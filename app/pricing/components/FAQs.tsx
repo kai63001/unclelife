@@ -13,7 +13,7 @@ const PricingFaq = () => {
         },
         {
             question: "Is there a free trial available?",
-            answer: "Yes, we offer a 14-day free trial for new users. You can try out all our premium features without any commitment."
+            answer: "Yes, we offer a 3-day free trial for new users. You can try out all our premium features without any commitment."
         },
         {
             question: "What happens after my free trial ends?",

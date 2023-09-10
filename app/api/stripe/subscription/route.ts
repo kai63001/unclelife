@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     let subscriptionData = {}
     if (trail_end == null) {
         subscriptionData = {
-            trial_period_days: 14,
+            trial_period_days: 3,
         }
     }
 
