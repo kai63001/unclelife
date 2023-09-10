@@ -256,7 +256,7 @@ const PricingBox = () => {
                 </div>
             </div>
             <div className={'flex justify-center'}>
-                <p className={'text-center text-md text-gray-500 my-5'}>All plans include a 14-day free trial. Cancel
+                <p className={'text-center text-md text-gray-500 my-5'}>All plans include a 3-day free trial. Cancel
                     anytime</p>
             </div>
         </>
