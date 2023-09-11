@@ -6,7 +6,7 @@ import {setCounting} from "@/app/redux/slice/pomodoroController.slice";
 
 const CountTimerPomodoro = () => {
     const dispatch = useAppDispatch()
-    const {counting, selectedCustomTimer, customTimer} = useAppSelector(state => state.pomodoroReducer)
+    const {counting, selectedCustomTimer, customTimer, customization} = useAppSelector(state => state.pomodoroReducer)
 
     const [count, setCount] = useState(customTimer[0].time * 60);
     const workerRef: any = useRef(null);
@@ -52,17 +52,17 @@ const CountTimerPomodoro = () => {
     }
 
     const stopAndResetTimer = () => {
-        if (workerRef.current) {
-            workerRef.current.terminate();
-            workerRef.current = null;
-            setCount(customTimer[selectedCustomTimer].time * 60)
-            dispatch(setCounting('stop'))
-            return
-        }
+        workerRef?.current?.terminate();
+        workerRef.current = null;
+        setCount(customTimer[selectedCustomTimer].time * 60)
+        dispatch(setCounting('stop'))
+        return
     }
 
     return (
-        <div className={'text-6xl'}>
+        <div className={'text-6xl'} style={{
+            color: customization.pomodoro.color
+        }}>
             {Math.floor(count / 60)
                 .toString()
                 .padStart(2, "0")}

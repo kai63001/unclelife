@@ -11,7 +11,7 @@ const PomodoroToolbar = () => {
                 <h2 className={'my-5 font-bold text-xl text-muted-foreground'}>
                     SETTINGS
                 </h2>
-                <Accordion type="multiple" defaultValue={['customTimer','customization']}>
+                <Accordion type="multiple" defaultValue={['customTimer']}>
                     <CustomTimerPomodoroToolBar/>
                     <CustomizationPomodoroToolbar/>
                 </Accordion>
