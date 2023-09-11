@@ -9,15 +9,15 @@ export interface PomodoroState {
 const initialState: PomodoroState = {
     customTimer: [
         {
-            name: "Pomodoro",
+            name: "📚 Pomodoro",
             time: 25,
         },
         {
-            name: "Short Break",
+            name: "☕️ Short Break",
             time: 5,
         },
         {
-            name: "Long Break",
+            name: "🛌 Long Break",
             time: 15,
         }
     ],
