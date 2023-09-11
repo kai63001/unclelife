@@ -4,6 +4,7 @@ import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 export interface PomodoroState {
     customTimer: any[];
     selectedCustomTimer: number;
+    counting: 'start' | 'pause' | 'stop';
 }
 
 const initialState: PomodoroState = {
@@ -22,6 +23,7 @@ const initialState: PomodoroState = {
         }
     ],
     selectedCustomTimer: 0,
+    counting: 'stop',
 };
 
 export const pomodoro = createSlice({
@@ -33,6 +35,9 @@ export const pomodoro = createSlice({
         },
         setSelectedCustomTimer: (state, action: PayloadAction<any>) => {
             state.selectedCustomTimer = action.payload;
+        },
+        setCounting: (state, action: PayloadAction<any>) => {
+            state.counting = action.payload;
         }
     },
 });
@@ -40,6 +45,7 @@ export const pomodoro = createSlice({
 export const {
     setCustomTimer,
     setSelectedCustomTimer,
+    setCounting
 } = pomodoro.actions;
 
 export default pomodoro.reducer;
