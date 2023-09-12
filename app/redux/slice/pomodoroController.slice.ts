@@ -40,6 +40,9 @@ export interface PomodoroState {
         resetColor: {
             color: string;
         }
+    },
+    pomodoro: {
+        font: 'inter' | 'roboto_mono' | 'dot_gothic_16'
     }
 }
 
@@ -94,6 +97,9 @@ const initialState: PomodoroState = {
             color: '#000000',
         }
     },
+    pomodoro: {
+        font: 'inter',
+    },
     selectedCustomTimer: 0,
     counting: 'stop',
 };
@@ -118,6 +124,9 @@ export const pomodoro = createSlice({
         }>) => {
             // @ts-ignore
             state.customization[action.payload.type][action.payload.key] = action.payload.value;
+        },
+        setFont: (state, action: PayloadAction<any>) => {
+            state.pomodoro.font = action.payload;
         }
     },
 });
@@ -126,7 +135,8 @@ export const {
     setCustomTimer,
     setSelectedCustomTimer,
     setCounting,
-    setCustomization
+    setCustomization,
+    setFont
 } = pomodoro.actions;
 
 export default pomodoro.reducer;
