@@ -5,7 +5,6 @@ import {cn} from "@/lib/utils";
 import CustomTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CustomTimer";
 import CountTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CountTimer";
 import ControlPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/ControlPomodoro";
-import {AspectRatio} from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 
 const PomodoroWidget = () => {
