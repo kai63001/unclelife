@@ -39,13 +39,17 @@ const ControlPomodoro = () => {
             >
                 {counting == 'start' ? 'Pause' : 'Start'}
             </button>
-            <RotateCcw size={24} onClick={() => {
-                dispatch(setCounting('stop'))
-                setStopping(true)
-                setTimeout(() => {
-                    setStopping(false)
-                }, 400)
-            }} className={cn('hover:text-black cursor-pointer', stopping && ('animate-reverse-spin'))}/>
+            {customization?.resetColor?.color !== 'transparent' && (
+                <RotateCcw size={24} onClick={() => {
+                    dispatch(setCounting('stop'))
+                    setStopping(true)
+                    setTimeout(() => {
+                        setStopping(false)
+                    }, 400)
+                }} style={{
+                    color: customization.resetColor.color,
+                }} className={cn('hover:text-black cursor-pointer', stopping && ('animate-reverse-spin'))}/>
+            )}
         </div>
     )
 }

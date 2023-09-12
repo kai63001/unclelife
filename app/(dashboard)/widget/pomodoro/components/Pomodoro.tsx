@@ -5,7 +5,7 @@ import {cn} from "@/lib/utils";
 import CustomTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CustomTimer";
 import CountTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CountTimer";
 import ControlPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/ControlPomodoro";
-import Image from "next/image";
+// import Image from "next/image";
 
 const PomodoroWidget = () => {
     const [dynamicFont, setDynamicFont]: any = useState('dot_gothic_16')
@@ -26,8 +26,8 @@ const PomodoroWidget = () => {
                 </div>
                 <ControlPomodoro/>
             </div>
-            <Image src="https://i.pinimg.com/originals/d4/29/3a/d4293acedaafb6a8447a9e57e079e1b3.gif" fill alt="Image"
-                   className="rounded-md object-cover z-10"/>
+            {/*<Image src="https://i.pinimg.com/originals/d4/29/3a/d4293acedaafb6a8447a9e57e079e1b3.gif" fill alt="Image"*/}
+            {/*       className="rounded-md object-cover z-10"/>*/}
         </div>
     )
 }

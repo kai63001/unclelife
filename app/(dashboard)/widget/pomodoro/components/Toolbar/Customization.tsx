@@ -102,6 +102,15 @@ const CustomizationPomodoroToolbar = () => {
                                               keyValue={'borderColor'} value={customization.pause.borderColor}/>
                     </div>
                 </div>
+                <div className={'mb-4'}>
+                    <h2 className={'font-bold text-muted-foreground mb-2'}>
+                        Pause Button
+                    </h2>
+                    <div className={'grid grid-cols-2 gap-2'}>
+                        <ColorSelectComponent label={'Reset Color'} name={'resetColor'} type={'resetColor'}
+                                              keyValue={'color'} value={customization.resetColor.color}/>
+                    </div>
+                </div>
             </AccordionContent>
         </AccordionItem>
     )

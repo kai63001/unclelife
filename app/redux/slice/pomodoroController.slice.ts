@@ -37,6 +37,9 @@ export interface PomodoroState {
         pomodoro: {
             color: string;
         }
+        resetColor: {
+            color: string;
+        }
     }
 }
 
@@ -86,6 +89,9 @@ const initialState: PomodoroState = {
         },
         pomodoro: {
             color: '#000000',
+        },
+        resetColor: {
+            color: '#000000',
         }
     },
     selectedCustomTimer: 0,
@@ -106,7 +112,7 @@ export const pomodoro = createSlice({
             state.counting = action.payload;
         },
         setCustomization: (state, action: PayloadAction<{
-            type: 'tab' | 'start' | 'pause' | 'pomodoro' | 'tabSelected',
+            type: 'tab' | 'start' | 'pause' | 'pomodoro' | 'tabSelected' | 'resetColor',
             key: 'backgroundColor' | 'color',
             value: string
         }>) => {
