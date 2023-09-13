@@ -19,6 +19,15 @@ const PomodoroWidget = () => {
                 <CountTimerPomodoro/>
                 <ControlPomodoro/>
             </div>
+            {pomodoro.typeBackground === 'image' ? (
+                <div></div>
+            ): (
+                <div className={'absolute top-0 left-0 w-full h-full z-10'} style={{
+                    backgroundColor: pomodoro.backgroundColor
+                }}>
+
+                </div>
+            )}
             {/*<Image src="https://i.pinimg.com/originals/d4/29/3a/d4293acedaafb6a8447a9e57e079e1b3.gif" fill alt="Image"*/}
             {/*       className="rounded-md object-cover z-10"/>*/}
         </div>

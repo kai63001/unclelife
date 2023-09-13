@@ -43,6 +43,9 @@ export interface PomodoroState {
     },
     pomodoro: {
         font: 'inter' | 'roboto_mono' | 'dot_gothic_16'
+        backgroundColor: string;
+        backgroundImage: string;
+        typeBackground: 'color' | 'image';
     }
 }
 
@@ -99,6 +102,9 @@ const initialState: PomodoroState = {
     },
     pomodoro: {
         font: 'inter',
+        backgroundColor: '#ffffff',
+        backgroundImage: '',
+        typeBackground: 'color',
     },
     selectedCustomTimer: 0,
     counting: 'stop',
@@ -127,6 +133,15 @@ export const pomodoro = createSlice({
         },
         setFont: (state, action: PayloadAction<any>) => {
             state.pomodoro.font = action.payload;
+        },
+        setBackGroundImage: (state, action: PayloadAction<any>) => {
+            state.pomodoro.backgroundImage = action.payload;
+        },
+        setTypeBackground: (state, action: PayloadAction<any>) => {
+            state.pomodoro.typeBackground = action.payload;
+        },
+        setBackGroundColor: (state, action: PayloadAction<any>) => {
+            state.pomodoro.backgroundColor = action.payload;
         }
     },
 });
@@ -136,7 +151,10 @@ export const {
     setSelectedCustomTimer,
     setCounting,
     setCustomization,
-    setFont
+    setFont,
+    setBackGroundImage,
+    setTypeBackground,
+    setBackGroundColor
 } = pomodoro.actions;
 
 export default pomodoro.reducer;
