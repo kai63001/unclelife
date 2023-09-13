@@ -5,7 +5,7 @@ import CustomTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Po
 import CountTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CountTimer";
 import ControlPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/ControlPomodoro";
 import {useAppSelector} from "@/app/redux/hook";
-// import Image from "next/image";
+import Image from "next/image";
 
 const PomodoroWidget = () => {
     const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
@@ -20,16 +20,16 @@ const PomodoroWidget = () => {
                 <ControlPomodoro/>
             </div>
             {pomodoro.typeBackground === 'image' ? (
-                <div></div>
-            ): (
+                <Image
+                    src={pomodoro.backgroundImage || 'https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg'}
+                    fill alt="Image"
+                    className="rounded-md object-cover z-10"/>
+            ) : (
                 <div className={'absolute top-0 left-0 w-full h-full z-10'} style={{
                     backgroundColor: pomodoro.backgroundColor
                 }}>
-
                 </div>
             )}
-            {/*<Image src="https://i.pinimg.com/originals/d4/29/3a/d4293acedaafb6a8447a9e57e079e1b3.gif" fill alt="Image"*/}
-            {/*       className="rounded-md object-cover z-10"/>*/}
         </div>
     )
 }

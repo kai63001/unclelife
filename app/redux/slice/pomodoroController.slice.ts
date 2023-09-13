@@ -1,7 +1,9 @@
 "use client";
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
+import crypto from "crypto";
 
 export interface PomodoroState {
+    key: string;
     customTimer: any[];
     selectedCustomTimer: number;
     counting: 'start' | 'pause' | 'stop';
@@ -50,6 +52,7 @@ export interface PomodoroState {
 }
 
 const initialState: PomodoroState = {
+    key: crypto.randomUUID(),
     customTimer: [
         {
             name: "📚 Pomodoro",
@@ -103,7 +106,7 @@ const initialState: PomodoroState = {
     pomodoro: {
         font: 'inter',
         backgroundColor: '#ffffff',
-        backgroundImage: '',
+        backgroundImage: 'https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg',
         typeBackground: 'color',
     },
     selectedCustomTimer: 0,
