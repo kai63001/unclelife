@@ -48,8 +48,12 @@ const SaveButtonPomodoroToolbar = () => {
 
     return (
         <div className={'flex justify-between items-center mt-5'}>
-            <div>
-
+            <div className={'w-10/12 pr-5'}>
+                {id && (
+                    <p className={'border h-10 rounded-md flex items-center px-5 whitespace-nowrap overflow-hidden text-ellipsis'}>
+                        {`${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/pomodoro/${id}`}
+                    </p>
+                )}
             </div>
             <div>
                 <Button onClick={saveData} disabled={loading} className={'px-10'}>

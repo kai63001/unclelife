@@ -1,3 +1,4 @@
+"use client"
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {
     Accordion,
@@ -6,14 +7,48 @@ import CustomTimerPomodoroToolBar from "@/app/(dashboard)/widget/pomodoro/compon
 import CustomizationPomodoroToolbar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/Customization";
 import PomodoroCustomToolBar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/PomodoroCustom";
 import BackgroundPomodoroToolBar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/BackgroundPomodoro";
+import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
+import {useEffect} from "react";
+import {supabase} from "@/lib/supabase";
+import {
+    setAllCustomization,
+    setAllPomodoro, setCustomization,
+    setCustomTimer,
+    setIdPomodoro,
+    setKeyPomodoro
+} from "@/app/redux/slice/pomodoroController.slice";
+
 const PomodoroToolbar = () => {
+    const dispatch = useAppDispatch()
+    // const {customTimer, key, id, customization, pomodoro} = useAppSelector(state => state.pomodoroReducer)
+
+    useEffect(() => {
+        //get data from supabase
+        const fetchPomodoro = async () => {
+            const {data, error} = await supabase.from('pomodoro').select('id,data').limit(1).order('created_at', {ascending: false}).single()
+            if (error) {
+                console.log(error)
+                return
+            }
+            if (data) {
+                dispatch(setCustomTimer(data.data.customTimer))
+                dispatch(setKeyPomodoro(data.data.key))
+                dispatch(setIdPomodoro(data.id))
+                dispatch(setAllPomodoro(data.data.pomodoro))
+                dispatch(setAllCustomization(data.data.customization))
+            }
+        }
+        fetchPomodoro().then(r => r)
+
+    }, [dispatch]);
+
     return (
         <div className={'fixed right-0 top-0 h-screen w-96 flex flex-col border-l bg-background pl-5'}>
             <ScrollArea className={'pr-5'}>
                 <h2 className={'my-5 font-bold text-xl text-muted-foreground'}>
                     SETTINGS
                 </h2>
-                <Accordion type="multiple" defaultValue={['customTimer','pomodoroCustom']}>
+                <Accordion type="multiple" defaultValue={['customTimer', 'pomodoroCustom']}>
                     <CustomTimerPomodoroToolBar/>
                     <PomodoroCustomToolBar/>
                     <BackgroundPomodoroToolBar/>

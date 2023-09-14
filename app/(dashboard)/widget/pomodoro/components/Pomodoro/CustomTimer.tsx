@@ -43,7 +43,7 @@ const CustomTimerPomodoro = () => {
                             onMouseLeave={() => {
                                 setCustomTimerHover(null)
                             }}
-                            className={cn('border px-3 py-2 rounded-full hover:bg-gray-200', selectedCustomTimer == index && 'text-white hover:bg-black')}
+                            className={cn('border px-3 py-2 rounded-full hover:bg-gray-200 duration-200', selectedCustomTimer == index && 'text-white hover:bg-black')}
                             key={index}>
                         {item?.name}
                     </button>

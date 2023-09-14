@@ -36,12 +36,18 @@ import {AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui
 import {Label} from "@/components/ui/label";
 import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import {setFont} from "@/app/redux/slice/pomodoroController.slice";
+import {useEffect} from "react";
 
 const PomodoroCustomToolBar = () => {
     const dispatch = useAppDispatch()
     const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
     const [open, setOpen] = React.useState(false)
-    const [value, setValue]:any = React.useState(pomodoro.font || "")
+    const [value, setValue]: any = React.useState(pomodoro.font || "")
+
+    useEffect(() => {
+        setValue(pomodoro.font || "")
+    },[pomodoro.font])
+
     return (
         <AccordionItem value="pomodoroCustom">
             <AccordionTrigger>

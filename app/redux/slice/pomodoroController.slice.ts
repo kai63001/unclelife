@@ -135,6 +135,9 @@ export const pomodoro = createSlice({
             // @ts-ignore
             state.customization[action.payload.type][action.payload.key] = action.payload.value;
         },
+        setAllCustomization: (state, action: PayloadAction<any>) => {
+            state.customization = action.payload;
+        },
         setFont: (state, action: PayloadAction<any>) => {
             state.pomodoro.font = action.payload;
         },
@@ -152,6 +155,9 @@ export const pomodoro = createSlice({
         },
         setIdPomodoro: (state, action: PayloadAction<any>) => {
             state.id = action.payload;
+        },
+        setAllPomodoro: (state, action: PayloadAction<any>) => {
+            state.pomodoro = action.payload;
         }
     },
 });
@@ -166,7 +172,9 @@ export const {
     setTypeBackground,
     setBackGroundColor,
     setKeyPomodoro,
-    setIdPomodoro
+    setIdPomodoro,
+    setAllPomodoro,
+    setAllCustomization
 } = pomodoro.actions;
 
 export default pomodoro.reducer;

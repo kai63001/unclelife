@@ -4,11 +4,29 @@ import {cn} from "@/lib/utils";
 import CustomTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CustomTimer";
 import CountTimerPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/CountTimer";
 import ControlPomodoro from "@/app/(dashboard)/widget/pomodoro/components/Pomodoro/ControlPomodoro";
-import {useAppSelector} from "@/app/redux/hook";
+import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import Image from "next/image";
+import {useEffect} from "react";
+import {
+    setAllCustomization,
+    setAllPomodoro,
+    setCustomTimer,
+    setIdPomodoro,
+    setKeyPomodoro
+} from "@/app/redux/slice/pomodoroController.slice";
 
-const PomodoroWidget = () => {
+const PomodoroWidget = ({data}: any) => {
+    const dispatch = useAppDispatch()
     const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
+    useEffect(() => {
+        if (!data) return
+        console.log(data.data)
+        dispatch(setCustomTimer(data.data.customTimer))
+        dispatch(setKeyPomodoro(data.data.key))
+        dispatch(setIdPomodoro(data.id))
+        dispatch(setAllPomodoro(data.data.pomodoro))
+        dispatch(setAllCustomization(data.data.customization))
+    }, [data, dispatch]);
 
     return (
         <div

@@ -21,7 +21,7 @@ const ControlPomodoro = () => {
     return (
         <div className={'flex items-center space-x-3 mt-5'}>
             <button onClick={handleStart}
-                    className={cn('px-10 py-2 border rounded-full')}
+                    className={cn('px-10 py-2 border rounded-full duration-200')}
                     style={{
                         // backgroundColor: counting !== 'start' ? customization.start.backgroundColor : customization.pause.backgroundColor,
                         // color: counting !== 'start' ? customization.start.color : customization.pause.color,
