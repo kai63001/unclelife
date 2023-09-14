@@ -27,12 +27,16 @@ import {supabase} from "@/lib/supabase";
 import {useEffect, useState} from "react";
 import {uploadPomodoroWallpaper} from "@/lib/pomodoro";
 import {Icons} from "@/components/Icons";
+import {useSupabase} from "@/app/hook/supabase-provider";
 
 const BackgroundPomodoroToolBar = () => {
     const dispatch = useAppDispatch()
     const {pomodoro, key} = useAppSelector(state => state.pomodoroReducer)
     const [images, setImages] = useState<any>([])
+    const [withUrl, setWithUrl] = useState(false)
     const [uploading, setUploading] = useState(false)
+    const {user} = useSupabase();
+
 
     useEffect(() => {
         if (!supabase) return
@@ -102,70 +106,88 @@ const BackgroundPomodoroToolBar = () => {
                         <p className={'text-muted-foreground font-bold'}>
                             Background Image
                         </p>
-                        <div>
-                            <Input disabled={uploading} type={'file'} onChange={uploadWallpaper} accept="image/*"
-                                   id={'uploadWallpaperPomodoro'} name={'uploadWallpaperPomodoro'}
-                                   className={'py-1 hidden'}/>
-                            <Button disabled={uploading} asChild>
-                                <Label htmlFor={'uploadWallpaperPomodoro'}
-                                       className={"flex items-center mt-1 cursor-pointer"}>
-                                    {uploading ? (
-                                        <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                        {!withUrl && (
+                            <div>
+                                <Input disabled={uploading || !user?.is_subscribed} type={'file'}
+                                       onChange={uploadWallpaper} accept="image/*"
+                                       id={'uploadWallpaperPomodoro'} name={'uploadWallpaperPomodoro'}
+                                       className={'py-1 hidden'}/>
+                                <Button disabled={uploading || !user?.is_subscribed} className={'w-full'}>
+                                    <Label htmlFor={'uploadWallpaperPomodoro'}
+                                           className={"flex items-center mt-1 cursor-pointer"}>
+                                        {uploading ? (
+                                            <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
                                         ) : (
-                                        <Upload className={'h-4 w-4 mr-2'}/>
-                                    )}
-                                    <span className={'mr-2'}>
+                                            <Upload className={'h-4 w-4 mr-2'}/>
+                                        )}
+                                        <span className={'mr-2'}>
                                         Upload File
                                     </span>
-                                    <ProBadge/>
-                                </Label>
-                            </Button>
-                            <span className={'text-muted-foreground text-xs'}>
+                                        <ProBadge/>
+                                    </Label>
+                                </Button>
+                                <span className={'text-muted-foreground text-xs'}>
                             {/*    limit 10mb*/}
-                                Support only image file. Max size 10mb
+                                    Support only image file. Max size 10mb
                             </span>
-                            <div className={'border my-2'}>
-                            </div>
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button className={'w-full'} variant="outline">
-                                        <Wallpaper className={'h-4 w-4 mr-2'}/>
-                                        Choose Wallpaper
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[700px]">
-                                    <DialogHeader>
-                                        <DialogTitle>
+                                <div className={'border my-2'}>
+                                </div>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button className={'w-full'} variant="outline">
+                                            <Wallpaper className={'h-4 w-4 mr-2'}/>
                                             Choose Wallpaper
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            Choose a wallpaper for your pomodoro
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid grid-cols-2 gap-2 py-4">
-                                        {images.map((item: any, index: any) => (
-                                            <AspectRatio
-                                                key={index}
-                                                ratio={16 / 9}
-                                                onClick={() => handleSelectImage(item.wallpaperUrl)}
-                                                className={'rounded-md overflow-hidden cursor-pointer'}>
-                                                <Image
-                                                    src={item.wallpaperUrl}
-                                                    fill
-                                                    alt={item.wallpaperName}
-                                                    className={'object-cover'}
-                                                />
-                                                {pomodoro.backgroundImage === item.wallpaperUrl && (
-                                                    <div className={'absolute button-0 h-full right-0'}>
-                                                        <Check className={'text-red-500 mr-2 mt-2'}/>
-                                                    </div>
-                                                )}
-                                            </AspectRatio>
-                                        ))}
-                                    </div>
-                                </DialogContent>
-                            </Dialog>
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[700px]">
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                Choose Wallpaper
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Choose a wallpaper for your pomodoro
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid grid-cols-2 gap-2 py-4">
+                                            {images.map((item: any, index: any) => (
+                                                <AspectRatio
+                                                    key={index}
+                                                    ratio={16 / 9}
+                                                    onClick={() => handleSelectImage(item.wallpaperUrl)}
+                                                    className={'rounded-md overflow-hidden cursor-pointer'}>
+                                                    <Image
+                                                        src={item.wallpaperUrl}
+                                                        fill
+                                                        alt={item.wallpaperName}
+                                                        className={'object-cover'}
+                                                    />
+                                                    {pomodoro.backgroundImage === item.wallpaperUrl && (
+                                                        <div className={'absolute button-0 h-full right-0'}>
+                                                            <Check className={'text-red-500 mr-2 mt-2'}/>
+                                                        </div>
+                                                    )}
+                                                </AspectRatio>
+                                            ))}
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+                        )}
+                        <div className={'mt-2 flex items-center space-x-3'}>
+                            <Switch disabled={!user?.is_subscribed} onCheckedChange={(e) => {
+                                setWithUrl(e)
+                            }} checked={withUrl} name={'withUrl'} id={'withUrl'}/>
+                            <Label htmlFor={'withUrl'}>
+                                With URL Image <ProBadge/>
+                            </Label>
                         </div>
+                        {withUrl && (
+                            <div className={'mt-2'}>
+                                <Input className={''} onChange={(e) => {
+                                    dispatch(setBackGroundImage(e.target.value))
+                                }} value={pomodoro.backgroundImage.indexOf('qpjxzzbztzjosvnoirap') >= 0 ? '' : pomodoro.backgroundImage} placeholder={'Ex. https://image.com/pomodoro.png'}/>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div>
