@@ -10,7 +10,6 @@ import Image from "next/image";
 const PomodoroWidget = () => {
     const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
 
-
     return (
         <div
             className={cn(fonts[pomodoro.font || 'inter'].className, 'w-full h-full flex flex-col relative text-black justify-center items-center')}>

@@ -3,7 +3,12 @@ import {AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui
 import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@/components/ui/label";
-import {setBackGroundColor, setBackGroundImage, setTypeBackground} from "@/app/redux/slice/pomodoroController.slice";
+import {
+    setBackGroundColor,
+    setBackGroundImage,
+    setKeyPomodoro,
+    setTypeBackground
+} from "@/app/redux/slice/pomodoroController.slice";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button"
 import {
@@ -20,17 +25,19 @@ import Image from "next/image"
 import {AspectRatio} from "@/components/ui/aspect-ratio";
 import {supabase} from "@/lib/supabase";
 import {useEffect, useState} from "react";
+import {uploadPomodoroWallpaper} from "@/lib/pomodoro";
+import {Icons} from "@/components/Icons";
 
 const BackgroundPomodoroToolBar = () => {
     const dispatch = useAppDispatch()
-    const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
+    const {pomodoro, key} = useAppSelector(state => state.pomodoroReducer)
     const [images, setImages] = useState<any>([])
+    const [uploading, setUploading] = useState(false)
 
     useEffect(() => {
         if (!supabase) return
         const fetchImages = async () => {
             const {data, error} = await supabase.from('pomodoro_wallpaper').select('*')
-
             if (error) {
                 console.log(error)
                 return
@@ -47,6 +54,32 @@ const BackgroundPomodoroToolBar = () => {
 
     const handleSelectImage = (image: string) => {
         dispatch(setBackGroundImage(image))
+    }
+
+    const uploadWallpaper = (e: any) => {
+        setUploading(true)
+        let newKey = key
+        if (key?.length <= 0) {
+            // key is uuid random
+            newKey = crypto.randomUUID();
+            dispatch(setKeyPomodoro(newKey))
+        }
+        // convert to blob
+        const file = e.target.files[0];
+        //check file size
+        if (file.size > 10000000) {
+            alert('File size is too large')
+            setUploading(false)
+            return
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = async function () {
+            const base64data = reader.result;
+            const {data: uriImage} = await uploadPomodoroWallpaper(base64data, newKey)
+            dispatch(setBackGroundImage(uriImage.data.publicURL))
+            setUploading(false)
+        }
     }
 
     return (
@@ -70,16 +103,27 @@ const BackgroundPomodoroToolBar = () => {
                             Background Image
                         </p>
                         <div>
-                            <Input type={'file'} className={'py-1 hidden'}/>
-                            <Label className={"flex flex-col mt-1"}>
-                                <Button>
-                                    <Upload className={'h-4 w-4 mr-2'}/>
+                            <Input disabled={uploading} type={'file'} onChange={uploadWallpaper} accept="image/*"
+                                   id={'uploadWallpaperPomodoro'} name={'uploadWallpaperPomodoro'}
+                                   className={'py-1 hidden'}/>
+                            <Button disabled={uploading} asChild>
+                                <Label htmlFor={'uploadWallpaperPomodoro'}
+                                       className={"flex items-center mt-1 cursor-pointer"}>
+                                    {uploading ? (
+                                        <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
+                                        ) : (
+                                        <Upload className={'h-4 w-4 mr-2'}/>
+                                    )}
                                     <span className={'mr-2'}>
                                         Upload File
                                     </span>
                                     <ProBadge/>
-                                </Button>
-                            </Label>
+                                </Label>
+                            </Button>
+                            <span className={'text-muted-foreground text-xs'}>
+                            {/*    limit 10mb*/}
+                                Support only image file. Max size 10mb
+                            </span>
                             <div className={'border my-2'}>
                             </div>
                             <Dialog>

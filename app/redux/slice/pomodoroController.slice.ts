@@ -1,6 +1,5 @@
 "use client";
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
-import crypto from "crypto";
 
 export interface PomodoroState {
     key: string;
@@ -52,7 +51,7 @@ export interface PomodoroState {
 }
 
 const initialState: PomodoroState = {
-    key: crypto.randomUUID(),
+    key: '',
     customTimer: [
         {
             name: "📚 Pomodoro",
@@ -145,6 +144,9 @@ export const pomodoro = createSlice({
         },
         setBackGroundColor: (state, action: PayloadAction<any>) => {
             state.pomodoro.backgroundColor = action.payload;
+        },
+        setKeyPomodoro: (state, action: PayloadAction<any>) => {
+            state.key = action.payload;
         }
     },
 });
@@ -157,7 +159,8 @@ export const {
     setFont,
     setBackGroundImage,
     setTypeBackground,
-    setBackGroundColor
+    setBackGroundColor,
+    setKeyPomodoro
 } = pomodoro.actions;
 
 export default pomodoro.reducer;
