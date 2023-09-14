@@ -2,6 +2,7 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 
 export interface PomodoroState {
+    id: string;
     key: string;
     customTimer: any[];
     selectedCustomTimer: number;
@@ -51,6 +52,7 @@ export interface PomodoroState {
 }
 
 const initialState: PomodoroState = {
+    id: '',
     key: '',
     customTimer: [
         {
@@ -147,6 +149,9 @@ export const pomodoro = createSlice({
         },
         setKeyPomodoro: (state, action: PayloadAction<any>) => {
             state.key = action.payload;
+        },
+        setIdPomodoro: (state, action: PayloadAction<any>) => {
+            state.id = action.payload;
         }
     },
 });
@@ -160,7 +165,8 @@ export const {
     setBackGroundImage,
     setTypeBackground,
     setBackGroundColor,
-    setKeyPomodoro
+    setKeyPomodoro,
+    setIdPomodoro
 } = pomodoro.actions;
 
 export default pomodoro.reducer;
