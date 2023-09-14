@@ -28,6 +28,7 @@ import {useEffect, useState} from "react";
 import {uploadPomodoroWallpaper} from "@/lib/pomodoro";
 import {Icons} from "@/components/Icons";
 import {useSupabase} from "@/app/hook/supabase-provider";
+import {cn} from "@/lib/utils";
 
 const BackgroundPomodoroToolBar = () => {
     const dispatch = useAppDispatch()
@@ -112,9 +113,9 @@ const BackgroundPomodoroToolBar = () => {
                                        onChange={uploadWallpaper} accept="image/*"
                                        id={'uploadWallpaperPomodoro'} name={'uploadWallpaperPomodoro'}
                                        className={'py-1 hidden'}/>
-                                <Button disabled={uploading || !user?.is_subscribed} className={'w-full'}>
+                                <Button disabled={uploading || !user?.is_subscribed} className={cn('w-full', (uploading || !user?.is_subscribed) ? 'bg-gray-300 hover:bg-gray-400 cursor-not-allowed' : 'cursor-pointer')} asChild>
                                     <Label htmlFor={'uploadWallpaperPomodoro'}
-                                           className={"flex items-center mt-1 cursor-pointer"}>
+                                           className={"flex items-center mt-1"}>
                                         {uploading ? (
                                             <Icons.spinner className="animate-spin mr-2 h-5 w-5"/>
                                         ) : (

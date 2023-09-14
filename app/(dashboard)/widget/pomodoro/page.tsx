@@ -6,7 +6,9 @@ const PomodoroDashboardPage = () => {
     return (
         <div className={'flex w-full'}>
             <div className={'m-auto mt-[20%] ml-14 shadow-md w-[70%] rounded-md h-[500px]'}>
-                <PomodoroWidget/>
+                <div className={'rounded-md overflow-hidden h-full'}>
+                    <PomodoroWidget/>
+                </div>
                 <SaveButtonPomodoroToolbar/>
             </div>
             <PomodoroToolbar/>

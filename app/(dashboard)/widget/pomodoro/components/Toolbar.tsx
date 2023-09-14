@@ -17,15 +17,18 @@ import {
     setIdPomodoro,
     setKeyPomodoro
 } from "@/app/redux/slice/pomodoroController.slice";
+import {useSupabase} from "@/app/hook/supabase-provider";
 
 const PomodoroToolbar = () => {
     const dispatch = useAppDispatch()
+    const {user} = useSupabase();
     // const {customTimer, key, id, customization, pomodoro} = useAppSelector(state => state.pomodoroReducer)
 
     useEffect(() => {
         //get data from supabase
+        if (!user?.id) return
         const fetchPomodoro = async () => {
-            const {data, error} = await supabase.from('pomodoro').select('id,data').limit(1).order('created_at', {ascending: false}).single()
+            const {data, error} = await supabase.from('pomodoro').select('id,data').eq('user_id', user?.id).limit(1).order('created_at', {ascending: false}).single()
             if (error) {
                 console.log(error)
                 return
@@ -40,7 +43,7 @@ const PomodoroToolbar = () => {
         }
         fetchPomodoro().then(r => r)
 
-    }, [dispatch]);
+    }, [dispatch, user]);
 
     return (
         <div className={'fixed right-0 top-0 h-screen w-96 flex flex-col border-l bg-background pl-5'}>

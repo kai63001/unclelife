@@ -40,7 +40,7 @@ const PomodoroWidget = ({data}: any) => {
                 <Image
                     src={pomodoro.backgroundImage || 'https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg'}
                     fill alt="Image"
-                    className="rounded-md object-cover z-10"/>
+                    className="object-cover z-10"/>
             ) : (
                 <div className={'absolute top-0 left-0 w-full h-full z-10'} style={{
                     backgroundColor: pomodoro.backgroundColor
