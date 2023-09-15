@@ -29,8 +29,8 @@ const FeatureIndex = () => {
                     </div>
                     <div className="p-4">
                         <h3 className="text-xl font-bold flex items-center">Pomodoro
-                            <span
-                                className={'rounded-full px-3 bg-red-600 text-white text-xs font-bold py-1 ml-2'}>SOON</span>
+                            {/*<span*/}
+                            {/*    className={'rounded-full px-3 bg-red-600 text-white text-xs font-bold py-1 ml-2'}>SOON</span>*/}
                         </h3>
                         <ul className="text-muted-foreground text-sm">
                             <li>

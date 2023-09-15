@@ -44,8 +44,6 @@ const CustomSoundToolbar = () => {
                 <div className={'flex items-center space-x-2'}>
                     <div className={'w-11/12'}>
                         <Select onValueChange={(e) => {
-                            audio.pause()
-                            audio.currentTime = 0;
                             dispatch(setSoundUrl(e))
                         }} defaultValue={
                             pomodoro?.soundUrl || '/sound/endSound.mp3'
