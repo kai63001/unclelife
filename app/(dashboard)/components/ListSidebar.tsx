@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import {Home, PlusSquare, FormInput, MessageSquare,Feather} from "lucide-react";
+import {Home, PlusSquare, FormInput, MessageSquare, Feather, Timer} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 
@@ -41,6 +41,16 @@ const ListSideBar = () => {
             ],
         },
         {
+          group: "WIDGETS",
+          items: [
+            {
+              path: "/widget/pomodoro",
+              name: "Pomodoro",
+              icon: <Timer className="mr-1 h-5" />,
+            },
+          ],
+        },
+        {
             group: "HELP",
             items: [
                 {
@@ -57,21 +67,6 @@ const ListSideBar = () => {
                 }
             ]
         }
-        // {
-        //   group: "WIDGETS",
-        //   items: [
-        //     {
-        //       path: "/pomodoro",
-        //       name: "Pomodoro",
-        //       icon: <Timer className="mr-1 h-5" />,
-        //     },
-        //     {
-        //       path: "/clock",
-        //       name: "Clock",
-        //       icon: <Clock className="mr-1 h-5" />,
-        //     },
-        //   ],
-        // },
     ]);
     return (
         <div className="flex-grow p-4">
