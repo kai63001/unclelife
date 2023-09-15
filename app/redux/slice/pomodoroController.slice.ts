@@ -48,6 +48,8 @@ export interface PomodoroState {
         backgroundColor: string;
         backgroundImage: string;
         typeBackground: 'color' | 'image';
+        soundUrl: string;
+        soundVolume: number;
     }
 }
 
@@ -109,6 +111,8 @@ const initialState: PomodoroState = {
         backgroundColor: '#ffffff',
         backgroundImage: 'https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg',
         typeBackground: 'color',
+        soundUrl: '/sound/achievement-bell.mp3',
+        soundVolume: 100
     },
     selectedCustomTimer: 0,
     counting: 'stop',
@@ -158,6 +162,12 @@ export const pomodoro = createSlice({
         },
         setAllPomodoro: (state, action: PayloadAction<any>) => {
             state.pomodoro = action.payload;
+        },
+        setSoundUrl: (state, action: PayloadAction<any>) => {
+            state.pomodoro.soundUrl = action.payload;
+        },
+        setSoundVolume: (state, action: PayloadAction<any>) => {
+            state.pomodoro.soundVolume = action.payload;
         }
     },
 });
@@ -174,7 +184,9 @@ export const {
     setKeyPomodoro,
     setIdPomodoro,
     setAllPomodoro,
-    setAllCustomization
+    setAllCustomization,
+    setSoundUrl,
+    setSoundVolume
 } = pomodoro.actions;
 
 export default pomodoro.reducer;

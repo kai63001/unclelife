@@ -7,17 +7,18 @@ import CustomTimerPomodoroToolBar from "@/app/(dashboard)/widget/pomodoro/compon
 import CustomizationPomodoroToolbar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/Customization";
 import PomodoroCustomToolBar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/PomodoroCustom";
 import BackgroundPomodoroToolBar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/BackgroundPomodoro";
-import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
+import {useAppDispatch} from "@/app/redux/hook";
 import {useEffect} from "react";
 import {supabase} from "@/lib/supabase";
 import {
     setAllCustomization,
-    setAllPomodoro, setCustomization,
+    setAllPomodoro,
     setCustomTimer,
     setIdPomodoro,
     setKeyPomodoro
 } from "@/app/redux/slice/pomodoroController.slice";
 import {useSupabase} from "@/app/hook/supabase-provider";
+import CustomSoundToolbar from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/CustomSound";
 
 const PomodoroToolbar = () => {
     const dispatch = useAppDispatch()
@@ -56,6 +57,7 @@ const PomodoroToolbar = () => {
                     <PomodoroCustomToolBar/>
                     <BackgroundPomodoroToolBar/>
                     <CustomizationPomodoroToolbar/>
+                    <CustomSoundToolbar/>
                 </Accordion>
             </ScrollArea>
         </div>

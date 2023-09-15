@@ -20,7 +20,7 @@ const PomodoroWidget = ({data}: any) => {
     const {pomodoro} = useAppSelector(state => state.pomodoroReducer)
     useEffect(() => {
         if (!data) return
-        console.log(data.data)
+        // console.log(data.data)
         dispatch(setCustomTimer(data.data.customTimer))
         dispatch(setKeyPomodoro(data.data.key))
         dispatch(setIdPomodoro(data.id))

@@ -6,7 +6,7 @@ import {setCounting} from "@/app/redux/slice/pomodoroController.slice";
 
 const CountTimerPomodoro = () => {
     const dispatch = useAppDispatch()
-    const {counting, selectedCustomTimer, customTimer, customization} = useAppSelector(state => state.pomodoroReducer)
+    const {counting, selectedCustomTimer, customTimer, customization, pomodoro} = useAppSelector(state => state.pomodoroReducer)
 
     const [count, setCount] = useState(customTimer[0].time * 60);
     const workerRef: any = useRef(null);
@@ -29,17 +29,18 @@ const CountTimerPomodoro = () => {
             stopAndResetTimer()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCustomTimer]);
+    }, [selectedCustomTimer, customTimer]);
 
     const startTimer = () => {
         workerRef.current = new Worker("/timerWorker.js");
 
         workerRef.current.onmessage = (event: any) => {
             setCount(event.data);
-            // if (event.data === 0) {
-            //     const audio = new Audio("/sound/endSound.mp3");
-            //     audio.play();
-            // }
+            if (event.data <= 0) {
+                const audio = new Audio(pomodoro.soundUrl || "/sound/endSound.mp3");
+                audio.volume = ((pomodoro.soundVolume || 100) / 100)
+                audio.play();
+            }
         };
         workerRef.current.postMessage(count);
     };
