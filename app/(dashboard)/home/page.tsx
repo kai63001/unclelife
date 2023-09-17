@@ -40,6 +40,26 @@ const DashboardPage = () => {
                             </Link>
                         </CardFooter>
                     </Card>
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>Pomodoro Widget</CardTitle>
+                            <CardDescription>Start building your Pomodoro just a few
+                                clicks.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className={'h-[240px]'}>
+                                <video className={'w-full h-full object-cover'} autoPlay loop muted>
+                                    <source src="/pomodoro/pomodoroWidget.mp4" type="video/mp4"/>
+                                </video>
+                            </div>
+                        </CardContent>
+                        <CardFooter className="flex justify-between">
+                            <Button variant={"outline"}>Help</Button>
+                            <Link href={"/pomodoro"}>
+                                <Button>Create</Button>
+                            </Link>
+                        </CardFooter>
+                    </Card>
                 </div>
             </div>
             <Suspense fallback={<RenderMyFormLoading/>}>
