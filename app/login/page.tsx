@@ -2,6 +2,9 @@ import {X} from "lucide-react";
 import Link from "next/link";
 import Login from "@/app/login/components/login";
 import {Metadata} from "next";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import MagicLink from "@/app/login/components/magicLink";
 
 export const metadata: Metadata = {
     title: 'Uncle Life - Login to Access Notion Tools',
@@ -20,9 +23,9 @@ const LoginPage = () => {
                 </div>
                 <h1 className="text-center text-3xl font-bold">UncleLife</h1>
                 <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
-                    One account for
-                    {"\n"}All your Notion pages
+                    Login to Access Notion Tools
                 </h2>
+                {/*<MagicLink/>*/}
                 <div className="border-b my-4"></div>
                 {/* notion login */}
                 <Login/>
@@ -31,7 +34,8 @@ const LoginPage = () => {
                     <Link href={'/privacy-policy'} className={'text-red-600'} target={'_blank'}
                           rel={'noopener noreferrer'}>Privacy Policy</Link>
                     {' and '}
-                    <Link href={'/terms-conditions'} className={'text-red-600'} target={'_blank'} rel={'noopener noreferrer'}>Terms of
+                    <Link href={'/terms-conditions'} className={'text-red-600'} target={'_blank'}
+                          rel={'noopener noreferrer'}>Terms of
                         Service</Link>
                 </p>
             </div>

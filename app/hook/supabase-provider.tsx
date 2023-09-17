@@ -61,6 +61,7 @@ export default function SupabaseProvider({
             getUserData().then(r => r);
         });
 
+
         return () => {
             subscription.unsubscribe();
         };
