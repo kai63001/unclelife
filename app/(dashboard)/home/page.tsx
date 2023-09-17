@@ -55,7 +55,7 @@ const DashboardPage = () => {
                         </CardContent>
                         <CardFooter className="flex justify-between">
                             <Button variant={"outline"}>Help</Button>
-                            <Link href={"/pomodoro"}>
+                            <Link href={"/widget/pomodoro"}>
                                 <Button>Create</Button>
                             </Link>
                         </CardFooter>
