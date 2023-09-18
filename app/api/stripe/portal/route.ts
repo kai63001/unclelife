@@ -2,6 +2,7 @@ import {NextResponse} from "next/server";
 import Stripe from "stripe";
 import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
 import {cookies} from "next/headers";
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {

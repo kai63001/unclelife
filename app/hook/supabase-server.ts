@@ -2,6 +2,7 @@ import { Database } from '@/lib/types_db';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
+export const dynamic = 'force-dynamic'
 
 export const createServerSupabaseClient = cache(() =>
   createServerComponentClient<Database>({ cookies })

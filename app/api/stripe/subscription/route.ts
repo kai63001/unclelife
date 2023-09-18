@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import {supabase as supabaseBypass} from "@/lib/supabase";
 import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
 import {cookies} from "next/headers";
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
 

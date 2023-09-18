@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import Stripe from "stripe";
 import {headers} from "next/headers"
 import {supabase as supabaseBypass} from "@/lib/supabase";
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {

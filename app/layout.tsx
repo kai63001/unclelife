@@ -6,6 +6,7 @@ import {Toaster} from "@/components/ui/toaster";
 import type {Metadata} from 'next'
 import Script from 'next/script'
 import { headers } from "next/headers";
+export const dynamic = 'force-dynamic'
 
 const inter = Inter({subsets: ["latin"]});
 

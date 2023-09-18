@@ -2,6 +2,7 @@ import {createRouteHandlerClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers'
 import {NextRequest, NextResponse} from 'next/server'
 import {supabase as supabaseBypass} from "@/lib/supabase";
+export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
     const supabase = createRouteHandlerClient({cookies})
