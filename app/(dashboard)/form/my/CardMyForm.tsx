@@ -89,13 +89,13 @@ const CardMyForm = ({form}: any) => {
                             <Icons.dotdotdot className={'w-4 h-4 fill-primary'}/>
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => openNotion(form.databaseId)}>
+                    <DropdownMenuContent className={''}>
+                        <DropdownMenuItem className={'cursor-pointer'} onClick={() => openNotion(form.databaseId)}>
                             <Icons.notion className={'w-4 h-4 mr-2'}/>
                             Open Notion
                         </DropdownMenuItem>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem onClick={()=>{
+                        <DropdownMenuItem className={'cursor-pointer'} onClick={()=>{
                             setAlertDelete(true)
                         }}>
                             <Trash className={'w-4 h-4 mr-2'}/>

@@ -12,7 +12,6 @@ import {Icons} from "@/components/Icons";
 import {useSupabase} from "@/app/hook/supabase-provider";
 import {cache} from "react";
 
-
 export const revalidate = 3600 * 24 // 1 day
 const PricingBox = () => {
     const {user, isLoading} = useSupabase()

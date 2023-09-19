@@ -24,7 +24,10 @@ const DashboardPage = () => {
                         <CardHeader>
                             <CardTitle>Create Form</CardTitle>
                             <CardDescription>Start building your custom Notion form with just a few
-                                clicks.</CardDescription>
+                                clicks.
+                                <br/>
+                                <br/>
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <iframe width="100%" height="240"
@@ -32,6 +35,36 @@ const DashboardPage = () => {
                                     title="YouTube video player"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowFullScreen></iframe>
+                        </CardContent>
+                        <CardFooter className="flex justify-between">
+                            <Button variant={"outline"}>Help</Button>
+                            <Link href={"/form/create"}>
+                                <Button>Create</Button>
+                            </Link>
+                        </CardFooter>
+                    </Card>
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>
+                                Pomodoro Widget
+                            </CardTitle>
+                            <CardDescription className={''}>
+                                Time management method developed by Francesco Cirillo in the late 1980s.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <video width="100%" height="240"
+                                   className={'h-[240px] w-full object-cover'}
+                                   autoPlay
+                                   muted
+                                   playsInline
+                                   preload={'auto'}
+                                   loop
+                                   controls={false}
+                            >
+                                <source src="/pomodoro/pomodoroWidget.mp4" type="video/mp4"/>
+                                Your browser does not support the video tag.
+                            </video>
                         </CardContent>
                         <CardFooter className="flex justify-between">
                             <Button variant={"outline"}>Help</Button>

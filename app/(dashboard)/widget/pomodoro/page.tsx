@@ -5,7 +5,7 @@ import SaveButtonPomodoroToolbar from "@/app/(dashboard)/widget/pomodoro/compone
 const PomodoroDashboardPage = () => {
     return (
         <div className={'flex w-full'}>
-            <div className={'m-auto mt-[20%] ml-14 shadow-md w-[70%] rounded-md h-[500px]'}>
+            <div className={'m-auto mt-[10%] ml-14 shadow-md w-[70%] rounded-md h-[500px]'}>
                 <div className={'rounded-md overflow-hidden h-full'}>
                     <PomodoroWidget/>
                 </div>

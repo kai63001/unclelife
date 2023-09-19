@@ -175,7 +175,7 @@ const BackgroundPomodoroToolBar = () => {
                             </div>
                         )}
                         <div className={'mt-2 flex items-center space-x-3'}>
-                            <Switch disabled={!user?.is_subscribed} onCheckedChange={(e) => {
+                            <Switch onCheckedChange={(e) => {
                                 setWithUrl(e)
                             }} checked={withUrl} name={'withUrl'} id={'withUrl'}/>
                             <Label htmlFor={'withUrl'}>
