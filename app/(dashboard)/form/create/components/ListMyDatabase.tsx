@@ -1,5 +1,5 @@
 "use client"
-import {getListDatabase} from "@/lib/notionApi"
+import {getAuthLink, getListDatabase} from "@/lib/notionApi"
 // import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
 import dynamic from "next/dynamic";
 import {Button} from "@/components/ui/button";
@@ -45,12 +45,22 @@ const ListMyDatabase = ({session}: any) => {
         setListDatabase(listDatabase)
     }
 
+    const openWindow = async () => {
+        const url = await getAuthLink()
+        console.log(url)
+        const win = window.open(url, '_blank');
+        win?.focus();
+    }
+
 
     return (
         <div className={'mt-4'}>
             <div className={"flex justify-between mb-3"}>
                 <div>
                     {/* search */}
+                    <Button onClick={openWindow}>
+                        Intergate with Notion
+                    </Button>
                 </div>
                 <div className={'flex items-center space-x-3'}>
                     <Button
