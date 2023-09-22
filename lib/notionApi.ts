@@ -36,3 +36,9 @@ export const getAuthLink = async () => {
     // https://api.notion.com/v1/oauth/authorize?client_id=0ba04f1e-711b-43cb-a6cd-1c038b3913bc&response_type=code&owner=user&redirect_uri=https%3A%2F%2Fqpjxzzbztzjosvnoirap.supabase.co%2Fauth%2Fv1%2Fcallback
     return `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_NOTION_CLIENT_ID}&response_type=code&owner=user&redirect_uri=${process.env.NEXT_PUBLIC_FRONT_END_URL}/api/notion/auth`;
 }
+
+export const getDecryptedIntegrationNotion = async (workspace_id: string) => {
+    const response = await notionApi.get(`/api/notion/decrypted-integration-notion?workspace_id=${workspace_id}`);
+    return response.data;
+}
+

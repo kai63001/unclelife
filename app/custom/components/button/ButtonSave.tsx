@@ -19,6 +19,8 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import {ArrowLeftRight} from "lucide-react";
+import { insertForm, updateForm } from "@/lib/formApi";
+// import { getDecryptedIntegrationNotion } from "@/lib/notionApi";
 
 const ButtonSaveCustomForm = ({session}: any) => {
     const {toast} = useToast();
@@ -26,7 +28,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
 
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();
-    const {layer, infomation, databaseId, form} = useAppSelector(
+    const {layer, infomation, databaseId, form, workspaceId} = useAppSelector(
         (state) => state.formReducer
     );
     const [warning, setWarning] = useState(false);
@@ -50,20 +52,28 @@ const ButtonSaveCustomForm = ({session}: any) => {
         return saveLayer();
     };
 
+
     const supabase = createClientComponentClient();
     const saveLayer = async () => {
+        // const token = await getDecryptedIntegrationNotion(workspaceId)
+        // console.log('token', token)
         //log user id
         setLoading(true);
         setWarning(false);
         if (infomation.id) {
-            const {data, error} = await supabase
-                .from("form")
-                .upsert({
-                    id: infomation.id,
-                    detail: form,
-                    layer: layer,
-                })
-                .select();
+            // const {data, error} = await supabase
+            //     .from("form")
+            //     .upsert({
+            //         id: infomation.id,
+            //         detail: form,
+            //         layer: layer,
+            //     })
+            //     .select();
+            const {data,error} = await updateForm({
+                id: infomation.id,
+                detail: form,
+                layer: layer,
+            })
             if (error) {
                 console.log(error);
             }
@@ -82,15 +92,24 @@ const ButtonSaveCustomForm = ({session}: any) => {
             });
             return;
         }
-        const {data, error} = await supabase
-            .from("form")
-            .insert({
-                layer: layer,
-                user_id: session?.user?.id || "",
-                detail: form,
-                databaseId,
-            })
-            .select();
+        // const {data, error} = await supabase
+        //     .from("form")
+        //     .insert({
+        //         layer: layer,
+        //         user_id: session?.user?.id || "",
+        //         detail: form,
+        //         databaseId,
+        //         workspaceId
+        //     })
+        //     .select();
+
+        const {data,error} = await insertForm({
+            layer: layer,
+            user_id: session?.user?.id || "",
+            detail: form,
+            databaseId,
+            workspaceId
+        })
         if (error) {
             console.log(error);
             toast({
@@ -101,15 +120,17 @@ const ButtonSaveCustomForm = ({session}: any) => {
             setLoading(false);
             return;
         }
+
+
         setLoading(false);
         dispatch(
             setInformation({
-                id: data[0].id,
+                id: data.id,
             })
         );
 
         //update a fake path
-        router.replace(`/custom/form?id=${data[0].id}`);
+        router.replace(`/custom/form?id=${data.id}`);
 
         //toast success
         toast({
@@ -117,7 +138,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
             description: "Your form has been saved",
             action: (
                 <ToastAction
-                    onClick={() => copyLink(data[0].id)}
+                    onClick={() => copyLink(data.id)}
                     altText="Goto schedule to undo"
                 >
                     Copy Link
