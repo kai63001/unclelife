@@ -13,8 +13,8 @@ export const getDatabase = async (id: string) => {
     return response.data;
 };
 
-export const getListDatabase = async (userId: string) => {
-    const response = await notionApi.get(`/api/notion/search/database?userid=${userId}`);
+export const getListDatabase = async (workspace_id:string) => {
+    const response = await notionApi.get(`/api/notion/search/database?workspace_id=${workspace_id}`);
     return response.data;
 }
 
