@@ -54,6 +54,7 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
         }
         // redirect to custom/form
         router.push("/custom/form");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, form, router]);
 
     const openNotion = (e: any, url: string) => {

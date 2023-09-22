@@ -1,4 +1,3 @@
-import {Button} from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/tabs"
 import ManageSubscrptionComponent from "@/app/(dashboard)/setting/components/ManageSubscrption";
 import DeleteAccount from "@/app/(dashboard)/setting/components/DeleteAccount";
+import WorkspaceSetting from "@/app/(dashboard)/setting/components/Workspace";
 
 export const metadata = {
     title: "Uncle Life Dashboard - Manage Your Notion Tools",
@@ -26,7 +26,8 @@ const SettingPage = () => {
         <div>
             <h1 className={'text-4xl font-bold'}>Settings</h1>
             <Tabs defaultValue="account" className="w-full mt-10">
-                <TabsList className="grid grid-cols-2 w-[400px]">
+                <TabsList className="grid grid-cols-3 w-[800px]">
+                    <TabsTrigger value="workspaces">Workspaces</TabsTrigger>
                     <TabsTrigger value="account">Account</TabsTrigger>
                     <TabsTrigger value="subscription">Subscription</TabsTrigger>
                 </TabsList>
@@ -36,6 +37,8 @@ const SettingPage = () => {
                             <CardTitle>Account</CardTitle>
                             <CardDescription>
                                 Make changes to your account here.
+                                <br/>
+                                Soon...
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
@@ -63,6 +66,20 @@ const SettingPage = () => {
                         </CardHeader>
                         <CardContent>
                             <ManageSubscrptionComponent/>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+                <TabsContent value="workspaces">
+                    <Card>
+                        {}
+                        <CardHeader>
+                            <CardTitle>Workspaces</CardTitle>
+                            <CardDescription>
+                                Manage your workspaces here.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <WorkspaceSetting/>
                         </CardContent>
                     </Card>
                 </TabsContent>
