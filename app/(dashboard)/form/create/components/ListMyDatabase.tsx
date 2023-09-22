@@ -102,6 +102,7 @@ const ListMyDatabase = ({ session }: any) => {
               setSelectedWorkspace(value);
             }}
             defaultValue={listWorkspace[0]?.workspace_id || ""}
+            disabled={loading}
           >
             <SelectTrigger className="w-[220px]">
               <SelectValue placeholder="Select a Workspace" />
