@@ -48,7 +48,7 @@ const CreateFormFAQs = () => {
     ];
 
     return (
-        <Accordion type="single" collapsible className="w-full mt-5 mb-5">
+        <Accordion type="multiple" className="w-full mt-5 mb-5">
             {listFaq.map((faq, index) => (
                     <AccordionItem key={index} value={`faq-${index}`}>
                         <AccordionTrigger className="w-full">{faq.question}

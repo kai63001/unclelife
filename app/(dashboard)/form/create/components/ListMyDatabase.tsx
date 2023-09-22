@@ -1,5 +1,5 @@
 "use client";
-import { getAuthLink, getListDatabase } from "@/lib/notionApi";
+import { getListDatabase } from "@/lib/notionApi";
 // import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
@@ -40,7 +40,6 @@ const ListMyDatabase = ({ session }: any) => {
           if (data.error) {
             return [];
           }
-          console.log(data);
           return data.data;
         });
       setListWorkspace(listWorkspaceData);

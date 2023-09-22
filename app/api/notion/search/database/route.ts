@@ -26,21 +26,9 @@ export async function GET(req: NextRequest) {
         const userId = session.user.id
 
 
-        // const {data: profile, error} = await supabaseBypass
-        //     .from('decrypted_profiles').select('decrypted_provider_token').eq('id', userId).single();
-        // if (error) {
-        //     return NextResponse.json(
-        //         {
-        //             'message': 'error',
-        //             'error': error
-        //         }
-        //     )
-        // }
-        // const token = profile.decrypted_provider_token
-
-        // get access token from decrypted_integration_notion
+        // get access token from decrypted_integration_notion and user id
         const {data: notionIntegration, error} = await supabaseBypass
-            .from('decrypted_integration_notion').select('decrypted_access_token').eq('workspace_id', workspace_id).single();
+            .from('decrypted_integration_notion').select('decrypted_access_token').eq('workspace_id', workspace_id).eq('user_id',userId).single();
         if (error) {
             return NextResponse.json(
                 {
@@ -49,9 +37,8 @@ export async function GET(req: NextRequest) {
                 }
             )
         }
+
         const token = notionIntegration.decrypted_access_token
-
-
 
         const notion = new Client({
             auth: token,
