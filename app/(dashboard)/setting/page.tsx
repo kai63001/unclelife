@@ -11,9 +11,19 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import ManageSubscrptionComponent from "@/app/(dashboard)/setting/components/ManageSubscrption";
-import DeleteAccount from "@/app/(dashboard)/setting/components/DeleteAccount";
-import WorkspaceSetting from "@/app/(dashboard)/setting/components/Workspace";
+import dynamic from "next/dynamic";
+const ManageSubscrptionComponent = dynamic(
+    () => import("@/app/(dashboard)/setting/components/ManageSubscrption"),
+    { ssr: false }
+);
+const DeleteAccount = dynamic(
+    () => import("@/app/(dashboard)/setting/components/DeleteAccount"),
+    { ssr: false }
+);
+const WorkspaceSetting = dynamic(
+    () => import("@/app/(dashboard)/setting/components/Workspace"),
+    { ssr: false }
+);
 
 export const metadata = {
     title: "Uncle Life Dashboard - Manage Your Notion Tools",
@@ -57,7 +67,6 @@ const SettingPage = () => {
                 </TabsContent>
                 <TabsContent value="subscription">
                     <Card>
-                        {}
                         <CardHeader>
                             <CardTitle>Manage Subscription</CardTitle>
                             <CardDescription>
