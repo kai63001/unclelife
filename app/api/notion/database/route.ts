@@ -74,12 +74,22 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "No userId provided" });
   }
 
-  const userId = req.nextUrl.searchParams.get("userid") as string;
+  const body = await req.json();
+  const properties = body.properties;
+  const form_id = body.form_id;
+  if (properties === null) {
+    return NextResponse.json({ error: "No properties provided" });
+  }
+  if (form_id === null) {
+    return NextResponse.json({ error: "No form_id provided" });
+  }
 
-  const { data: profile, error } = await supabaseBypass
-    .from("decrypted_profiles")
-    .select("decrypted_provider_token")
-    .eq("id", userId)
+  const userId = req.nextUrl.searchParams.get("userid") as string;
+  const { data: notionIntegration, error } = await supabaseBypass
+    .from("decrypted_form")
+    .select("decrypted_access_token")
+    .eq("user_id", userId)
+    .eq("id", form_id)
     .single();
   if (error) {
     return NextResponse.json({
@@ -87,10 +97,9 @@ export async function PUT(req: NextRequest) {
       error: error,
     });
   }
-  const token = profile.decrypted_provider_token;
 
-  const body = await req.json();
-  const properties = body.properties;
+  const token = notionIntegration.decrypted_access_token;
+  console.log("token",token);
 
   try {
     const notion = new Client({

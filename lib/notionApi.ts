@@ -18,9 +18,10 @@ export const getListDatabase = async (workspace_id:string) => {
     return response.data;
 }
 
-export const updateDatabase = async (id: string, properties: any, userId: any) => {
+export const updateDatabase = async (id: string, properties: any, userId: any,form_id:any) => {
     const response = await notionApi.put(`/api/notion/database?id=${id}&userid=${userId}`, {
         properties,
+        form_id
     });
     return response.data;
 };
