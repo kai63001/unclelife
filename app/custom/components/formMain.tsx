@@ -38,7 +38,7 @@ const FormMainBox = ({
     const [dataLayer, setDataLayer] = useState<any>([]);
     const [dataUser, setDataUser] = useState<any>({});
     const [databaseId, setDatabaseIdState] = useState<string>("");
-    const {form, layer} = useAppSelector((state) => state.formReducer);
+    const {form, layer, workspaceId} = useAppSelector((state) => state.formReducer);
     const [loading, setLoading] = useState(false);
 
     const [inputForm, setInputForm]: any = useState<any>({});
@@ -202,7 +202,6 @@ const FormMainBox = ({
                     check = false;
                 }
             }
-            console.log(item)
             //validate phone number
             if (item?.type === 'phone_number' && inputForm[item?.mapTo]?.value?.length != 0 && inputForm[item?.mapTo]?.value != undefined) {
                 if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {

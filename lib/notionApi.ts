@@ -8,8 +8,8 @@ const notionApi = axios.create({
     },
 });
 
-export const getDatabase = async (id: string) => {
-    const response = await notionApi.get(`/api/notion/database?id=${id}`);
+export const getDatabase = async (id: string, workspace_id:string) => {
+    const response = await notionApi.get(`/api/notion/database?id=${id}&workspace_id=${workspace_id}`);
     return response.data;
 };
 
