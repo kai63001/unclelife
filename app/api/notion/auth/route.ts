@@ -80,13 +80,13 @@ const insertToken = async (data: any) => {
     .eq("workspace_id", data.workspace_id)
     .single();
 
-  if (workspaceError) {
-    console.log(workspaceError);
-    return NextResponse.json({
-      message: "error",
-      error: workspaceError,
-    });
-  }
+  // if (workspaceError) {
+  //   console.log(workspaceError,84);
+  //   return NextResponse.json({
+  //     message: "error",
+  //     error: workspaceError,
+  //   });
+  // }
   if (workspace && workspace.user_id !== session.user.id && !is_subscribed) {
     // return NextResponse.json({
     //   message: "error",
@@ -109,7 +109,7 @@ const insertToken = async (data: any) => {
         .single();
 
     if (workspaceCountError) {
-      console.log(workspaceCountError);
+      console.log(workspaceCountError,112);
       return NextResponse.json({
         message: "error",
         error: workspaceCountError,
@@ -162,7 +162,7 @@ const insertToken = async (data: any) => {
   });
 
   if (error) {
-    console.log(error);
+    console.log(error,165);
     return NextResponse.json({
       message: "error",
       error: error,
