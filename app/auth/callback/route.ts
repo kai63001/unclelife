@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
             // cookies().set('tokenCode', token)
         } catch (e) {
             console.log(e)
-            return NextResponse.redirect(new URL('/auth/login', process.env.NEXT_PUBLIC_FRONT_END_URL))
+            return NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_FRONT_END_URL))
         }
     }
 

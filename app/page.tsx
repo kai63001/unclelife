@@ -10,6 +10,7 @@ import PricingBox from "@/app/pricing/components/PricingBox";
 import FeatureIndex from "@/app/index/components/Feature";
 import FooterIndex from "@/app/index/components/FooterIndex";
 import FAQs from "@/app/index/components/FAQs";
+import HeaderBannder from "./index/components/HeaderBanner";
 
 export const metadata: Metadata = {
     title: 'Uncle Life - Notion Forms & Widgets Simplified',
@@ -25,11 +26,7 @@ export default function Home() {
                     <IndexNavbar/>
                 </header>
                 <section className="max-w-2xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
-                    <h1 className="text-center text-5xl font-extrabold mt-28">
-                        Level up your Notion docs with <span
-                        className={'bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent'}>Forms</span> and <span
-                        className={'bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent'}>Widgets</span>
-                    </h1>
+                    <HeaderBannder/>
                     <p className="text-muted-foreground my-4 text-center text-lg">
                         Create beautiful forms and widget connected to your Notion pages
                     </p>
@@ -41,7 +38,7 @@ export default function Home() {
                         </Button>
                         <Button variant={'secondary'} asChild>
                             <Link target={'_blank'}
-                                  href={'https://pickle-shift-ee6.notion.site/Test-Example-658245953b8e457ba0e230e0c3dab8a8'}>
+                                  href={'https://unclelife-form.notion.site/unclelife-form/Notion-Form-20bf97e746c942bc8504230b33840653'}>
                                 See Live Example
                             </Link>
                         </Button>

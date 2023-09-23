@@ -179,7 +179,7 @@ const BackgroundPomodoroToolBar = () => {
                                 setWithUrl(e)
                             }} checked={withUrl} name={'withUrl'} id={'withUrl'}/>
                             <Label htmlFor={'withUrl'}>
-                                With URL Image <ProBadge/>
+                                With URL Image
                             </Label>
                         </div>
                         {withUrl && (
