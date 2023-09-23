@@ -18,10 +18,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import {useRouter} from "next/navigation"
 
 const WorkspaceSetting = () => {
+
   const [listWorkspace, setListWorkspace] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { toast } = useToast();
+  const router = useRouter()
 
   const supabase = createClientComponentClient();
 
@@ -34,6 +40,37 @@ const WorkspaceSetting = () => {
     };
     getWorkspace().then((r) => r);
   }, [supabase]);
+
+  useEffect(() => {
+    setInterval(() => {
+      const notionIntegrationMessage = localStorage.getItem(
+        "notion_integration_message"
+      );
+      if (
+        notionIntegrationMessage &&
+        notionIntegrationMessage !== "" &&
+        notionIntegrationMessage != null &&
+        notionIntegrationMessage != undefined
+      ) {
+        localStorage.removeItem("notion_integration_message");
+        if (notionIntegrationMessage === "success") {
+          refreshWorkspace().then((r) => r);
+        } else {
+          toast({
+            title: "Uh oh! Something went wrong.",
+            description: notionIntegrationMessage,
+            variant: "destructive",
+            action: (
+              <ToastAction onClick={()=>{
+                router.push('/pricing')
+              }} altText="Try again">Upgrade</ToastAction>
+            ),
+          });
+        }
+      }
+    }, 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addWorkspace = async () => {
     const url = await getAuthLink();
