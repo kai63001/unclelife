@@ -10,13 +10,14 @@ import {
     setDatabaseId,
     setDatabaseName,
     setForm,
-    setTableOfDatabase
+    setTableOfDatabase,
+    setWorkspaceId
 } from "@/app/redux/slice/formController.slice";
 import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
 import {useRouter} from "next/navigation";
 import {motion} from "framer-motion"
 
-const CardDatabaseList = ({listDatabase = []}: any) => {
+const CardDatabaseList = ({listDatabase = [],selectedWorkspace}: any) => {
     const dispatch = useAppDispatch();
     const {form} = useAppSelector((state) => state.formReducer);
     const router = useRouter();
@@ -38,6 +39,7 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
         //         properties[key][type].options.reverse()
         //     }
         // }
+        dispatch(setWorkspaceId(selectedWorkspace));
         dispatch(setTableOfDatabase(database.properties));
         dispatch(setDatabaseId(database.id));
         const databaseName = database?.title?.length > 0 ? database?.title[0].plain_text : 'Untitled'
@@ -54,6 +56,7 @@ const CardDatabaseList = ({listDatabase = []}: any) => {
         }
         // redirect to custom/form
         router.push("/custom/form");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, form, router]);
 
     const openNotion = (e: any, url: string) => {

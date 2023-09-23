@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { Database } from "@/lib/types_db";
 import {ModeToggle} from "@/components/ModeToggle";
 import MobileToggle from "@/app/index/components/MobileToggle";
+export const dynamic = 'force-dynamic'
 
 const IndexNavbar = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });

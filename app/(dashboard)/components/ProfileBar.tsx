@@ -7,6 +7,8 @@ import { LogOut, Settings } from "lucide-react";
 import Link from "next/link"
 import {ModeToggle} from "@/components/ModeToggle";
 
+export const dynamic = 'force-dynamic'
+
 const ProfileBar = async () => {
   const supabase = createServerComponentClient({ cookies });
 

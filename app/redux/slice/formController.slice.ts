@@ -3,6 +3,7 @@ import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 
 export interface FormState {
     databaseId: string;
+    workspaceId: string;
     selectedForm: "DB" | "";
     databaseName: string;
     tableOfDatabase: any[];
@@ -15,6 +16,7 @@ export interface FormState {
 
 const initialState: FormState = {
     databaseId: "",
+    workspaceId: "",
     selectedForm: "",
     databaseName: "",
     tableOfDatabase: [],
@@ -74,6 +76,12 @@ export const formSlice = createSlice({
             state.layer = [];
             state.infomation = initialState.infomation;
             state.selectedForm = initialState.selectedForm;
+            state.workspaceId = initialState.workspaceId;
+            state.databaseId = initialState.databaseId;
+            state.databaseName = initialState.databaseName;
+            state.tableOfDatabase = initialState.tableOfDatabase;
+            state.alertPro = initialState.alertPro;
+            state.modalMapInputOpen = initialState.modalMapInputOpen;
         },
         setInformation: (state, action: PayloadAction<any>) => {
             state.infomation = action.payload;
@@ -109,6 +117,9 @@ export const formSlice = createSlice({
         },
         setAlert: (state, action: PayloadAction<any>) => {
             state.alertPro = action.payload;
+        },
+        setWorkspaceId: (state, action: PayloadAction<any>) => {
+            state.workspaceId = action.payload;
         }
     },
 });
@@ -128,7 +139,8 @@ export const {
     updateModalMapInputOpen,
     clearAllData,
     setDatabaseName,
-    setAlert
+    setAlert,
+    setWorkspaceId
 } = formSlice.actions;
 
 export default formSlice.reducer;

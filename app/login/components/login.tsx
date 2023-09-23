@@ -9,7 +9,7 @@ const Login = () => {
 
     async function signInWithNotion() {
         const {data, error} = await supabase.auth.signInWithOAuth({
-            provider: "notion",
+            provider: "google",
             options: {
                 redirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
             },
@@ -20,8 +20,8 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center">
             <Button onClick={signInWithNotion} className="w-full ">
-                <Icons.notion className="mr-2 h-5 w-5"/>
-                Login with Notion
+                <Icons.google className="mr-2 h-5 w-5"/>
+                Login with Google
             </Button>
         </div>
     )

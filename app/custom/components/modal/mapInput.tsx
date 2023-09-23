@@ -30,7 +30,7 @@ const ModalMapInput = () => {
     const [open, setOpen] = useState(false);
     const [listObjectTable, setListObjectTable] = useState<any>({});
     const dispatch = useAppDispatch();
-    const {databaseId, layer, tableOfDatabase, modalMapInputOpen} = useAppSelector(
+    const {databaseId, layer, tableOfDatabase, modalMapInputOpen,workspaceId} = useAppSelector(
         (state) => state.formReducer
     );
     const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ const ModalMapInput = () => {
     const getDatabaseList = async () => {
         setLoading(true);
         try {
-            const databaseList = await getDatabase(databaseId);
+            const databaseList = await getDatabase(databaseId,workspaceId);
             // console.log("databaseList :", databaseList);
             setListObjectTable(databaseList);
             if (databaseList?.error) {

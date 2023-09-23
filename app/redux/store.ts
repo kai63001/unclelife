@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import FormReducer from "./slice/formController.slice";
 import UserReducer from "./slice/userController.slice";
 import PomodoroReducer from "./slice/pomodoroController.slice";
+import GlobalReducer from "./slice/globalController.slice";
 
 export const store = configureStore({
   reducer: {
     formReducer: FormReducer,
     userReducer: UserReducer,
     pomodoroReducer: PomodoroReducer,
+    globalReducer: GlobalReducer,
   },
 });
 
