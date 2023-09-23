@@ -1,7 +1,21 @@
+"use client";
 import { TextCursorInput, AlarmClock, Music, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import TextTransition, { presets } from "react-text-transition";
+const TEXTS = ["Form", "Survey", "Feedback", "Response"];
 
 const FeatureIndex = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(
+      () => setIndex((index) => index + 1),
+      3000 // every 3 seconds
+    );
+    return () => clearTimeout(intervalId);
+  }, []);
+
   return (
     <div className="mx-auto">
       <h2 className="text-2xl font-bold text-center mb-8">Our Features</h2>
@@ -10,7 +24,7 @@ const FeatureIndex = () => {
         <Link
           href={"/form/create"}
           className={
-            "border shadow-md rounded-md overflow-hidden cursor-pointer"
+            "border shadow-md rounded-md overflow-hidden cursor-pointer group relative"
           }
         >
           <div
@@ -20,25 +34,58 @@ const FeatureIndex = () => {
           >
             <TextCursorInput size={64} className={"text-white"} />
           </div>
+          <div className="absolute top-0 group-hover:block hidden">
+            <div className="space-y-2">
+             <div className="bg-red-400 text-white text-xs font-bold py-1 px-2 rounded-full ml-2 mt-2">
+                Infinite Responses
+              </div>
+            </div>
+          </div>
           <div className="p-4">
-            <h3 className="text-xl font-bold">Form Builder</h3>
+            <h3 className="text-xl font-bold flex">
+              <TextTransition springConfig={presets.wobbly} className="mr-1.5">
+                {TEXTS[index % TEXTS.length]}
+              </TextTransition>
+              Builder
+            </h3>
             <ul className="text-muted-foreground text-sm">
               <li>Customizable fields</li>
               <li>Integration with Notion databases</li>
             </ul>
           </div>
         </Link>
-        <div
+        <Link
+          href={"/widget/pomodoro"}
           className={
-            "border shadow-md rounded-md overflow-hidden cursor-pointer"
+            "border shadow-md rounded-md overflow-hidden cursor-pointer group"
           }
         >
           <div
             className={
-              "h-44 bg-gradient-to-r from-rose-400 to-red-500 flex justify-center items-center"
+              "h-44 bg-gradient-to-r from-rose-400 to-red-500 flex justify-center items-center group-hover:hidden duration-150"
             }
           >
             <AlarmClock size={64} className={"text-white"} />
+          </div>
+          <div
+            className={
+              "h-44 bg-gradient-to-r from-rose-400 to-blue-500 hidden justify-center items-center group-hover:flex duration-150"
+            }
+          >
+            <video
+              width="100%"
+              height=" 176px"
+              className={"h-44 w-full object-cover"}
+              autoPlay
+              muted
+              playsInline
+              preload={"auto"}
+              loop
+              controls={false}
+            >
+              <source src="/pomodoro/pomodoroWidget.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
           <div className="p-4">
             <h3 className="text-xl font-bold flex items-center">
@@ -51,7 +98,7 @@ const FeatureIndex = () => {
               <li>Audio and visual alerts</li>
             </ul>
           </div>
-        </div>
+        </Link>
         <div className="border shadow-md rounded-md overflow-hidden cursor-pointer">
           <div className="h-44 bg-gradient-to-r from-lime-300 to-lime-500 flex justify-center items-center">
             <CheckCircle size={64} className="text-white" />
