@@ -240,6 +240,11 @@ const FormMainBox = ({
     return check;
   };
 
+  /**
+   * Submits the form data to the database and updates the database with the new values.
+   * @param e - The event object.
+   * @returns void
+   */
   const submitForm = async (e: any) => {
     e.preventDefault();
     if (!checkRequire()) {

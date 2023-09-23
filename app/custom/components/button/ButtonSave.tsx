@@ -1,5 +1,4 @@
 "use client";
-import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 import {Icons} from "@/components/Icons";
 import {
     setInformation,
@@ -53,7 +52,6 @@ const ButtonSaveCustomForm = ({session}: any) => {
     };
 
 
-    const supabase = createClientComponentClient();
     const saveLayer = async () => {
         // const token = await getDecryptedIntegrationNotion(workspaceId)
         // console.log('token', token)
@@ -146,6 +144,11 @@ const ButtonSaveCustomForm = ({session}: any) => {
             ),
         });
     };
+    if(!workspaceId) {
+        return (
+            <div></div>
+        )
+    }
 
     return (
         <>
