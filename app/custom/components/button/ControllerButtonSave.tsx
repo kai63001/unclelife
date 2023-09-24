@@ -6,7 +6,6 @@ import ButtonSaveCustomForm from "./ButtonSave";
 
 const ControllerButtonSave = ({ session }: any) => {
   const { databaseId, workspaceId } = useAppSelector((state) => state.formReducer);
-  console.log(databaseId, workspaceId)
 
   if (!databaseId && workspaceId) {
     return <ButtonCreateDatabase session={session} />;
