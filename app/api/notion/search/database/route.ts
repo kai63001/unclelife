@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
         });
 
         const databases = searched.results;
-        console.log(searched)
+        // console.log(searched)
 
         return NextResponse.json(
             databases.map((database: any) => {
