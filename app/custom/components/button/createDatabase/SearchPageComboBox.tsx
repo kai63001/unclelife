@@ -83,7 +83,7 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
                 key={page.id}
                 onSelect={() => {
                   const currentValue = page.id;
-                  setPageId(currentValue);
+                  setPageId(currentValue === value ? "" : currentValue);
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
                 }}

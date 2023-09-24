@@ -8,7 +8,7 @@ const ControllerButtonSave = ({ session }: any) => {
   const { databaseId, workspaceId } = useAppSelector((state) => state.formReducer);
 
   if (!databaseId && workspaceId) {
-    return <ButtonCreateDatabase />;
+    return <ButtonCreateDatabase session={session} />;
   }else if(!databaseId && !workspaceId){
     return <div></div>
   }

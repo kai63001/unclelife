@@ -30,7 +30,7 @@ export const convertLayerToProperty = (layer: any) => {
                 ? listOptions.map((option: any) => {
                     return {
                       name: option.name,
-                      id: option.id,
+                      id: option.name,
                     };
                   })
                 : [],
@@ -45,7 +45,7 @@ export const convertLayerToProperty = (layer: any) => {
                 ? listOptions.map((option: any) => {
                     return {
                       name: option.name,
-                      id: option.id,
+                      id: option.name,
                     };
                   })
                 : [],
@@ -60,7 +60,7 @@ export const convertLayerToProperty = (layer: any) => {
                 ? listOptions.map((option: any) => {
                     return {
                       name: option.name,
-                      id: option.id,
+                      id: option.name,
                     };
                   })
                 : [],
@@ -232,3 +232,44 @@ export const convertInputToProperty = async (
   }
   return properties;
 };
+
+// const mapList:any = {
+//   title: "title",
+//   rich_text: "rich_text",
+//   number: "number",
+//   select: "select",
+//   radio_button: "select",
+//   multi_select: "multi_select",
+//   date: "date",
+//   email: "email",
+//   phone_number: "phone_number",
+//   url: "url",
+//   checkbox: "checkbox",
+//   created_time: "created_time",
+// }
+
+// export const addMapToLayer = (layer: any) => {
+//   const newLayer = layer.map((field: any) => {
+//     const { id, label, name, type, options: listOptions } = field;
+//     const newField = {
+//       ...field,
+//       value: mapList[type],
+//     };
+//     return newField;
+//   });
+//   return newLayer;
+// }
+
+export const addMapToLayer = (layer: any,property:any) => {
+  const newLayer = layer.map((field: any) => {
+    const { id, label, name, type, options: listOptions } = field;
+    const newField = {
+      ...field,
+      mapType: Object.keys(property[name])[0],
+      mapTo: name,
+    };
+    return newField;
+  });
+  return newLayer;
+}
+

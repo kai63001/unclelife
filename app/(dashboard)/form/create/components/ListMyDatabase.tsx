@@ -38,6 +38,7 @@ import {
   clearAllData,
   setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ListMyDatabase = ({ session }: any) => {
   const supabase = createClientComponentClient();
@@ -192,30 +193,32 @@ const ListMyDatabase = ({ session }: any) => {
           </Button>
         </div> */}
       </div>
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{ opacity: 1, x: 0 }}
-        initial={{ opacity: 0, x: 50 }}
-        onClick={() => {
-          createFormWithoutDatabase();
-        }}
-      >
-        <div className="flex flex-wrap justify-center py-16 border rounded-md cursor-pointer mb-5 group hover:bg-primary select-none">
-          <Newspaper className="w-16 h-16 text-primary group-hover:text-secondary mb-5" />
-          <h3 className="text-lg font-medium text-primary group-hover:text-secondary w-full text-center">
-            Create Form without Database
-          </h3>
-          <p className="text-muted-foreground w-full text-center">
-            We handle the database setup for you.
-          </p>
-          <div className="w-full text-center text-sm mt-2">
-            <span className="bg-red-500 rounded-full text-white px-3 py-1">
-              Suggested for Easy Use
-            </span>
+      {selectedWorkspace ? (
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95 }}
+          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 50 }}
+          onClick={() => {
+            createFormWithoutDatabase();
+          }}
+        >
+          <div className="flex flex-wrap justify-center py-16 border rounded-md cursor-pointer mb-5 group hover:bg-primary select-none">
+            <Newspaper className="w-16 h-16 text-primary group-hover:text-secondary mb-5" />
+            <h3 className="text-lg font-medium text-primary group-hover:text-secondary w-full text-center">
+              Create Form without Database
+            </h3>
+            <p className="text-muted-foreground w-full text-center">
+              We handle the database setup for you.
+            </p>
+            <div className="w-full text-center text-sm mt-2">
+              <span className="bg-red-500 rounded-full text-white px-3 py-1">
+                Suggested for Easy Use
+              </span>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      ):<Skeleton className="py-24 mb-5"/>}
       {/* border or at center */}
       <div className="relative mb-5">
         <div className="absolute inset-0 flex items-center">

@@ -67,15 +67,6 @@ export async function GET(req: NextRequest) {
         }
     })
 
-    // return NextResponse.json(
-    //     pages.map((page: any) => {
-    //         return {
-    //             id: page.id,
-    //             title: page.properties.title.title[0].plain_text,
-    //         }
-    //     })
-    // )
-
     return NextResponse.json(returnData);
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
