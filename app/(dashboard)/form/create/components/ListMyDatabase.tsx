@@ -3,7 +3,7 @@ import { getListDatabase } from "@/lib/notionApi";
 // import CardDatabaseList from "@/app/(dashboard)/form/create/components/CardDatabaseList";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { Newspaper, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import ListMyDatabaseLoading from "@/app/(dashboard)/form/create/components/ListMyDatabaseLoading";
 import {
@@ -25,17 +25,25 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Icons } from "@/components/Icons";
-import {useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const CardDatabaseList = dynamic(
   () => import("@/app/(dashboard)/form/create/components/CardDatabaseList"),
   { ssr: false }
 );
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useAppDispatch } from "@/app/redux/hook";
+import {
+  clearAllData,
+  setWorkspaceId,
+} from "@/app/redux/slice/formController.slice";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ListMyDatabase = ({ session }: any) => {
   const supabase = createClientComponentClient();
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [listDatabase, setListDatabase] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +72,14 @@ const ListMyDatabase = ({ session }: any) => {
     getListWorkspace();
   }, [session?.session?.user?.id, supabase]);
 
+  const createFormWithoutDatabase = () => {
+    //clear first
+    dispatch(clearAllData());
+
+    dispatch(setWorkspaceId(selectedWorkspace));
+    router.push("/custom/form");
+  };
+
   const checkListWorkspace = () => {
     if (listWorkspace.length === 0 && !loading) {
       return (
@@ -78,9 +94,11 @@ const ListMyDatabase = ({ session }: any) => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogAction onClick={()=>{
-                router.push("/setting?tab=workspaces")
-              }}>
+              <AlertDialogAction
+                onClick={() => {
+                  router.push("/setting?tab=workspaces");
+                }}
+              >
                 <Icons.notion className={"w-6 h-6 mr-2"} />
                 Connect a workspace
               </AlertDialogAction>
@@ -133,7 +151,7 @@ const ListMyDatabase = ({ session }: any) => {
   return (
     <div className={"mt-4"}>
       <div className={"flex justify-between mb-3"}>
-        <div>
+        <div className="flex space-x-3">
           {checkListWorkspace()}
           {/* search */}
           <Select
@@ -158,16 +176,61 @@ const ListMyDatabase = ({ session }: any) => {
               </SelectGroup>
             </SelectContent>
           </Select>
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={refreshListDatabase}
+          >
+            <RefreshCw className={`w-5 h-5 ${loading && "animate-spin"}`} />
+          </Button>
         </div>
-        <div className={"flex items-center space-x-3"}>
+        {/* <div className={"flex items-center space-x-3"}>
           <Button disabled={true} title={"Coming soon"}>
             Create Form with out Database
           </Button>
           <Button onClick={refreshListDatabase}>
             <RefreshCw className={`w-6 h-6 ${loading && "animate-spin"}`} />
           </Button>
+        </div> */}
+      </div>
+      {selectedWorkspace ? (
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.95 }}
+          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 50 }}
+          onClick={() => {
+            createFormWithoutDatabase();
+          }}
+        >
+          <div className="flex flex-wrap justify-center py-16 border rounded-md cursor-pointer mb-5 group hover:bg-primary select-none">
+            <Newspaper className="w-16 h-16 text-primary group-hover:text-secondary mb-5" />
+            <h3 className="text-lg font-medium text-primary group-hover:text-secondary w-full text-center">
+              Create Form without Database
+            </h3>
+            <p className="text-muted-foreground w-full text-center">
+              We handle the database setup for you.
+            </p>
+            <div className="w-full text-center text-sm mt-2">
+              <span className="bg-red-500 rounded-full text-white px-3 py-1">
+                Suggested for Easy Use
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      ):<Skeleton className="py-24 mb-5"/>}
+      {/* border or at center */}
+      <div className="relative mb-5">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            OR SELECT A DATABASE
+          </span>
         </div>
       </div>
+
       {loading ? (
         <ListMyDatabaseLoading />
       ) : (

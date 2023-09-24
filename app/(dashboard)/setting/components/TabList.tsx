@@ -31,7 +31,7 @@ const WorkspaceSetting = dynamic(
 const TabListSetting = () => {
   const searchParams = useSearchParams();
   const [tab,setTab] = useState(searchParams.get("tab") || "account")
-  console.log("tab", searchParams.get("tab"));
+  // console.log("tab", searchParams.get("tab"));
 
   useEffect(() => {
     setTab(searchParams.get("tab") || "account")

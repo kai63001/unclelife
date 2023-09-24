@@ -26,17 +26,18 @@ const PricingBox = () => {
         ],
         pro: [
             'Everything in Basic',
-            'Multi step form [soon]',
+            // 'Multi step form [soon]',
             'Full customization',
             'Remove branding',
             'Multiple Integrations',
+            'Multiple Workspace',
             'Custom CSS/JS',
             'New features first',
             '5 mb file upload'
         ],
         enterprise: [
             'Everything in Pro',
-            'Unlimited Notion Workspace',
+            'Custom domain',
             '20 mb file upload',
             'Priority support',
         ]
@@ -161,7 +162,7 @@ const PricingBox = () => {
             <div className={'flex items-center flex-col md:flex-row space-y-3'}>
                 <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Basic</h2>
-                    <p className={'my-2'}>All the basics tools to create beautiful forms.</p>
+                    <p className={'my-2'}>All the basics tools to create beautiful forms and widgets.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         Free
                     </h3>
@@ -184,7 +185,7 @@ const PricingBox = () => {
                 <div
                     className={'md:flex-1 border h-[520px] rounded-md shadow-lg bg-primary text-secondary p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Pro</h2>
-                    <p className={'my-2'}>Everything you need to create beautiful and professional forms, and support an
+                    <p className={'my-2'}>Everything you need to create beautiful and professional forms and widget, and support an
                         indie dev.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         {priceMonthlyAndYearly.pro.month.price === 0 ? (
@@ -235,8 +236,8 @@ const PricingBox = () => {
 
                 </div>
                 <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
-                    <h2 className={'text-3xl font-bold'}>Advanced</h2>
-                    <p className={'my-2'}>Unlock advanced tools for exquisite form creation.</p>
+                    <h2 className={'text-3xl font-bold'}>Enterprise</h2>
+                    <p className={'my-2'}>Unlock enterprise tools for exquisite form creation.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
                         <div>
                             <span className={'text-3xl font-bold'}>$</span>

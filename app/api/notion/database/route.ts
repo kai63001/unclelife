@@ -99,7 +99,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const token = notionIntegration.decrypted_access_token;
-  console.log("token",token);
+  // console.log("token",token);
 
   try {
     const notion = new Client({

@@ -111,7 +111,7 @@ const initialState: PomodoroState = {
         backgroundColor: '#ffffff',
         backgroundImage: 'https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg',
         typeBackground: 'color',
-        soundUrl: '/sound/achievement-bell.mp3',
+        soundUrl: '/sound/endSound.mp3',
         soundVolume: 100
     },
     selectedCustomTimer: 0,
