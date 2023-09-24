@@ -9,7 +9,7 @@ const Contact = () => {
                     <IndexNavbar/>
                 </header>
                 <article className="max-w-6xl mx-auto w-full flex-col justify-between pt-14 items-center">
-                    <iframe src="https://unclelife.co/public/form/549c9570-fd6e-4d3d-8e6b-72e6c5532e53" width="100%"
+                    <iframe src="https://unclelife.co/public/form/fd177669-3772-4c88-85a2-0d93754b27f1" width="100%"
                             height="700px"></iframe>
                 </article>
             </main>
