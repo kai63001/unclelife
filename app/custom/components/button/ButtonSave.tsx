@@ -144,11 +144,6 @@ const ButtonSaveCustomForm = ({session}: any) => {
             ),
         });
     };
-    if(!workspaceId) {
-        return (
-            <div></div>
-        )
-    }
 
     return (
         <>

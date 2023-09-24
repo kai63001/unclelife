@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
     });
 
     const pages = searched.results;
-    console.log(searched);
+    // console.log(searched);
 
     const returnData = pages.map((page: any) => {
         return {
