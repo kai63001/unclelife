@@ -150,6 +150,9 @@ const FormMainBox = ({
       setDataUser({
         is_subscribed: true,
       });
+      dispatch(setUserData({
+        is_subscribed: true,
+      }));
       return;
     }
     setDataUser(res.data.user_id);
@@ -264,7 +267,11 @@ const FormMainBox = ({
     // console.log("submit form");
 
     //loop inputForm create object properties for notion page body
-    const properties: any = await convertInputToProperty(inputForm,supabase,toast);
+    const properties: any = await convertInputToProperty(
+      inputForm,
+      supabase,
+      toast
+    );
 
     updateDatabase(databaseId, properties, dataUser.id, id)
       .then((e) => {
