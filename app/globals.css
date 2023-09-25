@@ -92,3 +92,24 @@
 html, body {
     height: 100%;
 }
+
+.blockRequest {
+    inset: 6px -8px auto auto;
+    z-index: 1;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 50%;
+    background-color: rgb(243, 243, 243);
+    color: rgb(55, 55, 55);
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+}

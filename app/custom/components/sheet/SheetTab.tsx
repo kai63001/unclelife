@@ -100,7 +100,7 @@ const SheetTab = ({id}: any) => {
                                 <div>
                                     <Label
                                         htmlFor={'label'}
-                                    >Helper Text (Label) :</Label>
+                                    >Field Name :</Label>
                                     <Input
                                         id={"label"}
                                         name={"label"}
@@ -111,7 +111,7 @@ const SheetTab = ({id}: any) => {
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor={'placeholder'}>Placeholder :</Label>
+                                    <Label htmlFor={'placeholder'}>Empty Input Text (Placeholder) :</Label>
                                     <Input
                                         id={"placeholder"}
                                         name={"placeholder"}
