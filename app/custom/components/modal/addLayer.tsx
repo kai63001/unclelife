@@ -152,7 +152,7 @@ const ModalAddLayer = () => {
           "Verification",
         ];
         break;
-      case "file":
+      case "files":
         titles = ["File Upload", "File", "Upload", "Document", "Attachment"];
         break;
       case "radio_button":

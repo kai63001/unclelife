@@ -6,13 +6,13 @@ const TitleRender = ({ data, type = "text", updateInputForm, error }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <div>
-      <Label htmlFor={data.label} className="">
+    <>
+      <Label htmlFor={data.label} className="text-lg">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
       <Input
-        className={`mt-1 block w-full ${error ? 'border-red-500' : ''}`}
+        className={`mt-1 block w-full ${error ? 'border-red-500' : ''} shadow-sm`}
         onChange={(e) => updateInputForm(e.target.value, data)}
         name={data.label}
         placeholder={data?.placeholder}
@@ -28,7 +28,7 @@ const TitleRender = ({ data, type = "text", updateInputForm, error }: any) => {
             </div>
         )}
 
-    </div>
+    </>
   );
 };
 

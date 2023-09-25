@@ -52,8 +52,8 @@ const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <div className="relative inline-block text-left w-full">
-      <Label htmlFor={data.label} className="">
+    <>
+      <Label htmlFor={data.label} className="text-lg">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
@@ -62,7 +62,7 @@ const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
           ref={buttonRef}
           disabled={data.disable}
           type="button"
-          className={`flex ${error && 'border border-red-500'} focus:ring-0 focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
+          className={`flex shadow-sm ${error && 'border border-red-500'} focus:ring-0 focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
           onClick={handleButtonClick}
         >
           {selected.length > 0 ? (
@@ -111,7 +111,7 @@ const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
             {error}
           </div>
       )}
-    </div>
+    </>
   );
 };
 

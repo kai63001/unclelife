@@ -27,8 +27,8 @@ const DateRender = ({ data, updateInputForm, error }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <div>
-      <Label htmlFor={data.label} className="">
+    <>
+      <Label htmlFor={data.label} className="text-lg">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
@@ -37,7 +37,7 @@ const DateRender = ({ data, updateInputForm, error }: any) => {
           <Button
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal shadow-sm",
               !date && "text-muted-foreground",
                 error && "border border-red-500"
             )}
@@ -82,7 +82,7 @@ const DateRender = ({ data, updateInputForm, error }: any) => {
             {error}
           </div>
       )}
-    </div>
+    </>
   );
 };
 

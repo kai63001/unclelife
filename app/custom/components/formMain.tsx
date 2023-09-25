@@ -354,13 +354,13 @@ const FormMainBox = ({
               </div>
             )}
           <div className={"p-5"}>
-            <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+            <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
             {dataForm?.description && (
-              <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
+              <p className="text-muted-foreground text-sm whitespace-pre-line pt-1 pb-4">
                 {dataForm?.description}
               </p>
             )}
-            <form onSubmit={submitForm} noValidate>
+            <form onSubmit={submitForm} className="flex flex-wrap w-[102%] -ml-2" noValidate>
               {dataLayer?.map((item: any, index: number) => {
                 return (
                   <RenderFormComponent
@@ -373,7 +373,7 @@ const FormMainBox = ({
                 );
               })}
               <div
-                className="mt-3 flex"
+                className="mt-3 flex w-full px-2"
                 style={{
                   justifyContent: dataForm?.button?.position,
                 }}

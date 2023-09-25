@@ -42,8 +42,8 @@ const FileRender = ({data, updateInputForm, error}: any) => {
     return data.hidden ? (
         <></>
     ) : (
-        <div className={'mt-3'}>
-            <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2">
+        <>
+            <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2 text-lg">
                 <div>
                     {data.label}
                     {data.required && <RequiredStar/>}
@@ -51,7 +51,7 @@ const FileRender = ({data, updateInputForm, error}: any) => {
             </Label>
             {file ? (
                 <div>
-                    <div className="flex items-center space-x-2 mt-1">
+                    <div className="flex items-center space-x-2 shadow-sm">
                         <div className="flex w-full border px-3 py-2 rounded-md overflow-hidden">
                             <p className={'text-ellipsis overflow-hidden max-w-[370px] whitespace-nowrap'}>{file}</p>
                         </div>
@@ -67,8 +67,8 @@ const FileRender = ({data, updateInputForm, error}: any) => {
                 </div>
             ) : (
                 <>
-                    <Button className={error && 'bg-red-500 text-white'} asChild>
-                        <Label htmlFor={'uploadFileForm'} className={`flex space-x-2 mt-2 cursor-pointer`}>
+                    <Button className={error && 'bg-red-500 text-white shadow-sm'} asChild>
+                        <Label htmlFor={'uploadFileForm'} className={`flex space-x-2 cursor-pointer`}>
                             Upload File
                             <Upload className="ml-2 h-4 w-4"/>
                         </Label>
@@ -91,7 +91,7 @@ const FileRender = ({data, updateInputForm, error}: any) => {
                     {error}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

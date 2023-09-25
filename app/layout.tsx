@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import { Providers } from "./redux/provider";
 import NextNProgressbar from "@/components/NextProgressbar";
 import { Toaster } from "@/components/ui/toaster";
@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 export const dynamic = "force-dynamic";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Open_Sans({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   // const

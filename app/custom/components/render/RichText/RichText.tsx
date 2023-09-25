@@ -7,8 +7,8 @@ const RichTextRender = ({data, updateInputForm, error}: any) => {
     return data.hidden ? (
         <></>
     ) : (
-        <div>
-            <Label htmlFor={data.label} className="">
+        <>
+            <Label htmlFor={data.label} className="text-lg">
                 {data.label}
                 {data.required && <RequiredStar/>}
             </Label>
@@ -16,7 +16,7 @@ const RichTextRender = ({data, updateInputForm, error}: any) => {
                 onChange={(e) => updateInputForm(e.target.value, data)}
                 name={data.label}
                 id={data.label}
-                className={`mt-1 block w-full ${error ? 'border-red-500' : ''}`}
+                className={`mt-1 block w-full ${error ? 'border-red-500' : ''} shadow-sm`}
                 placeholder={data?.placeholder}
                 disabled={data.disable}
                 required={data.required}
@@ -26,7 +26,7 @@ const RichTextRender = ({data, updateInputForm, error}: any) => {
                     {error}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

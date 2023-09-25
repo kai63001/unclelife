@@ -6,7 +6,7 @@ const CheckBoxRender = ({data, updateInputForm, error}: any) => {
     return data.hidden ? (
         <></>
     ) : (
-        <div className="mt-1">
+        <>
             <Checkbox
                 disabled={data.disable}
                 required={data.required}
@@ -18,13 +18,13 @@ const CheckBoxRender = ({data, updateInputForm, error}: any) => {
             />
             <Label
                 htmlFor={data.label}
-                className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${error && "text-red-500"}`}
+                className={` font-medium text-lg leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${error && "text-red-500"}`}
             >
                 {data.required && (
                     <span className="text-red-500">*</span>
                 )} {data.label}
             </Label>
-        </div>
+        </>
     );
 };
 

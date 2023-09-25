@@ -13,8 +13,8 @@ const SelectionRender = ({ data, updateInputForm, error }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <div className="">
-      <Label htmlFor={data.label} className="">
+    <>
+      <Label htmlFor={data.label} className="text-lg">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>
@@ -25,7 +25,7 @@ const SelectionRender = ({ data, updateInputForm, error }: any) => {
           id={data.label}
           name={data.label}
           disabled={data.disable}
-          className={`w-full ${error && 'border border-red-500'}`}
+          className={`w-full shadow-sm ${error && 'border border-red-500'}`}
         >
           <SelectValue placeholder={data.placeholder} />
         </SelectTrigger>
@@ -46,7 +46,7 @@ const SelectionRender = ({ data, updateInputForm, error }: any) => {
                 {error}
             </div>
         )}
-    </div>
+    </>
   );
 };
 

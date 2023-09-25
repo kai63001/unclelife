@@ -15,15 +15,15 @@ const RadioRender = ({ data, updateInputForm, error }: any) => {
     return data.hidden ? (
         <></>
     ) : (
-        <div className="mb-1">
-            <Label htmlFor={data.label} className="">
+        <>
+            <Label htmlFor={data.label} className="text-lg">
                 {data.label}
                 {data.required && <RequiredStar />}
             </Label>
             <div className="mt-1 flex space-y-2 flex-col">
                 {data?.options?.map((item: any, index: number) => {
                     return (
-                        <div key={index} onClick={()=>inputOnChange(item.name)} className={`flex ${data.disable ? 'cursor-not-allowed' : 'cursor-pointer'} ${error && 'border border-red-500'} items-center w-full ${selected == item.name ? 'bg-primary' : 'bg-secondary'} py-3 rounded-sm select-none`}>
+                        <div key={index} onClick={()=>inputOnChange(item.name)} className={`shadow-sm flex ${data.disable ? 'cursor-not-allowed' : 'cursor-pointer'} ${error && 'border border-red-500'} items-center w-full ${selected == item.name ? 'bg-primary' : 'bg-secondary'} py-3 rounded-sm select-none`}>
                             <label className={`ml-3 block text-sm font-medium ${selected == item.name ? 'text-secondary' : 'text-primary'} cursor-pointer`}>
                                 {item.name}
                             </label>
@@ -36,7 +36,7 @@ const RadioRender = ({ data, updateInputForm, error }: any) => {
                     {error}
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
