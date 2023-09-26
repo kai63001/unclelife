@@ -3,6 +3,7 @@ import MultiSelectRender from "./MultiSelect/MultiSelectRender";
 import CheckBoxRender from "./CheckBox/CheckBoxRender";
 import FileRender from "@/app/custom/components/render/File/FileRender";
 import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
+import { cn } from "@/lib/utils";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -117,7 +118,7 @@ const RenderFormComponent = ({
         );
     }
   };
-  return <div className="w-full my-2 px-2">{renderCase()}</div>;
+  return <div className={cn("my-2 px-2", data?.layout || 'w-full')}>{renderCase()}</div>;
 };
 
 export default RenderFormComponent;

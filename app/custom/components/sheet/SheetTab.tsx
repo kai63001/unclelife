@@ -11,7 +11,6 @@ import { Settings } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { useEffect, useState } from "react";
 import {
-  deleteLayerWithId,
   setLayerWithId,
 } from "@/app/redux/slice/formController.slice";
 import { Label } from "@/components/ui/label";
@@ -19,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import AddOptions from "@/app/custom/components/sheet/AddOptions";
 import DeleteLayer from "./components/DeleteLayer";
+import CustomizeSheet from "./components/CustomizeSheet";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -68,7 +68,7 @@ const SheetTab = ({ id }: any) => {
 
       <SheetContent>
         <SheetHeader className="h-full">
-          <SheetTitle>Update {data.name} Field</SheetTitle>
+          <SheetTitle className="font-bold">Update {data.name} Field</SheetTitle>
           <div className="text-primary select-none flex flex-col justify-between h-full">
             <div>
               <span className="text-lg font-medium">General</span>
@@ -117,12 +117,12 @@ const SheetTab = ({ id }: any) => {
                   </div>
                 ))}
               </div>
+              <CustomizeSheet id={id} data={data}/>
               {checkThisTypeIsOption() && (
                 <div className={"mt-2"}>
                   <AddOptions data={data} />
                 </div>
               )}
-              asds
             </div>
 
             {/*Delete*/}
