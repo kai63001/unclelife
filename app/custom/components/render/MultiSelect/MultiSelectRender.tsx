@@ -5,7 +5,7 @@ import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import RequiredStar from "../RequireStar";
 
-const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
+const MultiSelectRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
   const [selected, setSelected]: any = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -77,7 +77,7 @@ const MultiSelectRender = ({ data, updateInputForm, error }: any) => {
               ))}
             </div>
           ) : (
-            <div className={'h-5'}>{data?.placeholder}</div>
+            <div className={'h-5'}>{(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}</div>
           )}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </button>

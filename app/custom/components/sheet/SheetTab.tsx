@@ -84,19 +84,6 @@ const SheetTab = ({ id }: any) => {
                     }}
                   />
                 </div>
-                <div>
-                  <Label htmlFor={"placeholder"}>
-                    Empty Input Text (Placeholder) :
-                  </Label>
-                  <Input
-                    id={"placeholder"}
-                    name={"placeholder"}
-                    value={data.placeholder}
-                    onChange={(e) => {
-                      inputOnChange(e.target.value, "placeholder");
-                    }}
-                  />
-                </div>
               </div>
               <div className="mt-5 grid grid-cols-2 gap-4">
                 {["required", "disable", "hidden"].map((item, index) => (

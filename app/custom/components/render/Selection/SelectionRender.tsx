@@ -9,7 +9,7 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const SelectionRender = ({ data, updateInputForm, error }: any) => {
+const SelectionRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   return data.hidden ? (
     <></>
   ) : (
@@ -27,7 +27,7 @@ const SelectionRender = ({ data, updateInputForm, error }: any) => {
           disabled={data.disable}
           className={`w-full shadow-sm ${error && 'border border-red-500'}`}
         >
-          <SelectValue placeholder={data.placeholder} />
+          <SelectValue placeholder={(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

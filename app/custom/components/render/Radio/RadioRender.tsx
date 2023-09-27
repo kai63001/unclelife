@@ -3,7 +3,7 @@ import {Label} from "@/components/ui/label";
 import RequiredStar from "@/app/custom/components/render/RequireStar";
 import {useState} from "react";
 
-const RadioRender = ({ data, updateInputForm, error }: any) => {
+const RadioRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
     const [selected, setSelected] = useState<any>(null);
 
     const inputOnChange = (e: any) => {

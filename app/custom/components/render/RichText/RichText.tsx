@@ -3,7 +3,7 @@ import {Textarea} from "@/components/ui/textarea";
 import RequiredStar from "../RequireStar";
 import React from "react";
 
-const RichTextRender = ({data, updateInputForm, error}: any) => {
+const RichTextRender = ({data, updateInputForm, error, isSubscribed}: any) => {
     return data.hidden ? (
         <></>
     ) : (
@@ -17,7 +17,7 @@ const RichTextRender = ({data, updateInputForm, error}: any) => {
                 name={data.label}
                 id={data.label}
                 className={`mt-1 block w-full ${error ? 'border-red-500' : ''} shadow-sm`}
-                placeholder={data?.placeholder}
+                placeholder={(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}
                 disabled={data.disable}
                 required={data.required}
             />

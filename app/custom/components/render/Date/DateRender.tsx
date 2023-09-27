@@ -22,7 +22,7 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const DateRender = ({ data, updateInputForm, error }: any) => {
+const DateRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
@@ -42,10 +42,10 @@ const DateRender = ({ data, updateInputForm, error }: any) => {
                 error && "border border-red-500"
             )}
           >
-            {(date || data?.placeholder) && (
+            {((data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : '') && (
                 <CalendarIcon className="mr-2 h-4 w-4" />
             )}
-            {date ? format(date, "PPP") : <span>{data?.placeholder}</span>}
+            {date ? format(date, "PPP") : <span>{(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">

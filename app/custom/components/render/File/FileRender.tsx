@@ -9,7 +9,7 @@ import {useToast} from "@/components/ui/use-toast";
 import * as React from "react";
 
 
-const FileRender = ({data, updateInputForm, error}: any) => {
+const FileRender = ({data, updateInputForm, error, isSubscribed}: any) => {
     const [file, setFile] = useState<any>(null);
     const {toast} = useToast();
 
@@ -77,7 +77,7 @@ const FileRender = ({data, updateInputForm, error}: any) => {
                         className="hidden"
                         onChange={onFileChange}
                         name={data.label}
-                        placeholder={data?.placeholder}
+                        placeholder={(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}
                         id={'uploadFileForm'}
                         disabled={data.disable}
                         required={data.required}

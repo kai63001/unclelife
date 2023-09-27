@@ -172,11 +172,6 @@ const FormMainBox = ({
       setDataUser({
         is_subscribed: true,
       });
-      dispatch(
-        setUserData({
-          is_subscribed: true,
-        })
-      );
       return;
     }
     setDataUser(res.data.user_id);

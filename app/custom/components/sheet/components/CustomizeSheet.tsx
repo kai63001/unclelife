@@ -1,56 +1,16 @@
 "use client";
 import { useAppDispatch } from "@/app/redux/hook";
 import { setLayerWithId } from "@/app/redux/slice/formController.slice";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import ProBadge from "../../toolsbar/ProBadge";
 
-const widthLayout = [
-  {
-    id: "1",
-    name: "Full",
-    value: "w-full",
-  },
-  {
-    id: "2",
-    name: "Half",
-    value: "w-1/2",
-  },
-  {
-    id: "3",
-    name: "Third",
-    value: "w-1/3",
-  },
-  {
-    id: "4",
-    name: "Quarter",
-    value: "w-1/4",
-  },
-  {
-    id: "5",
-    value: "w-2/3",
-    name: "Two Third",
-  },
-  {
-    id: "6",
-    value: "w-3/4",
-    name: "Three Quarter",
-  },
-];
+import ProBadge from "../../toolsbar/ProBadge";
+import WidthLayout from "./customize/widthLayout";
+import PlaceholderField from "./customize/PlaceholderField";
 
 const CustomizeSheet = ({ id, data }: any) => {
   const dispatch = useAppDispatch();
 
-  const onSelectionChange = (e: any) => {
-    const newE = e === "w-full" ? null : e;
+  const onChange = (e: any,name:any, defaultData:any = "") => {
+    const newE = e === defaultData ? null : e;
     dispatch(
       setLayerWithId({
         id: id,
@@ -58,7 +18,7 @@ const CustomizeSheet = ({ id, data }: any) => {
           ...data,
           pro: {
             ...data.pro,
-            ["layout"]: newE, //? true : false
+            [name]: newE, //? true : false
           },
         },
       })
@@ -70,26 +30,8 @@ const CustomizeSheet = ({ id, data }: any) => {
       <h2 className="text-xl font-bold">
         Customize <ProBadge />
       </h2>
-      <Label>Field Layout</Label>
-      <Select
-        defaultValue={data?.pro?.layout || "w-full"}
-        onValueChange={onSelectionChange}
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select a layout" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Width Layout</SelectLabel>
-            {/* <SelectItem value="apple">Apple</SelectItem> */}
-            {widthLayout.map((item) => (
-              <SelectItem key={item.id} value={item.value}>
-                ({item.value}) {item.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <PlaceholderField data={data} onChange={onChange} />
+      <WidthLayout data={data} onChange={onChange} />
     </div>
   );
 };
