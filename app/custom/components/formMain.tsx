@@ -102,10 +102,32 @@ const FormMainBox = ({
         dataForm?.pro?.successPage[key].length != 0
       );
     });
-    listAlert = [...filterCustomization, ...filterSuccessPage];
+
+    //filterProLayer dataLayer pro is not empty
+    const filterProLayer = dataLayer?.filter((item: any) => {
+      return (
+        item?.pro !== undefined &&
+        item?.pro !== null &&
+        Object.keys(item?.pro).length !== 0 &&
+        Object.keys(item?.pro).filter((key) => {
+          return (
+            item?.pro[key] !== false &&
+            item?.pro[key] !== null &&
+            item?.pro[key] !== undefined &&
+            item?.pro[key].length != 0
+          )
+        }).length !== 0
+      );
+    });
+
+    listAlert = [
+      ...filterCustomization,
+      ...filterSuccessPage,
+      ...filterProLayer,
+    ];
 
     dispatch(setAlert(listAlert));
-  }, [dataForm, dispatch]);
+  }, [dataForm, dataLayer, dispatch]);
 
   const setDefaultInputFormLayer = () => {
     let defaultLayer = [
@@ -150,9 +172,11 @@ const FormMainBox = ({
       setDataUser({
         is_subscribed: true,
       });
-      dispatch(setUserData({
-        is_subscribed: true,
-      }));
+      dispatch(
+        setUserData({
+          is_subscribed: true,
+        })
+      );
       return;
     }
     setDataUser(res.data.user_id);
@@ -360,7 +384,11 @@ const FormMainBox = ({
                 {dataForm?.description}
               </p>
             )}
-            <form onSubmit={submitForm} className="flex flex-wrap w-[102%] -ml-2" noValidate>
+            <form
+              onSubmit={submitForm}
+              className="flex flex-wrap w-[102%] -ml-2"
+              noValidate
+            >
               {dataLayer?.map((item: any, index: number) => {
                 return (
                   <RenderFormComponent

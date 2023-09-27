@@ -50,6 +50,7 @@ const CustomizeSheet = ({ id, data }: any) => {
   const dispatch = useAppDispatch();
 
   const onSelectionChange = (e: any) => {
+    const newE = e === "w-full" ? null : e;
     dispatch(
       setLayerWithId({
         id: id,
@@ -57,7 +58,7 @@ const CustomizeSheet = ({ id, data }: any) => {
           ...data,
           pro: {
             ...data.pro,
-            ["layout"]: e, //? true : false
+            ["layout"]: newE, //? true : false
           },
         },
       })
