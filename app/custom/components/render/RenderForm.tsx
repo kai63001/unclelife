@@ -118,7 +118,7 @@ const RenderFormComponent = ({
         );
     }
   };
-  return <div className={cn("my-2 px-2", data?.layout || 'w-full')}>{renderCase()}</div>;
+  return <div className={cn("my-2 px-2", data?.pro?.layout || 'w-full')}>{renderCase()}</div>;
 };
 
 export default RenderFormComponent;

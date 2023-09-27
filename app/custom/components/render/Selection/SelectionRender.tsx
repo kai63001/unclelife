@@ -14,7 +14,7 @@ const SelectionRender = ({ data, updateInputForm, error }: any) => {
     <></>
   ) : (
     <>
-      <Label htmlFor={data.label} className="text-lg">
+      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
         {data.label}
         {data.required && <RequiredStar />}
       </Label>

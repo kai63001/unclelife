@@ -29,7 +29,7 @@ const PublicFormPage = async ({params : {id}}: Props) => {
     return (
         <div className="h-screen w-screen md:flex overflow-x-hidden">
             <div className="mx-auto">
-                <div className="md:min-w-[700px] w-full rounded-sm">
+                <div className="md:max-w-[700px] w-full rounded-sm">
                     <FormMainBox id={id} responseData={responseData}/>
                 </div>
             </div>

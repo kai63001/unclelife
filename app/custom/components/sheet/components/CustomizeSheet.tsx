@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ProBadge from "../../toolsbar/ProBadge";
 
 const widthLayout = [
   {
@@ -49,13 +50,15 @@ const CustomizeSheet = ({ id, data }: any) => {
   const dispatch = useAppDispatch();
 
   const onSelectionChange = (e: any) => {
-    console.log(e);
     dispatch(
       setLayerWithId({
         id: id,
         value: {
           ...data,
-          ["layout"]: e, //? true : false
+          pro: {
+            ...data.pro,
+            ["layout"]: e, //? true : false
+          },
         },
       })
     );
@@ -63,9 +66,14 @@ const CustomizeSheet = ({ id, data }: any) => {
 
   return (
     <div className="mt-5">
-      <h2 className="text-xl font-bold">Customize</h2>
+      <h2 className="text-xl font-bold">
+        Customize <ProBadge />
+      </h2>
       <Label>Field Layout</Label>
-      <Select defaultValue={data?.layout || 'w-full'} onValueChange={onSelectionChange}>
+      <Select
+        defaultValue={data?.pro?.layout || "w-full"}
+        onValueChange={onSelectionChange}
+      >
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Select a layout" />
         </SelectTrigger>

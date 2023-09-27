@@ -36,7 +36,7 @@ const SheetTab = ({ id }: any) => {
         id: id,
         value: {
           ...data,
-          [name]: e, //? true : false
+          [name]: e,
         },
       })
     );

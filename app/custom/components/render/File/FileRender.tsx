@@ -43,7 +43,7 @@ const FileRender = ({data, updateInputForm, error}: any) => {
         <></>
     ) : (
         <>
-            <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2 text-lg">
+            <Label htmlFor={'uploadFileForm'} className="flex flex-col space-y-2 text-lg font-bold cursor-text">
                 <div>
                     {data.label}
                     {data.required && <RequiredStar/>}

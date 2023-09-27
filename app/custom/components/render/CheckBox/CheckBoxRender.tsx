@@ -18,7 +18,7 @@ const CheckBoxRender = ({data, updateInputForm, error}: any) => {
             />
             <Label
                 htmlFor={data.label}
-                className={` font-medium text-lg leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${error && "text-red-500"}`}
+                className={`text-lg font-bold cursor-text leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${error && "text-red-500"}`}
             >
                 {data.required && (
                     <span className="text-red-500">*</span>
