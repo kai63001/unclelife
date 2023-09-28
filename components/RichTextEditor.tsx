@@ -7,16 +7,40 @@ import {
   Bold,
   Italic,
   Link as LinkIcon,
+  Smile,
   Underline as UnderlineIcon,
 } from "lucide-react";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
+import { useTheme } from "next-themes";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-const MenuBar = ({ editor, setLink }: any) => {
+const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
+  const { theme } = useTheme();
   if (!editor) {
     return null;
   }
+
+  const renderTheme = (): Theme => {
+    if (theme === "dark") {
+      return Theme.DARK;
+    }
+    if (theme === "light") {
+      return Theme.LIGHT;
+    }
+    return Theme.AUTO;
+  };
+
+  const addEmoji = (event: any) => {
+    const emoji = event.emoji
+    editor?.chain().focus().insertContent(emoji).run();
+  };
 
   return (
     <div className="flex space-x-1 flex-wrap">
@@ -63,7 +87,7 @@ const MenuBar = ({ editor, setLink }: any) => {
         disabled={!editor.can().chain().focus().setLink().run()}
         className={cn(
           "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
-          editor.isActive("link")
+          false
             ? "bg-secondary text-primary"
             : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
         )}
@@ -71,20 +95,23 @@ const MenuBar = ({ editor, setLink }: any) => {
         <LinkIcon className="h-4 w-4" />
       </button>
 
-      {/* <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
-      >
-        italic
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={editor.isActive("strike") ? "is-active" : ""}
-      >
-        strike
-      </button> */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <button
+            className={cn(
+              "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
+              editor.isActive("underline")
+                ? "bg-secondary text-primary"
+                : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
+            )}
+          >
+            <Smile className="h-4 w-4" />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className={"ml-10 w-11/12"}>
+          <EmojiPicker onEmojiClick={addEmoji} theme={renderTheme()} />
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
@@ -129,6 +156,12 @@ const RichTextEditor = (props: any) => {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   }, [editor]);
 
+  useEffect(() => {
+    if (!editor) return;
+
+    editor.commands.setContent(props.content || "");
+  }, [props.content, editor]);
+
   return (
     <div className="border rounded-md overflow-hidden">
       <div className="bg-foreground px-3 py-2">
@@ -136,7 +169,8 @@ const RichTextEditor = (props: any) => {
       </div>
       <div className="">
         <EditorContent
-          className="focus:outline-none p-1 h-full min-h-[100px]"
+          className="focus:outline-none p-1 h-full"
+          style={{ minHeight: props.minHeight || 100 }}
           editor={editor}
         />
       </div>
