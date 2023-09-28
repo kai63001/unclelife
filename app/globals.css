@@ -113,3 +113,7 @@ html, body {
     text-align: center;
     cursor: pointer;
 }
+
+.ProseMirror {
+    outline: none !important;
+}

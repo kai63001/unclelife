@@ -11,6 +11,7 @@ import ButtonSubmit from "@/app/custom/components/toolsbar/ButtonSubmit";
 import CustomizationToolbar from "@/app/custom/components/toolsbar/CustomizationToolbar";
 import CustomCssToolBar from "@/app/custom/components/toolsbar/CustomCssToolBar";
 import SuccessPageCustomComponent from "@/app/custom/components/toolsbar/SuccessPage";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const ToolsBar = () => {
     const dispatch = useAppDispatch();
@@ -51,6 +52,7 @@ const ToolsBar = () => {
                             value={form.description}
                         >
                         </Textarea>
+                        <RichTextEditor/>
                     </div>
 
                     <Accordion type="multiple" defaultValue={['buttonSubmit', 'customization']} className="w-full">
