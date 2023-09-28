@@ -375,9 +375,8 @@ const FormMainBox = ({
           <div className={"p-5"}>
             <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
             {dataForm?.description && (
-              <p className="text-muted-foreground text-sm whitespace-pre-line pt-1 pb-4">
-                {dataForm?.description}
-              </p>
+              <div dangerouslySetInnerHTML={{ __html: dataForm?.description }} className="text-muted-foreground prose text-sm whitespace-pre-line pt-1 pb-4">
+              </div>
             )}
             <form
               onSubmit={submitForm}

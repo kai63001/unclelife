@@ -44,15 +44,17 @@ const ToolsBar = () => {
                     </div>
                     <div>
                         <p className="text-xs font-bold">DESCRIPTION</p>
-                        <Textarea
+                        {/* <Textarea
                             onChange={(e) => {
                                 onChangeHook(e.target.value, "description");
                             }}
                             className="focus:outline-none focus-visible:ring-0"
                             value={form.description}
                         >
-                        </Textarea>
-                        <RichTextEditor/>
+                        </Textarea> */}
+                        <RichTextEditor onChange={(e:any) => {
+                                onChangeHook(e, "description");
+                            }}/>
                     </div>
 
                     <Accordion type="multiple" defaultValue={['buttonSubmit', 'customization']} className="w-full">

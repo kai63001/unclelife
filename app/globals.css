@@ -117,3 +117,7 @@ html, body {
 .ProseMirror {
     outline: none !important;
 }
+
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+    margin: 0 !important;
+}
