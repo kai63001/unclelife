@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import AddOptions from "@/app/custom/components/sheet/AddOptions";
 import DeleteLayer from "./components/DeleteLayer";
 import CustomizeSheet from "./components/CustomizeSheet";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -74,13 +75,20 @@ const SheetTab = ({ id }: any) => {
               <span className="text-lg font-medium">General</span>
               <div className={"mt-2 flex flex-col space-y-3"}>
                 <div>
-                  <Label htmlFor={"label"}>Field Name :</Label>
-                  <Input
+                  <Label htmlFor={"label"} className="font-semibold">Field Name :</Label>
+                  {/* <Input
                     id={"label"}
                     name={"label"}
                     value={data.label}
                     onChange={(e) => {
                       inputOnChange(e.target.value, "label");
+                    }}
+                  /> */}
+                  <RichTextEditor
+                    content={data?.label}
+                    minHeight={50}
+                    onChange={(e:any) => {
+                      inputOnChange(e, "label");
                     }}
                   />
                 </div>
