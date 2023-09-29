@@ -14,6 +14,7 @@ import {
   setDatabaseId,
   setInformation,
   setLayer,
+  setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
 import SuccessPageComponent from "./successPage";
@@ -115,7 +116,7 @@ const FormMainBox = ({
             item?.pro[key] !== null &&
             item?.pro[key] !== undefined &&
             item?.pro[key].length != 0
-          )
+          );
         }).length !== 0
       );
     });
@@ -168,6 +169,9 @@ const FormMainBox = ({
     dispatch(setLayer(res.data.layer));
     dispatch(setDatabaseId(res.data.databaseId));
     dispatch(setAllForm(res.data.detail));
+    if (!workspaceId) {
+      dispatch(setWorkspaceId(res.data.detail.workspaceId));
+    }
     if (testMode) {
       setDataUser({
         is_subscribed: true,
@@ -375,8 +379,10 @@ const FormMainBox = ({
           <div className={"p-5"}>
             <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
             {dataForm?.description && (
-              <div dangerouslySetInnerHTML={{ __html: dataForm?.description }} className="text-muted-foreground prose text-sm whitespace-pre-line pt-1 pb-4">
-              </div>
+              <div
+                dangerouslySetInnerHTML={{ __html: dataForm?.description }}
+                className="text-muted-foreground prose text-sm whitespace-pre-line pt-1 pb-4"
+              ></div>
             )}
             <form
               onSubmit={submitForm}
