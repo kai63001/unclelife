@@ -27,7 +27,12 @@ const CheckBoxRender = ({
           error && "text-red-500"
         }`}
       >
-        {data.required && <span className="text-red-500">*</span>} {data.label}
+        {data.required && <span className="text-red-500">*</span>}{" "}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: data?.label,
+          }}
+        ></span>
       </Label>
     </>
   );

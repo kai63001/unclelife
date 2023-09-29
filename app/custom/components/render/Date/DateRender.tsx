@@ -22,14 +22,18 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const DateRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
+const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
   ) : (
     <>
       <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        {data.label}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: data?.label,
+          }}
+        ></span>
         {data.required && <RequiredStar />}
       </Label>
       <Popover>
@@ -39,13 +43,21 @@ const DateRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
             className={cn(
               "w-full justify-start text-left font-normal shadow-sm",
               !date && "text-muted-foreground",
-                error && "border border-red-500"
+              error && "border border-red-500"
             )}
           >
-            {((data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : '') && (
-                <CalendarIcon className="mr-2 h-4 w-4" />
+            {(data?.pro?.placeholder && isSubscribed
+              ? data?.pro?.placeholder
+              : "") && <CalendarIcon className="mr-2 h-4 w-4" />}
+            {date ? (
+              format(date, "PPP")
+            ) : (
+              <span>
+                {data?.pro?.placeholder && isSubscribed
+                  ? data?.pro?.placeholder
+                  : ""}
+              </span>
             )}
-            {date ? format(date, "PPP") : <span>{(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
@@ -77,11 +89,7 @@ const DateRender = ({ data, updateInputForm, error,isSubscribed }: any) => {
           </div>
         </PopoverContent>
       </Popover>
-      {error && (
-          <div className="text-red-500 text-xs mt-1">
-            {error}
-          </div>
-      )}
+      {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );
 };

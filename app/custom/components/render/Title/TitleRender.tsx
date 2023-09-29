@@ -14,7 +14,11 @@ const TitleRender = ({
   ) : (
     <>
       <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        {data.label}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: data?.label,
+          }}
+        ></span>
         {data.required && <RequiredStar />}
       </Label>
       <Input
@@ -23,7 +27,9 @@ const TitleRender = ({
         } shadow-sm`}
         onChange={(e) => updateInputForm(e.target.value, data)}
         name={data.label}
-        placeholder={(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''}
+        placeholder={
+          data?.pro?.placeholder && isSubscribed ? data?.pro?.placeholder : ""
+        }
         id={data.label}
         disabled={data.disable}
         required={data.required}

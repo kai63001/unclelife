@@ -9,25 +9,44 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const SelectionRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const SelectionRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+}: any) => {
   return data.hidden ? (
     <></>
   ) : (
     <>
       <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        {data.label}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: data?.label,
+          }}
+        ></span>
         {data.required && <RequiredStar />}
       </Label>
-      <Select name={data.label} onValueChange={(e)=>{
-        updateInputForm(e, data)
-      }} required={data.required}>
+      <Select
+        name={data.label}
+        onValueChange={(e) => {
+          updateInputForm(e, data);
+        }}
+        required={data.required}
+      >
         <SelectTrigger
           id={data.label}
           name={data.label}
           disabled={data.disable}
-          className={`w-full shadow-sm ${error && 'border border-red-500'}`}
+          className={`w-full shadow-sm ${error && "border border-red-500"}`}
         >
-          <SelectValue placeholder={(data?.pro?.placeholder && isSubscribed) ? data?.pro?.placeholder : ''} />
+          <SelectValue
+            placeholder={
+              data?.pro?.placeholder && isSubscribed
+                ? data?.pro?.placeholder
+                : ""
+            }
+          />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -41,11 +60,7 @@ const SelectionRender = ({ data, updateInputForm, error, isSubscribed }: any) =>
           </SelectGroup>
         </SelectContent>
       </Select>
-        {error && (
-            <div className="text-red-500 text-xs mt-1">
-                {error}
-            </div>
-        )}
+      {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );
 };
