@@ -8,7 +8,7 @@ const PlaceholderField = ({ data, onChange }:any) => {
       <Input
         id={"placeholder"}
         name={"placeholder"}
-        value={data?.pro?.placeholder}
+        value={data?.pro?.placeholder || ''}
         onChange={(e) => {
             onChange(e.target.value, "placeholder", "");
         }}
