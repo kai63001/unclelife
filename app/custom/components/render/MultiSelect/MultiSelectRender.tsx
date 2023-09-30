@@ -60,6 +60,7 @@ const MultiSelectRender = ({
     <>
       <Label htmlFor={data.label} className="text-lg">
         <span
+          className="inline-block"
           dangerouslySetInnerHTML={{
             __html: data?.label,
           }}

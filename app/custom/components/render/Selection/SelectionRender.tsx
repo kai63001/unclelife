@@ -21,6 +21,7 @@ const SelectionRender = ({
     <>
       <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
         <span
+          className="inline-block"
           dangerouslySetInnerHTML={{
             __html: data?.label,
           }}

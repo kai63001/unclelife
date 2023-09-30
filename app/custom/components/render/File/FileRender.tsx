@@ -47,6 +47,7 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       >
         <div>
           <span
+            className="inline-block"
             dangerouslySetInnerHTML={{
               __html: data?.label,
             }}
@@ -56,13 +57,13 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       </Label>
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
-          <p
-            className="text-muted-foreground"
-            dangerouslySetInnerHTML={{
-              __html: data?.help,
-            }}
-          ></p>
-        )}
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       {file ? (
         <div>
           <div className="flex items-center space-x-2 shadow-sm">
@@ -121,14 +122,15 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       <div className={"text-xs text-muted-foreground mt-1"}>
         File size should be less than 5MB.{" "}
       </div>
-      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
-        <p
-          className="text-muted-foreground"
-          dangerouslySetInnerHTML={{
-            __html: data?.help,
-          }}
-        ></p>
-      )}
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );

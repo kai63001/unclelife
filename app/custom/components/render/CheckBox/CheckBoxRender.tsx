@@ -38,19 +38,21 @@ const CheckBoxRender = ({
       >
         {data.required && <span className="text-red-500">*</span>}{" "}
         <span
+          className="inline-block"
           dangerouslySetInnerHTML={{
             __html: data?.label,
           }}
         ></span>
       </Label>
-      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
-        <p
-          className="text-muted-foreground"
-          dangerouslySetInnerHTML={{
-            __html: data?.help,
-          }}
-        ></p>
-      )}
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
     </>
   );
 };
