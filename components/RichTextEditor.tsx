@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
 import {
@@ -117,6 +117,7 @@ const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
 };
 
 const RichTextEditor = (props: any) => {
+  const [checkTextUpdate, setCheckTextUpdate] = useState(false);
   const editor: any = useEditor({
     onUpdate: ({ editor }: any) => {
       if (props.onChange) props.onChange(editor.getHTML());
@@ -159,8 +160,12 @@ const RichTextEditor = (props: any) => {
   useEffect(() => {
     if (!editor) return;
 
-    editor.commands.setContent(props.content || "");
-  }, [props.content, editor]);
+    if (!checkTextUpdate && props.content) {
+      editor.commands.setContent(props.content || "");
+      setCheckTextUpdate(true);
+    }
+
+  }, [props.content, editor, checkTextUpdate]);
 
   return (
     <div className="border rounded-md overflow-hidden">

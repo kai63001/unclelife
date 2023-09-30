@@ -36,6 +36,16 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
         ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
+
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
@@ -89,6 +99,14 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
           </div>
         </PopoverContent>
       </Popover>
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );

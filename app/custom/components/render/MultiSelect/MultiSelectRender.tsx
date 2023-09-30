@@ -66,6 +66,15 @@ const MultiSelectRender = ({
         ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       <div className="w-full">
         <button
           ref={buttonRef}
@@ -120,6 +129,14 @@ const MultiSelectRender = ({
             ))}
           </div>
         </div>
+      )}
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
       )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>

@@ -27,6 +27,15 @@ const SelectionRender = ({
         ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       <Select
         name={data.label}
         onValueChange={(e) => {
@@ -60,6 +69,14 @@ const SelectionRender = ({
           </SelectGroup>
         </SelectContent>
       </Select>
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );

@@ -12,6 +12,15 @@ const CheckBoxRender = ({
     <></>
   ) : (
     <>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       <Checkbox
         disabled={data.disable}
         required={data.required}
@@ -34,6 +43,14 @@ const CheckBoxRender = ({
           }}
         ></span>
       </Label>
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
     </>
   );
 };

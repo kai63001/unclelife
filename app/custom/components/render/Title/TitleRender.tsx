@@ -21,6 +21,15 @@ const TitleRender = ({
         ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       <Input
         className={`mt-1 block w-full ${
           error ? "border-red-500" : ""
@@ -35,6 +44,14 @@ const TitleRender = ({
         required={data.required}
         type={type}
       />
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       {/*    error message*/}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>

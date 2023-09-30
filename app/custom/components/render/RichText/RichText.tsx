@@ -21,6 +21,15 @@ const RichTextRender = ({
         ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       <Textarea
         onChange={(e) => updateInputForm(e.target.value, data)}
         name={data.label}
@@ -34,6 +43,14 @@ const RichTextRender = ({
         disabled={data.disable}
         required={data.required}
       />
+      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );

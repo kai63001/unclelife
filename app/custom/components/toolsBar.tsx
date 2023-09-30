@@ -56,11 +56,11 @@ const ToolsBar = () => {
           >
             <CustomizationToolbar onChangeHook={onChangeHook} form={form} />
             <ButtonSubmit onChangeHook={onChangeHook} form={form} />
-            <CustomCssToolBar onChangeHook={onChangeHook} form={form} />
             <SuccessPageCustomComponent
               onChangeHook={onChangeHook}
               form={form}
             />
+            <CustomCssToolBar onChangeHook={onChangeHook} form={form} />
           </Accordion>
         </ScrollArea>
       </div>
