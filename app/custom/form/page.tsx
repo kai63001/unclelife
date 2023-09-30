@@ -11,7 +11,7 @@ const CreateFormCustomPage = () => {
             <div>
                 <p className="mb-2">Page 1</p>
                 <div className="max-w-2xl w-full h-fit bg-background rounded-sm">
-                    <div className="border-2 border-dashed w-full h-full rounded-sm">
+                    <div className="border-2 border-dashed w-full h-full rounded-sm relative">
                         <FormMainBox testMode={true}/>
                     </div>
                 </div>
