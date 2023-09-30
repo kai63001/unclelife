@@ -23,6 +23,7 @@ const PricingBox = () => {
             'Unlimited Fields',
             'As many forms as you like',
             'Embed your form anywhere',
+            'Widgets',
         ],
         pro: [
             'Everything in Basic',
@@ -37,6 +38,7 @@ const PricingBox = () => {
         ],
         enterprise: [
             'Everything in Pro',
+            'Multiple users',
             'Custom domain',
             '20 mb file upload',
             'Priority support',
@@ -160,7 +162,7 @@ const PricingBox = () => {
                 <span className={'font-bold'}>Yearly <Badge variant="destructive">~ 25%</Badge></span>
             </div>
             <div className={'flex items-center flex-col md:flex-row space-y-3'}>
-                <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
+                <div className={'md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Basic</h2>
                     <p className={'my-2'}>All the basics tools to create beautiful forms and widgets.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
@@ -235,7 +237,7 @@ const PricingBox = () => {
                     </div>
 
                 </div>
-                <div className={'md:flex-1 border h-[400px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
+                <div className={'md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full'}>
                     <h2 className={'text-3xl font-bold'}>Enterprise</h2>
                     <p className={'my-2'}>Unlock enterprise tools for exquisite form creation.</p>
                     <h3 className={'text-3xl font-bold text-center my-5'}>
@@ -255,7 +257,9 @@ const PricingBox = () => {
                         ))}
                     </div>
                     <div className={'w-full absolute bottom-[10px] left-0 flex justify-center p-5'}>
-                        <Button disabled={true} className={'w-full'}>Start Trial</Button>
+                        <Button disabled={true} className={'w-full'}>
+                            Coming soon
+                        </Button>
                     </div>
                 </div>
             </div>

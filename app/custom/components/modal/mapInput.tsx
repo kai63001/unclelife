@@ -116,7 +116,7 @@ const ModalMapInput = () => {
             <DialogContent className="sm:max-w-[800px]">
                 <DialogHeader>
                     <DialogTitle className="flex items-center">
-                        Map Layer Input <ArrowRight className="h-4 w-6"/> Notion Database{" "}
+                        Map Fields Input <ArrowRight className="h-4 w-6"/> Notion Properties{" "}
                     </DialogTitle>
                     <DialogDescription>
                         Map Input Fields to Notion Database Properties

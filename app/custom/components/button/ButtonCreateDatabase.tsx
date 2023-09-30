@@ -97,10 +97,15 @@ const ButtonCreateDatabase = ({ session }: any) => {
       return;
     }
 
+    const newForm = {
+      ...form,
+      workspaceId: workspaceId,
+    };
+
     const { data, error } = await insertForm({
       layer: newLayer,
       user_id: session?.user?.id || "",
-      detail: form,
+      detail: newForm,
       databaseId,
       workspaceId,
     });

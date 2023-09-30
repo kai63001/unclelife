@@ -58,6 +58,10 @@ const ButtonSaveCustomForm = ({session}: any) => {
         //log user id
         setLoading(true);
         setWarning(false);
+        const newForm = {
+            ...form,
+            workspaceId: workspaceId,
+        }
         if (infomation.id) {
             // const {data, error} = await supabase
             //     .from("form")
@@ -69,7 +73,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
             //     .select();
             const {data,error} = await updateForm({
                 id: infomation.id,
-                detail: form,
+                detail: newForm,
                 layer: layer,
             })
             if (error) {
@@ -104,7 +108,7 @@ const ButtonSaveCustomForm = ({session}: any) => {
         const {data,error} = await insertForm({
             layer: layer,
             user_id: session?.user?.id || "",
-            detail: form,
+            detail: newForm,
             databaseId,
             workspaceId
         })

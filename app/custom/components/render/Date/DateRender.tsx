@@ -22,30 +22,53 @@ import {
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
 
-const DateRender = ({ data, updateInputForm, error }: any) => {
+const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
   ) : (
-    <div>
-      <Label htmlFor={data.label} className="">
-        {data.label}
+    <>
+      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <span
+          className="inline-block"
+          dangerouslySetInnerHTML={{
+            __html: data?.label,
+          }}
+        ></span>
         {data.required && <RequiredStar />}
       </Label>
+      {(data?.helpPositionAboveInput ||
+        data?.helpPositionAboveInput == undefined) && (
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
+
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal shadow-sm",
               !date && "text-muted-foreground",
-                error && "border border-red-500"
+              error && "border border-red-500"
             )}
           >
-            {(date || data?.placeholder) && (
-                <CalendarIcon className="mr-2 h-4 w-4" />
+            {(data?.pro?.placeholder && isSubscribed
+              ? data?.pro?.placeholder
+              : "") && <CalendarIcon className="mr-2 h-4 w-4" />}
+            {date ? (
+              format(date, "PPP")
+            ) : (
+              <span>
+                {data?.pro?.placeholder && isSubscribed
+                  ? data?.pro?.placeholder
+                  : ""}
+              </span>
             )}
-            {date ? format(date, "PPP") : <span>{data?.placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
@@ -77,12 +100,17 @@ const DateRender = ({ data, updateInputForm, error }: any) => {
           </div>
         </PopoverContent>
       </Popover>
-      {error && (
-          <div className="text-red-500 text-xs mt-1">
-            {error}
-          </div>
-      )}
-    </div>
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
+      {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
+    </>
   );
 };
 

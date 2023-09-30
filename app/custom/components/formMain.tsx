@@ -14,6 +14,7 @@ import {
   setDatabaseId,
   setInformation,
   setLayer,
+  setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
 import SuccessPageComponent from "./successPage";
@@ -102,10 +103,32 @@ const FormMainBox = ({
         dataForm?.pro?.successPage[key].length != 0
       );
     });
-    listAlert = [...filterCustomization, ...filterSuccessPage];
+
+    //filterProLayer dataLayer pro is not empty
+    const filterProLayer = dataLayer?.filter((item: any) => {
+      return (
+        item?.pro !== undefined &&
+        item?.pro !== null &&
+        Object.keys(item?.pro).length !== 0 &&
+        Object.keys(item?.pro).filter((key) => {
+          return (
+            item?.pro[key] !== false &&
+            item?.pro[key] !== null &&
+            item?.pro[key] !== undefined &&
+            item?.pro[key].length != 0
+          );
+        }).length !== 0
+      );
+    });
+
+    listAlert = [
+      ...filterCustomization,
+      ...filterSuccessPage,
+      ...filterProLayer,
+    ];
 
     dispatch(setAlert(listAlert));
-  }, [dataForm, dispatch]);
+  }, [dataForm, dataLayer, dispatch]);
 
   const setDefaultInputFormLayer = () => {
     let defaultLayer = [
@@ -146,6 +169,9 @@ const FormMainBox = ({
     dispatch(setLayer(res.data.layer));
     dispatch(setDatabaseId(res.data.databaseId));
     dispatch(setAllForm(res.data.detail));
+    if (!workspaceId) {
+      dispatch(setWorkspaceId(res.data.detail.workspaceId));
+    }
     if (testMode) {
       setDataUser({
         is_subscribed: true,
@@ -264,7 +290,11 @@ const FormMainBox = ({
     // console.log("submit form");
 
     //loop inputForm create object properties for notion page body
-    const properties: any = await convertInputToProperty(inputForm,supabase,toast);
+    const properties: any = await convertInputToProperty(
+      inputForm,
+      supabase,
+      toast
+    );
 
     updateDatabase(databaseId, properties, dataUser.id, id)
       .then((e) => {
@@ -347,13 +377,18 @@ const FormMainBox = ({
               </div>
             )}
           <div className={"p-5"}>
-            <h1 className="text-2xl font-bold">{dataForm?.title}</h1>
+            <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
             {dataForm?.description && (
-              <p className="text-gray-400 text-sm whitespace-pre-line pt-1 pb-4">
-                {dataForm?.description}
-              </p>
+              <div
+                dangerouslySetInnerHTML={{ __html: dataForm?.description }}
+                className="text-muted-foreground prose text-sm whitespace-pre-line pt-1 pb-4"
+              ></div>
             )}
-            <form onSubmit={submitForm} noValidate>
+            <form
+              onSubmit={submitForm}
+              className="flex flex-wrap w-[102%] -ml-2"
+              noValidate
+            >
               {dataLayer?.map((item: any, index: number) => {
                 return (
                   <RenderFormComponent
@@ -366,7 +401,7 @@ const FormMainBox = ({
                 );
               })}
               <div
-                className="mt-3 flex"
+                className="mt-3 flex w-full px-2"
                 style={{
                   justifyContent: dataForm?.button?.position,
                 }}
