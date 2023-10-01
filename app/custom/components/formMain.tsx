@@ -122,10 +122,18 @@ const FormMainBox = ({
       );
     });
 
+    const filterTypeProLayer = dataLayer?.filter((item: any) => {
+      return (
+        ["files", "textBlock"].includes(item?.type)
+      )
+    })
+
+
     listAlert = [
       ...filterCustomization,
       ...filterSuccessPage,
       ...filterProLayer,
+      ...filterTypeProLayer
     ];
 
     dispatch(setAlert(listAlert));

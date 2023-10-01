@@ -21,11 +21,13 @@ import {
   Hash,
   ListChecks,
   Upload,
+  Text
 } from "lucide-react";
 import { RocketIcon } from "@radix-ui/react-icons";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ModalAddLayer = () => {
   const [open, setOpen] = useState(false);
@@ -85,6 +87,16 @@ const ModalAddLayer = () => {
       name: "File Upload",
       icon: <Upload className="h-10 w-10" />,
       type: "files",
+      pro: true,
+    },
+  ];
+
+  const LayoutBlock = [
+    {
+      name: "Text Block",
+      icon: <Text className="h-10 w-10" />,
+      type: "textBlock",
+      block: true,
       pro: true,
     },
   ];
@@ -164,13 +176,23 @@ const ModalAddLayer = () => {
           "Radio Choice",
         ];
         break;
+      case "textBlock":
+        titles = [
+          "Text Block",
+          "Text",
+          "Paragraph",
+          "Article",
+          "Content",
+          "Body",
+        ];
+        break;
       default:
         titles = ["Default Title"];
     }
     return titles[Math.floor(Math.random() * titles.length)];
   };
 
-  const addLayer = (type: string) => {
+  const addLayer = (type: string,block:boolean = false) => {
     const labelName = randomTitleWithType(type);
     let newLayer: any = {
       id: layer.length + 1,
@@ -197,6 +219,12 @@ const ModalAddLayer = () => {
         ],
       };
     }
+    if (block) {
+      newLayer = {
+        ...newLayer,
+        block: true,
+      };
+    }
     dispatch(addMoreLayer(newLayer));
     //close modal
     setOpen(false);
@@ -221,36 +249,55 @@ const ModalAddLayer = () => {
               Form
             </DialogDescription>
           </DialogHeader>
-          {!(!databaseId && workspaceId) && (
-            <Alert>
-              <RocketIcon className="h-4 w-4" />
-              <AlertTitle>Updating Form Structure & Fields!</AlertTitle>
-              <AlertDescription>
-                Use this to incorporate layout blocks into your forms. To
-                introduce more fields, expand the columns in your Notion
-                database. Ensure you select the appropriate type for your new
-                database column in Notion
-                {/*, and then refresh the form's layout.*/}
-              </AlertDescription>
-            </Alert>
-          )}
-          <div className="grid grid-cols-4 gap-4 py-4">
-            {typeOfLayerSelection.map((item: any, index) => (
-              <div
-                key={index}
-                className={`border rounded-sm h-32 flex cursor-pointer hover:bg-primary hover:text-secondary`}
-                onClick={() => {
-                  addLayer(item.type);
-                }}
-              >
-                <div className={`m-auto text-center`}>
-                  <div className={`flex justify-center`}>{item.icon}</div>
-                  <strong className="block">{item.name}</strong>
-                  {item?.pro && <ProBadge />}
+          <ScrollArea className="h-[600px]">
+            {!(!databaseId && workspaceId) && (
+              <Alert>
+                <RocketIcon className="h-4 w-4" />
+                <AlertTitle>Updating Form Structure & Fields!</AlertTitle>
+                <AlertDescription>
+                  Use this to incorporate layout blocks into your forms. To
+                  introduce more fields, expand the columns in your Notion
+                  database. Ensure you select the appropriate type for your new
+                  database column in Notion
+                  {/*, and then refresh the form's layout.*/}
+                </AlertDescription>
+              </Alert>
+            )}
+            <div className="grid grid-cols-4 gap-4 py-4">
+              {typeOfLayerSelection.map((item: any, index) => (
+                <div
+                  key={index}
+                  className={`border rounded-sm h-32 flex cursor-pointer hover:bg-primary hover:text-secondary`}
+                  onClick={() => {
+                    addLayer(item.type);
+                  }}
+                >
+                  <div className={`m-auto text-center`}>
+                    <div className={`flex justify-center`}>{item.icon}</div>
+                    <strong className="block">{item.name}</strong>
+                    {item?.pro && <ProBadge />}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-4 gap-4 py-4 border-t">
+              {LayoutBlock.map((item: any, index) => (
+                <div
+                  key={index}
+                  className={`border rounded-sm h-32 flex cursor-pointer hover:bg-primary hover:text-secondary`}
+                  onClick={() => {
+                    addLayer(item.type, item.block);
+                  }}
+                >
+                  <div className={`m-auto text-center`}>
+                    <div className={`flex justify-center`}>{item.icon}</div>
+                    <strong className="block">{item.name}</strong>
+                    {item?.pro && <ProBadge />}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </div>

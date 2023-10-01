@@ -125,7 +125,12 @@ const ModalMapInput = () => {
                 <ScrollArea className="h-[500px]">
                     <div className="flex flex-col space-y-3 py-4 px-10 ">
                         {/* loop layer map list Object Table */}
-                        {layer.map((item: any, index: number) => (
+                        {layer?.filter((item)=>{
+                            if (item?.block) {
+                                return false
+                            }
+                            return true
+                        }).map((item: any, index: number) => (
                             <div key={index} className="grid grid-cols-5 items-center gap-4">
                                 <Input
                                     className="w-full col-span-2"
