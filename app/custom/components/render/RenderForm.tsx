@@ -4,6 +4,7 @@ import CheckBoxRender from "./CheckBox/CheckBoxRender";
 import FileRender from "@/app/custom/components/render/File/FileRender";
 import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
 import { cn } from "@/lib/utils";
+import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -110,6 +111,17 @@ const RenderFormComponent = ({
             error={error}
           />
         );
+      case "textBlock":
+        return (
+          <TextBlockRender
+            updateInputForm={updateInputForm}
+            isSubscribed={dataUser?.is_subscribed}
+            data={data}
+            error={error}
+          />
+        );
+      case "formula":
+        return <></>;
       case "relation":
         return <></>;
       case "created_time":

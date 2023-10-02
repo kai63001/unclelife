@@ -64,7 +64,7 @@ const CardMyForm = ({form}: any) => {
     }
 
     return (
-        <Card>
+        <Card className="flex flex-col justify-between">
             <CardHeader>
                 <CardTitle>{form?.detail?.title || 'Form'}</CardTitle>
                 <CardDescription>{renderDate(form?.created_at)}</CardDescription>

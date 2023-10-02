@@ -15,8 +15,8 @@ export function checkKeyForm(onChangeHook: any, form: any) {
     return key
 }
 
-export async function convertImageToWebp(file: any,keyForm: string) {
-    return await axios.post(`/api/notion/uploadImage?id=${keyForm}`, {
+export async function convertImageToWebp(file: any,keyForm: string,bucket: string = 'cover') {
+    return await axios.post(`/api/notion/uploadImage?id=${keyForm}&bucket=${bucket}`, {
         imageBase64: file
     })
 }
