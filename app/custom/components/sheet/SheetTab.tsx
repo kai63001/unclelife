@@ -150,12 +150,12 @@ const SheetTab = ({ id }: any) => {
                   </div>
                 ))}
               </div>
-              <CustomizeSheet id={id} data={data} />
               {checkThisTypeIsOption() && (
                 <div className={"mt-2"}>
                   <AddOptions data={data} />
                 </div>
               )}
+              <CustomizeSheet id={id} data={data} />
             </div>
 
             {/*Delete*/}
