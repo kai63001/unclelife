@@ -40,7 +40,7 @@ const FormMainBox = ({
   const [dataLayer, setDataLayer] = useState<any>([]);
   const [dataUser, setDataUser] = useState<any>({});
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId } = useAppSelector(
+  const { form, layer, workspaceId, logic } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
@@ -52,7 +52,7 @@ const FormMainBox = ({
   const updateInputForm = (value: string, data: any) => {
     setError({
       ...error,
-      [data.mapTo]: "",
+      [data.id]: "",
     });
     if (data.mapTo != undefined) {
       setInputForm({
@@ -63,6 +63,61 @@ const FormMainBox = ({
         },
       });
     }
+
+    //check condition logic
+    logic.forEach((item: any) => {
+      if (item.layerId !== data?.id) {
+        return; // Skip if layerId doesn't match
+      }
+
+      let conditionMet = false;
+      switch (item.when?.operator) {
+        case "=":
+          conditionMet = item.when?.value === value;
+          break;
+        case ">":
+          conditionMet = value > item.when?.value;
+          break;
+        case "<":
+          conditionMet = value < item.when?.value;
+          break;
+        case "<=":
+          conditionMet = value <= item.when?.value;
+          break;
+        case ">=":
+          conditionMet = value >= item.when?.value;
+          break;
+        case "!=":
+          conditionMet = value !== item.when?.value;
+          break;
+      }
+
+      let shouldBeRequired = false;
+      let shouldBeHidden = false;
+
+      if (conditionMet) {
+        if (item.then?.type === "required") {
+          shouldBeRequired = true;
+        } else if (item.then?.type === "hidden") {
+          shouldBeHidden = true;
+        }
+      }
+
+      const layerId = item?.then?.layerId;
+      if (layerId) {
+        const layer = dataLayer?.map((layerItem: any) => {
+          if (layerItem?.id === layerId) {
+            return {
+              ...layerItem,
+              required: shouldBeRequired,
+              hidden: shouldBeHidden,
+            };
+          }
+          return layerItem;
+        });
+        dispatch(setLayer(layer));
+      }
+    });
   };
 
   useEffect(() => {
@@ -123,17 +178,14 @@ const FormMainBox = ({
     });
 
     const filterTypeProLayer = dataLayer?.filter((item: any) => {
-      return (
-        ["files", "textBlock"].includes(item?.type)
-      )
-    })
-
+      return ["files", "textBlock"].includes(item?.type);
+    });
 
     listAlert = [
       ...filterCustomization,
       ...filterSuccessPage,
       ...filterProLayer,
-      ...filterTypeProLayer
+      ...filterTypeProLayer,
     ];
 
     dispatch(setAlert(listAlert));
@@ -233,6 +285,11 @@ const FormMainBox = ({
     let error: any = {};
     let check = true;
 
+    //check if testMode
+    if (testMode) {
+      return false;
+    }
+
     dataLayer?.map((item: any) => {
       if (item?.required) {
         if (
@@ -241,7 +298,7 @@ const FormMainBox = ({
           inputForm[item?.mapTo]?.value === null ||
           inputForm[item?.mapTo]?.value === undefined
         ) {
-          error[item?.mapTo] = "This field is required";
+          error[item?.id] = "This field is required";
           check = false;
         }
         return;
@@ -254,7 +311,7 @@ const FormMainBox = ({
       ) {
         console.log(inputForm[item?.mapTo]?.value);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputForm[item?.mapTo]?.value)) {
-          error[item?.mapTo] = "Invalid email";
+          error[item?.id] = "Invalid email";
           check = false;
         }
       }
@@ -265,11 +322,13 @@ const FormMainBox = ({
         inputForm[item?.mapTo]?.value != undefined
       ) {
         if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
-          error[item?.mapTo] = "Invalid phone number";
+          error[item?.id] = "Invalid phone number";
           check = false;
         }
       }
     });
+
+    console.log(error)
 
     setError(error);
     return check;
@@ -467,7 +526,7 @@ const FormMainBox = ({
                   <RenderFormComponent
                     updateInputForm={updateInputForm}
                     data={item}
-                    error={error[item?.mapTo]}
+                    error={error[item?.id]}
                     dataUser={dataUser}
                     key={index}
                   />

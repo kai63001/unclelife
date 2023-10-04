@@ -9,6 +9,7 @@ export interface FormState {
     tableOfDatabase: any[];
     form: any;
     layer: any[];
+    logic: any;
     infomation: any;
     alertPro: any[];
     modalMapInputOpen: boolean;
@@ -32,6 +33,20 @@ const initialState: FormState = {
     },
     infomation: {},
     layer: [],
+    logic: [
+        {
+            layerId: 1,
+            then: {
+                layerId: 2,
+                type: "required",
+                value: true,
+            },
+            when: {
+                operator: "=",
+                value: "1",
+            }
+        }
+    ],
     alertPro: [],
     modalMapInputOpen: false,
 };
