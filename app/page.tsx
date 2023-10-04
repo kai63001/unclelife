@@ -6,11 +6,22 @@ const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
   ssr: true,
 });
 import type { Metadata } from "next";
-import PricingBox from "@/app/pricing/components/PricingBox";
+// import PricingBox from "@/app/pricing/components/PricingBox";
 import FeatureIndex from "@/app/index/components/Feature";
-import FooterIndex from "@/app/index/components/FooterIndex";
+// import FooterIndex from "@/app/index/components/FooterIndex";
 import FAQs from "@/app/index/components/FAQs";
 import HeaderBannder from "./index/components/HeaderBanner";
+// import YoutubeEmbedIndex from "./index/components/YoutubeEmbed";
+
+const FooterIndex = dynamic(() => import("./index/components/FooterIndex"), {
+  ssr: true,
+});
+const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
+  ssr: true,
+});
+const YoutubeEmbedIndex = dynamic(() => import("./index/components/YoutubeEmbed"), {
+  ssr: true,
+});
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",
@@ -119,16 +130,7 @@ export default function Home() {
               </div>
             </li>
           </ol>
-          <div className={"flex justify-center mt-5"}>
-            <iframe
-              width="860"
-              height="515"
-              src="https://www.youtube.com/embed/tbdh1yYIkDk?si=EHlqS4x1zzba3ng6"
-              title=""
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <YoutubeEmbedIndex/>
         </section>
         <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">
           <h2 className="text-center text-3xl font-bold">Pricing</h2>

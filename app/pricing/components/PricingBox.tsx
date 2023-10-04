@@ -158,7 +158,7 @@ const PricingBox = () => {
         <>
             <div className={'flex justify-center space-x-3 mt-7 mb-5'}>
                 <span className={'font-bold'}>Monthly</span>
-                <span className={''}><Switch checked={yearly} onCheckedChange={(e) => setYearly(e)} id="airplane-mode"/></span>
+                <span className={''}><Switch aria-label="switchYearlyOrMonth"  checked={yearly} onCheckedChange={(e) => setYearly(e)} id="airplane-mode"/></span>
                 <span className={'font-bold'}>Yearly <Badge variant="destructive">~ 25%</Badge></span>
             </div>
             <div className={'flex items-center flex-col md:flex-row space-y-3'}>

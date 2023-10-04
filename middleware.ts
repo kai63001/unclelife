@@ -24,6 +24,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/home","/form/create","/form/my", '/setting', "/widget/pomodoro"],
+  matcher: ["/home","/form/create","/form/my", '/setting', "/widget/pomodoro", "/custom/form"],
 };
 
