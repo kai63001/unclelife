@@ -22,6 +22,7 @@ import Image from "next/image";
 import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
+import { evaluateGroup } from "@/lib/formController";
 
 const FormMainBox = ({
   id = null,
@@ -66,40 +67,38 @@ const FormMainBox = ({
 
     //check condition logic
     logic.forEach((item: any) => {
-      if (item.layerId !== data?.id) {
-        return; // Skip if layerId doesn't match
+      if (item.layerId !== data?.id) return;
+
+      if (value === "") {
+        const layerId = item?.then?.layerId;
+        if (layerId) {
+          const layer = dataLayer?.map((layerItem: any) => {
+            if (layerItem?.id === layerId) {
+              return {
+                ...layerItem,
+                required: false,
+                hidden: false,
+              };
+            }
+            return layerItem;
+          });
+          dispatch(setLayer(layer));
+        }
+        return;
       }
 
-      let conditionMet = false;
-      switch (item.when?.operator) {
-        case "=":
-          conditionMet = item.when?.value === value;
-          break;
-        case ">":
-          conditionMet = value > item.when?.value;
-          break;
-        case "<":
-          conditionMet = value < item.when?.value;
-          break;
-        case "<=":
-          conditionMet = value <= item.when?.value;
-          break;
-        case ">=":
-          conditionMet = value >= item.when?.value;
-          break;
-        case "!=":
-          conditionMet = value !== item.when?.value;
-          break;
-      }
+      const conditionMet = evaluateGroup(item.when, value);
+
+      console.log("conditionMet", conditionMet);
 
       let shouldBeRequired = false;
       let shouldBeHidden = false;
 
       if (conditionMet) {
         if (item.then?.type === "required") {
-          shouldBeRequired = true;
+          shouldBeRequired = item.then.value;
         } else if (item.then?.type === "hidden") {
-          shouldBeHidden = true;
+          shouldBeHidden = item.then.value;
         }
       }
 
@@ -328,7 +327,7 @@ const FormMainBox = ({
       }
     });
 
-    console.log(error)
+    console.log(error);
 
     setError(error);
     return check;
