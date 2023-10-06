@@ -167,6 +167,8 @@ const ConditionLogic = () => {
       pointer = pointer[conditionPath[i]];
     }
 
+    console.log(conditionPath)
+
     pointer.conditions.push({
       type: "group",
       operator: "&&",

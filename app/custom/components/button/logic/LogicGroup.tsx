@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import ConditionGroup from "./ConditionGroup";
+import { X } from "lucide-react";
 
 const LogicGroup = ({
   group,
@@ -31,16 +32,20 @@ const LogicGroup = ({
           );
         } else if (item.type === "group") {
           return (
-            <div style={{marginLeft: newPath.length != 3 ? newPath.length * 5 : 0}}>
-              <hr />
-              {conditionPath}
+            <div
+              style={{
+                marginLeft: newPath.length != 3 ? newPath.length * 5 : 0,
+              }}
+              className="border border-dashed px-2 pt-2 pb-3 mt-2"
+            >
               <div className="flex justify-end space-x-2 mt-2">
-                <Button onClick={() => addGroup(newPath)}>
-                  Add Group
-                </Button>
-                <Button onClick={() => removeGroup(newPath)}>
+                {/* <Button onClick={() => removeGroup(newPath)}>
                     Remove Group
-                </Button>
+                </Button> */}
+                <X
+                  onClick={() => removeGroup(newPath)}
+                  className="cursor-pointer h-6 w-6"
+                />
               </div>
               <LogicGroup
                 key={conditionIndex}
@@ -57,19 +62,13 @@ const LogicGroup = ({
           );
         }
       })}
-      {conditionPath == "when" && (
-        <div className="flex justify-center mt-2 space-x-2">
+      {/* {conditionPath == "when" && (
+        <div className="flex justify-end mt-2 space-x-2">
           <Button onClick={() => addGroup(conditionPath)}>
             Add Nested Group
           </Button>
-          {/* <br />
-        {conditionPath != "when" && (
-          <Button onClick={() => removeGroup(conditionPath)}>
-            Remove Group
-          </Button>
-        )} */}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

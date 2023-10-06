@@ -83,7 +83,7 @@ const ConditionGroup = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              addGroup(conditionPath);
+              addGroup([...conditionPath.slice(0, -2)]);
             }}
             className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer"
           >
