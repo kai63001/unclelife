@@ -1,10 +1,8 @@
 "use client";
 
-import ColorSelectComponent from "@/app/(dashboard)/widget/pomodoro/components/Toolbar/Customization/ColorSelectComponent";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { setLogic } from "@/app/redux/slice/formController.slice";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -14,16 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { GitPullRequest, Group, MoreVertical, Trash } from "lucide-react";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import LogicGroup from "./LogicGroup";
 import _ from "lodash";
 
@@ -40,37 +28,37 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const handleOperatorChange = (e: any, index: any, conditionIndex: any) => {
-    const newLogic = [...logic];
-    const newCondition = [...newLogic[index].when.conditions];
-    newCondition[conditionIndex] = {
-      ...newCondition[conditionIndex],
-      operator: e,
-    };
-    newLogic[index] = {
-      ...newLogic[index],
-      when: {
-        ...newLogic[index].when,
-        conditions: newCondition,
-      },
-    };
+  const handleOperatorChange = (newOperator: string, conditionPath: any[]) => {
+    const newLogic = _.cloneDeep(logic);
+
+    // Get the conditions array of the group where you want to add a new condition
+    const targetConditions = _.get(newLogic[0], conditionPath);
+    console.log(conditionPath);
+
+    // Push a new condition to the target group's conditions array
+    if (
+      Object.prototype.toString.call(targetConditions) === "[object Object]"
+    ) {
+      targetConditions.operator = newOperator;
+    }
+
     dispatch(setLogic(newLogic));
   };
 
-  const handleValueChange = (e: any, index: any, conditionIndex: any) => {
-    const newLogic = [...logic];
-    const newCondition = [...newLogic[index].when.conditions];
-    newCondition[conditionIndex] = {
-      ...newCondition[conditionIndex],
-      value: e.target.value,
-    };
-    newLogic[index] = {
-      ...newLogic[index],
-      when: {
-        ...newLogic[index].when,
-        conditions: newCondition,
-      },
-    };
+  const handleValueChange = (newValue: any, conditionPath: any[]) => {
+    const newLogic = _.cloneDeep(logic);
+
+    // Get the conditions array of the group where you want to add a new condition
+    const targetConditions = _.get(newLogic[0], conditionPath);
+    console.log(conditionPath);
+
+    // Push a new condition to the target group's conditions array
+    if (
+      Object.prototype.toString.call(targetConditions) === "[object Object]"
+    ) {
+      targetConditions.value = newValue;
+    }
+
     dispatch(setLogic(newLogic));
   };
 
@@ -93,18 +81,6 @@ const ConditionLogic = () => {
       then: {
         ...newLogic[index].then,
         type: e,
-      },
-    };
-    dispatch(setLogic(newLogic));
-  };
-
-  const handleChangeOperatorMain = (e: any, index: any) => {
-    const newLogic = [...logic];
-    newLogic[index] = {
-      ...newLogic[index],
-      when: {
-        ...newLogic[index].when,
-        operator: e,
       },
     };
     dispatch(setLogic(newLogic));
@@ -133,60 +109,53 @@ const ConditionLogic = () => {
 
   const addCondition = (conditionPath: any) => {
     const newLogic = _.cloneDeep(logic);
+    let pointer = newLogic[0];
 
-    // Get the conditions array of the group where you want to add a new condition
-    const targetConditions = _.get(newLogic[0], conditionPath);
-
-    // Push a new condition to the target group's conditions array
-    if (Array.isArray(targetConditions)) {
-      targetConditions.push({
-        type: "condition",
-        operator: undefined,
-        value: "",
-      });
+    for (let i = 0; i < conditionPath.length - 1; i++) {
+      pointer = pointer[conditionPath[i]];
     }
 
-    console.log(newLogic)
+    console.log(conditionPath)
+    console.log(pointer)
+
+    // get last condition index in the group
+    const lastConditionIndex = pointer
+      .map((item: any) => item.type)
+      .lastIndexOf("condition");
+
+    // Insert a new condition after the last condition
+    pointer.splice(lastConditionIndex + 1, 0, {
+      type: "condition",
+      operator: undefined,
+      value: "",
+    });
+
+    // pointer.push({
+    //   type: "condition",
+    //   operator: undefined,
+    //   value: "",
+    // });
 
     dispatch(setLogic(newLogic));
   };
 
-  const removeCondition = (index: any, conditionIndex: any) => {
-    const newLogic = [...logic];
-    newLogic[index] = {
-      ...newLogic[index],
-      when: {
-        ...newLogic[index].when,
-        conditions: newLogic[index].when.conditions.filter(
-          (item: any, index: any) => index !== conditionIndex
-        ),
-      },
-    };
-    dispatch(setLogic(newLogic));
-  };
+  const removeCondition = (conditionPath: any) => {
+    const newLogic = _.cloneDeep(logic);
+    let pointer = newLogic[0]; // Assuming you're working with the first logic group
 
-  const addGroupCondition = (index: any) => {
-    const newLogic = [...logic];
-    newLogic[index] = {
-      ...newLogic[index],
-      when: {
-        ...newLogic[index].when,
-        conditions: [
-          ...newLogic[index].when.conditions,
-          {
-            type: "group",
-            operator: "&&",
-            conditions: [
-              {
-                type: "condition",
-                operator: undefined,
-                value: "",
-              },
-            ],
-          },
-        ],
-      },
-    };
+    // Traverse to the parent of the group to be removed
+    for (let i = 0; i < conditionPath.length - 1; i++) {
+      pointer = pointer[conditionPath[i]];
+    }
+
+
+    // Remove the group from its parent's conditions
+    if (Array.isArray(pointer)) {
+      pointer.splice(conditionPath[conditionPath.length - 1], 1);
+    } else if (pointer && pointer.conditions) {
+      pointer.conditions.splice(conditionPath[conditionPath.length - 1], 1);
+    }
+
     dispatch(setLogic(newLogic));
   };
 
@@ -201,7 +170,13 @@ const ConditionLogic = () => {
     pointer.conditions.push({
       type: "group",
       operator: "&&",
-      conditions: [],
+      conditions: [
+        {
+          type: "condition",
+          operator: undefined,
+          value: "",
+        },
+      ],
     });
 
     console.log(newLogic);
@@ -225,8 +200,6 @@ const ConditionLogic = () => {
       pointer.conditions.splice(conditionPath[conditionPath.length - 1], 1);
     }
 
-    console.log(newLogic);
-
     dispatch(setLogic(newLogic));
   };
 
@@ -234,6 +207,39 @@ const ConditionLogic = () => {
     <>
       {logic?.map((item: any, index: any) => (
         <div key={index} className="border border-dashed px-10 py-4">
+          <div className="flex items-center mt-2 space-x-2 justify-start">
+            <p
+              className="font-bold w-1/12 text-muted-foreground"
+              onClick={() => {
+                console.log(logic);
+              }}
+            >
+              WHEN
+            </p>
+            <Select
+              onValueChange={(e) => handleFieldChange(e, index)}
+              value={logic[index]?.then?.layerId || undefined}
+            >
+              <SelectTrigger className="w-11/12">
+                <SelectValue placeholder="Field" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Fields</SelectLabel>
+                  {layer?.map((item, index) => (
+                    <SelectItem key={index} value={item.id}>
+                      <p
+                        className="overflow-hidden h-5 text-ellipsis"
+                        dangerouslySetInnerHTML={{
+                          __html: item.label,
+                        }}
+                      ></p>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <LogicGroup
             group={item.when}
             handleOperatorChange={handleOperatorChange}
@@ -241,13 +247,21 @@ const ConditionLogic = () => {
             addGroup={addGroup}
             removeGroup={removeGroup}
             addCondition={addCondition}
+            removeCondition={removeCondition}
             conditionPath={["when"]}
           />
           <div className="flex w-full m-auto justify-center">
             <div className="w-3 h-3 border mt-1.5"></div>
           </div>
           <div className="flex items-center mt-2 space-x-2 justify-start">
-            <p className="font-bold w-1/12 text-muted-foreground">THEN</p>
+            <p
+              className="font-bold w-1/12 text-muted-foreground"
+              onClick={() => {
+                console.log(logic);
+              }}
+            >
+              THEN
+            </p>
             <Select
               onValueChange={(e) => handleThenFieldChange(e, index)}
               value={logic[index]?.then?.layerId || undefined}

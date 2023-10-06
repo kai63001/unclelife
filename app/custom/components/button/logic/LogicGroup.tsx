@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import ConditionGroup from "./ConditionGroup";
 
 const LogicGroup = ({
@@ -8,6 +9,7 @@ const LogicGroup = ({
   removeGroup,
   addCondition,
   conditionPath,
+  removeCondition
 }: any) => {
   return (
     <div>
@@ -20,39 +22,44 @@ const LogicGroup = ({
               condition={item}
               handleOperatorChange={handleOperatorChange}
               handleValueChange={handleValueChange}
+              addCondition={addCondition}
+              removeCondition={removeCondition}
+              addGroup={addGroup}
+              removeGroup={() => removeGroup(newPath)}
               conditionPath={newPath}
             />
           );
         } else if (item.type === "group") {
           return (
+            <>
+            <hr />
+            <div>{newPath}</div>
             <LogicGroup
               key={conditionIndex}
               group={item}
               handleOperatorChange={handleOperatorChange}
               handleValueChange={handleValueChange}
               addCondition={addCondition}
+              removeCondition={removeCondition}
               addGroup={addGroup}
               removeGroup={() => removeGroup(newPath)}
               conditionPath={newPath}
             />
+            </>
           );
         }
-
       })}
-      <button
-        onClick={() => {
-          console.log(addCondition);
-          addCondition([...conditionPath, "conditions"]);
-        }}
-      >
-        Add Condition
-      </button>
-      <br />
-      <button onClick={() => addGroup(conditionPath)}>Add Nested Group</button>
-      <br />
-      {conditionPath != 'when' && (
-        <button onClick={() => removeGroup(conditionPath)}>Remove Group</button>
-      )}
+      <div className="flex justify-center mt-2 space-x-2">
+        <Button onClick={() => addGroup(conditionPath)}>
+          Add Nested Group
+        </Button>
+        <br />
+        {conditionPath != "when" && (
+          <Button onClick={() => removeGroup(conditionPath)}>
+            Remove Group
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
