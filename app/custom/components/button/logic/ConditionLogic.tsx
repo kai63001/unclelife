@@ -185,10 +185,12 @@ const ConditionLogic = () => {
   };
 
   const removeGroup = (conditionPath: any) => {
+    //remove group with conditionPath
     const newLogic = _.cloneDeep(logic);
-    let pointer = newLogic[0]; // Assuming you're working with the first logic group
+    let pointer = newLogic[0];
 
-    // Traverse to the parent of the group to be removed
+    console.log(conditionPath)
+
     for (let i = 0; i < conditionPath.length - 1; i++) {
       pointer = pointer[conditionPath[i]];
     }
@@ -201,6 +203,7 @@ const ConditionLogic = () => {
     }
 
     dispatch(setLogic(newLogic));
+    
   };
 
   return (

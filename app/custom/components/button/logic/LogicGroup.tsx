@@ -9,7 +9,7 @@ const LogicGroup = ({
   removeGroup,
   addCondition,
   conditionPath,
-  removeCondition
+  removeCondition,
 }: any) => {
   return (
     <div>
@@ -25,41 +25,51 @@ const LogicGroup = ({
               addCondition={addCondition}
               removeCondition={removeCondition}
               addGroup={addGroup}
-              removeGroup={() => removeGroup(newPath)}
+              removeGroup={removeGroup}
               conditionPath={newPath}
             />
           );
         } else if (item.type === "group") {
           return (
-            <>
-            <hr />
-            <div>{newPath}</div>
-            <LogicGroup
-              key={conditionIndex}
-              group={item}
-              handleOperatorChange={handleOperatorChange}
-              handleValueChange={handleValueChange}
-              addCondition={addCondition}
-              removeCondition={removeCondition}
-              addGroup={addGroup}
-              removeGroup={() => removeGroup(newPath)}
-              conditionPath={newPath}
-            />
-            </>
+            <div style={{marginLeft: newPath.length != 3 ? newPath.length * 5 : 0}}>
+              <hr />
+              {conditionPath}
+              <div className="flex justify-end space-x-2 mt-2">
+                <Button onClick={() => addGroup(newPath)}>
+                  Add Group
+                </Button>
+                <Button onClick={() => removeGroup(newPath)}>
+                    Remove Group
+                </Button>
+              </div>
+              <LogicGroup
+                key={conditionIndex}
+                group={item}
+                handleOperatorChange={handleOperatorChange}
+                handleValueChange={handleValueChange}
+                addCondition={addCondition}
+                removeCondition={removeCondition}
+                addGroup={addGroup}
+                removeGroup={removeGroup}
+                conditionPath={newPath}
+              />
+            </div>
           );
         }
       })}
-      <div className="flex justify-center mt-2 space-x-2">
-        <Button onClick={() => addGroup(conditionPath)}>
-          Add Nested Group
-        </Button>
-        <br />
+      {conditionPath == "when" && (
+        <div className="flex justify-center mt-2 space-x-2">
+          <Button onClick={() => addGroup(conditionPath)}>
+            Add Nested Group
+          </Button>
+          {/* <br />
         {conditionPath != "when" && (
           <Button onClick={() => removeGroup(conditionPath)}>
             Remove Group
           </Button>
-        )}
-      </div>
+        )} */}
+        </div>
+      )}
     </div>
   );
 };
