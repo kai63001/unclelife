@@ -13,7 +13,6 @@ const LogicGroup = ({
     <div>
       {group.conditions.map((item: any, conditionIndex: any) => {
         const newPath = [...conditionPath, "conditions", conditionIndex];
-        console.log(item.type, conditionIndex);
         if (item.type === "condition") {
           return (
             <ConditionGroup
@@ -37,9 +36,8 @@ const LogicGroup = ({
               conditionPath={newPath}
             />
           );
-        } else {
-          return <div>wtf</div>;
         }
+
       })}
       <button
         onClick={() => {
@@ -52,7 +50,7 @@ const LogicGroup = ({
       <br />
       <button onClick={() => addGroup(conditionPath)}>Add Nested Group</button>
       <br />
-      {conditionPath.length > 0 && (
+      {conditionPath != 'when' && (
         <button onClick={() => removeGroup(conditionPath)}>Remove Group</button>
       )}
     </div>
