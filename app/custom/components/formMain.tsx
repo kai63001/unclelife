@@ -68,8 +68,12 @@ const FormMainBox = ({
     //check condition logic
     logic.forEach((item: any) => {
       if (item.layerId !== data?.id) return;
+      let newValue: any = value;
+      if (data.type == "number") {
+        newValue = parseInt(newValue);
+      }
 
-      if (value === "") {
+      if (newValue === "") {
         const layerId = item?.then?.layerId;
         if (layerId) {
           const layer = dataLayer?.map((layerItem: any) => {
@@ -87,7 +91,7 @@ const FormMainBox = ({
         return;
       }
 
-      const conditionMet = evaluateGroup(item.when, value);
+      const conditionMet = evaluateGroup(item.when, newValue);
 
       console.log("conditionMet", conditionMet);
 
@@ -95,10 +99,12 @@ const FormMainBox = ({
       let shouldBeHidden = false;
 
       if (conditionMet) {
+        console.log("type", item.then?.type)
         if (item.then?.type === "required") {
-          shouldBeRequired = item.then.value;
+          console.log("required")
+          shouldBeRequired = true;
         } else if (item.then?.type === "hidden") {
-          shouldBeHidden = item.then.value;
+          shouldBeHidden = true;
         }
       }
 

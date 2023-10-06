@@ -33,41 +33,57 @@ const initialState: FormState = {
   infomation: {},
   layer: [],
   logic: [
-    {
-      layerId: 1,
-      then: {
-        layerId: 2,
-        type: "required",
-        value: true,
-      },
-      when: {
-        type: "group",
-        operator: "||",
-        conditions: [
-          {
-            type: "condition",
-            operator: "=",
-            value: "1",
-          },
-          {
-            type: "group",
-            operator: "&&",
-            conditions: [
-              {
-                type: "condition",
-                operator: "<",
-                value: "10",
-              },
-            //   {
-            //     type: "condition",
-            //     operator: "<",
-            //     value: "0",
-            //   },
-            ],
-          },
-        ],
-      },
-    },
+    // {
+    //   layerId: 1,
+    //   then: {
+    //     layerId: 2,
+    //     type: "required",
+    //     value: true,
+    //   },
+    //   when: {
+    //     type: "group",
+    //     operator: "||",
+    //     conditions: [
+    //       {
+    //         type: "condition",
+    //         operator: "=",
+    //         value: "1",
+    //       },
+    //       {
+    //         type: "group",
+    //         operator: "&&",
+    //         conditions: [
+    //           {
+    //             type: "condition",
+    //             operator: "=",
+    //             value: "10",
+    //           },
+    //           //   {
+    //           //     type: "condition",
+    //           //     operator: "<",
+    //           //     value: "0",
+    //           //   },
+    //         ],
+    //       },
+    //       {
+    //         type: "group",
+    //         operator: "&&",
+    //         conditions: [
+    //           {
+    //             type: "condition",
+    //             operator: "=",
+    //             value: "11",
+    //           },
+    //           //   {
+    //           //     type: "condition",
+    //           //     operator: "<",
+    //           //     value: "0",
+    //           //   },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // },
   ],
   alertPro: [],
   modalMapInputOpen: false,
@@ -158,6 +174,24 @@ export const formSlice = createSlice({
     setWorkspaceId: (state, action: PayloadAction<any>) => {
       state.workspaceId = action.payload;
     },
+    setLogic: (state, action: PayloadAction<any>) => {
+      state.logic = action.payload;
+    },
+    addLogic: (state, action: PayloadAction<any>) => {
+      state.logic.push(action.payload);
+    },
+    deleteLogic: (state, action: PayloadAction<any>) => {
+      const index = state.logic.findIndex(
+        (item: any) => item.layerId === action.payload.layerId
+      );
+      state.logic.splice(index, 1);
+    },
+    updateLogic: (state, action: PayloadAction<any>) => {
+      const index = state.logic.findIndex(
+        (item: any) => item.layerId === action.payload.layerId
+      );
+      state.logic[index] = action.payload;
+    },
   },
 });
 
@@ -178,6 +212,9 @@ export const {
   setDatabaseName,
   setAlert,
   setWorkspaceId,
+  setLogic,
+  addLogic,
+  deleteLogic,
 } = formSlice.actions;
 
 export default formSlice.reducer;
