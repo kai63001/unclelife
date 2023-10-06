@@ -28,11 +28,11 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const handleOperatorChange = (newOperator: string, conditionPath: any[]) => {
+  const handleOperatorChange = (newOperator: string, conditionPath: any[], index:any = 0) => {
     const newLogic = _.cloneDeep(logic);
 
     // Get the conditions array of the group where you want to add a new condition
-    const targetConditions = _.get(newLogic[0], conditionPath);
+    const targetConditions = _.get(newLogic[index], conditionPath);
     console.log(conditionPath);
 
     // Push a new condition to the target group's conditions array
@@ -45,11 +45,11 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const handleValueChange = (newValue: any, conditionPath: any[]) => {
+  const handleValueChange = (newValue: any, conditionPath: any[],index:any = 0) => {
     const newLogic = _.cloneDeep(logic);
 
     // Get the conditions array of the group where you want to add a new condition
-    const targetConditions = _.get(newLogic[0], conditionPath);
+    const targetConditions = _.get(newLogic[index], conditionPath);
     console.log(conditionPath);
 
     // Push a new condition to the target group's conditions array
@@ -107,16 +107,16 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const addCondition = (conditionPath: any) => {
+  const addCondition = (conditionPath: any, index: any = 0) => {
     const newLogic = _.cloneDeep(logic);
-    let pointer = newLogic[0];
+    let pointer = newLogic[index];
 
     for (let i = 0; i < conditionPath.length - 1; i++) {
       pointer = pointer[conditionPath[i]];
     }
 
-    console.log(conditionPath)
-    console.log(pointer)
+    console.log(conditionPath);
+    console.log(pointer);
 
     // get last condition index in the group
     const lastConditionIndex = pointer
@@ -139,15 +139,14 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const removeCondition = (conditionPath: any) => {
+  const removeCondition = (conditionPath: any, index: any = 0) => {
     const newLogic = _.cloneDeep(logic);
-    let pointer = newLogic[0]; // Assuming you're working with the first logic group
+    let pointer = newLogic[index]; // Assuming you're working with the first logic group
 
     // Traverse to the parent of the group to be removed
     for (let i = 0; i < conditionPath.length - 1; i++) {
       pointer = pointer[conditionPath[i]];
     }
-
 
     // Remove the group from its parent's conditions
     if (Array.isArray(pointer)) {
@@ -159,15 +158,15 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const addGroup = (conditionPath: any) => {
+  const addGroup = (conditionPath: any, index: any = 0) => {
     const newLogic = _.cloneDeep(logic);
-    let pointer = newLogic[0];
+    let pointer = newLogic[index];
 
     for (let i = 0; i < conditionPath.length; i++) {
       pointer = pointer[conditionPath[i]];
     }
 
-    console.log(conditionPath)
+    console.log(conditionPath);
 
     pointer.conditions.push({
       type: "group",
@@ -186,12 +185,12 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const removeGroup = (conditionPath: any) => {
+  const removeGroup = (conditionPath: any, index: any = 0) => {
     //remove group with conditionPath
     const newLogic = _.cloneDeep(logic);
-    let pointer = newLogic[0];
+    let pointer = newLogic[index];
 
-    console.log(conditionPath)
+    console.log(conditionPath);
 
     for (let i = 0; i < conditionPath.length - 1; i++) {
       pointer = pointer[conditionPath[i]];
@@ -205,7 +204,6 @@ const ConditionLogic = () => {
     }
 
     dispatch(setLogic(newLogic));
-    
   };
 
   return (
@@ -246,6 +244,7 @@ const ConditionLogic = () => {
             </Select>
           </div>
           <LogicGroup
+            index={index}
             group={item.when}
             handleOperatorChange={handleOperatorChange}
             handleValueChange={handleValueChange}

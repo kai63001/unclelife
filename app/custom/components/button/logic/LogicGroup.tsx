@@ -3,6 +3,7 @@ import ConditionGroup from "./ConditionGroup";
 import { X } from "lucide-react";
 
 const LogicGroup = ({
+  index,
   group,
   handleOperatorChange,
   handleValueChange,
@@ -19,6 +20,7 @@ const LogicGroup = ({
         if (item.type === "condition") {
           return (
             <ConditionGroup
+              index={index}
               key={conditionIndex}
               condition={item}
               handleOperatorChange={handleOperatorChange}
@@ -28,26 +30,23 @@ const LogicGroup = ({
               addGroup={addGroup}
               removeGroup={removeGroup}
               conditionPath={newPath}
+              conditionIndex={conditionIndex}
             />
           );
         } else if (item.type === "group") {
           return (
-            <div
-              style={{
-                marginLeft: newPath.length != 3 ? newPath.length * 5 : 0,
-              }}
-              className="border border-dashed px-2 pt-2 pb-3 mt-2"
-            >
+            <div className="border border-dashed px-2 pt-2 pb-3 mt-2">
               <div className="flex justify-end space-x-2 mt-2">
                 {/* <Button onClick={() => removeGroup(newPath)}>
                     Remove Group
                 </Button> */}
                 <X
-                  onClick={() => removeGroup(newPath)}
+                  onClick={() => removeGroup(newPath, index)}
                   className="cursor-pointer h-6 w-6"
                 />
               </div>
               <LogicGroup
+                index={index}
                 key={conditionIndex}
                 group={item}
                 handleOperatorChange={handleOperatorChange}

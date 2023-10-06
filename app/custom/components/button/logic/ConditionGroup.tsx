@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 
 const ConditionGroup = ({
+  index,
   condition,
   handleOperatorChange,
   handleValueChange,
@@ -31,13 +32,14 @@ const ConditionGroup = ({
   removeCondition,
   addGroup,
   removeGroup,
+  conditionIndex,
 }: any) => {
   const handleLocalOperatorChange = (newOperator: string) => {
-    handleOperatorChange(newOperator, conditionPath);
+    handleOperatorChange(newOperator, conditionPath, index);
   };
 
   const handleLocalValueChange = (e: any) => {
-    handleValueChange(e.target.value, conditionPath);
+    handleValueChange(e.target.value, conditionPath, index);
   };
 
   return (
@@ -74,7 +76,7 @@ const ConditionGroup = ({
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem
             onClick={() => {
-              addCondition([...conditionPath]);
+              addCondition([...conditionPath], index);
             }}
             className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer"
           >
@@ -83,25 +85,27 @@ const ConditionGroup = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              addGroup([...conditionPath.slice(0, -2)]);
+              addGroup([...conditionPath.slice(0, -2)], index);
             }}
             className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer"
           >
             <Group className="h-5 w-5 inline-block mr-2" />
             Add Group
           </DropdownMenuItem>
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                removeCondition([...conditionPath]);
-              }}
-              className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer text-red-500"
-            >
-              <Trash className="h-5 w-5 inline-block mr-2" />
-              Remove Condtion
-            </DropdownMenuItem>
-          </>
+          {conditionIndex != 0 && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  removeCondition([...conditionPath], index);
+                }}
+                className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer text-red-500"
+              >
+                <Trash className="h-5 w-5 inline-block mr-2" />
+                Remove Condtion
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
