@@ -186,15 +186,23 @@ const FormMainBox = ({
       return ["files", "textBlock"].includes(item?.type);
     });
 
+    let checkLogic:any = []
+    if (logic.length != 0) {
+      checkLogic = [
+        "logic"
+      ];
+    }
+
     listAlert = [
       ...filterCustomization,
       ...filterSuccessPage,
       ...filterProLayer,
       ...filterTypeProLayer,
+      ...checkLogic
     ];
 
     dispatch(setAlert(listAlert));
-  }, [dataForm, dataLayer, dispatch]);
+  }, [dataForm, dataLayer, dispatch, logic]);
 
   const setDefaultInputFormLayer = () => {
     let defaultLayer = [

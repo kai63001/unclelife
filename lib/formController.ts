@@ -28,7 +28,6 @@ function evaluateCondition(
     case ">=":
       return compareValue >= value;
     case "!=":
-    console.log("compareValue", compareValue, "value", value);
       return compareValue != value;
     default:
       return false;
