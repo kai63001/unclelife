@@ -90,7 +90,7 @@ const ConditionGroup = ({
             className="w-full pl-5 py-2 hover:bg-muted rounded-md hover:cursor-pointer"
           >
             <Group className="h-5 w-5 inline-block mr-2" />
-            Add Group
+            Add Group <span className="bg-red-500 text-white rounded-full px-1 ml-2">Beta</span>
           </DropdownMenuItem>
           {conditionIndex != 0 && (
             <>

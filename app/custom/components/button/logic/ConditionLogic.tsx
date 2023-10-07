@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import LogicGroup from "./LogicGroup";
 import _ from "lodash";
+import { X } from "lucide-react";
 
 const ConditionLogic = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,23 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const handleOperatorChange = (newOperator: string, conditionPath: any[], index:any = 0) => {
+  const handleMainOperatorChange = (newOperator: string, index: any) => {
+    const newLogic = [...logic];
+    newLogic[index] = {
+      ...newLogic[index],
+      when: {
+        ...newLogic[index].when,
+        operator: newOperator,
+      },
+    };
+    dispatch(setLogic(newLogic));
+  };
+
+  const handleOperatorChange = (
+    newOperator: string,
+    conditionPath: any[],
+    index: any = 0
+  ) => {
     const newLogic = _.cloneDeep(logic);
 
     // Get the conditions array of the group where you want to add a new condition
@@ -45,7 +62,32 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
-  const handleValueChange = (newValue: any, conditionPath: any[],index:any = 0) => {
+  const handleGroupOperatorChange = (
+    newOperator: string,
+    conditionPath: any[],
+    index: any = 0
+  ) => {
+    const newLogic = _.cloneDeep(logic);
+
+    // Get the conditions array of the group where you want to add a new condition
+    const targetConditions = _.get(newLogic[index], conditionPath);
+    console.log(conditionPath);
+
+    // Push a new condition to the target group's conditions array
+    if (
+      Object.prototype.toString.call(targetConditions) === "[object Object]"
+    ) {
+      targetConditions.operator = newOperator;
+    }
+
+    dispatch(setLogic(newLogic));
+  };
+
+  const handleValueChange = (
+    newValue: any,
+    conditionPath: any[],
+    index: any = 0
+  ) => {
     const newLogic = _.cloneDeep(logic);
 
     // Get the conditions array of the group where you want to add a new condition
@@ -166,8 +208,6 @@ const ConditionLogic = () => {
       pointer = pointer[conditionPath[i]];
     }
 
-    console.log(conditionPath);
-
     pointer.conditions.push({
       type: "group",
       operator: "&&",
@@ -206,10 +246,22 @@ const ConditionLogic = () => {
     dispatch(setLogic(newLogic));
   };
 
+  const removeLogic = (index: any) => {
+    const newLogic = [...logic];
+    newLogic.splice(index, 1);
+    dispatch(setLogic(newLogic));
+  };
+
   return (
     <>
       {logic?.map((item: any, index: any) => (
         <div key={index} className="border border-dashed px-10 py-4">
+          <div className="flex justify-end">
+            <X
+              className="cursor-pointer h-6 w-6"
+              onClick={() => removeLogic(index)}
+            />
+          </div>
           <div className="flex items-center mt-2 space-x-2 justify-start">
             <p
               className="font-bold w-1/12 text-muted-foreground"
@@ -221,7 +273,7 @@ const ConditionLogic = () => {
             </p>
             <Select
               onValueChange={(e) => handleFieldChange(e, index)}
-              value={logic[index]?.then?.layerId || undefined}
+              value={logic[index]?.layerId || undefined}
             >
               <SelectTrigger className="w-11/12">
                 <SelectValue placeholder="Field" />
@@ -229,8 +281,8 @@ const ConditionLogic = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Fields</SelectLabel>
-                  {layer?.map((item, index) => (
-                    <SelectItem key={index} value={item.id}>
+                  {layer?.map((item, layerIndex) => (
+                    <SelectItem key={layerIndex} value={item.id}>
                       <p
                         className="overflow-hidden h-5 text-ellipsis"
                         dangerouslySetInnerHTML={{
@@ -239,6 +291,21 @@ const ConditionLogic = () => {
                       ></p>
                     </SelectItem>
                   ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              onValueChange={(e) => handleMainOperatorChange(e, index)}
+              value={logic[index]?.when?.operator || undefined}
+            >
+              <SelectTrigger className="w-2/12">
+                <SelectValue placeholder="Operator" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Fields</SelectLabel>
+                  <SelectItem value="&&">AND</SelectItem>
+                  <SelectItem value="||">OR</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -253,6 +320,7 @@ const ConditionLogic = () => {
             addCondition={addCondition}
             removeCondition={removeCondition}
             conditionPath={["when"]}
+            handleGroupOperatorChange={handleGroupOperatorChange}
           />
           <div className="flex w-full m-auto justify-center">
             <div className="w-3 h-3 border mt-1.5"></div>

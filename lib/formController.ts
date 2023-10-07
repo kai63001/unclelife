@@ -18,7 +18,7 @@ function evaluateCondition(
 ): boolean {
   switch (operator) {
     case "=":
-      return compareValue === value;
+      return compareValue == value;
     case ">":
       return compareValue > value;
     case "<":
@@ -28,7 +28,8 @@ function evaluateCondition(
     case ">=":
       return compareValue >= value;
     case "!=":
-      return compareValue !== value;
+    console.log("compareValue", compareValue, "value", value);
+      return compareValue != value;
     default:
       return false;
   }
