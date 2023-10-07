@@ -9,6 +9,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -367,8 +368,14 @@ const ConditionLogic = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Actions</SelectLabel>
+                  <SelectSeparator/>
+                  <SelectItem value="optional">Optional</SelectItem>
                   <SelectItem value="required">Required</SelectItem>
+                  <SelectSeparator/>
+                  <SelectItem value="enabled">Enabled</SelectItem>
                   <SelectItem value="disabled">Disabled</SelectItem>
+                  <SelectSeparator/>
+                  <SelectItem value="visible">Visible</SelectItem>
                   <SelectItem value="hidden">Hidden</SelectItem>
                 </SelectGroup>
               </SelectContent>

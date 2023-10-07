@@ -101,12 +101,21 @@ const FormMainBox = ({
 
       let shouldBeRequired = false;
       let shouldBeHidden = false;
+      let shouldBeDisabled = false;
 
       if (conditionMet) {
         if (item.then?.type === "required") {
           shouldBeRequired = true;
         } else if (item.then?.type === "hidden") {
           shouldBeHidden = true;
+        } else if (item.then?.type === "visible") {
+          shouldBeHidden = false;
+        } else if (item.then?.type === "optional") {
+          shouldBeRequired = false;
+        } else if (item.then?.type === "disabled") {
+          shouldBeDisabled = true;
+        } else if (item.then?.type === "enabled") {
+          shouldBeDisabled = false;
         }
       }
 
@@ -118,6 +127,7 @@ const FormMainBox = ({
               ...layerItem,
               required: shouldBeRequired,
               hidden: shouldBeHidden,
+              disable: shouldBeDisabled,
             };
           }
           return layerItem;
