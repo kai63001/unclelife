@@ -32,59 +32,7 @@ const initialState: FormState = {
   },
   infomation: {},
   layer: [],
-  logic: [
-    // {
-    //   layerId: 1,
-    //   then: {
-    //     layerId: 2,
-    //     type: "required",
-    //     value: true,
-    //   },
-    //   when: {
-    //     type: "group",
-    //     operator: "||",
-    //     conditions: [
-    //       {
-    //         type: "condition",
-    //         operator: "=",
-    //         value: "1",
-    //       },
-    //       {
-    //         type: "group",
-    //         operator: "&&",
-    //         conditions: [
-    //           {
-    //             type: "condition",
-    //             operator: "=",
-    //             value: "10",
-    //           },
-    //           //   {
-    //           //     type: "condition",
-    //           //     operator: "<",
-    //           //     value: "0",
-    //           //   },
-    //         ],
-    //       },
-    //       {
-    //         type: "group",
-    //         operator: "&&",
-    //         conditions: [
-    //           {
-    //             type: "condition",
-    //             operator: "=",
-    //             value: "11",
-    //           },
-    //           //   {
-    //           //     type: "condition",
-    //           //     operator: "<",
-    //           //     value: "0",
-    //           //   },
-    //         ],
-    //       },
-    //     ],
-    //   },
-    // },
-  ],
+  logic: [],
   alertPro: [],
   modalMapInputOpen: false,
 };

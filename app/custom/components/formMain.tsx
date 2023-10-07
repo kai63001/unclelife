@@ -14,6 +14,7 @@ import {
   setDatabaseId,
   setInformation,
   setLayer,
+  setLogic,
   setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
@@ -65,6 +66,10 @@ const FormMainBox = ({
       });
     }
 
+
+    if (!dataUser?.is_subscribed) {
+      return;
+    }
     //check condition logic
     logic.forEach((item: any) => {
       if (item.layerId !== data?.id) return;
@@ -73,7 +78,7 @@ const FormMainBox = ({
         newValue = parseInt(newValue);
       }
 
-      if (newValue === "") {
+      if (newValue == "") {
         const layerId = item?.then?.layerId;
         if (layerId) {
           const layer = dataLayer?.map((layerItem: any) => {
@@ -87,21 +92,18 @@ const FormMainBox = ({
             return layerItem;
           });
           dispatch(setLayer(layer));
+          setDataLayer(layer);
         }
         return;
       }
 
       const conditionMet = evaluateGroup(item.when, newValue);
 
-      console.log("conditionMet", conditionMet);
-
       let shouldBeRequired = false;
       let shouldBeHidden = false;
 
       if (conditionMet) {
-        console.log("type", item.then?.type)
         if (item.then?.type === "required") {
-          console.log("required")
           shouldBeRequired = true;
         } else if (item.then?.type === "hidden") {
           shouldBeHidden = true;
@@ -121,6 +123,7 @@ const FormMainBox = ({
           return layerItem;
         });
         dispatch(setLayer(layer));
+        setDataLayer(layer);
       }
     });
   };
@@ -186,11 +189,9 @@ const FormMainBox = ({
       return ["files", "textBlock"].includes(item?.type);
     });
 
-    let checkLogic:any = []
+    let checkLogic: any = [];
     if (logic.length != 0) {
-      checkLogic = [
-        "logic"
-      ];
+      checkLogic = ["logic"];
     }
 
     listAlert = [
@@ -198,7 +199,7 @@ const FormMainBox = ({
       ...filterSuccessPage,
       ...filterProLayer,
       ...filterTypeProLayer,
-      ...checkLogic
+      ...checkLogic,
     ];
 
     dispatch(setAlert(listAlert));
@@ -237,12 +238,17 @@ const FormMainBox = ({
       });
       return;
     }
+    // check if data layer is empty
+    if (dataLayer.length > 0 && dataForm) {
+      return;
+    }
     setDataLayer(res.data.layer);
     setDataForm(res.data.detail);
     setDatabaseIdState(res.data.databaseId);
     dispatch(setLayer(res.data.layer));
     dispatch(setDatabaseId(res.data.databaseId));
     dispatch(setAllForm(res.data.detail));
+    dispatch(setLogic(res?.data?.logic));
     if (!workspaceId) {
       dispatch(setWorkspaceId(res.data.detail.workspaceId));
     }
@@ -268,7 +274,7 @@ const FormMainBox = ({
       try {
         supabase
           .from("form")
-          .select("layer,detail,databaseId,user_id")
+          .select("layer,detail,databaseId,user_id,logic")
           .eq("id", _id)
           .single()
           .then((res: any) => {
@@ -322,7 +328,6 @@ const FormMainBox = ({
         inputForm[item?.mapTo]?.value?.length != 0 &&
         inputForm[item?.mapTo]?.value != undefined
       ) {
-        console.log(inputForm[item?.mapTo]?.value);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputForm[item?.mapTo]?.value)) {
           error[item?.id] = "Invalid email";
           check = false;

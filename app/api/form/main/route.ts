@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  const { workspaceId, layer, user_id, detail, databaseId } = body;
+  const { workspaceId, layer, user_id, detail, databaseId, logic } = body;
   if (workspaceId === null) {
     return NextResponse.json({ error: "No workspaceId provided" });
   }
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
   if (databaseId === null) {
     return NextResponse.json({ error: "No databaseId provided" });
   }
+
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const {
@@ -61,6 +62,7 @@ export async function POST(req: NextRequest) {
           detail: detail,
           databaseId: databaseId,
           access_token: token,
+          logic: logic,
         },
       ])
       .select("id")
@@ -88,7 +90,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const body = await req.json();
 
-  const { id, detail, layer } = body;
+  const { id, detail, layer, logic } = body;
   if (layer === null) {
     return NextResponse.json({ error: "No layer provided" });
   }
@@ -116,6 +118,7 @@ export async function PUT(req: NextRequest) {
         id: id,
         detail: detail,
         layer: layer,
+        logic,
       })
       .select();
 

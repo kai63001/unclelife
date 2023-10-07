@@ -344,7 +344,7 @@ const ConditionLogic = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Fields</SelectLabel>
-                  {layer?.map((item, index) => (
+                  {layer?.map((item:any, index:any) => (
                     <SelectItem key={index} value={item.id}>
                       <p
                         className="overflow-hidden h-5 text-ellipsis"

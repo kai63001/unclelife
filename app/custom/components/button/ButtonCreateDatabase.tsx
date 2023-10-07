@@ -30,7 +30,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
   const [listPage, setListPage] = useState<any>([]);
   const [pageId, setPageId] = useState<any>("");
   const [loading, setLoading] = useState(false);
-  const { layer, infomation, form, workspaceId } = useAppSelector(
+  const { layer, infomation, form, workspaceId, logic } = useAppSelector(
     (state) => state.formReducer
   );
 
@@ -76,6 +76,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
         id: infomation.id,
         detail: form,
         layer: newLayer,
+        logic
       });
       if (error) {
         console.log(error);
@@ -108,6 +109,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
       detail: newForm,
       databaseId,
       workspaceId,
+      logic,
     });
     if (error) {
       console.log(error);

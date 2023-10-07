@@ -14,6 +14,7 @@ export const insertForm = async ({
     user_id,
     detail,
     databaseId,
+    logic
 }:any) => {
     const response = await notionApi.post(`/api/form/main`, {
         workspaceId,
@@ -21,6 +22,7 @@ export const insertForm = async ({
         user_id,
         detail,
         databaseId,
+        logic
     });
     return response.data;
 }
@@ -29,11 +31,13 @@ export const updateForm = async ({
     id,
     detail,
     layer,
+    logic
 }:any) => {
     const response = await notionApi.put(`/api/form/main`, {
         id,
         detail,
         layer,
+        logic
     });
     return response.data;
 }
