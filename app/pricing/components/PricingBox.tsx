@@ -134,7 +134,7 @@ const PricingBox = () => {
           </Badge>
         </span>
       </div>
-      <div className={"flex items-center flex-col md:flex-row space-y-3"}>
+      <div className={"flex items-center flex-col md:flex-row space-y-3 md:space-y-0"}>
         <div
           className={
             "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full"
@@ -255,12 +255,12 @@ const PricingBox = () => {
         </div>
         <div
           className={
-            "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full"
+            "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full -mt-1"
           }
         >
-          <h2 className={"text-3xl font-bold"}>Enterprise</h2>
+          <h2 className={"text-3xl font-bold"}>Team</h2>
           <p className={"my-2"}>
-            Unlock enterprise tools for exquisite form creation.
+            For organizations seeking collaborative form solutions.
           </p>
           <h3 className={"text-3xl font-bold text-center my-5"}>
             <div>
@@ -297,7 +297,7 @@ const PricingBox = () => {
                 >
                   <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
                 </Button>
-              ) : user.is_enterprice ? (
+              ) : user.is_enterprise ? (
                 <Button
                   className={"w-full"}
                   onClick={portal}

@@ -36,7 +36,7 @@ export default function Home() {
         <header>
           <IndexNavbar />
         </header>
-        <section className="max-w-2xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
+        <section className="max-w-4xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
           <HeaderBannder />
           <p className="text-muted-foreground my-4 text-center text-lg">
             Create beautiful forms and widget connected to your Notion pages
