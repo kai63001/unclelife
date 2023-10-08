@@ -40,6 +40,7 @@ const FormMainBox = ({
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
   const [dataLayer, setDataLayer] = useState<any>([]);
+  const [dataLayerDefault, setDataLayerDefault] = useState<any>([]);
   const [dataUser, setDataUser] = useState<any>({});
   const [databaseId, setDatabaseIdState] = useState<string>("");
   const { form, layer, workspaceId, logic } = useAppSelector(
@@ -66,7 +67,6 @@ const FormMainBox = ({
       });
     }
 
-
     if (!dataUser?.is_subscribed) {
       return;
     }
@@ -78,30 +78,20 @@ const FormMainBox = ({
         newValue = parseInt(newValue);
       }
 
-      if (newValue == "") {
-        const layerId = item?.then?.layerId;
-        if (layerId) {
-          const layer = dataLayer?.map((layerItem: any) => {
-            if (layerItem?.id === layerId) {
-              return {
-                ...layerItem,
-                required: false,
-                hidden: false,
-              };
-            }
-            return layerItem;
-          });
-          dispatch(setLayer(layer));
-          setDataLayer(layer);
-        }
-        return;
-      }
-
       const conditionMet = evaluateGroup(item.when, newValue);
+      const layerId = item?.then?.layerId;
 
-      let shouldBeRequired = false;
-      let shouldBeHidden = false;
-      let shouldBeDisabled = false;
+      let shouldBeRequired =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.required ||
+        false;
+      let shouldBeHidden =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.hidden ||
+        false;
+      let shouldBeDisabled =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.disabled ||
+        false;
+
+      console.log("conditionMet", conditionMet);
 
       if (conditionMet) {
         if (item.then?.type === "required") {
@@ -117,23 +107,45 @@ const FormMainBox = ({
         } else if (item.then?.type === "enabled") {
           shouldBeDisabled = false;
         }
-      }
-
-      const layerId = item?.then?.layerId;
-      if (layerId) {
-        const layer = dataLayer?.map((layerItem: any) => {
-          if (layerItem?.id === layerId) {
-            return {
-              ...layerItem,
-              required: shouldBeRequired,
-              hidden: shouldBeHidden,
-              disable: shouldBeDisabled,
-            };
-          }
-          return layerItem;
-        });
-        dispatch(setLayer(layer));
-        setDataLayer(layer);
+        if (layerId) {
+          const layer = dataLayer?.map((layerItem: any) => {
+            if (layerItem?.id === layerId) {
+              return {
+                ...layerItem,
+                required: shouldBeRequired,
+                hidden: shouldBeHidden,
+                disable: shouldBeDisabled,
+              };
+            }
+            return layerItem;
+          });
+          console.log("layer", layer);
+          setDataLayer(layer);
+        }
+      } else {
+        // setDataLayer(dataLayerDefault);
+        // check layer Id and set it to default by dataLayerDefault
+        if (layerId) {
+          const layer = dataLayer?.map((layerItem: any) => {
+            if (layerItem?.id === layerId) {
+              return {
+                ...layerItem,
+                required:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.required || false,
+                hidden:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.hidden || false,
+                disable:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.disable || false,
+              };
+            }
+            return layerItem;
+          });
+          console.log("layer", layer);
+          setDataLayer(layer);
+        }
       }
     });
   };
@@ -143,6 +155,8 @@ const FormMainBox = ({
       setDefaultInputFormLayer();
       return;
     }
+    setDataLayer(layer);
+    setDataLayerDefault(layer);
     if (testMode) {
       setDataUser({
         is_subscribed: true,
@@ -248,11 +262,8 @@ const FormMainBox = ({
       });
       return;
     }
-    // check if data layer is empty
-    if (dataLayer.length > 0 && dataForm) {
-      return;
-    }
     setDataLayer(res.data.layer);
+    setDataLayerDefault(res.data.layer);
     setDataForm(res.data.detail);
     setDatabaseIdState(res.data.databaseId);
     dispatch(setLayer(res.data.layer));

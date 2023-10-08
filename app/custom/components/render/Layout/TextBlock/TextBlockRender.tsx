@@ -4,6 +4,7 @@ const TextBlockRender = ({
   error,
   isSubscribed,
 }: any) => {
+  if (data.hidden) return <></>;
   return <p dangerouslySetInnerHTML={{
     __html: data?.label,
   }}></p>;
