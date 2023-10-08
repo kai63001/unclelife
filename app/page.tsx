@@ -19,9 +19,12 @@ const FooterIndex = dynamic(() => import("./index/components/FooterIndex"), {
 const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
   ssr: true,
 });
-const YoutubeEmbedIndex = dynamic(() => import("./index/components/YoutubeEmbed"), {
-  ssr: true,
-});
+const YoutubeEmbedIndex = dynamic(
+  () => import("./index/components/YoutubeEmbed"),
+  {
+    ssr: true,
+  }
+);
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",
@@ -95,13 +98,13 @@ export default function Home() {
 
               <div>
                 <h2 className={"text-2xl font-medium"}>
-                  2. Select a Notion Database
+                  2. Select a Create Form Menu
                 </h2>
                 <ul className={"text-muted-foreground p-0 m-0"}>
                   <li>
-                    Choose the Notion database you want to link your form with.
-                    This ensures that all form responses get stored directly in
-                    your selected Notion database.
+                    Choose the workspace you want to link your form with. Then
+                    click create form without database.We handle the database
+                    setup for you.
                   </li>
                 </ul>
               </div>
@@ -130,7 +133,7 @@ export default function Home() {
               </div>
             </li>
           </ol>
-          <YoutubeEmbedIndex/>
+          <YoutubeEmbedIndex />
         </section>
         <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">
           <h2 className="text-center text-3xl font-bold">Pricing</h2>
