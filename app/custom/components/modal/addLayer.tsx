@@ -21,7 +21,8 @@ import {
   Hash,
   ListChecks,
   Upload,
-  Text
+  Text,
+  PlusCircle
 } from "lucide-react";
 import { RocketIcon } from "@radix-ui/react-icons";
 
@@ -239,7 +240,10 @@ const ModalAddLayer = () => {
         }}
       >
         <DialogTrigger asChild>
-          <Button variant="outline">Add Custom Block</Button>
+          <Button variant="outline">
+            <PlusCircle className="h-4 w-4 mr-3" />
+            Custom
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[725px]">
           <DialogHeader>

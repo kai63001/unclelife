@@ -14,6 +14,7 @@ import {
   setDatabaseId,
   setInformation,
   setLayer,
+  setLogic,
   setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
@@ -22,6 +23,7 @@ import Image from "next/image";
 import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
+import { evaluateGroup } from "@/lib/formController";
 
 const FormMainBox = ({
   id = null,
@@ -38,9 +40,10 @@ const FormMainBox = ({
   const supabase = createClientComponentClient();
   const [dataForm, setDataForm] = useState<any>({});
   const [dataLayer, setDataLayer] = useState<any>([]);
+  const [dataLayerDefault, setDataLayerDefault] = useState<any>([]);
   const [dataUser, setDataUser] = useState<any>({});
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId } = useAppSelector(
+  const { form, layer, workspaceId, logic } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
@@ -52,7 +55,7 @@ const FormMainBox = ({
   const updateInputForm = (value: string, data: any) => {
     setError({
       ...error,
-      [data.mapTo]: "",
+      [data.id]: "",
     });
     if (data.mapTo != undefined) {
       setInputForm({
@@ -63,6 +66,88 @@ const FormMainBox = ({
         },
       });
     }
+
+    if (!dataUser?.is_subscribed) {
+      return;
+    }
+    //check condition logic
+    logic.forEach((item: any) => {
+      if (item.layerId !== data?.id) return;
+      let newValue: any = value;
+      if (data.type == "number") {
+        newValue = parseInt(newValue);
+      }
+
+      const conditionMet = evaluateGroup(item.when, newValue);
+      const layerId = item?.then?.layerId;
+
+      let shouldBeRequired =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.required ||
+        false;
+      let shouldBeHidden =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.hidden ||
+        false;
+      let shouldBeDisabled =
+        dataLayerDefault.find((item: any) => item?.id === layerId)?.disabled ||
+        false;
+
+      console.log("conditionMet", conditionMet);
+
+      if (conditionMet) {
+        if (item.then?.type === "required") {
+          shouldBeRequired = true;
+        } else if (item.then?.type === "hidden") {
+          shouldBeHidden = true;
+        } else if (item.then?.type === "visible") {
+          shouldBeHidden = false;
+        } else if (item.then?.type === "optional") {
+          shouldBeRequired = false;
+        } else if (item.then?.type === "disabled") {
+          shouldBeDisabled = true;
+        } else if (item.then?.type === "enabled") {
+          shouldBeDisabled = false;
+        }
+        if (layerId) {
+          const layer = dataLayer?.map((layerItem: any) => {
+            if (layerItem?.id === layerId) {
+              return {
+                ...layerItem,
+                required: shouldBeRequired,
+                hidden: shouldBeHidden,
+                disable: shouldBeDisabled,
+              };
+            }
+            return layerItem;
+          });
+          console.log("layer", layer);
+          setDataLayer(layer);
+        }
+      } else {
+        // setDataLayer(dataLayerDefault);
+        // check layer Id and set it to default by dataLayerDefault
+        if (layerId) {
+          const layer = dataLayer?.map((layerItem: any) => {
+            if (layerItem?.id === layerId) {
+              return {
+                ...layerItem,
+                required:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.required || false,
+                hidden:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.hidden || false,
+                disable:
+                  dataLayerDefault.find((item: any) => item?.id === layerId)
+                    ?.disable || false,
+              };
+            }
+            return layerItem;
+          });
+          console.log("layer", layer);
+          setDataLayer(layer);
+        }
+      }
+    });
   };
 
   useEffect(() => {
@@ -70,6 +155,8 @@ const FormMainBox = ({
       setDefaultInputFormLayer();
       return;
     }
+    setDataLayer(layer);
+    setDataLayerDefault(layer);
     if (testMode) {
       setDataUser({
         is_subscribed: true,
@@ -123,21 +210,24 @@ const FormMainBox = ({
     });
 
     const filterTypeProLayer = dataLayer?.filter((item: any) => {
-      return (
-        ["files", "textBlock"].includes(item?.type)
-      )
-    })
+      return ["files", "textBlock"].includes(item?.type);
+    });
 
+    let checkLogic: any = [];
+    if (logic.length != 0) {
+      checkLogic = ["logic"];
+    }
 
     listAlert = [
       ...filterCustomization,
       ...filterSuccessPage,
       ...filterProLayer,
-      ...filterTypeProLayer
+      ...filterTypeProLayer,
+      ...checkLogic,
     ];
 
     dispatch(setAlert(listAlert));
-  }, [dataForm, dataLayer, dispatch]);
+  }, [dataForm, dataLayer, dispatch, logic]);
 
   const setDefaultInputFormLayer = () => {
     let defaultLayer = [
@@ -173,11 +263,13 @@ const FormMainBox = ({
       return;
     }
     setDataLayer(res.data.layer);
+    setDataLayerDefault(res.data.layer);
     setDataForm(res.data.detail);
     setDatabaseIdState(res.data.databaseId);
     dispatch(setLayer(res.data.layer));
     dispatch(setDatabaseId(res.data.databaseId));
     dispatch(setAllForm(res.data.detail));
+    dispatch(setLogic(res?.data?.logic));
     if (!workspaceId) {
       dispatch(setWorkspaceId(res.data.detail.workspaceId));
     }
@@ -203,7 +295,7 @@ const FormMainBox = ({
       try {
         supabase
           .from("form")
-          .select("layer,detail,databaseId,user_id")
+          .select("layer,detail,databaseId,user_id,logic")
           .eq("id", _id)
           .single()
           .then((res: any) => {
@@ -233,6 +325,11 @@ const FormMainBox = ({
     let error: any = {};
     let check = true;
 
+    //check if testMode
+    if (testMode) {
+      return false;
+    }
+
     dataLayer?.map((item: any) => {
       if (item?.required) {
         if (
@@ -241,7 +338,7 @@ const FormMainBox = ({
           inputForm[item?.mapTo]?.value === null ||
           inputForm[item?.mapTo]?.value === undefined
         ) {
-          error[item?.mapTo] = "This field is required";
+          error[item?.id] = "This field is required";
           check = false;
         }
         return;
@@ -252,9 +349,8 @@ const FormMainBox = ({
         inputForm[item?.mapTo]?.value?.length != 0 &&
         inputForm[item?.mapTo]?.value != undefined
       ) {
-        console.log(inputForm[item?.mapTo]?.value);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputForm[item?.mapTo]?.value)) {
-          error[item?.mapTo] = "Invalid email";
+          error[item?.id] = "Invalid email";
           check = false;
         }
       }
@@ -265,11 +361,13 @@ const FormMainBox = ({
         inputForm[item?.mapTo]?.value != undefined
       ) {
         if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
-          error[item?.mapTo] = "Invalid phone number";
+          error[item?.id] = "Invalid phone number";
           check = false;
         }
       }
     });
+
+    console.log(error);
 
     setError(error);
     return check;
@@ -467,7 +565,7 @@ const FormMainBox = ({
                   <RenderFormComponent
                     updateInputForm={updateInputForm}
                     data={item}
-                    error={error[item?.mapTo]}
+                    error={error[item?.id]}
                     dataUser={dataUser}
                     key={index}
                   />

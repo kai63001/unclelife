@@ -61,11 +61,15 @@ export const getPostById = cache(async (id: string) => {
         title: data.title,
         id: realId,
         date: `${data.date?.toISOString().slice(0, 10)}`,
-        html: html.value.toString(),
+        html: replaceHtmlImgAddLazyLoad(html.value.toString()),
         cover: data.cover,
         description: data.description,
     }
 });
+
+const replaceHtmlImgAddLazyLoad = (html: string) => {
+    return html.replace(/<img/g, '<img loading="lazy"')
+}
 
 export const getMarkdownInFolderMarkDown = cache(async (file: string) => {
     const realId = file.replace(/\.md$/, '')
@@ -78,7 +82,7 @@ export const getMarkdownInFolderMarkDown = cache(async (file: string) => {
     return {
         ...data,
         id: realId,
-        html: html.value.toString(),
+        html: replaceHtmlImgAddLazyLoad(html.value.toString()),
     }
 })
 

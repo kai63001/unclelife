@@ -6,11 +6,25 @@ const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
   ssr: true,
 });
 import type { Metadata } from "next";
-import PricingBox from "@/app/pricing/components/PricingBox";
+// import PricingBox from "@/app/pricing/components/PricingBox";
 import FeatureIndex from "@/app/index/components/Feature";
-import FooterIndex from "@/app/index/components/FooterIndex";
+// import FooterIndex from "@/app/index/components/FooterIndex";
 import FAQs from "@/app/index/components/FAQs";
 import HeaderBannder from "./index/components/HeaderBanner";
+// import YoutubeEmbedIndex from "./index/components/YoutubeEmbed";
+
+const FooterIndex = dynamic(() => import("./index/components/FooterIndex"), {
+  ssr: true,
+});
+const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
+  ssr: true,
+});
+const YoutubeEmbedIndex = dynamic(
+  () => import("./index/components/YoutubeEmbed"),
+  {
+    ssr: true,
+  }
+);
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",
@@ -25,7 +39,7 @@ export default function Home() {
         <header>
           <IndexNavbar />
         </header>
-        <section className="max-w-2xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
+        <section className="max-w-4xl mx-auto w-full flex-col justify-between pt-8 items-center relative">
           <HeaderBannder />
           <p className="text-muted-foreground my-4 text-center text-lg">
             Create beautiful forms and widget connected to your Notion pages
@@ -84,13 +98,13 @@ export default function Home() {
 
               <div>
                 <h2 className={"text-2xl font-medium"}>
-                  2. Select a Notion Database
+                  2. Select a Create Form Menu
                 </h2>
                 <ul className={"text-muted-foreground p-0 m-0"}>
                   <li>
-                    Choose the Notion database you want to link your form with.
-                    This ensures that all form responses get stored directly in
-                    your selected Notion database.
+                    Choose the workspace you want to link your form with. Then
+                    click create form without database.We handle the database
+                    setup for you.
                   </li>
                 </ul>
               </div>
@@ -119,16 +133,7 @@ export default function Home() {
               </div>
             </li>
           </ol>
-          <div className={"flex justify-center mt-5"}>
-            <iframe
-              width="860"
-              height="515"
-              src="https://www.youtube.com/embed/tbdh1yYIkDk?si=EHlqS4x1zzba3ng6"
-              title=""
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <YoutubeEmbedIndex />
         </section>
         <section className="max-w-5xl mx-auto w-full flex-col justify-between pt-3 mt-10 items-center relative">
           <h2 className="text-center text-3xl font-bold">Pricing</h2>
