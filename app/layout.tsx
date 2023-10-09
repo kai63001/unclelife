@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Open_Sans } from "next/font/google";
 import { Providers } from "./redux/provider";
-import NextNProgressbar from "@/components/NextProgressbar";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import Script from "next/script";
@@ -43,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <NextNProgressbar />
+        {/* <NextNProgressbar /> */}
         <Providers>{children}</Providers>
         <Toaster />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-C7BSJTQDVY" />
