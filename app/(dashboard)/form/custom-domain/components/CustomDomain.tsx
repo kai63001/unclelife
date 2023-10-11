@@ -21,6 +21,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ArrowRight } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CustomDomainComponent = () => {
   const [adding, setAdding] = useState(false);
@@ -104,88 +114,137 @@ const CustomDomainComponent = () => {
   }, []);
 
   return (
-    <div className="border rounded-md mt-5 p-10">
-      <h2 className="text-2xl font-bold border-b pb-5">Custom Domain</h2>
-      <div className="pt-5">
-        <div className="grid grid-cols-3 gap-x-4 gap-y-10">
-          {listDomain.map((item: any, index) => (
-            <Fragment key={index}>
-              <div>{item?.domain}</div>
-              <div>
-                {item?.verify ? (
-                  <Verified />
-                ) : (
-                  <NotVerified
-                    handleVerify={() => handleVerify(item?.domain_id)}
-                    loading={loading}
-                  />
-                )}
-              </div>
-              <div className="flex justify-end">
-                <AlertDialog
-                  onOpenChange={(e) => {
-                    setConfirmDelete(e);
+    <>
+      <div className="border rounded-md mt-5 p-10">
+        <h2 className="text-2xl font-bold border-b pb-5">Custom Domain</h2>
+        <div className="pt-5">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-10">
+            {listDomain.map((item: any, index) => (
+              <Fragment key={index}>
+                <div className="font-semibold">{item?.domain}</div>
+                <div>
+                  {item?.verify ? (
+                    <Verified />
+                  ) : (
+                    <NotVerified
+                      handleVerify={() => handleVerify(item?.domain_id)}
+                      loading={loading}
+                    />
+                  )}
+                </div>
+                <div className="flex justify-end">
+                  <AlertDialog
+                    onOpenChange={(e) => {
+                      setConfirmDelete(e);
+                    }}
+                    open={confirmDelete}
+                  >
+                    <AlertDialogTrigger asChild>
+                      <Button disabled={loading} variant="destructive">
+                        Delete
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete the {item?.domain} domain.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(item?.domain_id)}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </Fragment>
+            ))}
+          </div>
+          <div className="mt-5">
+            {adding ? (
+              <div className="flex space-x-4 w-11/12">
+                <Input
+                  onChange={(e) => {
+                    setDomain(e.target.value);
                   }}
-                  open={confirmDelete}
+                  placeholder="www.example.com"
+                />
+                <Button
+                  disabled={loading}
+                  className="px-10"
+                  onClick={handleSave}
                 >
-                  <AlertDialogTrigger asChild>
-                    <Button disabled={loading} variant="destructive">
-                      Delete
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete the {item?.domain} domain.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDelete(item?.domain_id)}
-                      >
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                  Save
+                </Button>
+                <Button onClick={() => setAdding(false)} variant={"ghost"}>
+                  Cancel
+                </Button>
               </div>
-            </Fragment>
-          ))}
-        </div>
-        <div className="mt-5">
-          {adding ? (
-            <div className="flex space-x-4 w-11/12">
-              <Input
-                onChange={(e) => {
-                  setDomain(e.target.value);
+            ) : (
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  setAdding(true);
                 }}
-                placeholder="www.example.com"
-              />
-              <Button disabled={loading} className="px-10" onClick={handleSave}>
-                Save
+              >
+                Add Custom Domain
               </Button>
-              <Button onClick={() => setAdding(false)} variant={"ghost"}>
-                Cancel
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant={"outline"}
-              onClick={() => {
-                setAdding(true);
-              }}
-            >
-              Add Custom Domain
-            </Button>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {listDomain.filter((item: any) => item?.verify).length > 0 &&
+        listDomain.map((item: any, index) => (
+          <div key={index} className="border rounded-md mt-5 p-10">
+            <h3 className="text-2xl font-bold border-b pb-5">{item?.domain}</h3>
+            {/* map pathname to form */}
+            <div className="grid grid-cols-11 gap-4 pt-5">
+              <div className="col-span-5 flex">
+                <Input
+                  value={item?.domain}
+                  className="rounded-r-none w-fit"
+                  disabled
+                />
+                <Input
+                  className="rounded-l-none"
+                  placeholder="Enter your pathname"
+                />
+              </div>
+              <div className="col-span-1 flex justify-center items-center">
+                <ArrowRight className="h-5 w-5" />
+              </div>
+              <div className="col-span-5">
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a fruit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex justify-end mt-5">
+              <Button className="px-10">Save</Button>
+            </div>
+          </div>
+        ))}
+    </>
   );
 };
 
