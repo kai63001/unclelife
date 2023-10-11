@@ -64,3 +64,11 @@ export const deleteCustomDomainForm = async (domain: any) => {
   });
   return response.data;
 };
+
+export const updateCustomDomainForm = async (domain: any, mapping: any) => {
+  const response = await notionApi.put(`/api/form/custom-domain`, {
+    domain,
+    mapping,
+  });
+  return response.data;
+};

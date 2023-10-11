@@ -64,7 +64,6 @@ export async function POST(req: NextRequest) {
     }
     const userId = session.user.id;
 
-
     const addCustomDomainToRender = await addCustomDomain(domain);
     const domain_id = addCustomDomainToRender[0].id;
     //insert domain to custom domain database
@@ -93,6 +92,55 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       message: "error",
       error: error.response.data,
+    });
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  const body = await req.json();
+
+  const { mapping, domain } = body;
+  if (mapping === null) {
+    return NextResponse.json({ error: "No mapping provided" });
+  }
+  if (domain === null) {
+    return NextResponse.json({ error: "No domain provided" });
+  }
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) {
+      return NextResponse.json({
+        message: "no session",
+      });
+    }
+
+    //insert to form database
+    const { data, error: errorInsert } = await supabaseBypass
+      .from("custom_domain")
+      .update({
+        mapping: mapping,
+      })
+      .eq("domain_id", domain)
+      .eq("user_id", session?.user?.id);
+
+    if (errorInsert) {
+      return NextResponse.json({
+        message: "error",
+        error: errorInsert,
+      });
+    }
+
+    return NextResponse.json({
+      message: "success",
+      data: data,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "error",
+      error: error,
     });
   }
 }

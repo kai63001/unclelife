@@ -7,6 +7,7 @@ import {
   addCustomDomainForm,
   deleteCustomDomainForm,
   getCustomDomainForm,
+  updateCustomDomainForm,
   verifyCustomDomainForm,
 } from "@/lib/formApi";
 import { Fragment, useEffect, useState } from "react";
@@ -172,6 +173,23 @@ const CustomDomainComponent = () => {
     setListDomain(newListDomain);
   };
 
+  const handleSaveMapping = async (domain_id: any, mapping: any) => {
+    const { data, error } = await updateCustomDomainForm(domain_id, mapping);
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    console.log(data);
+    toast({
+      title: "Success",
+      description: "Your mapping has been saved",
+    });
+  };
+
   return (
     <>
       <div className="border rounded-md mt-5 p-10">
@@ -332,7 +350,14 @@ const CustomDomainComponent = () => {
                 <Plus className="h-5 w-5 mr-3" />
                 Add Another Path
               </Button>
-              <Button className="px-10">Save Changes</Button>
+              <Button
+                onClick={() => {
+                  handleSaveMapping(item?.domain_id, item?.mapping);
+                }}
+                className="px-10"
+              >
+                Save Changes
+              </Button>
             </div>
           </div>
         ))}
