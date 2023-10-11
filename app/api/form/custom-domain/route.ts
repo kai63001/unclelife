@@ -64,10 +64,8 @@ export async function POST(req: NextRequest) {
     }
     const userId = session.user.id;
 
-    console.log("add custom domain to render", domain);
 
     const addCustomDomainToRender = await addCustomDomain(domain);
-    console.log(addCustomDomainToRender);
     const domain_id = addCustomDomainToRender[0].id;
     //insert domain to custom domain database
     const { data, error: errorInsert } = await supabaseBypass
@@ -121,7 +119,6 @@ export async function DELETE(req: NextRequest) {
 
     //delete domain to render
     const deleteCustomDomainToRender = await deleteCustomDomain(domain);
-    console.log(deleteCustomDomainToRender);
 
     //insert to form database
     const { data, error: errorInsert } = await supabaseBypass

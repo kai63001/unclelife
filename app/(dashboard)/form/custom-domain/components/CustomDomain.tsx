@@ -26,10 +26,12 @@ const CustomDomainComponent = () => {
   const [adding, setAdding] = useState(false);
   const [listDomain, setListDomain] = useState<string[]>([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [domain, setDomain] = useState("");
   const { toast } = useToast();
 
   const handleSave = async () => {
+    setLoading(true);
     if (domain === "") {
       return;
     }
@@ -40,13 +42,16 @@ const CustomDomainComponent = () => {
         description: newDomain?.error.message,
         variant: "destructive",
       });
+      setLoading(false);
       return;
     }
     setListDomain([...listDomain, ...newDomain.data]);
     setAdding(false);
+    setLoading(false);
   };
 
   const handleDelete = async (domain: string) => {
+    setLoading(true);
     const { data, error } = await deleteCustomDomainForm(domain);
     if (error) {
       toast({
@@ -54,6 +59,7 @@ const CustomDomainComponent = () => {
         description: error.message,
         variant: "destructive",
       });
+      setLoading(false);
       return;
     }
 
@@ -61,12 +67,14 @@ const CustomDomainComponent = () => {
       (item: any) => item.domain_id !== domain
     );
     setListDomain(newListDomain);
+    setLoading(false);
   };
 
   const handleVerify = async (domain: string) => {
+    setLoading(true);
     const { data, error } = await verifyCustomDomainForm(domain);
-    console.log(data, error);
     if (error) {
+      setLoading(false);
       if (error == "domain not verified") {
         return;
       }
@@ -84,6 +92,7 @@ const CustomDomainComponent = () => {
       return item;
     });
     setListDomain(newListDomain);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -104,10 +113,11 @@ const CustomDomainComponent = () => {
               <div>{item?.domain}</div>
               <div>
                 {item?.verify ? (
-                  <div>DONE</div>
+                  <Verified />
                 ) : (
                   <NotVerified
                     handleVerify={() => handleVerify(item?.domain_id)}
+                    loading={loading}
                   />
                 )}
               </div>
@@ -119,7 +129,9 @@ const CustomDomainComponent = () => {
                   open={confirmDelete}
                 >
                   <AlertDialogTrigger asChild>
-                    <Button variant="destructive">Delete</Button>
+                    <Button disabled={loading} variant="destructive">
+                      Delete
+                    </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
@@ -154,7 +166,7 @@ const CustomDomainComponent = () => {
                 }}
                 placeholder="www.example.com"
               />
-              <Button className="px-10" onClick={handleSave}>
+              <Button disabled={loading} className="px-10" onClick={handleSave}>
                 Save
               </Button>
               <Button onClick={() => setAdding(false)} variant={"ghost"}>
@@ -177,7 +189,7 @@ const CustomDomainComponent = () => {
   );
 };
 
-const NotVerified = ({ handleVerify }: any) => {
+const NotVerified = ({ handleVerify, loading }: any) => {
   return (
     <div>
       <p>DNS update needed</p>
@@ -190,6 +202,7 @@ const NotVerified = ({ handleVerify }: any) => {
         </div>
         <div className="mt-5">
           <Button
+            disabled={loading}
             onClick={() => {
               handleVerify();
             }}
@@ -199,6 +212,18 @@ const NotVerified = ({ handleVerify }: any) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Verified = () => {
+  return (
+    <span
+      className={
+        "px-2 py-1 bg-green-500 text-white flex w-fit rounded-md uppercase"
+      }
+    >
+      Verified
+    </span>
   );
 };
 
