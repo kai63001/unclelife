@@ -214,7 +214,7 @@ const FormMainBox = ({
     });
 
     let checkLogic: any = [];
-    if (logic.length != 0) {
+    if (logic?.length != 0) {
       checkLogic = ["logic"];
     }
 

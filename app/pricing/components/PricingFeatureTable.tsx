@@ -32,6 +32,12 @@ const PricingFeatureTable = () => {
           pro: true,
           enterprise: true,
         },
+        {
+          name: "Remove Branding",
+          free: false,
+          pro: true,
+          enterprise: true,
+        },
         { name: "Custom CSS", free: false, pro: true, enterprise: true },
         { name: "File Uploads", free: false, pro: "5 MB", enterprise: "20 MB" },
         { name: "Custom Redirects", free: false, pro: true, enterprise: true },
@@ -67,53 +73,52 @@ const PricingFeatureTable = () => {
       ],
     },
     {
-        name: "Widget",
-        list: [
-            {
-                name:"Pomodoro",
-                free: true,
-                pro: true,
-                enterprise: true,
-            },
-            {
-                name: "Habit Tracker",
-                free: true,
-                pro: true,
-                enterprise: true,
-                soon: true,
-
-            }
-        ]
+      name: "Widget",
+      list: [
+        {
+          name: "Pomodoro",
+          free: true,
+          pro: true,
+          enterprise: true,
+        },
+        {
+          name: "Habit Tracker",
+          free: true,
+          pro: true,
+          enterprise: true,
+          soon: true,
+        },
+      ],
     },
     {
-        name: "Pomodoro",
-        list: [
-            {
-                name:"Custom Pomodoro",
-                free: true,
-                pro: true,
-                enterprise: true,
-            },
-            {
-                name: "Custom Background",
-                free: true,
-                pro: true,
-                enterprise: true,
-            },
-            {
-                name: "Custom Font",
-                free: true,
-                pro: true,
-                enterprise: true,
-            },
-            {
-                name: "Upload Background",
-                free: false,
-                pro: true,
-                enterprise: true,
-            }
-        ]
-    }
+      name: "Pomodoro",
+      list: [
+        {
+          name: "Custom Pomodoro",
+          free: true,
+          pro: true,
+          enterprise: true,
+        },
+        {
+          name: "Custom Background",
+          free: true,
+          pro: true,
+          enterprise: true,
+        },
+        {
+          name: "Custom Font",
+          free: true,
+          pro: true,
+          enterprise: true,
+        },
+        {
+          name: "Upload Background",
+          free: false,
+          pro: true,
+          enterprise: true,
+        },
+      ],
+    },
   ];
 
   const renderFeatureValue = (value: any) => {
@@ -129,22 +134,22 @@ const PricingFeatureTable = () => {
         <div key={index}>
           <h3 className="text-xl font-semibold mb-4">{featureCategory.name}</h3>
           <table className="min-w-full border-t border-b rounded-lg mb-8">
-          <thead>
-          <tr>
-            <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider">
-              Feature
-            </th>
-            <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">
-              Basic
-            </th>
-            <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-              Pro
-            </th>
-            <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 bg-clip-text text-transparent">
-              Team
-            </th>
-          </tr>
-        </thead>    
+            <thead>
+              <tr>
+                <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider">
+                  Feature
+                </th>
+                <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">
+                  Basic
+                </th>
+                <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                  Pro
+                </th>
+                <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+                  Team
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {featureCategory.list.map((feature, idx) => (
                 <tr key={idx}>

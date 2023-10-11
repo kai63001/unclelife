@@ -6,7 +6,11 @@ import { cookies } from "next/headers";
 import { Database } from "@/lib/types_db";
 import {ModeToggle} from "@/components/ModeToggle";
 import MobileToggle from "@/app/index/components/MobileToggle";
-export const dynamic = 'force-dynamic'
+import dynamic from "next/dynamic";
+
+const CrispWithNoSSR = dynamic(() => import("@/components/Crisp"), {
+  ssr: false,
+});
 
 const IndexNavbar = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -17,6 +21,7 @@ const IndexNavbar = async () => {
 
   return (
     <div className="max-w-6xl m-auto w-full flex justify-between pt-8 items-center">
+      <CrispWithNoSSR/>
       <Link href="/" className="font-bold text-xl">
         UncleLife
         <span className="ml-2 text-xs">BETA</span>
