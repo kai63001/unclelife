@@ -22,7 +22,7 @@ const initialState: FormState = {
   databaseName: "",
   tableOfDatabase: [],
   form: {
-    title: "Contact Form",
+    title: "Untitle",
     button: {
       text: "Submit",
       color: "#000000",
