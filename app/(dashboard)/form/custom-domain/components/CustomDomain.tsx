@@ -21,7 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plus, Trash } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -31,13 +31,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const CustomDomainComponent = () => {
+  const supabase = createClientComponentClient();
+
   const [adding, setAdding] = useState(false);
   const [listDomain, setListDomain] = useState<string[]>([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [domain, setDomain] = useState("");
+  const [myForm, setMyForm] = useState<any[]>([]);
   const { toast } = useToast();
 
   const handleSave = async () => {
@@ -110,8 +114,63 @@ const CustomDomainComponent = () => {
       const { data } = await getCustomDomainForm();
       setListDomain(data);
     };
+    const getMyForm = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session?.user?.id) {
+        return;
+      }
+      const { data }: any = await supabase
+        .from("form")
+        .select("*")
+        .eq("user_id", session?.session?.user?.id);
+      console.log(data);
+      setMyForm(data);
+    };
+    getMyForm();
+
     getListDomain();
-  }, []);
+  }, [supabase]);
+
+  const addPathMappingByIndex = (index: number) => {
+    const newListDomain = listDomain.map((item: any, i: number) => {
+      if (i === index) {
+        if (!item.mapping) {
+          item.mapping = [];
+        }
+        item.mapping.push({
+          pathname: "",
+          formId: "",
+        });
+      }
+      return item;
+    });
+    setListDomain(newListDomain);
+  };
+
+  const deletePathMappingByIndex = (index: number, mapperIndex: number) => {
+    const newListDomain = listDomain.map((item: any, i: number) => {
+      if (i === index) {
+        item.mapping.splice(mapperIndex, 1);
+      }
+      return item;
+    });
+    setListDomain(newListDomain);
+  };
+
+  const handleMapping = (
+    index: number,
+    mapperIndex: number,
+    value: any,
+    key = "pathname"
+  ) => {
+    const newListDomain = listDomain.map((item: any, i: number) => {
+      if (i === index) {
+        item.mapping[mapperIndex][key] = value;
+      }
+      return item;
+    });
+    setListDomain(newListDomain);
+  };
 
   return (
     <>
@@ -206,41 +265,74 @@ const CustomDomainComponent = () => {
           <div key={index} className="border rounded-md mt-5 p-10">
             <h3 className="text-2xl font-bold border-b pb-5">{item?.domain}</h3>
             {/* map pathname to form */}
-            <div className="grid grid-cols-11 gap-4 pt-5">
-              <div className="col-span-5 flex">
-                <Input
-                  value={item?.domain}
-                  className="rounded-r-none w-fit"
-                  disabled
-                />
-                <Input
-                  className="rounded-l-none"
-                  placeholder="Enter your pathname"
-                />
-              </div>
-              <div className="col-span-1 flex justify-center items-center">
-                <ArrowRight className="h-5 w-5" />
-              </div>
-              <div className="col-span-5">
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a fruit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="grid grid-cols-12 gap-4 pt-5">
+              {item?.mapping &&
+                item?.mapping.map((mapper: any, mapperIndex: number) => (
+                  <Fragment key={mapperIndex}>
+                    <div className="col-span-5 flex">
+                      <Input
+                        value={item?.domain}
+                        className="rounded-r-none w-fit"
+                        disabled
+                      />
+                      <Input
+                        value={mapper?.pathname}
+                        className="rounded-l-none"
+                        placeholder="Enter your pathname"
+                        onChange={(e) => {
+                          handleMapping(index, mapperIndex, e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="col-span-1 flex justify-center items-center">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                    <div className="col-span-5">
+                      <Select
+                        onValueChange={(e) => {
+                          handleMapping(index, mapperIndex, e, "formId");
+                        }}
+                        value={mapper?.formId || undefined}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a Form" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Forms</SelectLabel>
+                            {myForm.map((form: any, FormIndex) => (
+                              <SelectItem key={FormIndex} value={form?.id}>
+                                {form?.detail?.title || "Untitled Form"}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="col-span-1 flex justify-center items-center">
+                      <Button
+                        onClick={() => {
+                          deletePathMappingByIndex(index, mapperIndex);
+                        }}
+                        variant={"destructive"}
+                        size={"icon"}
+                      >
+                        <Trash className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </Fragment>
+                ))}
             </div>
-            <div className="flex justify-end mt-5">
-              <Button className="px-10">Save</Button>
+            <div className="flex justify-end mt-5 space-x-3">
+              <Button
+                onClick={() => addPathMappingByIndex(index)}
+                className="px-5"
+                variant={"ghost"}
+              >
+                <Plus className="h-5 w-5 mr-3" />
+                Add Another Path
+              </Button>
+              <Button className="px-10">Save Changes</Button>
             </div>
           </div>
         ))}

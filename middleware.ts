@@ -22,6 +22,8 @@ export async function middleware(req: NextRequest) {
   // console.log("url", url);
   // console.log("host", host);
 
+  console.log("host", host);
+
   if (host != "localhost:3000" && !host?.includes("supabase.io") && host != "unclelife.co" && host != "www.unclelife.co") {
     console.log("redirect");
   }
