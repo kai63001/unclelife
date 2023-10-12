@@ -34,6 +34,7 @@ export async function middleware(req: NextRequest) {
 
     url.pathname = `/public/form/${redirect}`;
     if (redirect) return NextResponse.rewrite(url);
+    return NextResponse.rewrite(new URL("/404", req.url));
   }
 
   const supabase = createMiddlewareClient({ req, res });
