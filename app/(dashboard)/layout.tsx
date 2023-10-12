@@ -1,5 +1,6 @@
 import Slidebars from "./components/Slidebar";
 import React from "react";
+import CrispChat from "@/components/Crisp";
 
 //layout
 export const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({
     return (
         <div className="flex">
             <Slidebars/>
+            <CrispChat/>
             <div className="p-4 w-full max-w-6xl mx-auto mt-14 pl-32">{children}</div>
         </div>
     );

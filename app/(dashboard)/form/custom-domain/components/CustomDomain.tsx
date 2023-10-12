@@ -124,7 +124,7 @@ const CustomDomainComponent = () => {
         .from("form")
         .select("*")
         .eq("user_id", session?.session?.user?.id);
-      console.log(data);
+    //   console.log(data);
       setMyForm(data);
     };
     getMyForm();
