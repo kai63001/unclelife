@@ -11,11 +11,9 @@ export const validateDomain = async (domain: string, path: string) => {
     }
   );
   const { data } = await response.json();
-  console.log(data);
   if (path == "/") {
     path = "";
   }
-  console.log("patch", path);
   //filter with path
   const filteredData = data.filter((item: any) => item.pathname == path);
   if (filteredData.length > 0) {
