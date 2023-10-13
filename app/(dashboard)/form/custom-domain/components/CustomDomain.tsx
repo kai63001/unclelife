@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Icons } from "@/components/Icons";
 
 const CustomDomainComponent = () => {
   const supabase = createClientComponentClient();
@@ -41,15 +42,16 @@ const CustomDomainComponent = () => {
   const [listDomain, setListDomain] = useState<string[]>([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingMapping, setLoadingMapping] = useState(false);
   const [domain, setDomain] = useState("");
   const [myForm, setMyForm] = useState<any[]>([]);
   const { toast } = useToast();
 
   const handleSave = async () => {
-    setLoading(true);
     if (domain === "") {
       return;
     }
+    setLoading(true);
     const newDomain = await addCustomDomainForm(domain);
     if (newDomain?.message === "error") {
       toast({
@@ -174,6 +176,7 @@ const CustomDomainComponent = () => {
   };
 
   const handleSaveMapping = async (domain_id: any, mapping: any) => {
+    setLoadingMapping(true);
     const { data, error } = await updateCustomDomainForm(domain_id, mapping);
     if (error) {
       toast({
@@ -181,9 +184,10 @@ const CustomDomainComponent = () => {
         description: error.message,
         variant: "destructive",
       });
+      setLoadingMapping(false);
       return;
     }
-    console.log(data);
+    setLoadingMapping(false);
     toast({
       title: "Success",
       description: "Your mapping has been saved",
@@ -219,7 +223,11 @@ const CustomDomainComponent = () => {
                   >
                     <AlertDialogTrigger asChild>
                       <Button disabled={loading} variant="destructive">
-                        Delete
+                        {loading ? (
+                          <Icons.spinner className="animate-spin h-5 w-5" />
+                        ) : (
+                          "Delete"
+                        )}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
@@ -260,7 +268,11 @@ const CustomDomainComponent = () => {
                   className="px-10"
                   onClick={handleSave}
                 >
-                  Save
+                  {loading ? (
+                    <Icons.spinner className="animate-spin h-5 w-5" />
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
                 <Button onClick={() => setAdding(false)} variant={"ghost"}>
                   Cancel
@@ -355,9 +367,14 @@ const CustomDomainComponent = () => {
                 onClick={() => {
                   handleSaveMapping(item?.domain_id, item?.mapping);
                 }}
+                disabled={loadingMapping}
                 className="px-10"
               >
-                Save Changes
+                {loadingMapping ? (
+                  <Icons.spinner className="animate-spin h-5 w-5" />
+                ) : (
+                  "Save Changes"
+                )}
               </Button>
             </div>
           </div>
@@ -383,8 +400,16 @@ const NotVerified = ({ handleVerify, loading, domain }: any) => {
         <div className="flex">
           <div className="bg-gray-100 border border-gray-300 rounded-md p-4">
             Create a CNAME record with the name{" "}
-            <span className="font-bold">"{getSubdomain()}"</span> that points to
-            <span className="font-bold">"cname.unclelife.co"</span>.
+            <span className="font-bold">
+              {'"'}
+              {getSubdomain()}
+              {'"'}
+            </span>{" "}
+            that points to
+            <span className="font-bold">
+              {'"'}cname.unclelife.co{'"'}
+            </span>
+            .
           </div>
         </div>
         <div className="mt-5">
@@ -394,7 +419,11 @@ const NotVerified = ({ handleVerify, loading, domain }: any) => {
               handleVerify();
             }}
           >
-            Verify
+            {loading ? (
+              <Icons.spinner className="animate-spin h-5 w-5" />
+            ) : (
+              "Verify"
+            )}
           </Button>
         </div>
       </div>
