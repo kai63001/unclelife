@@ -68,7 +68,6 @@ const PricingFeatureTable = () => {
           free: false,
           pro: false,
           enterprise: true,
-          soon: true,
         },
       ],
     },

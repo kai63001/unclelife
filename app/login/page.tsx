@@ -1,42 +1,102 @@
-import {X} from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import Login from "@/app/login/components/login";
-import {Metadata} from "next";
+import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
-    title: 'Uncle Life - Login to Access Notion Tools',
-    description: 'Sign in to Uncle Life and unlock the power of Notion forms and widgets. Streamline your workflow and enhance your Notion experience with our specialized tools.',
-}
+  title: "Uncle Life - Login to Access Notion Tools",
+  description:
+    "Sign in to Uncle Life and unlock the power of Notion forms and widgets. Streamline your workflow and enhance your Notion experience with our specialized tools.",
+};
 
 const LoginPage = () => {
-    return (
-        <div className="h-screen w-screen bg-customMode flex justify-center items-center">
-            <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full">
-                {/* close */}
-                <div className="flex justify-end">
-                    <Link href="/">
-                        <X size={24}/>
-                    </Link>
-                </div>
-                <h1 className="text-center text-3xl font-bold">UncleLife</h1>
-                <h2 className="flex w-full text-center justify-center text-xl whitespace-pre-line my-5">
-                    One account for
-                    {"\n"}All your Notion pages
-                </h2>
-                <div className="border-b my-4"></div>
-                {/* notion login */}
-                <Login/>
-                <p className="text-muted-foreground text-xs text-center mt-3 whitespace-pre-line">
-                    By continuing, you are indicating that you accept our{' \n'}
-                    <Link href={'/privacy-policy'} className={'text-red-600'} target={'_blank'}
-                          rel={'noopener noreferrer'}>Privacy Policy</Link>
-                    {' and '}
-                    <Link href={'/terms-conditions'} className={'text-red-600'} target={'_blank'} rel={'noopener noreferrer'}>Terms of
-                        Service</Link>
-                </p>
-            </div>
+  return (
+    <>
+      <div className="md:hidden">
+        <Image
+          src="/examples/authentication-light.png"
+          width={1280}
+          height={843}
+          alt="Authentication"
+          className="block dark:hidden"
+        />
+        <Image
+          src="/examples/authentication-dark.png"
+          width={1280}
+          height={843}
+          alt="Authentication"
+          className="hidden dark:block"
+        />
+      </div>
+      <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <Link
+          href="/examples/authentication"
+          className={"absolute right-4 top-4 md:right-8 md:top-8"}
+        >
+          Login
+        </Link>
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+          <div className="absolute inset-0 bg-zinc-900" />
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-6 w-6"
+            >
+              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+            </svg>
+            Acme Inc
+          </div>
+          <div className="relative z-20 mt-auto">
+            <blockquote className="space-y-2">
+              <p className="text-lg">
+                &ldquo;This library has saved me countless hours of work and
+                helped me deliver stunning designs to my clients faster than
+                ever before.&rdquo;
+              </p>
+              <footer className="text-sm">Sofia Davis</footer>
+            </blockquote>
+          </div>
         </div>
-    );
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Create an account
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Enter your email below to create your account
+              </p>
+            </div>
+            {/* <UserAuthForm /> */}
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              By clicking continue, you agree to our{" "}
+              <Link
+                href="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default LoginPage;
