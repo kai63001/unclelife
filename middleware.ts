@@ -2,7 +2,10 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
-import { validateDomain } from "./lib/customDomainController";
+import {
+  checkIsEnterprise,
+  validateDomain,
+} from "./lib/customDomainController";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -31,9 +34,15 @@ export async function middleware(req: NextRequest) {
     host != "www.unclelife.co"
   ) {
     const redirect = await validateDomain(host, url.pathname);
+    if (redirect) {
+      const is_enterprise = await checkIsEnterprise(redirect);
+      if (!is_enterprise) {
+        return NextResponse.rewrite(new URL("/404", req.url));
+      }
+      url.pathname = `/public/form/${redirect}`;
+      return NextResponse.rewrite(url);
+    }
 
-    url.pathname = `/public/form/${redirect}`;
-    if (redirect) return NextResponse.rewrite(url);
     return NextResponse.rewrite(new URL("/404", req.url));
   }
 

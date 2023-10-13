@@ -21,3 +21,18 @@ export const validateDomain = async (domain: string, path: string) => {
   }
   return null;
 };
+
+export const checkIsEnterprise = async (formId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONT_END_URL}/api/form/check-enterpise`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formId }),
+    }
+  );
+  const { is_enterprise } = await response.json();
+  return is_enterprise;
+};

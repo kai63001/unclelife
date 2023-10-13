@@ -34,9 +34,12 @@ import {
 } from "@/components/ui/select";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Icons } from "@/components/Icons";
+import { useSupabase } from "@/app/hook/supabase-provider";
+import EnterpriseAlert from "./EnterpiseAlert";
 
 const CustomDomainComponent = () => {
   const supabase = createClientComponentClient();
+  const { user } = useSupabase();
 
   const [adding, setAdding] = useState(false);
   const [listDomain, setListDomain] = useState<string[]>([]);
@@ -194,6 +197,10 @@ const CustomDomainComponent = () => {
     });
   };
 
+  if (!user?.is_enterprise) {
+    return <EnterpriseAlert />;
+  }
+
   return (
     <>
       <div className="border rounded-md mt-5 p-10">
@@ -291,7 +298,8 @@ const CustomDomainComponent = () => {
           </div>
         </div>
       </div>
-      {listDomain.filter((item: any) => item?.verify).length > 0 &&
+      {user?.is_enterprise &&
+        listDomain.filter((item: any) => item?.verify).length > 0 &&
         listDomain.map((item: any, index) => (
           <div key={index} className="border rounded-md mt-5 p-10">
             <h3 className="text-2xl font-bold border-b pb-5">{item?.domain}</h3>
