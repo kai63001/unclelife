@@ -124,7 +124,7 @@ const CustomDomainComponent = () => {
         .from("form")
         .select("*")
         .eq("user_id", session?.session?.user?.id);
-    //   console.log(data);
+      //   console.log(data);
       setMyForm(data);
     };
     getMyForm();
@@ -206,6 +206,7 @@ const CustomDomainComponent = () => {
                     <NotVerified
                       handleVerify={() => handleVerify(item?.domain_id)}
                       loading={loading}
+                      domain={item?.domain}
                     />
                   )}
                 </div>
@@ -365,15 +366,25 @@ const CustomDomainComponent = () => {
   );
 };
 
-const NotVerified = ({ handleVerify, loading }: any) => {
+const NotVerified = ({ handleVerify, loading, domain }: any) => {
+  const getSubdomain = () => {
+    //check if not have subdomain
+    if (domain.split(".").length === 2) {
+      return "@";
+    }
+    const subdomain = domain.split(".")[0];
+    return subdomain;
+  };
+
   return (
     <div>
       <p>DNS update needed</p>
       <div className="pt-5">
         <div className="flex">
-          <div>
-            Add a CNAME record for *.cname pointing to
-            test-wildcard.onrender.com
+          <div className="bg-gray-100 border border-gray-300 rounded-md p-4">
+            Create a CNAME record with the name{" "}
+            <span className="font-bold">"{getSubdomain()}"</span> that points to
+            <span className="font-bold">"cname.unclelife.co"</span>.
           </div>
         </div>
         <div className="mt-5">
