@@ -2,16 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import RegisterCompoment from "./components/Register";
 
 export const metadata: Metadata = {
   title: "Uncle Life - Register to Access Notion Tools",
@@ -20,17 +11,6 @@ export const metadata: Metadata = {
 };
 
 const RegisterPage = () => {
-  const listHowDidYouHearAboutUs = [
-    "Google",
-    "Twitter",
-    "Facebook",
-    "Reddit",
-    "YouTube",
-    "LinkedIn",
-    "Instagram",
-    "A friend or colleague",
-    "Other",
-  ];
   return (
     <>
       <div className="md:hidden">
@@ -96,26 +76,7 @@ const RegisterPage = () => {
                 Enter your email below to create your account
               </p>
             </div>
-            <div className="flex flex-col space-y-3">
-              <Input placeholder="Email address" />
-              <Select>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="How did you come to know about us?" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {listHowDidYouHearAboutUs.map((item, index) => (
-                      <SelectItem key={index} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Input placeholder="Password" />
-              <Input placeholder="Confirm Password" />
-              <Button>Create Account</Button>
-            </div>
+            <RegisterCompoment/>
             {/* <UserAuthForm /> */}
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}

@@ -1,0 +1,119 @@
+"use client";
+
+import { useSupabase } from "@/app/hook/supabase-provider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+
+const RegisterCompoment = () => {
+  const { toast } = useToast();
+  const { supabase } = useSupabase();
+  const listHowDidYouHearAboutUs = [
+    "Google",
+    "Twitter",
+    "Facebook",
+    "Reddit",
+    "YouTube",
+    "LinkedIn",
+    "Instagram",
+    "A friend or colleague",
+    "Other",
+  ];
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassowrd] = useState("");
+  const [howDidYouHearAboutUs, setHowDidYouHearAboutUs] = useState("");
+
+  const createAccount = async () => {
+    //check required
+    if (!email || !password || !confirmPassword || !howDidYouHearAboutUs) {
+      toast({
+        title: "Please fill all the fields",
+        description: "Please fill all the fields",
+        variant: "destructive",
+      });
+      return;
+    }
+    //validate
+    if (password !== confirmPassword) {
+      toast({
+        title: "Password and confirm password must be the same",
+        description: "Please check your password",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "Success",
+      description: "Please check your email to verify your account",
+      variant: "default",
+    });
+  };
+
+  return (
+    <div className="flex flex-col space-y-3">
+      <Input
+        placeholder="Email address"
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      />
+      <Select
+        onValueChange={(e) => {
+          setHowDidYouHearAboutUs(e);
+        }}
+      >
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="How did you come to know about us?" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {listHowDidYouHearAboutUs.map((item, index) => (
+              <SelectItem key={index} value={item}>
+                {item}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <Input
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+        placeholder="Password"
+      />
+      <Input
+        onChange={(e) => {
+          setConfirmPassowrd(e.target.value);
+        }}
+        placeholder="Confirm Password"
+      />
+      <Button onClick={createAccount}>Create Account</Button>
+    </div>
+  );
+};
+
+export default RegisterCompoment;
