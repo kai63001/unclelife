@@ -5,9 +5,58 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/Icons";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+  const { toast } = useToast();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginWithEmail = async () => {
+    if (!email || !password) {
+      toast({
+        title: "Please fill all the fields",
+        description: "Please fill all the fields",
+        variant: "destructive",
+      });
+      return;
+    }
+    //validate email
+    const emailRegex =
+      // eslint-disable-next-line no-control-regex
+      /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Email is invalid",
+        description: "Please check your email",
+        variant: "destructive",
+      });
+      return;
+    }
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "Success",
+      description: "Login successfully",
+    });
+    //redirect
+    router.push("/home");
+  };
 
   async function signInWithNotion() {
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -22,9 +71,22 @@ const Login = () => {
   return (
     <div>
       <div className="flex justify-center flex-col items-center space-y-2 pb-5 border-b">
-        <Input placeholder="Email address" />
-        <Input placeholder="Password" />
-        <Button className="w-full">Login</Button>
+        <Input
+          placeholder="Email address"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <Input
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          type="password"
+        />
+        <Button className="w-full" onClick={loginWithEmail}>
+          Login
+        </Button>
         <div>
           Don{"'"}t have an account?{" "}
           <Link href="/register" className="text-red-500">

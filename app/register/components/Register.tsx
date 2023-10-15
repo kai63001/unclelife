@@ -45,6 +45,18 @@ const RegisterCompoment = () => {
       });
       return;
     }
+    //validate email
+    const emailRegex =
+      // eslint-disable-next-line no-control-regex
+      /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Email is invalid",
+        description: "Please check your email",
+        variant: "destructive",
+      });
+      return;
+    }
     //validate
     if (password !== confirmPassword) {
       toast({
@@ -55,7 +67,7 @@ const RegisterCompoment = () => {
       return;
     }
 
-    const { error, data: createdUser }:any = await supabase.auth.signUp({
+    const { error, data: createdUser }: any = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
