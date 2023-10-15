@@ -123,7 +123,7 @@ const RichTextEditor = (props: any) => {
       if (props.onChange) props.onChange(editor.getHTML());
     },
     extensions: [
-      StarterKit,
+      StarterKit as any,
       Underline,
       Link.configure({
         openOnClick: false,
