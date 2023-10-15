@@ -263,11 +263,17 @@ export const convertInputToProperty = async (
 export const addMapToLayer = (layer: any,property:any) => {
   const newLayer = layer.map((field: any) => {
     const { id, label, name, type, options: listOptions } = field;
-    const newField = {
+    let newField = {
       ...field,
-      mapType: Object.keys(property[name])[0],
+      // mapType: Object?.keys(property[name])[0],
       mapTo: name,
     };
+    if (property[name]) {
+      newField = {
+        ...newField,
+        mapType: Object?.keys(property[name])[0],
+      };
+    }
     return newField;
   });
   return newLayer;
