@@ -1,6 +1,7 @@
 "use client";
 
 import { useSupabase } from "@/app/hook/supabase-provider";
+import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,6 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 
 const RegisterCompoment = () => {
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const { supabase } = useSupabase();
   const listHowDidYouHearAboutUs = [
@@ -66,6 +68,7 @@ const RegisterCompoment = () => {
       });
       return;
     }
+    setLoading(true);
 
     const { error, data: createdUser }: any = await supabase.auth.signUp({
       email: email,
@@ -80,6 +83,7 @@ const RegisterCompoment = () => {
         description: error.message,
         variant: "destructive",
       });
+      setLoading(false);
       return;
     }
     const emailIsTaken = createdUser?.user.identities?.length === 0;
@@ -90,6 +94,7 @@ const RegisterCompoment = () => {
         description: "Email is taken",
         variant: "destructive",
       });
+      setLoading(false);
       return;
     }
     toast({
@@ -102,6 +107,7 @@ const RegisterCompoment = () => {
     setPassword("");
     setConfirmPassowrd("");
     setHowDidYouHearAboutUs("");
+    setLoading(false);
   };
 
   return (
@@ -148,7 +154,13 @@ const RegisterCompoment = () => {
         placeholder="Confirm Password"
         type="password"
       />
-      <Button onClick={createAccount}>Create Account</Button>
+      <Button onClick={createAccount}>
+        {loading ? (
+          <Icons.spinner className="animate-spin" />
+        ) : (
+          "Create Account"
+        )}
+      </Button>
     </div>
   );
 };

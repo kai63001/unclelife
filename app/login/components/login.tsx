@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const { toast } = useToast();
@@ -38,6 +39,7 @@ const Login = () => {
       });
       return;
     }
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -48,17 +50,21 @@ const Login = () => {
         description: error.message,
         variant: "destructive",
       });
+      setLoading(false);
       return;
     }
     toast({
       title: "Success",
       description: "Login successfully",
     });
+    setLoading(false);
+    return;
     //redirect
     router.push("/home");
   };
 
   async function signInWithNotion() {
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -66,6 +72,7 @@ const Login = () => {
       },
     });
     if (error) console.log(error);
+    setLoading(false);
   }
 
   return (
@@ -85,7 +92,7 @@ const Login = () => {
           type="password"
         />
         <Button className="w-full" onClick={loginWithEmail}>
-          Login
+          {loading ? <Icons.spinner className="animate-spin" /> : "Login"}
         </Button>
         <div>
           Don{"'"}t have an account?{" "}
@@ -96,8 +103,14 @@ const Login = () => {
       </div>
       <div className="flex justify-center items-center mt-5">
         <Button onClick={signInWithNotion} className="w-full ">
-          <Icons.google className="mr-2 h-5 w-5" />
-          Login with Google
+          {loading ? (
+            <Icons.spinner className="animate-spin" />
+          ) : (
+            <>
+              <Icons.google className="mr-2 h-5 w-5" />
+              Login with Google
+            </>
+          )}
         </Button>
       </div>
     </div>
