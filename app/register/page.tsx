@@ -1,25 +1,25 @@
 import Link from "next/link";
-import Login from "@/app/login/components/login";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import RegisterCompoment from "./components/Register";
 
 export const metadata: Metadata = {
-  title: "Uncle Life - Login to Access Notion Tools",
+  title: "Uncle Life - Register to Access Notion Tools",
   description:
-    "Sign in to Uncle Life and unlock the power of Notion forms and widgets. Streamline your workflow and enhance your Notion experience with our specialized tools.",
+    "Sign up for Uncle Life and unlock the power of Notion forms and widgets. Streamline your workflow and enhance your Notion experience with our specialized tools.",
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <>
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Button variant={"outline"} asChild>
           <Link
-            href="/register"
+            href="/login"
             className={"absolute right-4 top-4 md:right-8 md:top-8"}
           >
-            Register
+            Login
           </Link>
         </Button>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -38,10 +38,9 @@ const LoginPage = () => {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;This platform has streamlined my workflow, enabling me to
-                set up intuitive forms and integrate with Notion seamlessly.
-                With UncleLife, I{"'"}ve been able to engage with my audience
-                more effectively and manage data like never before.&rdquo;
+                &ldquo;Dive into UncleLife and discover a world where form
+                creation meets Notion integration. Say goodbye to complicated
+                setups and hello to a smoother workflow.&rdquo;
               </p>
             </blockquote>
           </div>
@@ -50,27 +49,25 @@ const LoginPage = () => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Welcome Back
+                Create an account
               </h1>
               <p className="text-sm text-muted-foreground">
-                Sign in to your account to continue.
+                Enter your email below to create your account
               </p>
             </div>
-            <div>
-              <Login />
-            </div>
+            <RegisterCompoment />
             {/* <UserAuthForm /> */}
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
-                href="/terms-conditions"
+                href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
-                href="/privacy-policy"
+                href="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Privacy Policy
@@ -84,4 +81,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

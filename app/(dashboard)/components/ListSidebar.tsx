@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import {Home, PlusSquare, FormInput, MessageSquare, Feather, Timer} from "lucide-react";
+import {Home, PlusSquare, FormInput, MessageSquare, Feather, Timer, Globe2} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 
@@ -38,6 +38,11 @@ const ListSideBar = () => {
                     name: "Create a form",
                     icon: <PlusSquare className="mr-1 h-5"/>,
                 },
+                {
+                    path: "/form/custom-domain",
+                    name: "Custom Domain",
+                    icon: <Globe2 className="mr-1 h-5"/>,
+                }
             ],
         },
         {

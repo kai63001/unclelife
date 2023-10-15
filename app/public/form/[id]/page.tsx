@@ -15,7 +15,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     const responseData = await getFormData(id)
 
-    const title = responseData?.data ? `${responseData.data.detail.title} - Uncle Life` : "Form - Uncle Life";
+    const title = responseData?.data ? `${responseData.data.detail.title}` : "Form - Uncle Life";
 
     return {
         title,
