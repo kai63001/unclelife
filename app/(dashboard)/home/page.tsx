@@ -31,7 +31,7 @@ const DashboardPage = () => {
                         </CardHeader>
                         <CardContent>
                             <iframe width="100%" height="240"
-                                    src="https://www.youtube.com/embed/s7g2LurUikU?si=2fORUwZ9qRXRRo4U"
+                                    src="https://www.youtube.com/embed/EoQROpU_m20?si=fLSG8zTVBlN1_hpN"
                                     title="YouTube video player"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowFullScreen></iframe>

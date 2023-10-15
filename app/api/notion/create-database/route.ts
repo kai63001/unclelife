@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       properties: properties,
     });
 
-    console.log("Database created:", databaseResponse);
+    // console.log("Database created:", databaseResponse);
     const databaseId = databaseResponse.id;
 
     return NextResponse.json({

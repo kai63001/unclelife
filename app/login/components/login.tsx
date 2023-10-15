@@ -58,7 +58,6 @@ const Login = () => {
       description: "Login successfully",
     });
     setLoading(false);
-    return;
     //redirect
     router.push("/home");
   };
