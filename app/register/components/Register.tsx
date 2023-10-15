@@ -32,7 +32,8 @@ const RegisterCompoment = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassowrd] = useState("");
-  const [howDidYouHearAboutUs, setHowDidYouHearAboutUs] = useState("");
+  const [howDidYouHearAboutUs, setHowDidYouHearAboutUs]: any =
+    useState(undefined);
 
   const createAccount = async () => {
     //check required
@@ -53,13 +54,13 @@ const RegisterCompoment = () => {
       });
       return;
     }
-    
-    const { error } = await supabase.auth.signUp({
+
+    const { error, data: createdUser }:any = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
-      }
+      },
     });
     if (error) {
       toast({
@@ -69,11 +70,26 @@ const RegisterCompoment = () => {
       });
       return;
     }
+    const emailIsTaken = createdUser?.user.identities?.length === 0;
+
+    if (emailIsTaken) {
+      toast({
+        title: "Error",
+        description: "Email is taken",
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Success",
       description: "Please check your email to verify your account",
       variant: "default",
     });
+    //clear form
+    setEmail("");
+    setPassword("");
+    setConfirmPassowrd("");
+    setHowDidYouHearAboutUs("");
   };
 
   return (
@@ -83,8 +99,10 @@ const RegisterCompoment = () => {
         onChange={(e) => {
           setEmail(e.target.value);
         }}
+        value={email}
       />
       <Select
+        value={howDidYouHearAboutUs}
         onValueChange={(e) => {
           setHowDidYouHearAboutUs(e);
         }}
@@ -103,6 +121,7 @@ const RegisterCompoment = () => {
         </SelectContent>
       </Select>
       <Input
+        value={password}
         onChange={(e) => {
           setPassword(e.target.value);
         }}
@@ -110,6 +129,7 @@ const RegisterCompoment = () => {
         type="password"
       />
       <Input
+        value={confirmPassword}
         onChange={(e) => {
           setConfirmPassowrd(e.target.value);
         }}
