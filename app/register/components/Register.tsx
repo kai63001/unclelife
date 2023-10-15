@@ -57,6 +57,9 @@ const RegisterCompoment = () => {
     const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_FRONT_END_URL}/auth/callback`,
+      }
     });
     if (error) {
       toast({
@@ -104,12 +107,14 @@ const RegisterCompoment = () => {
           setPassword(e.target.value);
         }}
         placeholder="Password"
+        type="password"
       />
       <Input
         onChange={(e) => {
           setConfirmPassowrd(e.target.value);
         }}
         placeholder="Confirm Password"
+        type="password"
       />
       <Button onClick={createAccount}>Create Account</Button>
     </div>
