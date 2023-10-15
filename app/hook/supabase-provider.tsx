@@ -39,7 +39,8 @@ export default function SupabaseProvider({
           .select("id,stripe_customer,is_subscribed,is_enterprise")
           .eq("id", session.user.id)
           .single();
-        console.info("search data");
+        // console.log(data);
+        // console.info("search data");
         // setUser({
         //     ...session,
         //     ...data
