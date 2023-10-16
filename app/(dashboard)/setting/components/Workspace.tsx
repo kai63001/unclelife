@@ -20,14 +20,80 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const WorkspaceSetting = () => {
+  const faqList = [
+    {
+      question: "Why do I need to connect my Notion workspace?",
+      answer:
+        "To seamlessly integrate and manage forms directly within your Notion environment, it's essential to connect your workspace.",
+    },
+    {
+      question: "Is my data safe when I connect my workspace?",
+      answer:
+        "Absolutely. Your data remains within Notion, and we don't store any form submissions or personal information.",
+    },
+    {
+      question: "Can I disconnect my workspace later?",
+      answer:
+        "Yes, you can disconnect your workspace at any time from the settings.",
+    },
+    {
+      question:
+        "What permissions will UncleLife.co have once I connect my workspace?",
+      answer:
+        "UncleLife.co will only have the permissions necessary to create and manage forms in the specified Notion pages. We won't access or modify any other data.",
+    },
+    {
+      question:
+        "Will other members of my workspace know I've connected to UncleLife.co?",
+      answer:
+        "No, the connection is specific to your account and won't be visible to other workspace members unless shared.",
+    },
+    {
+      question: "Can I connect multiple workspaces?",
+      answer:
+        "Yes, you can connect multiple workspaces, but you'll need to be pro plan.",
+    },
+    {
+      question: "I'm facing issues connecting my workspace. What should I do?",
+      answer:
+        "Ensure you have the necessary permissions in your Notion workspace. If the problem persists, please contact our support team.",
+    },
+    {
+      question: "Do I need to connect my workspace every time I create a form?",
+      answer:
+        "No, once connected, your workspace remains linked unless you choose to disconnect.",
+    },
+    {
+      question: "What happens if I modify my Notion page after connecting?",
+      answer:
+        "Any changes made in your Notion page will reflect in the forms you've created through UncleLife.co. Ensure to update your forms if necessary.",
+    },
+    {
+      question: "Are there any costs associated with connecting my workspace?",
+      answer:
+        "Connecting your workspace is free. However, certain advanced features might come with a subscription cost.",
+    },
+    {
+      question:
+        "Why does Uncle Life need access to basic information about all workspace members and guest data?",
+      answer:
+        "Uncle Life requires this access to support features like the 'person field' in forms. However, we only access the necessary data for the feature's functionality and do not store or use this information for any other purpose. Your privacy and data security are our top priorities.",
+    },
+  ];
 
   const [listWorkspace, setListWorkspace] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
-  const router = useRouter()
+  const router = useRouter();
 
   const supabase = createClientComponentClient();
 
@@ -61,15 +127,20 @@ const WorkspaceSetting = () => {
             description: notionIntegrationMessage,
             variant: "destructive",
             action: (
-              <ToastAction onClick={()=>{
-                router.push('/pricing')
-              }} altText="Try again">Upgrade</ToastAction>
+              <ToastAction
+                onClick={() => {
+                  router.push("/pricing");
+                }}
+                altText="Try again"
+              >
+                Upgrade
+              </ToastAction>
             ),
           });
         }
       }
     }, 2000);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addWorkspace = async () => {
@@ -175,6 +246,21 @@ const WorkspaceSetting = () => {
         You can reconnect the workspace to grant access once more to your Notion
         page.
       </p>
+
+      <div className="border-t pt-5 mt-10">
+        <Accordion type="multiple" className="w-full mt-5 mb-5">
+          {faqList.map((faq, index) => (
+            <AccordionItem key={index} value={`faq-${index}`}>
+              <AccordionTrigger className="w-full">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="w-full whitespace-pre-line">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
     </>
   );
 };
