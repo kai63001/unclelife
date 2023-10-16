@@ -76,9 +76,8 @@ const insertToken = async (data: any) => {
   //check workspace not match with user_id
   const { data: workspace, error: workspaceError } = await supabaseBypass
     .from("integration_notion")
-    .select("*")
+    .select("id,user_id")
     .eq("workspace_id", data.workspace_id)
-    .single();
 
   // if (workspaceError) {
   //   console.log(workspaceError,84);
@@ -87,7 +86,8 @@ const insertToken = async (data: any) => {
   //     error: workspaceError,
   //   });
   // }
-  if (workspace && workspace.user_id !== session.user.id && !is_subscribed) {
+  const isWorkspaceAlreadyExist:any = workspace?.filter((item:any) => item.user_id !== session.user.id) || []
+  if (workspace && isWorkspaceAlreadyExist?.length > 0 && !is_subscribed) {
     // return NextResponse.json({
     //   message: "error",
     //   error: "Workspace already integrated with another user",
@@ -128,7 +128,9 @@ const insertToken = async (data: any) => {
     }
   }
 
-  if (workspace) {
+  const myWorkspace = workspace?.filter((item:any) => item.user_id == session.user.id) || []
+
+  if (myWorkspace?.length > 0) {
     //update
     const { error } = await supabaseBypass
       .from("integration_notion")
