@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Mail } from "lucide-react";
 import dynamic from "next/dynamic";
+import ProBadge from "../toolsbar/ProBadge";
 const ListNotification = dynamic(
   () => import("./notification/ListNotification"),
   {
@@ -36,7 +37,7 @@ const ButtonNotification = () => {
         <DialogHeader>
           <DialogTitle className="flex space-x-2 items-center">
             <Mail className="h-4 w-4 mr-2" />
-            Notification & Integrations
+            Notification & Integrations <ProBadge />
           </DialogTitle>
           {/* <DialogDescription>
             Conditional logic enables you to tailor the form experience for your

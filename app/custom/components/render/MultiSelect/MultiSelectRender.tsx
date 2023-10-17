@@ -58,7 +58,7 @@ const MultiSelectRender = ({
     <></>
   ) : (
     <>
-      <Label htmlFor={data.label} className="text-lg">
+      <Label htmlFor={data.label} className="text-lg font-bold">
         <span
           className="inline-block"
           dangerouslySetInnerHTML={{
@@ -83,7 +83,7 @@ const MultiSelectRender = ({
           type="button"
           className={`flex shadow-sm ${
             error && "border border-red-500"
-          } focus:ring-0 focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
+          } focus-visible:ring-2 hover:shadow-md focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
           onClick={handleButtonClick}
         >
           {selected.length > 0 ? (
