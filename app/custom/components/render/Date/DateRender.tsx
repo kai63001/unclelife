@@ -52,7 +52,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
           <Button
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal shadow-sm",
+              "w-full justify-start text-left font-normal shadow-sm hover:shadow-md",
               !date && "text-muted-foreground",
               error && "border border-red-500"
             )}

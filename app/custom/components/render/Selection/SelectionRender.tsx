@@ -48,7 +48,7 @@ const SelectionRender = ({
           id={data.label}
           name={data.label}
           disabled={data.disable}
-          className={`w-full shadow-sm ${error && "border border-red-500"}`}
+          className={`w-full shadow-sm hover:shadow-md ${error && "border border-red-500"}`}
         >
           <SelectValue
             placeholder={

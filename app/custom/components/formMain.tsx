@@ -71,7 +71,7 @@ const FormMainBox = ({
       return;
     }
     //check condition logic
-    logic.forEach((item: any) => {
+    logic?.forEach((item: any) => {
       if (item.layerId !== data?.id) return;
       let newValue: any = value;
       if (data.type == "number") {
@@ -90,8 +90,6 @@ const FormMainBox = ({
       let shouldBeDisabled =
         dataLayerDefault.find((item: any) => item?.id === layerId)?.disabled ||
         false;
-
-      console.log("conditionMet", conditionMet);
 
       if (conditionMet) {
         if (item.then?.type === "required") {
@@ -471,82 +469,69 @@ const FormMainBox = ({
         <SuccessPageComponent />
       ) : (
         <>
-          <div className={cn("absolute w-full left-0")}>
-            {/*cover image*/}
-            {dataForm?.pro?.customizations?.coverPicture &&
-              dataUser?.is_subscribed && (
-                <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
-                  <Image
-                    src={dataForm?.pro?.customizations?.coverPicture as string}
-                    alt={"cover image"}
-                    fill
-                    className={"w-full h-full object-cover"}
-                  />
-                </div>
-              )}
-            {/* logo */}
-            {dataForm?.pro?.customizations?.logoPicture &&
-              dataUser?.is_subscribed && (
-                <div className="flex w-full">
-                  <div className="mx-auto w-full">
-                    <div className="mx-auto max-w-[700px] w-full h-32">
-                      <div
-                        className={cn(
-                          `h-32 w-32 bg-cover bg-center bg-no-repeat relative rounded-full overflow-hidden mx-4`,
-                          dataForm?.pro?.customizations?.coverPicture
-                            ? "-mt-[70px]"
-                            : "mt-4"
-                        )}
-                      >
-                        <Image
-                          src={
-                            dataForm?.pro?.customizations?.logoPicture as string
-                          }
-                          alt={"logo image"}
-                          fill
-                          className={"w-full h-full object-cover"}
-                        />
+          {testMode && (
+            <>
+              <div className={cn("absolute w-full left-0")}>
+                {/*cover image*/}
+                {dataForm?.pro?.customizations?.coverPicture &&
+                  dataUser?.is_subscribed && (
+                    <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
+                      <Image
+                        src={
+                          dataForm?.pro?.customizations?.coverPicture as string
+                        }
+                        alt={"cover image"}
+                        fill
+                        className={"w-full h-full object-cover"}
+                      />
+                    </div>
+                  )}
+                {/* logo */}
+                {dataForm?.pro?.customizations?.logoPicture &&
+                  dataUser?.is_subscribed && (
+                    <div className="flex w-full">
+                      <div className="mx-auto w-full">
+                        <div className="mx-auto max-w-[700px] w-full h-32">
+                          <div
+                            className={cn(
+                              `h-32 w-32 bg-cover bg-center bg-no-repeat relative rounded-full overflow-hidden mx-4`,
+                              dataForm?.pro?.customizations?.coverPicture
+                                ? "-mt-[70px]"
+                                : "mt-4"
+                            )}
+                          >
+                            <Image
+                              src={
+                                dataForm?.pro?.customizations
+                                  ?.logoPicture as string
+                              }
+                              alt={"logo image"}
+                              fill
+                              className={"w-full h-full object-cover"}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <div className=" w-full rounded-sm">
-                    <div className="flex justify-start w-full">
-                      <div
-                        className={cn(
-                          `h-32 w-32 bg-cover bg-center bg-no-repeat relative rounded-full overflow-hidden mx-4`,
-                          dataForm?.pro?.customizations?.coverPicture
-                            ? "-mt-[70px]"
-                            : "mt-4"
-                        )}
-                      >
-                        <Image
-                          src={
-                            dataForm?.pro?.customizations?.logoPicture as string
-                          }
-                          alt={"logo image"}
-                          fill
-                          className={"w-full h-full object-cover"}
-                        />
-                      </div>
-                    </div>
-                  </div> */}
-                </div>
+                  )}
+              </div>
+              {dataForm?.pro?.customizations?.coverPicture &&
+              dataUser?.is_subscribed &&
+              dataForm?.pro?.customizations?.logoPicture &&
+              dataUser?.is_subscribed ? (
+                <div className="h-64 mb-14"></div>
+              ) : dataForm?.pro?.customizations?.coverPicture &&
+                dataUser?.is_subscribed ? (
+                <div className="h-52 mb-14"></div>
+              ) : dataForm?.pro?.customizations?.logoPicture &&
+                dataUser?.is_subscribed ? (
+                <div className="h-24 mb-14"></div>
+              ) : (
+                <div></div>
               )}
-          </div>
-          {dataForm?.pro?.customizations?.coverPicture &&
-          dataUser?.is_subscribed &&
-          dataForm?.pro?.customizations?.logoPicture &&
-          dataUser?.is_subscribed ? (
-            <div className="h-64 mb-14"></div>
-          ) : dataForm?.pro?.customizations?.coverPicture &&
-            dataUser?.is_subscribed ? (
-            <div className="h-52 mb-14"></div>
-          ) : dataForm?.pro?.customizations?.logoPicture &&
-            dataUser?.is_subscribed ? (
-            <div className="h-24 mb-14"></div>
-          ) : (
-            <div></div>
+            </>
           )}
+
           <div className={"p-5"}>
             <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
             {dataForm?.description && (

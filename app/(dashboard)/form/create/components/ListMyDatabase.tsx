@@ -86,15 +86,16 @@ const ListMyDatabase = ({ session }: any) => {
         <AlertDialog open={true}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>No Workspace Detected</AlertDialogTitle>
+              <AlertDialogTitle className="text-2xl font-bold">
+                Connect your Notion Workspace
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                {`It appears you don't have any workspace set up yet. To proceed,
-                please add a workspace. This action will ensure your data is
-                organized and accessible.`}
+                {`Link your Notion workspace and begin gathering responses. Ensure you choose at least one Notion page.`}
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
+            <AlertDialogFooter className="flex justify-center sm:justify-center mt-10">
               <AlertDialogAction
+                className="animate-bounce"
                 onClick={() => {
                   router.push("/setting?tab=workspaces");
                 }}
@@ -103,6 +104,9 @@ const ListMyDatabase = ({ session }: any) => {
                 Connect a workspace
               </AlertDialogAction>
             </AlertDialogFooter>
+            <div className="text-xs border bg-muted px-3 py-3">
+              {`Your information remains in Notion. We don't keep any form responses.`}
+            </div>
           </AlertDialogContent>
         </AlertDialog>
       );
@@ -218,7 +222,9 @@ const ListMyDatabase = ({ session }: any) => {
             </div>
           </div>
         </motion.div>
-      ):<Skeleton className="py-24 mb-5"/>}
+      ) : (
+        <Skeleton className="py-24 mb-5" />
+      )}
       {/* border or at center */}
       <div className="relative mb-5">
         <div className="absolute inset-0 flex items-center">
