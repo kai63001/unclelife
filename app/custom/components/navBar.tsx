@@ -5,6 +5,7 @@ import OpenFormBtn from "./button/openForm";
 import ButtonEmbed from "@/app/custom/components/button/ButtonEmbed";
 import ControllerButtonSave from "./button/ControllerButtonSave";
 import ButtonCondition from "./button/ButtonCondition";
+import ButtonNotification from "./button/ButtonNotification";
 
 const CustomFormNavbar = async () => {
   const [session] = await Promise.all([getSession()]);
@@ -21,6 +22,7 @@ const CustomFormNavbar = async () => {
         <OpenFormBtn />
         <ButtonEmbed />
         <ButtonCondition />
+        <ButtonNotification />
       </div>
       <div className="flex space-x-3">
         <ButtonMapInput />
