@@ -77,7 +77,7 @@ const insertToken = async (data: any) => {
   const { data: workspace, error: workspaceError } = await supabaseBypass
     .from("integration_notion")
     .select("id,user_id")
-    .eq("workspace_id", data.workspace_id)
+    .eq("workspace_id", data.workspace_id);
 
   // if (workspaceError) {
   //   console.log(workspaceError,84);
@@ -86,7 +86,8 @@ const insertToken = async (data: any) => {
   //     error: workspaceError,
   //   });
   // }
-  const isWorkspaceAlreadyExist:any = workspace?.filter((item:any) => item.user_id !== session.user.id) || []
+  const isWorkspaceAlreadyExist: any =
+    workspace?.filter((item: any) => item.user_id !== session.user.id) || [];
   if (workspace && isWorkspaceAlreadyExist?.length > 0 && !is_subscribed) {
     // return NextResponse.json({
     //   message: "error",
@@ -108,13 +109,13 @@ const insertToken = async (data: any) => {
         .eq("user_id", session.user.id)
         .single();
 
-    if (workspaceCountError) {
-      console.log(workspaceCountError,112);
-      return NextResponse.json({
-        message: "error",
-        error: workspaceCountError,
-      });
-    }
+    // if (workspaceCountError) {
+    //   console.log(workspaceCountError, 112);
+    //   return NextResponse.json({
+    //     message: "error",
+    //     error: workspaceCountError,
+    //   });
+    // }
     if (workspaceCount && workspaceCount.workspace_id !== data.workspace_id) {
       // return NextResponse.json({
       //   message: "error",
@@ -128,7 +129,8 @@ const insertToken = async (data: any) => {
     }
   }
 
-  const myWorkspace = workspace?.filter((item:any) => item.user_id == session.user.id) || []
+  const myWorkspace =
+    workspace?.filter((item: any) => item.user_id == session.user.id) || [];
 
   if (myWorkspace?.length > 0) {
     //update
@@ -164,7 +166,7 @@ const insertToken = async (data: any) => {
   });
 
   if (error) {
-    console.log(error,165);
+    console.log(error, 165);
     return NextResponse.json({
       message: "error",
       error: error,
