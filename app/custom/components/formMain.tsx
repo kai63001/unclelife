@@ -401,6 +401,8 @@ const FormMainBox = ({
       toast
     );
 
+    // console.log("properties", properties);
+
     updateDatabase(databaseId, properties, dataUser.id, id)
       .then((e) => {
         if (e?.error) {
