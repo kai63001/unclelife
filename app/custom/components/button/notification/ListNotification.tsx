@@ -2,13 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Send, Mail } from "lucide-react";
-import { useState } from "react";
+import dynamic from "next/dynamic";
+const RespondentEmail = dynamic(() => import("./RespontEmail"), {
+  ssr: false,
+});
 
-const ListNotification = () => {
-  const [selectNotification, setSelectNotification]: any = useState("none");
-
+const ListNotification = ({
+  selectNotification,
+  setSelectNotification,
+}: any) => {
   if (selectNotification == "RespondentEmail") {
-    return <div>asd</div>;
+    return <RespondentEmail />;
   }
 
   return (
