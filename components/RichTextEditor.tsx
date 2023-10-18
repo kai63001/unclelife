@@ -4,13 +4,17 @@ import { cn } from "@/lib/utils";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
+  Baseline,
   Bold,
+  Heading1,
+  Heading2,
   Italic,
   Link as LinkIcon,
   Smile,
   Underline as UnderlineIcon,
 } from "lucide-react";
 import Underline from "@tiptap/extension-underline";
+import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import { useCallback, useEffect, useState } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
@@ -20,8 +24,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Color } from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import { Label } from "@/components/ui/label";
 
-const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
+const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
   const { theme } = useTheme();
   if (!editor) {
     return null;
@@ -38,12 +45,41 @@ const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
   };
 
   const addEmoji = (event: any) => {
-    const emoji = event.emoji
+    const emoji = event.emoji;
     editor?.chain().focus().insertContent(emoji).run();
   };
 
   return (
     <div className="flex space-x-1 flex-wrap">
+      <button
+        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        disabled={
+          !editor.can().chain().focus().toggleHeading({ level: 1 }).run()
+        }
+        className={cn(
+          "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
+          editor.isActive("heading", { level: 1 })
+            ? "bg-secondary text-primary"
+            : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
+        )}
+      >
+        <Heading1 className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        disabled={
+          !editor.can().chain().focus().toggleHeading({ level: 2 }).run()
+        }
+        className={cn(
+          "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
+          editor.isActive("heading", { level: 2 })
+            ? "bg-secondary text-primary"
+            : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
+        )}
+      >
+        <Heading2 className="h-4 w-4" />
+      </button>
+      <div className="pr-4"></div>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -112,6 +148,31 @@ const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
           <EmojiPicker onEmojiClick={addEmoji} theme={renderTheme()} />
         </PopoverContent>
       </Popover>
+      <div className="pr-4"></div>
+      <Label>
+        <div
+          className={cn(
+            "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
+            false
+              ? "bg-secondary text-primary"
+              : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
+          )}
+        >
+          <Baseline className="h-4 w-4" style={{
+            color: editor.getAttributes("textStyle").color,
+          }} />
+        </div>
+        <input
+          type="color"
+          id="colorPicker"
+          className="h-0 w-0 opacity-0 absolute"
+          onInput={(event: any) =>
+            editor.chain().focus().setColor(event.target.value).run()
+          }
+          value={editor.getAttributes("textStyle").color}
+          data-testid="setColor"
+        />
+      </Label>
     </div>
   );
 };
@@ -119,6 +180,11 @@ const MenuBar = ({ editor, setLink, minHeight=100 }: any) => {
 const RichTextEditor = (props: any) => {
   const [checkTextUpdate, setCheckTextUpdate] = useState(false);
   const editor: any = useEditor({
+    editorProps: {
+      attributes: {
+        class: "prose prose-xs mx-auto focus:outline-none",
+      },
+    },
     onUpdate: ({ editor }: any) => {
       if (props.onChange) props.onChange(editor.getHTML());
     },
@@ -133,6 +199,14 @@ const RichTextEditor = (props: any) => {
           class: "text-blue-500 hover:underline cursor-pointer",
         },
       }),
+      Heading.configure({
+        levels: [1, 2],
+        // add class to heading
+      }),
+      Color.configure({
+        types: ["textStyle"],
+      }),
+      TextStyle,
     ],
     content: props.content || "",
   });
@@ -164,7 +238,6 @@ const RichTextEditor = (props: any) => {
       editor.commands.setContent(props.content || "");
       setCheckTextUpdate(true);
     }
-
   }, [props.content, editor, checkTextUpdate]);
 
   return (

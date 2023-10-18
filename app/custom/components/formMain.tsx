@@ -539,7 +539,7 @@ const FormMainBox = ({
             {dataForm?.description && (
               <div
                 dangerouslySetInnerHTML={{ __html: dataForm?.description }}
-                className="text-muted-foreground prose text-sm whitespace-pre-line pt-1 pb-4"
+                className="prose text-sm whitespace-pre-line pt-1 pb-4"
               ></div>
             )}
             <form

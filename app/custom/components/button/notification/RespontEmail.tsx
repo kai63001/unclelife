@@ -24,7 +24,9 @@ const SendEmail = () => {
   const [emailSubject, setEmailSubject] = useState(
     "Your Submission Has Been Recorded!"
   );
-  const [emailContent, setEmailContent] = useState("");
+  const [emailContent, setEmailContent] = useState(`<p>Hey there! 😁</p>
+    <br/>
+  <p>Just letting you know that UncleLife has successfully received your form submission.</p>`);
   const { layer } = useAppSelector((state) => state.formReducer);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
