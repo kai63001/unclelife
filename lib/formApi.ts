@@ -72,3 +72,12 @@ export const updateCustomDomainForm = async (domain: any, mapping: any) => {
   });
   return response.data;
 };
+
+
+export const updateNotification = async (formId: any, notification: any) => {
+  const response = await notionApi.post(`/api/form/notification`, {
+    formId,
+    notification,
+  });
+  return response.data;
+}

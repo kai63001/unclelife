@@ -53,6 +53,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
     <div className="flex space-x-1 flex-wrap justify-between">
       <div className="flex space-x-1 flex-wrap">
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -69,6 +70,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
           <Heading1 className="h-4 w-4" />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -87,6 +89,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
       </div>
       <div className="flex space-x-1 flex-wrap">
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={cn(
@@ -99,6 +102,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
           <Bold className="h-4 w-4" />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={cn(
@@ -112,6 +116,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
         </button>
         {/* underline */}
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           disabled={!editor.can().chain().focus().toggleUnderline().run()}
           className={cn(
@@ -125,6 +130,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
         </button>
         {/* link */}
         <button
+          type="button"
           onClick={setLink}
           disabled={!editor.can().chain().focus().setLink().run()}
           className={cn(
@@ -142,7 +148,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
         <Label>
           <div
             className={cn(
-              "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
+              "cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
               false
                 ? "bg-secondary text-primary"
                 : "hover:bg-secondary hover:bg-opacity-10 hover:text-primary duration-75"
@@ -169,6 +175,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
         <Popover>
           <PopoverTrigger asChild>
             <button
+              type="button"
               className={cn(
                 "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
                 editor.isActive("underline")

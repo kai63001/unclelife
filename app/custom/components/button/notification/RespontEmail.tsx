@@ -8,30 +8,97 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAppSelector } from "@/app/redux/hook";
-import { AlertCircle, FileWarning, Terminal } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
+import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import RichTextEditor from "@/components/RichTextEditor";
+import { useToast } from "@/components/ui/use-toast";
+import RequiredStar from "../../render/RequireStar";
+import { setNotification } from "@/app/redux/slice/formController.slice";
+import { updateNotification } from "@/lib/formApi";
 
 const SendEmail = () => {
-  const [replyTo, setReplyTo] = useState("");
-  const [senderName, setSenderName] = useState("UncleLife");
-  const [emailSubject, setEmailSubject] = useState(
-    "Your Submission Has Been Recorded!"
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const { layer, notification, infomation } = useAppSelector(
+    (state) => state.formReducer
   );
-  const [emailContent, setEmailContent] = useState(`<p>Hey there! 😁</p>
-    <br/>
-  <p>Just letting you know that UncleLife has successfully received your form submission.</p>`);
-  const { layer } = useAppSelector((state) => state.formReducer);
+  const dispatch = useAppDispatch();
+  const [sendTo, setSendTo] = useState(
+    notification?.respondentEmail?.sendTo || undefined
+  );
+  const [replyTo, setReplyTo] = useState(
+    notification?.respondentEmail?.replyTo || ""
+  );
+  const [senderName, setSenderName] = useState(
+    notification?.respondentEmail?.senderName || "UncleLife"
+  );
+  const [emailSubject, setEmailSubject] = useState(
+    notification?.respondentEmail?.emailSubject ||
+      "Your Submission Has Been Recorded!"
+  );
+  const [emailContent, setEmailContent] = useState(
+    notification?.respondentEmail?.emailContent ||
+      `<p>Hey there! 😁</p>
+  <p>Just letting you know that UncleLife has successfully received your form submission.</p>`
+  );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Send email logic here
+    //validate sendTo required  replyTo is email senderName emailSubject emailContent required
+    if (!sendTo || !senderName || !emailSubject || !emailContent) {
+      toast({
+        title: "Error",
+        description: "Please fill all required field",
+        variant: "destructive",
+      });
+      return;
+    }
+    //validate replyTo is email when not empty
+    if (replyTo && !validateEmail(replyTo)) {
+      toast({
+        title: "Error",
+        description: "Reply To must be email",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    //set notification
+    dispatch(
+      setNotification({
+        ...notification,
+        respondentEmail: {
+          sendTo,
+          replyTo,
+          senderName,
+          emailSubject,
+          emailContent,
+        },
+      })
+    );
+    if (infomation?.id) {
+      const data = await updateNotification(infomation?.id, notification);
+      console.log(data)
+      //update form
+    }
+    toast({
+      title: "Success",
+      description: "Notification has been saved.",
+    });
+    setLoading(false);
+  };
+
+  const validateEmail = (email: string) => {
+    //with include @
+    return /\S+@\S+\.\S+/.test(email);
   };
 
   return (
@@ -53,10 +120,18 @@ const SendEmail = () => {
               </AlertDescription>
             </Alert>
           )}
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap space-y-2 -mx-3 mb-6">
             <div className="w-full px-3 mb-6 md:mb-0">
-              <Label htmlFor="sendTo">Send To:</Label>
-              <Select>
+              <Label htmlFor="sendTo">
+                Send To:
+                <RequiredStar />
+              </Label>
+              <Select
+                onValueChange={(e: any) => {
+                  setSendTo(e);
+                }}
+                value={sendTo}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Email Field" />
                 </SelectTrigger>
@@ -86,7 +161,10 @@ const SendEmail = () => {
               />
             </div>
             <div className="w-full px-3 mb-6 md:mb-0">
-              <Label htmlFor="senderName">Sender Name:</Label>
+              <Label htmlFor="senderName">
+                Sender Name:
+                <RequiredStar />
+              </Label>
               <Input
                 id="senderName"
                 type="text"
@@ -99,7 +177,10 @@ const SendEmail = () => {
               </span>
             </div>
             <div className="w-full px-3 mb-6 md:mb-0">
-              <Label htmlFor="emailSubject">Email Subject:</Label>
+              <Label htmlFor="emailSubject">
+                Email Subject:
+                <RequiredStar />
+              </Label>
               <Input
                 id="emailSubject"
                 type="text"
@@ -109,7 +190,10 @@ const SendEmail = () => {
               />
             </div>
             <div className="w-full px-3 mb-6 md:mb-0">
-              <Label htmlFor="emailContent">Email Content:</Label>
+              <Label htmlFor="emailContent">
+                Email Content:
+                <RequiredStar />
+              </Label>
               {/* <Input
                 id="emailContent"
                 type="textarea"
@@ -124,7 +208,9 @@ const SendEmail = () => {
             </div>
           </div>
           <div className="flex justify-end">
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit" className="w-40" loading={loading}>
+              Save Changes
+            </Button>
           </div>
         </form>
       </div>
