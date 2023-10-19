@@ -127,9 +127,19 @@ export const convertInputToProperty = async (
 ) => {
   const properties: any = {};
 
+  const validateValue = (value: any) => {
+    if (value == "" || value == null || value == undefined) {
+      return false;
+    }
+    return true;
+  };
+
   // console.log(inputForm);
   for (const [key, value] of Object.entries(input) as any) {
-    if (value.type === "title" || value.type === "rich_text") {
+    if (
+      value.type === "title" ||
+      (value.type === "rich_text" && validateValue(value.value))
+    ) {
       properties[key] = {
         [value.type]: [
           {
@@ -140,21 +150,24 @@ export const convertInputToProperty = async (
         ],
         type: value.type,
       };
-    } else if (value.type === "select" || value.type === "status") {
+    } else if (
+      value.type === "select" ||
+      (value.type === "status" && validateValue(value.value))
+    ) {
       properties[key] = {
         [value.type]: {
           name: value.value as string,
         },
         type: value.type,
       };
-    } else if (value.type === "date") {
+    } else if (value.type === "date" && validateValue(value.value)) {
       properties[key] = {
         [value.type]: {
           start: value.value as string,
         },
         type: value.type,
       };
-    } else if (value.type === "files") {
+    } else if (value.type === "files" && validateValue(value.value)) {
       let url = "";
       if (value.value === "") {
         return;
@@ -198,7 +211,7 @@ export const convertInputToProperty = async (
         ],
         type: value.type,
       };
-    } else if (value.type === "multi_select") {
+    } else if (value.type === "multi_select" && validateValue(value.value)) {
       let newValue = value.value;
       if (typeof value.value === "string") {
         newValue = [value.value];
@@ -213,21 +226,23 @@ export const convertInputToProperty = async (
         ],
         type: value.type,
       };
-    } else if (value.type === "number") {
+    } else if (value.type === "number" && validateValue(value.value)) {
       properties[key] = {
         [value.type]: parseInt(value.value),
         type: value.type,
       };
-    } else if (value.type === "radio_button") {
+    } else if (value.type === "radio_button" && validateValue(value.value)) {
       properties[key] = {
         [value.type]: value.value,
         type: value.type,
       };
     } else {
-      properties[key] = {
-        [value.type]: value.value,
-        type: value.type,
-      };
+      if (validateValue(value.value)) {
+        properties[key] = {
+          [value.type]: value.value,
+          type: value.type,
+        };
+      }
     }
   }
   return properties;
@@ -260,7 +275,7 @@ export const convertInputToProperty = async (
 //   return newLayer;
 // }
 
-export const addMapToLayer = (layer: any,property:any) => {
+export const addMapToLayer = (layer: any, property: any) => {
   const newLayer = layer.map((field: any) => {
     const { id, label, name, type, options: listOptions } = field;
     let newField = {
@@ -277,5 +292,4 @@ export const addMapToLayer = (layer: any,property:any) => {
     return newField;
   });
   return newLayer;
-}
-
+};

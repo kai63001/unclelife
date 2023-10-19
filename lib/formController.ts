@@ -6,7 +6,7 @@ const supabase = createClientComponentClient();
 export const getFormData = cache(async (id: string) => {
   return await supabase
     .from("form")
-    .select("layer,detail,databaseId,user_id (is_subscribed,id),logic")
+    .select("layer,detail,databaseId,user_id (is_subscribed,id),logic,notification")
     .eq("id", id)
     .single();
 });

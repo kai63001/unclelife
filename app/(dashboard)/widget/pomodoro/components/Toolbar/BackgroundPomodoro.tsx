@@ -23,7 +23,6 @@ import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 import {Check, Upload, Wallpaper} from "lucide-react";
 import Image from "next/image"
 import {AspectRatio} from "@/components/ui/aspect-ratio";
-import {supabase} from "@/lib/supabase";
 import {useEffect, useState} from "react";
 import {uploadPomodoroWallpaper} from "@/lib/pomodoro";
 import {Icons} from "@/components/Icons";
@@ -32,6 +31,7 @@ import {cn} from "@/lib/utils";
 
 const BackgroundPomodoroToolBar = () => {
     const dispatch = useAppDispatch()
+    const {supabase} = useSupabase()
     const {pomodoro, key} = useAppSelector(state => state.pomodoroReducer)
     const [images, setImages] = useState<any>([])
     const [withUrl, setWithUrl] = useState(false)
@@ -51,7 +51,7 @@ const BackgroundPomodoroToolBar = () => {
         }
         fetchImages().then(r => r)
 
-    }, []);
+    }, [supabase]);
 
     const handleBackgroundColor = (e: any) => {
         dispatch(setBackGroundColor(e.target.value))

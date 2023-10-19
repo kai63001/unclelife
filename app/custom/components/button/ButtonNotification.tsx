@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,9 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Mail } from "lucide-react";
+import { ArrowLeft, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import ProBadge from "../toolsbar/ProBadge";
+import { useState } from "react";
 const ListNotification = dynamic(
   () => import("./notification/ListNotification"),
   {
@@ -18,6 +20,17 @@ const ListNotification = dynamic(
 );
 
 const ButtonNotification = () => {
+  const [selectNotification, setSelectNotification]: any = useState("none");
+
+  const renderHeader = () => {
+    switch (selectNotification) {
+      case "RespondentEmail":
+        return "Respondent Email Notifications";
+      default:
+        return "Notification & Integrations";
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,18 +46,31 @@ const ButtonNotification = () => {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="sm:max-w-[650px]">
         <DialogHeader>
-          <DialogTitle className="flex space-x-2 items-center">
-            <Mail className="h-4 w-4 mr-2" />
-            Notification & Integrations <ProBadge />
+          <DialogTitle className="flex flex-col space-y-2">
+            {selectNotification != "none" && (
+              <div className="flex items-center">
+                <ArrowLeft
+                  onClick={() => setSelectNotification("none")}
+                  className="h-4 w-4 mr-2 cursor-pointer"
+                />
+              </div>
+            )}
+            <div className="flex space-x-2 items-center">
+              <Mail className="h-4 w-4 mr-2" />
+              {renderHeader()} <ProBadge />
+            </div>
           </DialogTitle>
           {/* <DialogDescription>
             Conditional logic enables you to tailor the form experience for your
             respondents by creating intelligent paths based on their input.
           </DialogDescription> */}
         </DialogHeader>
-        <ListNotification />
+        <ListNotification
+          selectNotification={selectNotification}
+          setSelectNotification={setSelectNotification}
+        />
       </DialogContent>
     </Dialog>
   );

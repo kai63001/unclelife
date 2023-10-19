@@ -15,6 +15,7 @@ export const insertForm = async ({
   detail,
   databaseId,
   logic,
+  notification,
 }: any) => {
   const response = await notionApi.post(`/api/form/main`, {
     workspaceId,
@@ -23,16 +24,24 @@ export const insertForm = async ({
     detail,
     databaseId,
     logic,
+    notification,
   });
   return response.data;
 };
 
-export const updateForm = async ({ id, detail, layer, logic }: any) => {
+export const updateForm = async ({
+  id,
+  detail,
+  layer,
+  logic,
+  notification,
+}: any) => {
   const response = await notionApi.put(`/api/form/main`, {
     id,
     detail,
     layer,
     logic,
+    notification,
   });
   return response.data;
 };
@@ -69,6 +78,22 @@ export const updateCustomDomainForm = async (domain: any, mapping: any) => {
   const response = await notionApi.put(`/api/form/custom-domain`, {
     domain,
     mapping,
+  });
+  return response.data;
+};
+
+export const updateNotification = async (formId: any, notification: any) => {
+  const response = await notionApi.post(`/api/form/notification`, {
+    formId,
+    notification,
+  });
+  return response.data;
+};
+
+export const sendEmail = async (formId: any, email: any) => {
+  const response = await notionApi.post(`/api/form/notification/send-email`, {
+    formId,
+    email,
   });
   return response.data;
 };

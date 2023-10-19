@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const client_id = process.env.NEXT_PUBLIC_NOTION_CLIENT_ID;
-    const client_secret = process.env.NEXT_PUBLIC_NOTION_CLIENT_SECRET;
+    const client_secret = process.env.NOTION_CLIENT_SECRET;
 
     const { data } = await axios.post(
       "https://api.notion.com/v1/oauth/token",

@@ -6,7 +6,7 @@ const renderApi = axios.create({
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     Accept: "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_RENDER_TOKEN}`,
+    Authorization: `Bearer ${process.env.RENDER_TOKEN}`,
   },
 });
 

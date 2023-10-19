@@ -11,6 +11,7 @@ export interface FormState {
   layer: any[];
   logic: any;
   infomation: any;
+  notification: any;
   alertPro: any[];
   modalMapInputOpen: boolean;
 }
@@ -33,6 +34,17 @@ const initialState: FormState = {
   infomation: {},
   layer: [],
   logic: [],
+  notification: {
+    // respondentEmail: {
+    //   enable: false,
+    //   sendTo: undefined,
+    //   replyTo: "",
+    //   senderName: "UncelLife",
+    //   emailSubject: "Your Submission Has Been Recorded!",
+    //   emailContent: `<p>Hey there! 😁</p>
+    //   <p>Just letting you know that UncleLife has successfully received your form submission.</p>`,
+    // },
+  },
   alertPro: [],
   modalMapInputOpen: false,
 };
@@ -83,6 +95,8 @@ export const formSlice = createSlice({
       state.tableOfDatabase = initialState.tableOfDatabase;
       state.alertPro = initialState.alertPro;
       state.modalMapInputOpen = initialState.modalMapInputOpen;
+      state.logic = initialState.logic;
+      state.notification = initialState.notification;
     },
     setInformation: (state, action: PayloadAction<any>) => {
       state.infomation = action.payload;
@@ -140,6 +154,9 @@ export const formSlice = createSlice({
       );
       state.logic[index] = action.payload;
     },
+    setNotification: (state, action: PayloadAction<any>) => {
+      state.notification = action.payload;
+    },
   },
 });
 
@@ -163,6 +180,7 @@ export const {
   setLogic,
   addLogic,
   deleteLogic,
+  setNotification,
 } = formSlice.actions;
 
 export default formSlice.reducer;
