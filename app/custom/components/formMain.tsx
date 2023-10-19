@@ -213,9 +213,13 @@ const FormMainBox = ({
       return ["files", "textBlock"].includes(item?.type);
     });
 
-    let checkLogic: any = [];
+    let other: any = [];
     if (logic?.length != 0) {
-      checkLogic = ["logic"];
+      other = ["logic"];
+    }
+
+    if (notification?.respondentEmail?.enable) {
+      other = [...other, "notification"];
     }
 
     listAlert = [
@@ -223,11 +227,17 @@ const FormMainBox = ({
       ...filterSuccessPage,
       ...filterProLayer,
       ...filterTypeProLayer,
-      ...checkLogic,
+      ...other,
     ];
 
     dispatch(setAlert(listAlert));
-  }, [dataForm, dataLayer, dispatch, logic]);
+  }, [
+    dataForm,
+    dataLayer,
+    dispatch,
+    logic,
+    notification?.respondentEmail?.enable,
+  ]);
 
   const setDefaultInputFormLayer = () => {
     let defaultLayer = [
@@ -419,7 +429,7 @@ const FormMainBox = ({
           });
         }
         //send Email
-        if (notification?.respondentEmail?.enable) {
+        if (notification?.respondentEmail?.enable && dataUser?.is_subscribed) {
           const sendTo = notification?.respondentEmail?.sendTo;
           if (!sendTo) {
             console.error("send to is empty");

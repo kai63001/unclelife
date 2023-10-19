@@ -28,15 +28,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No email provided" });
     }
 
-    const { data, error } = await supabaseBypass
+    const { data, error }: any = await supabaseBypass
       .from("form")
-      .select("notification")
+      .select("notification, user_id (is_subscribed)")
       .eq("id", formId)
       .single();
     if (error) {
       return NextResponse.json({
         message: "error",
         error: error,
+      });
+    }
+    if (!data?.user_id?.is_subscribed) {
+      return NextResponse.json({
+        message: "error",
+        error: "user not subscribed",
       });
     }
 
