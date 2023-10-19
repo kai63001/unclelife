@@ -1,3 +1,9 @@
+const securityHeaders = [
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+];
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -8,6 +14,31 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/",
+        headers: securityHeaders,
+      },
+      {
+        source: "/login",
+        headers: securityHeaders,
+      },
+      {
+        source: "/register",
+        headers: securityHeaders,
+      },
+      {
+        source: "/dashboard/:path*",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+        ],
+      },
+    ];
   },
   poweredByHeader: false,
 };

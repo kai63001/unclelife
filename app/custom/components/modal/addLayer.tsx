@@ -22,7 +22,7 @@ import {
   ListChecks,
   Upload,
   Text,
-  PlusCircle
+  PlusCircle,
 } from "lucide-react";
 import { RocketIcon } from "@radix-ui/react-icons";
 
@@ -193,10 +193,14 @@ const ModalAddLayer = () => {
     return titles[Math.floor(Math.random() * titles.length)];
   };
 
-  const addLayer = (type: string,block:boolean = false) => {
+  const addLayer = (type: string, block: boolean = false) => {
     const labelName = randomTitleWithType(type);
+    //no duplicate id
     let newLayer: any = {
-      id: layer.length + 1,
+      id:
+        layer.length > 0
+          ? Math.max(...layer.map((item: any) => item.id)) + 1
+          : 1,
       name: labelName,
       type: type,
       label: labelName,
@@ -227,6 +231,11 @@ const ModalAddLayer = () => {
       };
     }
     dispatch(addMoreLayer(newLayer));
+    // console.log(
+    //   "newLayer",
+    //   newLayer,
+    //   layer.map((item: any) => item.id)
+    // );
     //close modal
     setOpen(false);
   };

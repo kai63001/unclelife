@@ -8,7 +8,15 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  const { workspaceId, layer, user_id, detail, databaseId, logic } = body;
+  const {
+    workspaceId,
+    layer,
+    user_id,
+    detail,
+    databaseId,
+    logic,
+    notification,
+  } = body;
   if (workspaceId === null) {
     return NextResponse.json({ error: "No workspaceId provided" });
   }
@@ -63,6 +71,7 @@ export async function POST(req: NextRequest) {
           databaseId: databaseId,
           access_token: token,
           logic: logic,
+          notification,
         },
       ])
       .select("id")
@@ -90,7 +99,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const body = await req.json();
 
-  const { id, detail, layer, logic } = body;
+  const { id, detail, layer, logic, notification } = body;
   if (layer === null) {
     return NextResponse.json({ error: "No layer provided" });
   }
@@ -119,6 +128,7 @@ export async function PUT(req: NextRequest) {
         detail: detail,
         layer: layer,
         logic,
+        notification,
       })
       .select();
 

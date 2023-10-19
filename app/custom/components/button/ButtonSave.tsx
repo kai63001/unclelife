@@ -27,7 +27,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
 
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { layer, infomation, databaseId, form, workspaceId, logic } =
+  const { layer, infomation, databaseId, form, workspaceId, logic, notification } =
     useAppSelector((state) => state.formReducer);
   const [warning, setWarning] = useState(false);
   const [mapLength, setMapLength] = useState(0);
@@ -44,7 +44,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       (item: any) => item.mapTo && item.block != true
     );
     const newLayer = layer.filter((item: any) => item.block != true);
-    console.log("inputForm", inputForm);
+    // console.log("inputForm", inputForm);
     // console.log(layer.length, inputForm.length);
     if (newLayer.length != inputForm.length) {
       setWarning(true);
@@ -78,6 +78,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
         detail: newForm,
         layer: layer,
         logic: logic,
+        notification
       });
       if (error) {
         console.log(error);
@@ -115,6 +116,7 @@ const ButtonSaveCustomForm = ({ session }: any) => {
       databaseId,
       workspaceId,
       logic,
+      notification
     });
     if (error) {
       console.log(error);

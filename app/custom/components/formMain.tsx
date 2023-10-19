@@ -15,6 +15,7 @@ import {
   setInformation,
   setLayer,
   setLogic,
+  setNotification,
   setWorkspaceId,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
@@ -24,6 +25,7 @@ import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
 import { evaluateGroup } from "@/lib/formController";
+import { sendEmail } from "@/lib/formApi";
 
 const FormMainBox = ({
   id = null,
@@ -43,7 +45,7 @@ const FormMainBox = ({
   const [dataLayerDefault, setDataLayerDefault] = useState<any>([]);
   const [dataUser, setDataUser] = useState<any>({});
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId, logic } = useAppSelector(
+  const { form, layer, workspaceId, logic, notification } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
@@ -268,6 +270,7 @@ const FormMainBox = ({
     dispatch(setDatabaseId(res.data.databaseId));
     dispatch(setAllForm(res.data.detail));
     dispatch(setLogic(res?.data?.logic));
+    dispatch(setNotification(res?.data?.notification));
     if (!workspaceId) {
       dispatch(setWorkspaceId(res.data.detail.workspaceId));
     }
@@ -293,7 +296,7 @@ const FormMainBox = ({
       try {
         supabase
           .from("form")
-          .select("layer,detail,databaseId,user_id,logic")
+          .select("layer,detail,databaseId,user_id,logic,notification")
           .eq("id", _id)
           .single()
           .then((res: any) => {
@@ -377,6 +380,8 @@ const FormMainBox = ({
    * @returns void
    */
   const submitForm = async (e: any) => {
+    // console.log(notification?.respondentEmail.sendTo);
+    // console.log(inputForm[notification?.respondentEmail.sendTo]?.value);
     e.preventDefault();
     if (!checkRequire()) {
       return;
@@ -404,7 +409,7 @@ const FormMainBox = ({
     // console.log("properties", properties);
 
     updateDatabase(databaseId, properties, dataUser.id, id)
-      .then((e) => {
+      .then(async (e) => {
         if (e?.error) {
           //toast error
           toast({
@@ -412,6 +417,36 @@ const FormMainBox = ({
             description: e?.error,
             variant: "destructive",
           });
+        }
+        //send Email
+        if (notification?.respondentEmail?.enable) {
+          const sendTo = notification?.respondentEmail?.sendTo;
+          if (!sendTo) {
+            console.error("send to is empty");
+            return;
+          }
+          const layer = dataLayer?.find(
+            (item: any) => item?.id === parseInt(sendTo)
+          );
+          if (!layer) {
+            console.error("layer is empty");
+            return;
+          }
+          const mapDataSendTo = inputForm[layer?.mapTo]?.value;
+          if (!mapDataSendTo) {
+            console.error("mapDataSendTo is empty");
+            return;
+          }
+          //validate email
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mapDataSendTo)) {
+            toast({
+              title: "Error",
+              description: "Invalid email",
+              variant: "destructive",
+            });
+            return;
+          }
+          await sendEmail(id, mapDataSendTo);
         }
       })
       .catch((error) => {

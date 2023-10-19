@@ -1,7 +1,6 @@
 "use client"
 import {Button} from "@/components/ui/button";
 import {useAppDispatch, useAppSelector} from "@/app/redux/hook";
-import {supabase} from "@/lib/supabase";
 import {useState} from "react";
 import {Icons} from "@/components/Icons";
 import {setIdPomodoro} from "@/app/redux/slice/pomodoroController.slice";
@@ -10,6 +9,7 @@ import {Copy, ExternalLink} from "lucide-react";
 import {useToast} from "@/components/ui/use-toast";
 
 const SaveButtonPomodoroToolbar = () => {
+    const {supabase} = useSupabase();
     const {user} = useSupabase();
     const {toast} = useToast()
     const dispatch = useAppDispatch()
