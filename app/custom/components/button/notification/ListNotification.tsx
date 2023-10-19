@@ -28,6 +28,7 @@ const ListNotification = ({
       <Button
         variant={"outline"}
         className="py-5"
+        disabled={true}
         onClick={() => setSelectNotification("SelfEmail")}
       >
         <Mail className="h-4 w-4 mr-2" />
