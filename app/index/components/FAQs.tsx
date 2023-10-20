@@ -45,7 +45,7 @@ const FAQs = () => {
         },
         {
             question: "Is UncleLife.co mobile-friendly?",
-            answer: "Yes, our platform is designed to be responsive and works seamlessly on both desktop and mobile devices."
+            answer: "Yes, our platform is designed to be responsive and works seamlessly on both desktop and mobile devices. but we recommend using it on desktop for the best experience."
         }
     ];
 
