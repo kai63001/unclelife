@@ -22,14 +22,14 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "en_IE",
       url: "https://unclelife.co",
       siteName: "Uncle Life",
-      images: ["https://unclelife.co/og.png"],
+      images: ["https://unclelife.co/og2.jpg"],
     },
     twitter: {
       title: "Uncle Life",
       card: "summary_large_image",
       site: "@unclelife",
       creator: "@unclelife",
-      images: ["https://unclelife.co/og.png"],
+      images: ["https://unclelife.co/og2.jpg"],
     },
   };
 }

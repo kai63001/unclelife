@@ -52,7 +52,6 @@ const TabListSetting = () => {
             <CardDescription>
               Make changes to your account here.
               <br />
-              Soon...
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

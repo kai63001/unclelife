@@ -38,6 +38,12 @@ const PricingFeatureTable = () => {
           pro: true,
           enterprise: true,
         },
+        {
+          name: "Respondent Email Notifications",
+          free: false,
+          pro: true,
+          enterprise: true,
+        },
         { name: "Custom CSS", free: false, pro: true, enterprise: true },
         { name: "File Uploads", free: false, pro: "5 MB", enterprise: "20 MB" },
         { name: "Custom Redirects", free: false, pro: true, enterprise: true },
