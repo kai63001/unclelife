@@ -23,7 +23,7 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
   const [value, setValue] = React.useState("");
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} modal onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -73,11 +73,11 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[560px] p-0">
+      <PopoverContent className="w-[560px] p-0 overflow-auto z-[100]">
         <Command className="w-full">
           <CommandInput placeholder="Search Notion Page..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
-          <CommandGroup>
+          <CommandEmpty>No Database found.</CommandEmpty>
+          <CommandGroup className="max-h-96 overflow-scroll">
             {listPage.map((page: any) => (
               <CommandItem
                 key={page.id}
