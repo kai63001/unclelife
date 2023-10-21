@@ -10,32 +10,32 @@ const SuccessPageComponent = ({ testMode = false }: any) => {
     <div className="flex items-center justify-center">
       <div className="p-6 ">
         {!(
-          dataForm?.pro?.successPage?.icon == "hide" &&
+          dataForm?.free?.successPage?.icon == "hide" &&
           (dataUser?.is_subscribed || testMode)
         ) && (
           <div className="flex items-center justify-center">
             <p className="text-7xl">
-              {dataForm?.pro?.successPage?.icon &&
+              {dataForm?.free?.successPage?.icon &&
               (dataUser?.is_subscribed || testMode)
-                ? dataForm?.pro?.successPage?.icon
+                ? dataForm?.free?.successPage?.icon
                 : "🎉"}
             </p>
           </div>
         )}
         <div className="flex flex-col items-center justify-center mt-5">
           <h1 className="text-3xl font-bold text-muted-foreground">
-            {dataForm?.pro?.successPage?.title != undefined &&
+            {dataForm?.free?.successPage?.title != undefined &&
             (dataUser?.is_subscribed || testMode)
-              ? dataForm?.pro?.successPage?.title
+              ? dataForm?.free?.successPage?.title
               : "Thank you!"}
           </h1>
           <p
             className="mt-2 text-gray-600 prose"
             dangerouslySetInnerHTML={{
               __html:
-                dataForm?.pro?.successPage?.description != undefined &&
+                dataForm?.free?.successPage?.description != undefined &&
                 (dataUser?.is_subscribed || testMode)
-                  ? dataForm?.pro?.successPage?.description
+                  ? dataForm?.free?.successPage?.description
                   : "Your form has been submitted.",
             }}
           ></p>

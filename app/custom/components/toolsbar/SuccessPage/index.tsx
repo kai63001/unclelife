@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -20,6 +19,7 @@ import { useTheme } from "next-themes";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import RichTextEditor from "@/components/RichTextEditor";
+import ProBadge from "../ProBadge";
 
 const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
   const { theme } = useTheme();
@@ -28,40 +28,40 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
   const handleClickChangeIcon = (icon: any) => {
     onChangeHook(
       {
-        ...form?.pro,
+        ...form?.free,
         successPage: {
-          ...form?.pro?.successPage,
+          ...form?.free?.successPage,
           ["icon"]: icon.emoji,
         },
       },
-      "pro"
+      "free"
     );
   };
 
   const clearIcon = () => {
     onChangeHook(
       {
-        ...form?.pro,
+        ...form?.free,
         successPage: {
-          ...form?.pro?.successPage,
+          ...form?.free?.successPage,
           ["icon"]: "",
         },
       },
-      "pro"
+      "free"
     );
   };
 
   const hideIcon = () => {
-    const icon = form?.pro?.successPage?.icon === "hide" ? "" : "hide";
+    const icon = form?.free?.successPage?.icon === "hide" ? "" : "hide";
     onChangeHook(
       {
-        ...form?.pro,
+        ...form?.free,
         successPage: {
-          ...form?.pro?.successPage,
+          ...form?.free?.successPage,
           ["icon"]: icon,
         },
       },
-      "pro"
+      "free"
     );
   };
 
@@ -79,7 +79,7 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
     <AccordionItem value="customSuccessPage">
       <AccordionTrigger className={"hover:no-underline"}>
         <div>
-          Submission <ProBadge />
+          Submission
         </div>
       </AccordionTrigger>
       <AccordionContent>
@@ -92,14 +92,14 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
               <PopoverTrigger asChild>
                 <Button
                   disabled={
-                    form?.pro?.successPage?.icon === "hide" || customRedirect
+                    form?.free?.successPage?.icon === "hide" || customRedirect
                   }
                   variant="outline"
                   size="icon"
                 >
-                  {form?.pro?.successPage?.icon &&
-                  form?.pro?.successPage?.icon !== "hide"
-                    ? form?.pro?.successPage?.icon
+                  {form?.free?.successPage?.icon &&
+                  form?.free?.successPage?.icon !== "hide"
+                    ? form?.free?.successPage?.icon
                     : "🎉"}
                 </Button>
               </PopoverTrigger>
@@ -119,8 +119,8 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
                 </Tabs>
               </PopoverContent>
             </Popover>
-            {form?.pro?.successPage?.icon &&
-              form?.pro?.successPage?.icon != "hide" && (
+            {form?.free?.successPage?.icon &&
+              form?.free?.successPage?.icon != "hide" && (
                 <Button
                   disabled={customRedirect}
                   onClick={clearIcon}
@@ -137,7 +137,7 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
               variant="outline"
               size="icon"
             >
-              {form?.pro?.successPage?.icon === "hide" ? (
+              {form?.free?.successPage?.icon === "hide" ? (
                 <EyeClosedIcon className={"w-4 h-4"} />
               ) : (
                 <EyeOpenIcon className={"w-4 h-4"} />
@@ -152,18 +152,18 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
               placeholder="Thank you!"
               disabled={customRedirect}
               className="focus:outline-none focus-visible:ring-0"
-              value={form?.pro?.successPage?.title}
+              value={form?.free?.successPage?.title}
               onChange={(e) => {
                 console.log(e.target.value);
                 onChangeHook(
                   {
-                    ...form?.pro,
+                    ...form?.free,
                     successPage: {
-                      ...form?.pro?.successPage,
+                      ...form?.free?.successPage,
                       ["title"]: e.target.value,
                     },
                   },
-                  "pro"
+                  "free"
                 );
               }}
             />
@@ -172,17 +172,17 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
             <div className="text-xs font-bold mb-2">DESCRIPTION</div>
             <RichTextEditor
               disabled={customRedirect}
-              value={form?.pro?.successPage?.description}
+              value={form?.free?.successPage?.description}
               onChange={(e:any) => {
                 onChangeHook(
                   {
-                    ...form?.pro,
+                    ...form?.free,
                     successPage: {
-                      ...form?.pro?.successPage,
+                      ...form?.free?.successPage,
                       ["description"]: e,
                     },
                   },
-                  "pro"
+                  "free"
                 );
               }}
             />
@@ -194,7 +194,7 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
                   setCustomRedirect(e);
                 }}
               />
-              <p className={"font-bold"}>Custom Redirect</p>
+              <p className={"font-bold"}>Custom Redirect <ProBadge/></p>
             </div>
             {customRedirect && (
               <div className={"mt-5"}>
