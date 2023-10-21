@@ -29,12 +29,16 @@ const SuccessPageComponent = ({ testMode = false }: any) => {
               ? dataForm?.pro?.successPage?.title
               : "Thank you!"}
           </h1>
-          <p className="mt-2 text-gray-600">
-            {dataForm?.pro?.successPage?.description != undefined &&
-            (dataUser?.is_subscribed || testMode)
-              ? dataForm?.pro?.successPage?.description
-              : "Your form has been submitted."}
-          </p>
+          <p
+            className="mt-2 text-gray-600 prose"
+            dangerouslySetInnerHTML={{
+              __html:
+                dataForm?.pro?.successPage?.description != undefined &&
+                (dataUser?.is_subscribed || testMode)
+                  ? dataForm?.pro?.successPage?.description
+                  : "Your form has been submitted.",
+            }}
+          ></p>
           {!(
             dataForm?.pro?.customizations?.hideBranding_pro &&
             (dataUser?.is_subscribed || testMode)
