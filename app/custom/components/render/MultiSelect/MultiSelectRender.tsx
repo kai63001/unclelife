@@ -58,24 +58,26 @@ const MultiSelectRender = ({
     <></>
   ) : (
     <>
-      <Label htmlFor={data.label} className="text-lg font-bold">
-        <span
-          className="inline-block"
-          dangerouslySetInnerHTML={{
-            __html: data?.label,
-          }}
-        ></span>
-        {data.required && <RequiredStar />}
-      </Label>
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+          <span
+            className="inline-block"
+            dangerouslySetInnerHTML={{
+              __html: data?.label,
+            }}
+          ></span>
+          {data.required && <RequiredStar />}
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
-          <p
-            className="text-muted-foreground"
-            dangerouslySetInnerHTML={{
-              __html: data?.help,
-            }}
-          ></p>
-        )}
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       <div className="w-full">
         <button
           ref={buttonRef}
@@ -131,14 +133,15 @@ const MultiSelectRender = ({
           </div>
         </div>
       )}
-      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
-        <p
-          className="text-muted-foreground"
-          dangerouslySetInnerHTML={{
-            __html: data?.help,
-          }}
-        ></p>
-      )}
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );

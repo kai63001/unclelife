@@ -41,11 +41,8 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
     <></>
   ) : (
     <>
-      <Label
-        htmlFor={"uploadFileForm"}
-        className="flex flex-col space-y-2 text-lg font-bold cursor-text"
-      >
-        <div>
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -53,8 +50,8 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
             }}
           ></span>
           {data.required && <RequiredStar />}
-        </div>
-      </Label>
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p

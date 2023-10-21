@@ -28,15 +28,17 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
     <></>
   ) : (
     <>
-      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        <span
-          className="inline-block"
-          dangerouslySetInnerHTML={{
-            __html: data?.label,
-          }}
-        ></span>
-        {data.required && <RequiredStar />}
-      </Label>
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+          <span
+            className="inline-block"
+            dangerouslySetInnerHTML={{
+              __html: data?.label,
+            }}
+          ></span>
+          {data.required && <RequiredStar />}
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p

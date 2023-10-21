@@ -19,24 +19,26 @@ const SelectionRender = ({
     <></>
   ) : (
     <>
-      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        <span
-          className="inline-block"
-          dangerouslySetInnerHTML={{
-            __html: data?.label,
-          }}
-        ></span>
-        {data.required && <RequiredStar />}
-      </Label>
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+          <span
+            className="inline-block"
+            dangerouslySetInnerHTML={{
+              __html: data?.label,
+            }}
+          ></span>
+          {data.required && <RequiredStar />}
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
-          <p
-            className="text-muted-foreground"
-            dangerouslySetInnerHTML={{
-              __html: data?.help,
-            }}
-          ></p>
-        )}
+        <p
+          className="text-muted-foreground"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
       <Select
         name={data.label}
         onValueChange={(e) => {
@@ -48,7 +50,9 @@ const SelectionRender = ({
           id={data.label}
           name={data.label}
           disabled={data.disable}
-          className={`w-full shadow-sm hover:shadow-md ${error && "border border-red-500"}`}
+          className={`w-full shadow-sm hover:shadow-md ${
+            error && "border border-red-500"
+          }`}
         >
           <SelectValue
             placeholder={
@@ -70,14 +74,15 @@ const SelectionRender = ({
           </SelectGroup>
         </SelectContent>
       </Select>
-      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
-        <p
-          className="text-muted-foreground"
-          dangerouslySetInnerHTML={{
-            __html: data?.help,
-          }}
-        ></p>
-      )}
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
     </>
   );
