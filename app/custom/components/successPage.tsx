@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useAppSelector } from "@/app/redux/hook";
+import { Button } from "@/components/ui/button";
 
-const SuccessPageComponent = ({ testMode = false }: any) => {
+const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
   const { form: dataForm } = useAppSelector((state) => state.formReducer);
   const { data: dataUser } = useAppSelector((state) => state.userReducer);
 
@@ -30,7 +31,7 @@ const SuccessPageComponent = ({ testMode = false }: any) => {
               : "Thank you!"}
           </h1>
           <p
-            className="mt-2 text-gray-600 prose"
+            className="mt-2 prose"
             dangerouslySetInnerHTML={{
               __html:
                 dataForm?.free?.successPage?.description != undefined &&
@@ -39,6 +40,17 @@ const SuccessPageComponent = ({ testMode = false }: any) => {
                   : "Your form has been submitted.",
             }}
           ></p>
+          {dataForm?.free?.successPage?.refill && (
+            <Button
+              className="mt-2"
+              onClick={() => {
+                setSuccessSubmit(false);
+              }}
+            >
+              {dataForm?.free?.successPage?.refillText || "Refill Form"}
+            </Button>
+          )}
+          
           {!(
             dataForm?.pro?.customizations?.hideBranding_pro &&
             (dataUser?.is_subscribed || testMode)

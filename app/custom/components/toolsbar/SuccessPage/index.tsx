@@ -20,6 +20,16 @@ import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import RichTextEditor from "@/components/RichTextEditor";
 import ProBadge from "../ProBadge";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
   const { theme } = useTheme();
@@ -78,9 +88,7 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
   return (
     <AccordionItem value="customSuccessPage">
       <AccordionTrigger className={"hover:no-underline"}>
-        <div>
-          Submission
-        </div>
+        <div>Success Page</div>
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col space-y-2">
@@ -173,7 +181,7 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
             <RichTextEditor
               disabled={customRedirect}
               value={form?.free?.successPage?.description}
-              onChange={(e:any) => {
+              onChange={(e: any) => {
                 onChangeHook(
                   {
                     ...form?.free,
@@ -188,36 +196,145 @@ const SuccessPageCustomComponent = ({ onChangeHook, form }: any) => {
             />
           </div>
           <div>
-            <div className={"flex space-x-3 items-center"}>
-              <Switch
-                onCheckedChange={(e) => {
-                  setCustomRedirect(e);
-                }}
-              />
-              <p className={"font-bold"}>Custom Redirect <ProBadge/></p>
-            </div>
-            {customRedirect && (
-              <div className={"mt-5"}>
-                <div className="text-xs font-bold mb-2">URL</div>
-                <Input
-                  placeholder="https://www.unclelife.co"
-                  className="focus:outline-none focus-visible:ring-0"
-                  value={form?.pro?.successPage?.redirect}
-                  onChange={(e) => {
+            <div className="mb-2">
+              <div className={"flex space-x-3 items-center"}>
+                <Switch
+                  onCheckedChange={(e) => {
                     onChangeHook(
                       {
-                        ...form?.pro,
+                        ...form?.free,
                         successPage: {
-                          ...form?.pro?.successPage,
-                          ["redirect"]: e.target.value,
+                          ...form?.free?.successPage,
+                          ["refill"]: e,
                         },
                       },
-                      "pro"
+                      "free"
                     );
                   }}
+                  checked={form?.free?.successPage?.refill}
                 />
+                <p className={"font-bold"}>Re-fillable Form</p>
               </div>
-            )}
+              <p className={"text-xs text-muted-foreground"}>
+                Allow users to re-fill the form after submitting.
+              </p>
+              {form?.free?.successPage?.refill && (
+                <div>
+                  <div>
+                    <div className={"flex space-x-3 items-center"}>
+                      <Switch
+                        onCheckedChange={(e) => {
+                          onChangeHook(
+                            {
+                              ...form?.free,
+                              successPage: {
+                                ...form?.free?.successPage,
+                                ["refillBypass"]: e,
+                              },
+                            },
+                            "free"
+                          );
+                        }}
+                        checked={form?.free?.successPage?.refillBypass}
+                      />
+                      <p className={"font-bold"}>Bypass Re-fillable Form</p>
+                    </div>
+                    <p className={"text-xs text-muted-foreground"}>
+                      After submitting, bypass the success page and display an
+                      empty form again.
+                    </p>
+                  </div>
+                  {form?.free?.successPage?.refillBypass && (
+                    <Select
+                      onValueChange={(e) => {
+                        onChangeHook(
+                          {
+                            ...form?.free,
+                            successPage: {
+                              ...form?.free?.successPage,
+                              ["alertTypeBypass"]: e,
+                            },
+                          },
+                          "free"
+                        );
+                      }}
+                      value={form?.free?.successPage?.alertTypeBypass || "toast"}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a alert type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="toast">Toast</SelectItem>
+                          <SelectItem value="box">Box</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                  {!form?.free?.successPage?.refillBypass && (
+                    <div>
+                      <Label className="text-xs font-bold">
+                        Re-fillable Button Text
+                      </Label>
+                      <Input
+                        placeholder="Refill Form"
+                        className="focus:outline-none focus-visible:ring-0"
+                        value={form?.free?.successPage?.refillText}
+                        onChange={(e) => {
+                          onChangeHook(
+                            {
+                              ...form?.free,
+                              successPage: {
+                                ...form?.free?.successPage,
+                                ["refillText"]: e.target.value,
+                              },
+                            },
+                            "free"
+                          );
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <div>
+              <div className={"flex space-x-3 items-center"}>
+                <Switch
+                  onCheckedChange={(e) => {
+                    setCustomRedirect(e);
+                  }}
+                />
+                <p className={"font-bold"}>
+                  Custom Redirect <ProBadge />
+                </p>
+              </div>
+              <p className={"text-xs text-muted-foreground"}>
+                Redirect users to a custom URL after submitting.
+              </p>
+              {customRedirect && (
+                <div className={"mt-5"}>
+                  <div className="text-xs font-bold mb-2">URL</div>
+                  <Input
+                    placeholder="https://www.unclelife.co"
+                    className="focus:outline-none focus-visible:ring-0"
+                    value={form?.pro?.successPage?.redirect}
+                    onChange={(e) => {
+                      onChangeHook(
+                        {
+                          ...form?.pro,
+                          successPage: {
+                            ...form?.pro?.successPage,
+                            ["redirect"]: e.target.value,
+                          },
+                        },
+                        "pro"
+                      );
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </AccordionContent>
