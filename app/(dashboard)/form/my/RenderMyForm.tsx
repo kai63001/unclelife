@@ -17,17 +17,15 @@ import { TableMyForm } from "./TableMyForm";
 
 export const revalidate = 60;
 const RenderMyForm = async ({ limit = 1000 }: { limit?: number }) => {
-  //get user id
-  //get all forms with user id
-  const supabase = createServerSupabaseClient(),
-    { data: session } = await supabase.auth.getSession(),
-    userId = session?.session?.user?.id,
-    { data, error } = await supabase
-      .from("form")
-      .select("id,detail,databaseId,created_at")
-      .eq("user_id", userId)
-      .limit(limit)
-      .order("created_at", { ascending: false });
+  const supabase = createServerSupabaseClient();
+  const { data: session } = await supabase.auth.getSession();
+  const userId = session?.session?.user?.id;
+  const { data, error } = await supabase
+    .from("form")
+    .select("id,detail,databaseId,created_at")
+    .eq("user_id", userId)
+    .limit(limit)
+    .order("created_at", { ascending: false });
   if (error) {
     console.log(error);
   }
@@ -53,16 +51,6 @@ const RenderMyForm = async ({ limit = 1000 }: { limit?: number }) => {
           {data?.map((form: any, index: number) => (
             <TableMyForm key={index} form={form} />
           ))}
-          {/* {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">
-                {invoice.totalAmount}
-              </TableCell>
-            </TableRow>
-          ))} */}
         </TableBody>
       </Table>
     </>

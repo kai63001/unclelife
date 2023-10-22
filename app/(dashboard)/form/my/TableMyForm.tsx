@@ -34,12 +34,12 @@ export const TableMyForm = ({ form }: any) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const renderDate = async (date: any) => {
+  const renderDate = (date: any) => {
     const newDate = new Date(date);
     return dayjs().to(newDate);
   };
 
-  const renderFullDate = async (date: any) => {
+  const renderFullDate = (date: any) => {
     const newDate = new Date(date);
     return dayjs().format("DD/MM/YYYY HH:mm:ss");
   };
@@ -71,7 +71,7 @@ export const TableMyForm = ({ form }: any) => {
     <>
       <TableRow>
         <TableCell className="font-bold">
-          <Link href={"/"} className="w-full hover:underline">
+          <Link href={`/form/detail/${form?.id}`} className="w-full hover:underline">
             {form?.detail?.title || "Form"}
           </Link>
         </TableCell>

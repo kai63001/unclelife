@@ -1,8 +1,12 @@
 import { Suspense } from "react";
-import RenderMyForm from "@/app/(dashboard)/form/my/RenderMyForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import RenderMyFormLoading from "./RenderMyFormLoading";
+import dynamic from "next/dynamic";
+const RenderMyForm = dynamic(
+  () => import("@/app/(dashboard)/form/my/RenderMyForm"),
+  { ssr: false }
+);
 
 export const metadata = {
   title: "Uncle Life Form Builder - Craft Your Notion Forms",
