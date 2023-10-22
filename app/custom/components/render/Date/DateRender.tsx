@@ -27,7 +27,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <>
+    <div className="relative">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
         <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
           <span
@@ -48,7 +48,11 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
           }}
         ></p>
       )}
-
+      {data.required && data?.pro?.hideFieldName && isSubscribed && (
+        <div className="absolute -top-2 -right-2">
+          <RequiredStar/>
+        </div>
+      )}
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
@@ -112,7 +116,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
           ></p>
         )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-    </>
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ const TitleRender = ({
   return data.hidden ? (
     <></>
   ) : (
-    <>
+    <div className="relative">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
         <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
           <span
@@ -33,6 +33,11 @@ const TitleRender = ({
             __html: data?.help,
           }}
         ></p>
+      )}
+      {data.required && data?.pro?.hideFieldName && isSubscribed && (
+        <div className="absolute -top-2 -right-2">
+          <RequiredStar/>
+        </div>
       )}
       <Input
         className={`mt-1 block w-full ${
@@ -59,7 +64,7 @@ const TitleRender = ({
         )}
       {/*    error message*/}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-    </>
+    </div>
   );
 };
 
