@@ -42,7 +42,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground"
+          className="text-muted-foreground text-xs"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
@@ -105,7 +105,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground"
+            className="text-muted-foreground text-xs"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}

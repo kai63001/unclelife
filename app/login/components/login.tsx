@@ -18,7 +18,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginWithEmail = async () => {
+  const loginWithEmail = async (e: any) => {
+    e.preventDefault();
     if (!email || !password) {
       toast({
         title: "Please fill all the fields",
@@ -76,7 +77,11 @@ const Login = () => {
 
   return (
     <div>
-      <div className="flex justify-center flex-col items-center space-y-2 pb-5 border-b">
+      <form
+        noValidate
+        onSubmit={loginWithEmail}
+        className="flex justify-center flex-col items-center space-y-2 pb-5 border-b"
+      >
         <Input
           placeholder="Email address"
           onChange={(e) => {
@@ -99,7 +104,7 @@ const Login = () => {
             Register
           </Link>
         </div>
-      </div>
+      </form>
       <div className="flex justify-center items-center mt-5">
         <Button onClick={signInWithNotion} className="w-full ">
           {loading ? (

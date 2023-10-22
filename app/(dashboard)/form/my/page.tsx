@@ -1,37 +1,34 @@
-import {Suspense} from "react";
+import { Suspense } from "react";
 import RenderMyForm from "@/app/(dashboard)/form/my/RenderMyForm";
-import RenderMyFormLoading from "@/app/(dashboard)/form/my/RenderMyFormLoading";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import RenderMyFormLoading from "./RenderMyFormLoading";
 
 export const metadata = {
-    title: "Uncle Life Form Builder - Craft Your Notion Forms",
-    description: "Step into Uncle Life's Form Builder, where creating and managing your Notion forms becomes a breeze. Design, customize, and integrate forms seamlessly with your Notion workspace.",
+  title: "Uncle Life Form Builder - Craft Your Notion Forms",
+  description:
+    "Step into Uncle Life's Form Builder, where creating and managing your Notion forms becomes a breeze. Design, customize, and integrate forms seamlessly with your Notion workspace.",
 };
 
 const MyFormPage = () => {
-    return (
+  return (
+    <div>
+      <div className={`mb-3 flex justify-between items-center`}>
         <div>
-            <div className={`mb-3 flex justify-between items-center`}>
-                <div>
-                    <h1 className={`text-2xl font-bold mb-1 uppercase`}>
-                        My Form
-                    </h1>
-                    <p className={`text-muted-foreground`}>
-                        My form is a list of forms that you have created.
-                    </p>
-                </div>
-                <Button asChild>
-                    <Link href={"/form/create"}>
-                        Create a form
-                    </Link>
-                </Button>
-            </div>
-            <Suspense fallback={<RenderMyFormLoading/>}>
-                <RenderMyForm/>
-            </Suspense>
+          <h1 className={`text-2xl font-bold mb-1 uppercase`}>My Form</h1>
+          <p className={`text-muted-foreground`}>
+            My form is a list of forms that you have created.
+          </p>
         </div>
-    )
-}
+        <Button asChild>
+          <Link href={"/form/create"}>Create a form</Link>
+        </Button>
+      </div>
+      <Suspense fallback={<RenderMyFormLoading />}>
+        <RenderMyForm />
+      </Suspense>
+    </div>
+  );
+};
 
 export default MyFormPage;
