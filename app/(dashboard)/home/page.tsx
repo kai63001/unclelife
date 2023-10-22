@@ -1,5 +1,6 @@
 import RenderMyFormLoading from "@/app/(dashboard)/form/my/RenderMyFormLoading";
-import RenderMyForm from "@/app/(dashboard)/form/my/RenderMyForm";
+const dynamic = require("next/dynamic");
+// import RenderMyForm from "@/app/(dashboard)/form/my/RenderMyForm";
 import {Suspense} from "react";
 import {
     Card,
@@ -13,6 +14,11 @@ import {
     Button
 } from "@/components/ui/button";
 import Link from "next/link"
+const RenderMyForm = dynamic(
+    () => import("@/app/(dashboard)/form/my/RenderMyForm"),
+    {ssr: false}
+);
+
 
 const DashboardPage = () => {
     return (

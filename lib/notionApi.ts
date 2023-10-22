@@ -77,3 +77,10 @@ export const createNotionDatabase = async ({
   });
   return response.data;
 };
+
+export const getListNotionDatabase = async (id: any,databaseId:any) => {
+  const response = await notionApi.get(
+    `/api/notion/list-database?database_id=${databaseId}&id=${id}`
+  );
+  return response.data;
+}

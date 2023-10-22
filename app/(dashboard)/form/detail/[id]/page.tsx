@@ -1,19 +1,23 @@
 import { Button } from "@/components/ui/button";
 import dayjs from "@/lib/dayjs";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Edit, ExternalLink, MoreVertical, Trash } from "lucide-react";
+import { ExternalLink, MoreVertical, Trash } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
 import { MoreDetailDropDown } from "./components/MoreDetailDropDown";
+import { ShareURLDetailForm } from "./components/ShareURL";
+import { ListSubmition } from "./components/ListSubmition";
 
 const FormDetailPage = async ({ params: { id } }: any) => {
   const supabase = createServerComponentClient({ cookies });
-
+  const { data: session } = await supabase.auth.getSession();
+  const userId = session?.session?.user?.id;
   const { data, error } = await supabase
     .from("form")
     .select("*")
     .eq("id", id)
+    .eq("user_id", userId)
     .single();
 
   const renderDate = (date: any) => {
@@ -39,6 +43,10 @@ const FormDetailPage = async ({ params: { id } }: any) => {
           </Button>
           <MoreDetailDropDown id={id} />
         </div>
+      </div>
+      <div>
+        <ShareURLDetailForm id={id} />
+        <ListSubmition id={id} databaseId={data?.databaseId} />
       </div>
     </div>
   );
