@@ -18,9 +18,9 @@ export const ListSubmition = ({ databaseId, id }: any) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { list } = await getListNotionDatabase(id, databaseId);
+      const { list, nextCursor } = await getListNotionDatabase(id, databaseId);
       const converted = convertListToTable(list);
-      console.log(converted);
+      // TODO: nextCursor can be used to fetch more data if needed
       setData(converted);
     };
     fetch();

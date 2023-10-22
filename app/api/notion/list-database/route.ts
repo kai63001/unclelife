@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
     const response: any = await notion.databases
       .query({
         database_id: databaseId.trim().toString(),
-        page_size: pageSize,
+        page_size: 1,
       })
       .catch((error) => {
         console.log(error);
@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
       list: properties,
       message: "success",
       hasMore: response.has_more,
+      nextCursor: response.next_cursor,
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
