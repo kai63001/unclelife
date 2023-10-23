@@ -64,17 +64,24 @@ export const ListSubmition = ({ databaseId, id }: any) => {
 
   const renderValue = (value: any) => {
     if (typeof value == 'object') {
-      let newValue = value?.map((item: any) => {
-        return item?.name;
-      }).join(", ");
+      //check if array list or object
+      if (value?.length > 0) {
+        return value?.map((item: any) => {
+          return item?.name;
+        }).join(", ");
+      }
+      let newValue = value?.name
       return newValue;
+    }
+    if (typeof value == 'boolean') {
+      return value ? "Yes" : "No";
     }
     return value;
   };
 
   return (
     <>
-      <Table className="mt-10">
+      <Table className="mt-10 overflow-x-scroll">
         <TableCaption>
           {user?.is_subscribed ? (
             ""
@@ -92,7 +99,7 @@ export const ListSubmition = ({ databaseId, id }: any) => {
           <TableRow>
             {data?.length > 0 &&
               Object.keys(data[0]).map((key, index) => (
-                <TableHead key={index}>{key}</TableHead>
+                <TableHead key={index} className="whitespace-nowrap">{key}</TableHead>
               ))}
           </TableRow>
         </TableHeader>
