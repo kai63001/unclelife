@@ -307,34 +307,34 @@ export const convertListToTable = (list: any) => {
       };
       if (Array.isArray(value[type])) {
         const firstItem = value[type][0];
-        if (firstItem.type === "text") {
-          newValue.value = firstItem.plain_text;
-        } else if (firstItem.type === "rich_text") {
-          newValue.value = firstItem.rich_text[0].plain_text;
-        } else if (firstItem.type === "title") {
-          newValue.value = firstItem.title[0].plain_text;
-        } else if (firstItem.type === "url") {
-          newValue.value = firstItem.url;
-        } else if (firstItem.type === "email") {
-          newValue.value = firstItem.email;
-        } else if (firstItem.type === "phone_number") {
-          newValue.value = firstItem.phone_number;
-        } else if (firstItem.type === "number") {
-          newValue.value = firstItem.number;
-        } else if (firstItem.type === "checkbox") {
-          newValue.value = firstItem.checkbox;
-        } else if (firstItem.type === "select") {
-          newValue.value = firstItem.select.name;
-        } else if (firstItem.type === "multi_select") {
-          newValue.value = firstItem.multi_select
+        if (firstItem?.type === "text") {
+          newValue.value = firstItem?.plain_text;
+        } else if (firstItem?.type === "rich_text") {
+          newValue.value = firstItem?.rich_text[0].plain_text;
+        } else if (firstItem?.type === "title") {
+          newValue.value = firstItem?.title[0].plain_text;
+        } else if (firstItem?.type === "url") {
+          newValue.value = firstItem?.url;
+        } else if (firstItem?.type === "email") {
+          newValue.value = firstItem?.email;
+        } else if (firstItem?.type === "phone_number") {
+          newValue.value = firstItem?.phone_number;
+        } else if (firstItem?.type === "number") {
+          newValue.value = firstItem?.number;
+        } else if (firstItem?.type === "checkbox") {
+          newValue.value = firstItem?.checkbox;
+        } else if (firstItem?.type === "select") {
+          newValue.value = firstItem?.select.name;
+        } else if (firstItem?.type === "multi_select") {
+          newValue.value = firstItem?.multi_select
             .map((option: any) => option.name)
             .join(", ");
-        } else if (firstItem.type === "date") {
-          newValue.value = firstItem.date.start;
-        } else if (firstItem.type === "created_time") {
-          newValue.value = firstItem.created_time;
-        } else if (firstItem.type === "last_edited_time") {
-          newValue.value = firstItem.last_edited_time;
+        } else if (firstItem?.type === "date") {
+          newValue.value = firstItem?.date.start;
+        } else if (firstItem?.type === "created_time") {
+          newValue.value = firstItem?.created_time;
+        } else if (firstItem?.type === "last_edited_time") {
+          newValue.value = firstItem?.last_edited_time;
         }
       }
       row[key] = newValue;

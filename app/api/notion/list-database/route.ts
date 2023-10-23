@@ -53,10 +53,16 @@ export async function GET(req: NextRequest) {
       auth: token,
     });
 
+    let nextCursor:any = req.nextUrl.searchParams.get("next_cursor") as string;
+    if (nextCursor === "null") {
+      nextCursor = undefined;
+    }
+
     const response: any = await notion.databases
       .query({
         database_id: databaseId.trim().toString(),
-        page_size: 1,
+        page_size: 10,
+        start_cursor: nextCursor,
       })
       .catch((error) => {
         console.log(error);

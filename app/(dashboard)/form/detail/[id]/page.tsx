@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import dayjs from "@/lib/dayjs";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { ExternalLink, MoreVertical, Trash } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ const FormDetailPage = async ({ params: { id } }: any) => {
   const userId = session?.session?.user?.id;
   const { data, error } = await supabase
     .from("form")
-    .select("*")
+    .select("detail,created_at,databaseId")
     .eq("id", id)
     .eq("user_id", userId)
     .single();

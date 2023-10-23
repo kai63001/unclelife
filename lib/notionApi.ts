@@ -78,9 +78,9 @@ export const createNotionDatabase = async ({
   return response.data;
 };
 
-export const getListNotionDatabase = async (id: any,databaseId:any) => {
+export const getListNotionDatabase = async (id: any,databaseId:any,nextCursor:any) => {
   const response = await notionApi.get(
-    `/api/notion/list-database?database_id=${databaseId}&id=${id}`
+    `/api/notion/list-database?database_id=${databaseId}&id=${id}&next_cursor=${nextCursor}`
   );
   return response.data;
 }
