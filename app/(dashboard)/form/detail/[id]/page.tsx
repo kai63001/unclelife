@@ -8,6 +8,7 @@ import Link from "next/link";
 import { MoreDetailDropDown } from "./components/MoreDetailDropDown";
 import { ShareURLDetailForm } from "./components/ShareURL";
 import { ListSubmition } from "./components/ListSubmition";
+import { FormAPIComponent } from "./components/FormAPI";
 
 const FormDetailPage = async ({ params: { id } }: any) => {
   const supabase = createServerComponentClient({ cookies });
@@ -15,7 +16,7 @@ const FormDetailPage = async ({ params: { id } }: any) => {
   const userId = session?.session?.user?.id;
   const { data, error } = await supabase
     .from("form")
-    .select("detail,created_at,databaseId")
+    .select("detail,created_at,databaseId,layer")
     .eq("id", id)
     .eq("user_id", userId)
     .single();
@@ -47,6 +48,7 @@ const FormDetailPage = async ({ params: { id } }: any) => {
       <div>
         <ShareURLDetailForm id={id} />
         <ListSubmition id={id} databaseId={data?.databaseId} />
+        <FormAPIComponent id={id} layer={data?.layer}/>
       </div>
     </div>
   );

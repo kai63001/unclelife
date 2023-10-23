@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { evaluateGroup } from "@/lib/formController";
 import { sendEmail } from "@/lib/formApi";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useTheme } from "next-themes";
 
 const FormMainBox = ({
   id = null,
@@ -38,6 +39,7 @@ const FormMainBox = ({
   responseData?: any;
 }) => {
   const { toast } = useToast();
+  const { setTheme } = useTheme();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
@@ -295,6 +297,10 @@ const FormMainBox = ({
     }
     setDataUser(res.data.user_id);
     dispatch(setUserData(res.data.user_id));
+    //set theme dark mode
+    if (res.data.detail?.free?.customizations?.darkMode) {
+      setTheme(res.data.detail?.free?.customizations?.darkMode);
+    }
   };
 
   useEffect(() => {
@@ -615,26 +621,27 @@ const FormMainBox = ({
                 className="prose text-sm whitespace-pre-line pt-1 pb-4"
               ></div>
             )}
-            {(dataForm?.free?.successPage?.alertTypeBypass == "box" && bypassSuccessPage) && (
-              <Alert>
-                <AlertTitle>
-                  {dataForm?.free?.successPage?.title != undefined &&
-                  (dataUser?.is_subscribed || testMode)
-                    ? dataForm?.free?.successPage?.title
-                    : "Thank you!"}
-                </AlertTitle>
-                <AlertDescription
-                  className="mt-2 prose"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      dataForm?.free?.successPage?.description != undefined &&
-                      (dataUser?.is_subscribed || testMode)
-                        ? dataForm?.free?.successPage?.description
-                        : "Your form has been submitted.",
-                  }}
-                ></AlertDescription>
-              </Alert>
-            )}
+            {dataForm?.free?.successPage?.alertTypeBypass == "box" &&
+              bypassSuccessPage && (
+                <Alert>
+                  <AlertTitle>
+                    {dataForm?.free?.successPage?.title != undefined &&
+                    (dataUser?.is_subscribed || testMode)
+                      ? dataForm?.free?.successPage?.title
+                      : "Thank you!"}
+                  </AlertTitle>
+                  <AlertDescription
+                    className="mt-2 prose"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        dataForm?.free?.successPage?.description != undefined &&
+                        (dataUser?.is_subscribed || testMode)
+                          ? dataForm?.free?.successPage?.description
+                          : "Your form has been submitted.",
+                    }}
+                  ></AlertDescription>
+                </Alert>
+              )}
             <form
               onSubmit={submitForm}
               className="flex flex-wrap w-[102%] -ml-2"

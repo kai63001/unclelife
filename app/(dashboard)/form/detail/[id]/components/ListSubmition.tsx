@@ -63,17 +63,19 @@ export const ListSubmition = ({ databaseId, id }: any) => {
   }
 
   const renderValue = (value: any) => {
-    if (typeof value == 'object') {
+    if (typeof value == "object") {
       //check if array list or object
       if (value?.length > 0) {
-        return value?.map((item: any) => {
-          return item?.name;
-        }).join(", ");
+        return value
+          ?.map((item: any) => {
+            return item?.name;
+          })
+          .join(", ");
       }
-      let newValue = value?.name
+      let newValue = value?.name;
       return newValue;
     }
-    if (typeof value == 'boolean') {
+    if (typeof value == "boolean") {
       return value ? "Yes" : "No";
     }
     return value;
@@ -98,19 +100,29 @@ export const ListSubmition = ({ databaseId, id }: any) => {
         <TableHeader>
           <TableRow>
             {data?.length > 0 &&
-              Object.keys(data[0]).map((key, index) => (
-                <TableHead key={index} className="whitespace-nowrap">{key}</TableHead>
-              ))}
+              Object.keys(data[0])
+                .reverse() // reverse the order of the keys
+                .map((key, index) => (
+                  <TableHead key={index} className="whitespace-nowrap">
+                    {key}
+                  </TableHead>
+                ))}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((row: any, index: number) => (
-            <TableRow key={index}>
-              {Object.values(row).map((column: any, index: number) => (
-                <TableCell key={index}>{renderValue(column?.value)}</TableCell>
-              ))}
-            </TableRow>
-          ))}
+          {data
+            .reverse() // reverse the order of the data
+            .map((row: any, index: number) => (
+              <TableRow key={index}>
+                {Object.values(row)
+                  .reverse() // reverse the order of the values
+                  .map((column: any, index: number) => (
+                    <TableCell key={index}>
+                      {renderValue(column?.value)}
+                    </TableCell>
+                  ))}
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       {nextCursor && user.is_subscribed && (
