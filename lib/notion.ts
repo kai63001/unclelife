@@ -343,3 +343,132 @@ export const convertListToTable = (list: any) => {
   }
   return table;
 };
+
+export const convertBodyAndLayerToProperty = async (body: any, layer: any) => {
+  const properties: any = {};
+
+  const validateValue = (value: any) => {
+    if (value == "" || value == null || value == undefined) {
+      return false;
+    }
+    return true;
+  };
+
+  const mapNameWithLayer = (name: any) => {
+    const field = layer.find((item: any) => item.name === name);
+    if (field) {
+      return field;
+    }
+    return null;
+  };
+
+  for (const [key, value] of Object.entries(body) as any) {
+    if (mapNameWithLayer(key)?.type == undefined) {
+      return
+    }
+    if (
+      mapNameWithLayer(key)?.type === "title" ||
+      (mapNameWithLayer(key)?.type === "rich_text" && validateValue(value))
+    ) {
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: [
+          {
+            text: {
+              content: value as string,
+            },
+          },
+        ],
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else if (
+      mapNameWithLayer(key)?.type === "select" ||
+      (mapNameWithLayer(key)?.type === "status" && validateValue(value))
+    ) {
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: {
+          name: value as string,
+        },
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else if (mapNameWithLayer(key)?.type === "date" && validateValue(value)) {
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: {
+          start: value as string,
+        },
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else if (mapNameWithLayer(key)?.type === "files" && validateValue(value)) {
+      console.log("");
+    } else if (
+      mapNameWithLayer(key)?.type === "multi_select" &&
+      validateValue(value)
+    ) {
+      let newValue = value;
+      if (typeof value === "string") {
+        newValue = [value];
+      }
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: [
+          ...newValue?.map((item: any) => {
+            return {
+              name: item,
+            };
+          }),
+        ],
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else if (
+      mapNameWithLayer(key)?.type === "number" &&
+      validateValue(value)
+    ) {
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: parseInt(value),
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else if (
+      mapNameWithLayer(key)?.type === "radio_button" &&
+      validateValue(value)
+    ) {
+      properties[key] = {
+        [mapNameWithLayer(key)?.type]: value,
+        type: mapNameWithLayer(key)?.type,
+      };
+    } else {
+      if (validateValue(value)) {
+        properties[key] = {
+          [mapNameWithLayer(key)?.type]: value,
+          type: mapNameWithLayer(key)?.type,
+        };
+      }
+    }
+  }
+
+  return properties;
+};
+
+export const validateBodyAndLayer = (body: any, layer: any) => {
+  //check it required
+  let isRequired = false;
+  let validate = {};
+
+  for (const [key, value] of Object.entries(layer) as any) {
+    if (value.required) {
+      console.log(body,value.mapTo)
+      if (body[value.mapTo] == "" || body[value.mapTo] == null || body[value.mapTo] == undefined) {
+        isRequired = true;
+        validate = {
+          ...validate,
+          [value.name]: {
+            error: true,
+            message: `${value.name} is required`,
+          },
+        };
+      }
+    }
+  }
+
+  return {
+    isRequired,
+    validate,
+  };
+};
