@@ -27,26 +27,32 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <>
-      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        <span
-          className="inline-block"
-          dangerouslySetInnerHTML={{
-            __html: data?.label,
-          }}
-        ></span>
-        {data.required && <RequiredStar />}
-      </Label>
+    <div className="relative">
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+          <span
+            className="inline-block"
+            dangerouslySetInnerHTML={{
+              __html: data?.label,
+            }}
+          ></span>
+          {data.required && <RequiredStar />}
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground"
+          className="text-muted-foreground text-xs"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
         ></p>
       )}
-
+      {data.required && data?.pro?.hideFieldName && isSubscribed && (
+        <div className="absolute -top-2 -right-2">
+          <RequiredStar/>
+        </div>
+      )}
       <Popover>
         <PopoverTrigger disabled={data.disable} asChild>
           <Button
@@ -103,14 +109,14 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground"
+            className="text-muted-foreground text-xs"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}
           ></p>
         )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-    </>
+    </div>
   );
 };
 

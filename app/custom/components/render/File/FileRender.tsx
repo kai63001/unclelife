@@ -40,12 +40,9 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <>
-      <Label
-        htmlFor={"uploadFileForm"}
-        className="flex flex-col space-y-2 text-lg font-bold cursor-text"
-      >
-        <div>
+    <div className="relative">
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -53,16 +50,21 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
             }}
           ></span>
           {data.required && <RequiredStar />}
-        </div>
-      </Label>
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground"
+          className="text-muted-foreground text-xs"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
         ></p>
+      )}
+      {data.required && data?.pro?.hideFieldName && isSubscribed && (
+        <div className="absolute -top-2 -right-2">
+          <RequiredStar />
+        </div>
       )}
       {file ? (
         <div>
@@ -125,14 +127,14 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground"
+            className="text-muted-foreground text-xs"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}
           ></p>
         )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-    </>
+    </div>
   );
 };
 

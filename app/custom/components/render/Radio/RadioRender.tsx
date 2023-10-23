@@ -15,25 +15,32 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   return data.hidden ? (
     <></>
   ) : (
-    <>
-      <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
-        <span
-          className="inline-block"
-          dangerouslySetInnerHTML={{
-            __html: data?.label,
-          }}
-        ></span>
-        {data.required && <RequiredStar />}
-      </Label>
+    <div className="relative">
+      {data?.pro?.hideFieldName && isSubscribed ? null : (
+        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+          <span
+            className="inline-block"
+            dangerouslySetInnerHTML={{
+              __html: data?.label,
+            }}
+          ></span>
+          {data.required && <RequiredStar />}
+        </Label>
+      )}
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
-          <p
-            className="text-muted-foreground"
-            dangerouslySetInnerHTML={{
-              __html: data?.help,
-            }}
-          ></p>
-        )}
+        <p
+          className="text-muted-foreground text-xs"
+          dangerouslySetInnerHTML={{
+            __html: data?.help,
+          }}
+        ></p>
+      )}
+      {data.required && data?.pro?.hideFieldName && isSubscribed && (
+        <div className="absolute -top-2 -right-2">
+          <RequiredStar />
+        </div>
+      )}
       <div className="mt-1 flex space-y-2 flex-col">
         {data?.options?.map((item: any, index: number) => {
           return (
@@ -57,16 +64,17 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
           );
         })}
       </div>
-      {(!data?.helpPositionAboveInput && data?.helpPositionAboveInput != undefined) && (
-        <p
-          className="text-muted-foreground"
-          dangerouslySetInnerHTML={{
-            __html: data?.help,
-          }}
-        ></p>
-      )}
+      {!data?.helpPositionAboveInput &&
+        data?.helpPositionAboveInput != undefined && (
+          <p
+            className="text-muted-foreground text-xs"
+            dangerouslySetInnerHTML={{
+              __html: data?.help,
+            }}
+          ></p>
+        )}
       {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-    </>
+    </div>
   );
 };
 

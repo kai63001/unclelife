@@ -1,6 +1,6 @@
 export const helpFieldNotAllow = ["textBlock"];
 
-export const placeholderNotAllow = ["textBlock"];
+export const placeholderNotAllow = ["textBlock","checkbox"];
 
 export const requiredNotAllow = ["textBlock"];
 

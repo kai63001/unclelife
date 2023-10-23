@@ -26,6 +26,7 @@ import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
 import { evaluateGroup } from "@/lib/formController";
 import { sendEmail } from "@/lib/formApi";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const FormMainBox = ({
   id = null,
@@ -44,6 +45,7 @@ const FormMainBox = ({
   const [dataLayer, setDataLayer] = useState<any>([]);
   const [dataLayerDefault, setDataLayerDefault] = useState<any>([]);
   const [dataUser, setDataUser] = useState<any>({});
+  const [formKey, setFormKey] = useState<any>(0);
   const [databaseId, setDatabaseIdState] = useState<string>("");
   const { form, layer, workspaceId, logic, notification } = useAppSelector(
     (state) => state.formReducer
@@ -53,6 +55,7 @@ const FormMainBox = ({
   const [inputForm, setInputForm]: any = useState<any>({});
   const [error, setError] = useState<any>({});
   const [successSubmit, setSuccessSubmit] = useState(false);
+  const [bypassSuccessPage, setBypassSuccessPage] = useState(false);
 
   const updateInputForm = (value: string, data: any) => {
     setError({
@@ -463,7 +466,32 @@ const FormMainBox = ({
         console.log(error);
       })
       .finally(() => {
-        setSuccessSubmit(true);
+        if (dataForm?.free?.successPage?.refillBypass) {
+          setSuccessSubmit(false);
+          setBypassSuccessPage(true);
+          if (
+            dataForm?.free?.successPage?.alertTypeBypass == "toast" ||
+            dataForm?.free?.successPage?.alertTypeBypass == undefined
+          ) {
+            toast({
+              title:
+                dataForm?.free?.successPage?.title != undefined &&
+                (dataUser?.is_subscribed || testMode)
+                  ? dataForm?.free?.successPage?.title
+                  : "Thank you!",
+              description:
+                dataForm?.free?.successPage?.description != undefined &&
+                (dataUser?.is_subscribed || testMode)
+                  ? dataForm?.free?.successPage?.description
+                  : "Your form has been submitted.",
+            });
+          }
+          //clear form
+          setInputForm({});
+          setFormKey(formKey + 1);
+        } else {
+          setSuccessSubmit(true);
+        }
         setLoading(false);
         //check redirect
         if (
@@ -513,7 +541,7 @@ const FormMainBox = ({
         `}</style>
       )}
       {successSubmit ? (
-        <SuccessPageComponent />
+        <SuccessPageComponent setSuccessSubmit={setSuccessSubmit} />
       ) : (
         <>
           {testMode && (
@@ -587,10 +615,31 @@ const FormMainBox = ({
                 className="prose text-sm whitespace-pre-line pt-1 pb-4"
               ></div>
             )}
+            {(dataForm?.free?.successPage?.alertTypeBypass == "box" && bypassSuccessPage) && (
+              <Alert>
+                <AlertTitle>
+                  {dataForm?.free?.successPage?.title != undefined &&
+                  (dataUser?.is_subscribed || testMode)
+                    ? dataForm?.free?.successPage?.title
+                    : "Thank you!"}
+                </AlertTitle>
+                <AlertDescription
+                  className="mt-2 prose"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      dataForm?.free?.successPage?.description != undefined &&
+                      (dataUser?.is_subscribed || testMode)
+                        ? dataForm?.free?.successPage?.description
+                        : "Your form has been submitted.",
+                  }}
+                ></AlertDescription>
+              </Alert>
+            )}
             <form
               onSubmit={submitForm}
               className="flex flex-wrap w-[102%] -ml-2"
               noValidate
+              key={formKey}
             >
               {dataLayer?.map((item: any, index: number) => {
                 return (

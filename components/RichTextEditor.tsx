@@ -145,7 +145,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
       </div>
 
       <div className="flex space-x-1 flex-wrap">
-        <Label>
+        <Label className="relative">
           <div
             className={cn(
               "cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 text-secondary border p-1 rounded-sm",
@@ -257,6 +257,11 @@ const RichTextEditor = (props: any) => {
       setCheckTextUpdate(true);
     }
   }, [props.content, editor, checkTextUpdate]);
+
+  useEffect(() => {
+    if (!editor) return;
+    editor.setEditable(!props.disabled);
+  }, [editor, props.disabled]);
 
   return (
     <div className="border rounded-md overflow-hidden">

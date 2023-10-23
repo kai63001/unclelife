@@ -30,6 +30,7 @@ const initialState: FormState = {
       position: "flex-start",
     },
     pro: {},
+    free: {},
   },
   infomation: {},
   layer: [],
