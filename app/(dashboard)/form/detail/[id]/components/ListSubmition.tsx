@@ -15,15 +15,18 @@ import {
 import { useSupabase } from "@/app/hook/supabase-provider";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/Icons";
 
 export const ListSubmition = ({ databaseId, id }: any) => {
   const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [mainLoading, setMainLoading] = useState(false);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const { user } = useSupabase();
 
   useEffect(() => {
     const fetch = async () => {
+      setMainLoading(true);
       const { list, nextCursor } = await getListNotionDatabase(
         id,
         databaseId,
@@ -32,6 +35,7 @@ export const ListSubmition = ({ databaseId, id }: any) => {
       const converted = convertListToTable(list);
       setNextCursor(nextCursor);
       setData(converted);
+      setMainLoading(false);
     };
     fetch();
   }, [databaseId, id]);
@@ -50,6 +54,13 @@ export const ListSubmition = ({ databaseId, id }: any) => {
       setLoading(false);
     }
   };
+  if (mainLoading) {
+    return (
+      <div className="bg-gray-100 border rounded-md h-44 mt-10 flex justify-center items-center">
+        <Icons.spinner className="animate-spin h-10 w-10" />
+      </div>
+    );
+  }
 
   return (
     <>

@@ -7,10 +7,7 @@ import { Newspaper, Send, SendIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
@@ -37,7 +34,6 @@ const ButtonCreateDatabase = ({ session }: any) => {
   useEffect(() => {
     const getListPageCallback = async () => {
       const listPageData = await getListPage(workspaceId);
-      console.log(listPageData);
       setListPage(listPageData);
     };
     getListPageCallback();

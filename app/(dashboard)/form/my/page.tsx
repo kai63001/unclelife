@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import RenderMyFormLoading from "./RenderMyFormLoading";
 import dynamic from "next/dynamic";
+import { PlusSquare } from "lucide-react";
 const RenderMyForm = dynamic(
   () => import("@/app/(dashboard)/form/my/RenderMyForm"),
   { ssr: false }
@@ -24,8 +25,11 @@ const MyFormPage = () => {
             My form is a list of forms that you have created.
           </p>
         </div>
-        <Button asChild>
-          <Link href={"/form/create"}>Create a form</Link>
+        <Button variant={'outline'} asChild>
+          <Link href={"/form/create"}>
+            <PlusSquare className={`w-6 h-6 mr-2`} />
+            Create a form
+          </Link>
         </Button>
       </div>
       <Suspense fallback={<RenderMyFormLoading />}>
