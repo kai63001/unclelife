@@ -62,6 +62,16 @@ export const ListSubmition = ({ databaseId, id }: any) => {
     );
   }
 
+  const renderValue = (value: any) => {
+    if (typeof value == 'object') {
+      let newValue = value?.map((item: any) => {
+        return item?.name;
+      }).join(", ");
+      return newValue;
+    }
+    return value;
+  };
+
   return (
     <>
       <Table className="mt-10">
@@ -80,9 +90,9 @@ export const ListSubmition = ({ databaseId, id }: any) => {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            {data.length > 0 &&
-              Object.keys(data[0]).map((key) => (
-                <TableHead key={key}>{key}</TableHead>
+            {data?.length > 0 &&
+              Object.keys(data[0]).map((key, index) => (
+                <TableHead key={index}>{key}</TableHead>
               ))}
           </TableRow>
         </TableHeader>
@@ -90,7 +100,7 @@ export const ListSubmition = ({ databaseId, id }: any) => {
           {data.map((row: any, index: number) => (
             <TableRow key={index}>
               {Object.values(row).map((column: any, index: number) => (
-                <TableCell key={index}>{column?.value}</TableCell>
+                <TableCell key={index}>{renderValue(column?.value)}</TableCell>
               ))}
             </TableRow>
           ))}
