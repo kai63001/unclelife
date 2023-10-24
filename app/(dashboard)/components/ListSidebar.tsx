@@ -3,6 +3,7 @@ import Link from "next/link";
 import {Home, PlusSquare, FormInput, MessageSquare, Feather, Timer, Globe2} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ListSideBar = () => {
     const pathname = usePathname();
@@ -74,7 +75,7 @@ const ListSideBar = () => {
         }
     ]);
     return (
-        <div className="flex-grow p-4">
+        <div className="flex-grow p-4 h-96 xl:h-full overflow-hidden">
             {pathList.map((group) => (
                 <div key={group.group} className="mb-5">
                     <span className="font-bold text-xs text-primary">{group.group}</span>

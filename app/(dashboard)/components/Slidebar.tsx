@@ -5,24 +5,27 @@ import ListSideBar from "./ListSidebar";
 import UpgradePlan from "@/app/(dashboard)/components/UpgradePlan";
 
 const Slidebars = async () => {
-    //get auth data
+  //get auth data
 
-    return (
-        <div className="text-black h-screen w-64 flex flex-col border-r fixed bg-background">
-            <div className="p-4">
-                <Link href="/">
-                    <p className="text-2xl font-bold text-primary">UncleLife
-                        <span className={'text-xs ml-2'}>BETA</span>
-                    </p>
-                </Link>
-            </div>
-            <ListSideBar/>
-            <div className="p-4">
-                <UpgradePlan/>
-                <ProfileBar/>
-            </div>
+  return (
+    <div className="text-black h-screen w-64 flex-col justify-between border-r bg-background z-50 left-0 hidden xl:flex">
+      <div>
+        <div className="p-4">
+          <Link href="/">
+            <p className="text-2xl font-bold text-primary">
+              UncleLife
+              <span className={"text-xs ml-2"}>BETA</span>
+            </p>
+          </Link>
         </div>
-    );
+        <ListSideBar />
+      </div>
+      <div className="p-4">
+        <UpgradePlan />
+        <ProfileBar />
+      </div>
+    </div>
+  );
 };
 
 export default Slidebars;
