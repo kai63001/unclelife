@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { getFormData } from "@/lib/formController";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const revalidate = 3;
 
@@ -28,8 +30,25 @@ export async function generateMetadata({
 
 const PublicFormPage = async ({ params: { id } }: Props) => {
   const responseData = await getFormData(id);
+  if (responseData.error) {
+    return (
+      <div className="h-screen w-screen md:flex overflow-x-hidden md:flex-col">
+        <div className="m-auto">
+          <div className="md:max-w-[700px] w-full rounded-sm">
+            <h1 className="mt-10 text-5xl font-bold">Form Not Found</h1>
+            <div className="text-center mt-5">
+              <Button asChild>
+                <Link href="/">Create my form</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const dataForm = responseData?.data ? responseData.data.detail : null;
+  const formId = responseData?.data ? responseData.data.id : null;
 
   const dataUser: any = responseData?.data ? responseData.data.user_id : null;
 
@@ -74,7 +93,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
       </div>
       <div className="mx-auto">
         <div className="md:max-w-[700px] w-full rounded-sm">
-          <FormMainBox id={id} responseData={responseData} />
+          <FormMainBox id={formId} responseData={responseData} />
         </div>
       </div>
     </div>
