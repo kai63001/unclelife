@@ -3,7 +3,6 @@ import Link from "next/link";
 import {Home, PlusSquare, FormInput, MessageSquare, Feather, Timer, Globe2} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ListSideBar = () => {
     const pathname = usePathname();
