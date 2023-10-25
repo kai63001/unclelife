@@ -16,7 +16,7 @@ const FormDetailPage = async ({ params: { id } }: any) => {
   const userId = session?.session?.user?.id;
   const { data, error } = await supabase
     .from("form")
-    .select("detail,created_at,databaseId,layer")
+    .select("detail,created_at,databaseId,layer, slug")
     .eq("id", id)
     .eq("user_id", userId)
     .single();
@@ -46,7 +46,7 @@ const FormDetailPage = async ({ params: { id } }: any) => {
         </div>
       </div>
       <div>
-        <ShareURLDetailForm id={id} />
+        <ShareURLDetailForm id={id} dataSlug={data?.slug} />
         <ListSubmition id={id} databaseId={data?.databaseId} />
         <FormAPIComponent id={id} layer={data?.layer}/>
       </div>

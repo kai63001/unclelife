@@ -9,6 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import dynamic from "next/dynamic";
 import ModalAddLayer from "./modal/addLayer";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
+import { Layers, Pencil } from "lucide-react";
 
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
@@ -77,59 +78,67 @@ const LayerBar = () => {
   };
 
   return (
-    <div className="text-[#3d3d3d] h-screen w-[350px] fixed right-0 pb-5 pt-20 pr-5">
-      <div className="flex flex-col px-5 shadow-me h-full rounded-xl bg-background text-primary">
-        <div className="flex items-center justify-between">
-          <b className="mt-5 mb-5 uppercase">Structure</b>
-          <ModalAddLayer />
-        </div>
-        <ScrollArea>
-          <SortableList
-            items={layer}
-            onChange={setLayerHook}
-            renderItem={(item: any) => (
-              <SortableList.Item id={item.id}>
-                <div className="flex space-x-3 min-h-[30px]">
-                  <div className="flex flex-col">
-                    {item.block != true ? (
-                      <p
-                        dangerouslySetInnerHTML={{
-                          __html: item?.label,
-                        }}
-                      ></p>
-                    ) : (
-                      <p>{item?.type.toUpperCase()}</p>
-                    )}
-                    <div className="flex items-center space-x-1">
-                      {/*<p className="text-xs text-[#9E9E9E]">{item.name}</p>*/}
-                      {/*<p className="text-xs text-[#9E9E9E]">·</p>*/}
-                      <p className="text-xs text-[#9E9E9E] capitalize">
-                        {renderFilterTypeWording(item.type)}
-                      </p>
-                      {item.block && (
-                        <>
-                          <p className="text-xs text-[#9E9E9E]">·</p>
-                          <p className="text-xs text-[#9E9E9E]">Block</p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  {checkTypeIsPro(item.type) && (
-                    <div className="flex items-center space-x-1">
-                      <ProBadge />
-                    </div>
-                  )}
-                </div>
-                <div className="flex">
-                  <SheetTab id={item.id} />
-                  <SortableList.DragHandle />
-                </div>
-              </SortableList.Item>
-            )}
-          />
-        </ScrollArea>
-      </div>
+    <>
+    {/* <div className="fixed bg-[#E51E0F] bottom-3 left-5 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
+      <Pencil className="h-5 w-5" />
     </div>
+    <div className="fixed bg-[#E51E0F] bottom-3 left-20 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
+      <Layers className="h-5 w-5" />
+    </div> */}
+      <div className="text-[#3d3d3d] h-screen w-[350px] fixed right-0 pb-5 pt-20 pr-5">
+        <div className="flex flex-col px-5 shadow-me h-full rounded-xl bg-background text-primary">
+          <div className="flex items-center justify-between">
+            <b className="mt-5 mb-5 uppercase">Structure</b>
+            <ModalAddLayer />
+          </div>
+          <ScrollArea>
+            <SortableList
+              items={layer}
+              onChange={setLayerHook}
+              renderItem={(item: any) => (
+                <SortableList.Item id={item.id}>
+                  <div className="flex space-x-3 min-h-[30px]">
+                    <div className="flex flex-col">
+                      {item.block != true ? (
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: item?.label,
+                          }}
+                        ></p>
+                      ) : (
+                        <p>{item?.type.toUpperCase()}</p>
+                      )}
+                      <div className="flex items-center space-x-1">
+                        {/*<p className="text-xs text-[#9E9E9E]">{item.name}</p>*/}
+                        {/*<p className="text-xs text-[#9E9E9E]">·</p>*/}
+                        <p className="text-xs text-[#9E9E9E] capitalize">
+                          {renderFilterTypeWording(item.type)}
+                        </p>
+                        {item.block && (
+                          <>
+                            <p className="text-xs text-[#9E9E9E]">·</p>
+                            <p className="text-xs text-[#9E9E9E]">Block</p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {checkTypeIsPro(item.type) && (
+                      <div className="flex items-center space-x-1">
+                        <ProBadge />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex">
+                    <SheetTab id={item.id} />
+                    <SortableList.DragHandle />
+                  </div>
+                </SortableList.Item>
+              )}
+            />
+          </ScrollArea>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -14,10 +14,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex">
+        <div className="flex justify-center">
             <Slidebars/>
             <CrispChat/>
-            <div className="p-4 w-full max-w-6xl mx-auto mt-14 pl-32">{children}</div>
+            <div className="p-4 w-full max-w-6xl mx-auto mt-14 ">{children}</div>
         </div>
     );
 }

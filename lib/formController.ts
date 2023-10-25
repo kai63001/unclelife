@@ -4,9 +4,18 @@ import { cache } from "react";
 const supabase = createClientComponentClient();
 
 export const getFormData = cache(async (id: string) => {
+  // check if id is not a uuid
+  if (!id.match(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)) {
+    return await supabase
+    .from("form")
+    .select("id,layer,detail,databaseId,user_id (is_subscribed,id),logic,notification")
+    .eq("slug", id)
+    .single();
+  }
+
   return await supabase
     .from("form")
-    .select("layer,detail,databaseId,user_id (is_subscribed,id),logic,notification")
+    .select("id,layer,detail,databaseId,user_id (is_subscribed,id),logic,notification")
     .eq("id", id)
     .single();
 });

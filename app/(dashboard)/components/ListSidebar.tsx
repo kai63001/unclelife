@@ -74,7 +74,7 @@ const ListSideBar = () => {
         }
     ]);
     return (
-        <div className="flex-grow p-4">
+        <div className="flex-grow p-4 h-96 xl:h-full overflow-hidden">
             {pathList.map((group) => (
                 <div key={group.group} className="mb-5">
                     <span className="font-bold text-xs text-primary">{group.group}</span>
