@@ -40,7 +40,7 @@ const Slidebars = async () => {
           </div>
         </div>
       </div>
-      <div className="flex xl:hidden p-4 justify-between items-center w-full fixed bg-white">
+      <div className="flex xl:hidden p-4 justify-between items-center w-full fixed bg-white z-50">
         <div></div>
         <Link href="/">
           <p className="text-2xl font-bold text-primary">
