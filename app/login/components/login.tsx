@@ -112,7 +112,7 @@ const Login = () => {
           ) : (
             <>
               <Icons.google className="mr-2 h-5 w-5" />
-              Login with Google
+              Continue with Google
             </>
           )}
         </Button>
