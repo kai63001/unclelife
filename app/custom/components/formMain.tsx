@@ -175,7 +175,7 @@ const FormMainBox = ({
   useEffect(() => {
     // dataForm?.pro.customizations is object filter true
     let listAlert: any = [];
-    const filterCustomization = Object.keys(
+    let filterCustomization = Object.keys(
       dataForm?.pro?.customizations || {}
     ).filter((key) => {
       return (
@@ -186,6 +186,17 @@ const FormMainBox = ({
       );
     });
 
+    //filter custom color
+    filterCustomization = filterCustomization.filter((item:any) => {
+      if (item == 'light') {
+        if (dataForm?.pro?.customizations[item]?.enableBackgroundColor) {
+          return item
+        }
+        return
+      }
+      return item
+    });
+    
     const filterSuccessPage = Object.keys(
       dataForm?.pro?.successPage || {}
     ).filter((key) => {

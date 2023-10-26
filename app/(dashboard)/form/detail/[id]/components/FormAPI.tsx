@@ -26,7 +26,7 @@ export const FormAPIComponent = ({ id, layer }: any) => {
 
   const codeOfList: any = {
     HTML: `<form action="https://unclelife.co/api/form/public/${id}" method="POST">
-      ${layer.map((item: any) => {
+      ${layer?.map((item: any) => {
         return `<label for="${item.mapTo}">${item.label}</label>
       <input type="${convertTypeOfPropertyToInputType(item.type)}" id="${
           item.mapTo
@@ -40,7 +40,7 @@ export const FormAPIComponent = ({ id, layer }: any) => {
     // Create a data object
     const data = {
       ${layer
-        .map((item:any) => {
+        ?.map((item:any) => {
           return `"${item.mapTo}": ${item.mapTo},`;
         })
         .join("\n       ")}
@@ -69,7 +69,7 @@ export const FormAPIComponent = ({ id, layer }: any) => {
     // Create a data object
     const data = JSON.stringify({
       ${layer
-        .map((item:any) => {
+        ?.map((item:any) => {
           return `"${item.mapTo}": ${item.mapTo},`;
         })
         .join("\n       ")}
