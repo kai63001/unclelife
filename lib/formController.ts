@@ -74,3 +74,8 @@ export function calculateTextColor(color: string): string {
 
   return luminance > 0.5 ? "#000000" : "#ffffff";
 }
+
+export function convertNumberToAlphabet(number:number): string {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return alphabet[number];
+}
