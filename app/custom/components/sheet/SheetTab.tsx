@@ -22,6 +22,7 @@ import {
   helpFieldNotAllow,
   requiredNotAllow,
 } from "./Lib/AllowFieldTypeList";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -69,70 +70,75 @@ const SheetTab = ({ id }: any) => {
         </button>
       </SheetTrigger>
 
-      <SheetContent>
-        <SheetHeader className="h-full">
+      <SheetContent className="pr-0">
+        <SheetHeader className="">
           <SheetTitle className="font-bold">
             Update {data?.type?.toUpperCase()} Field
           </SheetTitle>
-          <div className="text-primary select-none flex flex-col justify-between h-full">
-            <div>
-              <span className="text-lg font-medium">General</span>
-              <div className={"mt-2 flex flex-col space-y-3"}>
-                <div>
-                  <Label htmlFor={"label"} className="font-semibold">
-                    Field Name :
-                  </Label>
-                  <RichTextEditor
-                    content={data?.label}
-                    minHeight={50}
-                    onChange={(e: any) => {
-                      inputOnChange(e, "label");
-                    }}
-                  />
-                </div>
-                {!helpFieldNotAllow.includes(data?.type) && (
-                  <>
-                    <div>
-                      <Label htmlFor={"help"} className="font-semibold">
-                        Field Help :
-                      </Label>
-                      <RichTextEditor
-                        content={data?.help}
-                        minHeight={80}
-                        onChange={(e: any) => {
-                          inputOnChange(e, "help");
-                        }}
-                      />
-                    </div>
-                    <div className="flex items-center pb-5 space-x-2">
-                      <Switch
-                        onCheckedChange={(e: any) => {
-                          inputOnChange(e, "helpPositionAboveInput");
-                        }}
-                        id="fieldHelpSwitch"
-                        checked={
-                          data?.helpPositionAboveInput === undefined
-                            ? true
-                            : data?.helpPositionAboveInput
-                        }
-                      />
-                      <label
-                        htmlFor={"fieldHelpSwitch"}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
-                      >
-                        Field Help Above Input
-                      </label>
-                    </div>
-                  </>
-                )}
+        </SheetHeader>
+        <ScrollArea className="text-primary select-none flex overflow-y-auto flex-col justify-between h-full pr-5">
+          <div>
+            <span className="text-lg font-medium">General</span>
+            <div className={"mt-2 flex flex-col space-y-3"}>
+              <div>
+                <Label htmlFor={"label"} className="font-semibold">
+                  Field Name :
+                </Label>
+                <RichTextEditor
+                  content={data?.label}
+                  minHeight={50}
+                  onChange={(e: any) => {
+                    inputOnChange(e, "label");
+                  }}
+                />
               </div>
-              <hr />
-              <div className="mt-5 grid grid-cols-2 gap-4">
-                {["required", "disable", "hidden"].filter((item)=>{
-                  if(item == "required") return !requiredNotAllow.includes(data?.type)
-                  if(item == "disable") return !disabledNotAllow.includes(data?.type)
-                  return true
-                }).map((item, index) => (
+              {!helpFieldNotAllow.includes(data?.type) && (
+                <>
+                  <div>
+                    <Label htmlFor={"help"} className="font-semibold">
+                      Field Help :
+                    </Label>
+                    <RichTextEditor
+                      content={data?.help}
+                      minHeight={80}
+                      onChange={(e: any) => {
+                        inputOnChange(e, "help");
+                      }}
+                    />
+                  </div>
+                  <div className="flex items-center pb-5 space-x-2">
+                    <Switch
+                      onCheckedChange={(e: any) => {
+                        inputOnChange(e, "helpPositionAboveInput");
+                      }}
+                      id="fieldHelpSwitch"
+                      checked={
+                        data?.helpPositionAboveInput === undefined
+                          ? true
+                          : data?.helpPositionAboveInput
+                      }
+                    />
+                    <label
+                      htmlFor={"fieldHelpSwitch"}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
+                    >
+                      Field Help Above Input
+                    </label>
+                  </div>
+                </>
+              )}
+            </div>
+            <hr />
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              {["required", "disable", "hidden"]
+                .filter((item) => {
+                  if (item == "required")
+                    return !requiredNotAllow.includes(data?.type);
+                  if (item == "disable")
+                    return !disabledNotAllow.includes(data?.type);
+                  return true;
+                })
+                .map((item, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <Switch
                       onCheckedChange={(e: any) => {
@@ -149,19 +155,18 @@ const SheetTab = ({ id }: any) => {
                     </label>
                   </div>
                 ))}
-              </div>
-              {checkThisTypeIsOption() && (
-                <div className={"mt-2"}>
-                  <AddOptions data={data} />
-                </div>
-              )}
-              <CustomizeSheet id={id} data={data} />
             </div>
-
-            {/*Delete*/}
-            <DeleteLayer id={id} />
+            {checkThisTypeIsOption() && (
+              <div className={"mt-2"}>
+                <AddOptions data={data} />
+              </div>
+            )}
+            <CustomizeSheet id={id} data={data} />
           </div>
-        </SheetHeader>
+
+          {/*Delete*/}
+          <DeleteLayer id={id} />
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );

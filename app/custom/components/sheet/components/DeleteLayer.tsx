@@ -33,9 +33,9 @@ const DeleteLayer = ({ id }: any) => {
     );
   };
   return (
-    <div className="">
+    <div className="mt-2 pb-10">
       <Button variant={"destructive"} onClick={confirmationDelete}>
-        <Trash className="w-4 h-4" />
+        <Trash className="w-4 h-4 mr-2" /> Delete Field
       </Button>
       {open && (
         <AlertDialog open={open}>
