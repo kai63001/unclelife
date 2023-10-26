@@ -23,6 +23,8 @@ import {
   requiredNotAllow,
 } from "./Lib/AllowFieldTypeList";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { GridColForOption } from "./optional/GridColForOption";
+import { HeaderForOption } from "./optional/HeaderForOption";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -158,6 +160,8 @@ const SheetTab = ({ id }: any) => {
             </div>
             {checkThisTypeIsOption() && (
               <div className={"mt-2"}>
+                <GridColForOption data={data}/>
+                <HeaderForOption data={data} />
                 <AddOptions data={data} />
               </div>
             )}
