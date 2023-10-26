@@ -40,10 +40,10 @@ const ButtonSaveCustomForm = ({ session }: any) => {
   };
 
   const checkAllInputIsMaped = () => {
-    const inputForm = layer.filter(
+    const inputForm = layer?.filter(
       (item: any) => item.mapTo && item.block != true
     );
-    const newLayer = layer.filter((item: any) => item.block != true);
+    const newLayer = layer?.filter((item: any) => item.block != true);
     // console.log("inputForm", inputForm);
     // console.log(layer.length, inputForm.length);
     if (newLayer.length != inputForm.length) {

@@ -147,7 +147,7 @@ const SendEmail = () => {
             submission. You can also send yourself an email when someone submits
           </span>
           <form onSubmit={handleSubmit} className="w-full max-w-lg">
-            {layer.filter((item) => item.type == "email")?.length == 0 && (
+            {layer?.filter((item) => item.type == "email")?.length == 0 && (
               <Alert className="mb-4" variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>

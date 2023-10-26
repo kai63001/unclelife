@@ -21,10 +21,10 @@ const MultiSelectRender = ({
     await setSelected((prevSelected: any): any => {
       if (prevSelected.includes(id)) {
         updateInputForm(
-          prevSelected.filter((i: any) => i !== id),
+          prevSelected?.filter((i: any) => i !== id),
           data
         );
-        return prevSelected.filter((i: any) => i !== id);
+        return prevSelected?.filter((i: any) => i !== id);
       } else {
         updateInputForm([...prevSelected, id], data);
         return [...prevSelected, id];
