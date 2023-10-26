@@ -27,6 +27,7 @@ import {
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import { Label } from "@/components/ui/label";
+import { useAppSelector } from "@/app/redux/hook";
 
 const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
   const { theme } = useTheme();
@@ -196,6 +197,7 @@ const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
 };
 
 const RichTextEditor = (props: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
   const [checkTextUpdate, setCheckTextUpdate] = useState(false);
   const editor: any = useEditor({
     editorProps: {
@@ -271,7 +273,12 @@ const RichTextEditor = (props: any) => {
       <div className="">
         <EditorContent
           className="focus:outline-none p-1 h-full"
-          style={{ minHeight: props.minHeight || 100 }}
+          style={{
+            backgroundColor: form?.pro?.customizations?.light?.enableBackgroundColor
+              ? form?.pro?.customizations?.light?.backgroundColor
+              : undefined,
+            minHeight: props.minHeight || 100,
+          }}
           editor={editor}
         />
       </div>

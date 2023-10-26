@@ -2,8 +2,11 @@
 import { Label } from "@/components/ui/label";
 import RequiredStar from "@/app/custom/components/render/RequireStar";
 import { useState } from "react";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected] = useState<any>(null);
 
   const inputOnChange = (e: any) => {
@@ -50,13 +53,56 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
               className={`shadow-sm flex ${
                 data.disable ? "cursor-not-allowed" : "cursor-pointer"
               } ${error && "border border-red-500"} items-center w-full ${
-                selected == item.name ? "bg-primary" : "bg-secondary"
+                selected == item.name ? "border-2 border-primary" : "border"
               } py-3 rounded-sm select-none`}
+              style={{
+                backgroundColor:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? form?.pro?.customizations?.light?.inputColor
+                    : null,
+                color:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? calculateTextColor(
+                        form?.pro?.customizations?.light?.inputColor
+                      )
+                    : undefined,
+                borderColor:
+                  selected == item.name &&
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? form?.pro?.customizations?.light?.secondaryColor
+                    : undefined,
+              }}
             >
+              <div
+                className="bg-primary font-bold text-secondary h-5 w-5 text-center items-center flex justify-center rounded-sm ml-5"
+                style={{
+                  backgroundColor:
+                    form?.pro?.customizations?.light?.enableBackgroundColor &&
+                    isSubscribed
+                      ? selected == item.name
+                        ? form?.pro?.customizations?.light?.secondaryColor
+                        : 
+                            form?.pro?.customizations?.light?.primaryColor
+                          
+                      : undefined,
+                  color:
+                    form?.pro?.customizations?.light?.enableBackgroundColor &&
+                    isSubscribed
+                      ? selected == item.name
+                        ? calculateTextColor(
+                            form?.pro?.customizations?.light?.secondaryColor
+                          )
+                        : calculateTextColor(form?.pro?.customizations?.light?.primaryColor)
+                      : undefined,
+                }}
+              >
+                {index + 1}
+              </div>
               <label
-                className={`ml-3 block text-sm font-medium ${
-                  selected == item.name ? "text-secondary" : "text-primary"
-                } cursor-pointer`}
+                className={`ml-3 block text-sm font-medium cursor-pointer`}
               >
                 {item.name}
               </label>

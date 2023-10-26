@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const SelectionRender = ({
   data,
@@ -15,6 +17,8 @@ const SelectionRender = ({
   error,
   isSubscribed,
 }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
+
   return data.hidden ? (
     <></>
   ) : (
@@ -58,6 +62,20 @@ const SelectionRender = ({
           className={`w-full shadow-sm hover:shadow-md ${
             error && "border border-red-500"
           }`}
+          style={{
+            backgroundColor:
+              form?.pro?.customizations?.light?.enableBackgroundColor &&
+              isSubscribed
+                ? form?.pro?.customizations?.light?.inputColor
+                : null,
+            color:
+              form?.pro?.customizations?.light?.enableBackgroundColor &&
+              isSubscribed
+                ? calculateTextColor(
+                    form?.pro?.customizations?.light?.inputColor
+                  )
+                : undefined,
+          }}
         >
           <SelectValue
             placeholder={

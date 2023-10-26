@@ -4,6 +4,8 @@ import { Label } from "@/components/ui/label";
 import { ChevronDown, Check } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import RequiredStar from "../RequireStar";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const MultiSelectRender = ({
   data,
@@ -11,6 +13,7 @@ const MultiSelectRender = ({
   error,
   isSubscribed,
 }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected]: any = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -92,6 +95,18 @@ const MultiSelectRender = ({
             error && "border border-red-500"
           } focus-visible:ring-2 hover:shadow-md focus:outline-0 min-h-10 items-center justify-between rounded-md border border-input bg-transparent px-3 h-10 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full`}
           onClick={handleButtonClick}
+          style={{
+            backgroundColor:
+              form?.pro?.customizations?.light?.enableBackgroundColor &&
+              isSubscribed
+                ? form?.pro?.customizations?.light?.inputColor
+                : null,
+            color:
+              form?.pro?.customizations?.light?.enableBackgroundColor &&
+              isSubscribed
+                ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+                : undefined,
+          }}
         >
           {selected.length > 0 ? (
             <div className="flex flex-wrap">
@@ -99,6 +114,18 @@ const MultiSelectRender = ({
                 <div
                   key={index}
                   className="flex items-center justify-center px-2 m-1 bg-primary text-secondary rounded-sm text-xs h-5"
+                  style={{
+                    backgroundColor:
+                      form?.pro?.customizations?.light?.enableBackgroundColor &&
+                      isSubscribed
+                        ? form?.pro?.customizations?.light?.primaryColor
+                        : null,
+                    color:
+                      form?.pro?.customizations?.light?.enableBackgroundColor &&
+                      isSubscribed
+                        ? calculateTextColor(form?.pro?.customizations?.light?.primaryColor)
+                        : undefined,
+                  }}
                 >
                   {item}
                 </div>

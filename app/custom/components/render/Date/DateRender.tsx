@@ -21,8 +21,11 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
   const [date, setDate] = React.useState<Date>();
   return data.hidden ? (
     <></>
@@ -62,6 +65,18 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
               !date && "text-muted-foreground",
               error && "border border-red-500"
             )}
+            style={{
+              backgroundColor:
+                form?.pro?.customizations?.light?.enableBackgroundColor &&
+                isSubscribed
+                  ? form?.pro?.customizations?.light?.inputColor
+                  : null,
+              color:
+                form?.pro?.customizations?.light?.enableBackgroundColor &&
+                isSubscribed
+                  ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+                  : undefined,
+            }}
           >
             {(data?.pro?.placeholder && isSubscribed
               ? data?.pro?.placeholder
