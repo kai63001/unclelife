@@ -177,7 +177,7 @@ const FormMainBox = ({
     let listAlert: any = [];
     let filterCustomization = Object.keys(
       dataForm?.pro?.customizations || {}
-    ).filter((key) => {
+    )?.filter((key) => {
       return (
         dataForm?.pro?.customizations[key] !== false &&
         dataForm?.pro?.customizations[key] !== null &&
@@ -199,7 +199,7 @@ const FormMainBox = ({
     
     const filterSuccessPage = Object.keys(
       dataForm?.pro?.successPage || {}
-    ).filter((key) => {
+    )?.filter((key) => {
       return (
         dataForm?.pro?.successPage[key] !== false &&
         dataForm?.pro?.successPage[key] !== null &&

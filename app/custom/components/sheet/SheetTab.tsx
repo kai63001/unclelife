@@ -33,7 +33,7 @@ const SheetTab = ({ id }: any) => {
   const { layer } = useAppSelector((state) => state.formReducer);
 
   useEffect(() => {
-    const layerFilter = layer.filter((item: any) => item.id === id);
+    const layerFilter = layer?.filter((item: any) => item.id === id);
     setData(layerFilter[0]);
   }, [id, layer]);
 
@@ -136,7 +136,7 @@ const SheetTab = ({ id }: any) => {
             <hr />
             <div className="mt-5 grid grid-cols-2 gap-4">
               {["required", "disable", "hidden"]
-                .filter((item) => {
+                ?.filter((item) => {
                   if (item == "required")
                     return !requiredNotAllow.includes(data?.type);
                   if (item == "disable")

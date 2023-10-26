@@ -70,7 +70,7 @@ const ModalMapInput = () => {
   const renderSelection = () => {
     let list = Object.keys(listObjectTable);
     //filter list
-    list = list.filter((item: any) => {
+    list = list?.filter((item: any) => {
       return (
         listObjectTable[item].type !== "relation" &&
         listObjectTable[item].type !== "created_time" &&

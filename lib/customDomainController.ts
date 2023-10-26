@@ -15,7 +15,7 @@ export const validateDomain = async (domain: string, path: string) => {
     path = "";
   }
   //filter with path
-  const filteredData = data.filter((item: any) => item.pathname == path);
+  const filteredData = data?.filter((item: any) => item.pathname == path);
   if (filteredData.length > 0) {
     return filteredData[0].formId;
   }

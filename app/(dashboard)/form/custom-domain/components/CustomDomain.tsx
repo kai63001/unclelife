@@ -83,7 +83,7 @@ const CustomDomainComponent = () => {
       return;
     }
 
-    const newListDomain = listDomain.filter(
+    const newListDomain = listDomain?.filter(
       (item: any) => item.domain_id !== domain
     );
     setListDomain(newListDomain);
@@ -299,8 +299,8 @@ const CustomDomainComponent = () => {
         </div>
       </div>
       {user?.is_enterprise &&
-        listDomain.filter((item: any) => item?.verify).length > 0 &&
-        listDomain.map((item: any, index) => (
+        listDomain?.filter((item: any) => item?.verify).length > 0 &&
+        listDomain?.map((item: any, index) => (
           <div key={index} className="border rounded-md mt-5 p-10">
             <h3 className="text-2xl font-bold border-b pb-5">{item?.domain}</h3>
             {/* map pathname to form */}
