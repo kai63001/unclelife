@@ -11,7 +11,7 @@ const CheckBoxRender = ({
   return data.hidden ? (
     <></>
   ) : (
-    <>
+    <div className="mb-2">
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
@@ -53,7 +53,7 @@ const CheckBoxRender = ({
             }}
           ></p>
         )}
-    </>
+    </div>
   );
 };
 

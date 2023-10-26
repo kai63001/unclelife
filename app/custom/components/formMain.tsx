@@ -226,7 +226,7 @@ const FormMainBox = ({
     });
 
     const filterTypeProLayer = dataLayer?.filter((item: any) => {
-      return ["files", "textBlock"].includes(item?.type);
+      return ["files", "textBlock", "dividerBlock"].includes(item?.type);
     });
 
     let other: any = [];

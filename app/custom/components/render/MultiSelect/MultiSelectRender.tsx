@@ -60,7 +60,7 @@ const MultiSelectRender = ({
   return data.hidden ? (
     <></>
   ) : (
-    <div className="relative">
+    <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
         <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
           <span

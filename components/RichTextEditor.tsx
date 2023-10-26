@@ -28,6 +28,7 @@ import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import { Label } from "@/components/ui/label";
 import { useAppSelector } from "@/app/redux/hook";
+import HardBreak from "@tiptap/extension-hard-break";
 
 const MenuBar = ({ editor, setLink, minHeight = 100 }: any) => {
   const { theme } = useTheme();
@@ -202,7 +203,7 @@ const RichTextEditor = (props: any) => {
   const editor: any = useEditor({
     editorProps: {
       attributes: {
-        class: "prose prose-xs mx-auto focus:outline-none",
+        class: "prose prose-xs focus:outline-none max-w-[34ch]",
       },
     },
     onUpdate: ({ editor }: any) => {
@@ -227,6 +228,7 @@ const RichTextEditor = (props: any) => {
         types: ["textStyle"],
       }),
       TextStyle,
+      HardBreak
     ],
     content: props.content || "",
   });
@@ -266,11 +268,11 @@ const RichTextEditor = (props: any) => {
   }, [editor, props.disabled]);
 
   return (
-    <div className="border rounded-md overflow-hidden">
+    <div className="border rounded-md overflow-hidden w-full">
       <div className="bg-foreground px-3 py-2">
         <MenuBar editor={editor} setLink={setLink} />
       </div>
-      <div className="">
+      <div className="w-full">
         <EditorContent
           className="focus:outline-none p-1 h-full"
           style={{

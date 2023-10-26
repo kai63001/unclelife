@@ -62,7 +62,9 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
     const { data: dataUpdate, error: errorUpdate } = await supabase
       .from("form")
       .update({ slug })
-      .eq("id", id).select("slug").single();
+      .eq("id", id)
+      .select("slug")
+      .single();
     if (errorUpdate) {
       toast({
         title: "Error",
@@ -105,7 +107,7 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
     }
     setOpenAlertDelete(false);
     setSlug("");
-  }
+  };
 
   return (
     <div>
@@ -116,7 +118,7 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
           COPY
         </Button>
       </div>
-      {(slug && !onCustomBackHref ) && (
+      {slug && !onCustomBackHref && (
         <div className="border dark:bg-background bg-gray-100 rounded-sm mt-1 w-full px-3 py-2 flex justify-between items-center">
           <p>https://unclelife.co/public/form/{slug}</p>
           <div className="flexx space-x-2">
@@ -160,7 +162,14 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
             Submit
           </Button>
           <Button
-            onClick={() => setOnCustomBackHref(false)}
+            onClick={() => {
+              setOnCustomBackHref(false);
+              if (dataSlug) {
+                setSlug(dataSlug);
+                return
+              }
+              setSlug("");
+            }}
             variant={"ghost"}
             className="w-1/12"
           >
