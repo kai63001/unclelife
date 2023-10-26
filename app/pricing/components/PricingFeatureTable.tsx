@@ -39,6 +39,12 @@ const PricingFeatureTable = () => {
           enterprise: true,
         },
         {
+          name: 'Custom Back-href (Slug)',
+          free: false,
+          pro: true,
+          enterprise: true,
+        },
+        {
           name: "Respondent Email Notifications",
           free: false,
           pro: true,
