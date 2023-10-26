@@ -7,8 +7,11 @@ import { Upload, Trash } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import * as React from "react";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
   const [file, setFile] = useState<any>(null);
   const { toast } = useToast();
 
@@ -55,7 +58,7 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground text-xs"
+          className="text-muted-foreground text-sm my-2"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
@@ -69,7 +72,23 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {file ? (
         <div>
           <div className="flex items-center space-x-2 shadow-sm">
-            <div className="flex w-full border px-3 py-2 rounded-md overflow-hidden">
+            <div
+              style={{
+                backgroundColor:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? form?.pro?.customizations?.light?.inputColor
+                    : null,
+                color:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? calculateTextColor(
+                        form?.pro?.customizations?.light?.inputColor
+                      )
+                    : undefined,
+              }}
+              className="flex w-full border px-3 py-2 rounded-md overflow-hidden"
+            >
               <p
                 className={
                   "text-ellipsis overflow-hidden max-w-[370px] whitespace-nowrap"
@@ -84,6 +103,20 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                 setFile(null);
                 updateInputForm(null, data);
               }}
+              style={{
+                backgroundColor:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? form?.pro?.customizations?.light?.primaryColor
+                    : null,
+                color:
+                  form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed
+                    ? calculateTextColor(
+                        form?.pro?.customizations?.light?.primaryColor
+                      )
+                    : undefined,
+              }}
             >
               <Label className="flex flex-col space-y-2 cursor-pointer">
                 <Trash className="h-4 w-4" />
@@ -95,6 +128,20 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
         <>
           <Button
             className={error && "bg-red-500 text-white shadow-sm"}
+            style={{
+              backgroundColor:
+                form?.pro?.customizations?.light?.enableBackgroundColor &&
+                isSubscribed
+                  ? form?.pro?.customizations?.light?.primaryColor
+                  : null,
+              color:
+                form?.pro?.customizations?.light?.enableBackgroundColor &&
+                isSubscribed
+                  ? calculateTextColor(
+                      form?.pro?.customizations?.light?.primaryColor
+                    )
+                  : undefined,
+            }}
             asChild
           >
             <Label
@@ -127,7 +174,7 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground text-xs"
+            className="text-muted-foreground text-sm my-2"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}

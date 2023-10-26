@@ -26,7 +26,7 @@ export const DarkmodeSelectionForm = ({ onChangeHook, form }: any) => {
 
   return (
     <div>
-      <Label className="pb-2">
+      <Label className="pb-2 uppercase font-bold">
         Dark Mode
         <FreeBadge />
       </Label>

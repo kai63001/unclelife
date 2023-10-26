@@ -24,7 +24,7 @@ import Image from "next/image";
 import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
-import { evaluateGroup } from "@/lib/formController";
+import { calculateTextColor, evaluateGroup } from "@/lib/formController";
 import { sendEmail } from "@/lib/formApi";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useTheme } from "next-themes";
@@ -612,9 +612,30 @@ const FormMainBox = ({
               )}
             </>
           )}
-
-          <div className={"p-5"}>
-            <h1 className="text-4xl font-extrabold mb-5">{dataForm?.title}</h1>
+          <div
+            className={"p-5"}
+            style={{
+              backgroundColor:
+                dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                dataUser?.is_subscribed
+                  ? dataForm?.pro?.customizations?.light?.backgroundColor
+                  : null,
+            }}
+          >
+            <h1
+              className="text-4xl font-extrabold mb-5"
+              style={{
+                color:
+                  dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                  dataUser?.is_subscribed
+                    ? calculateTextColor(
+                        form?.pro?.customizations?.light?.backgroundColor
+                      )
+                    : undefined,
+              }}
+            >
+              {dataForm?.title}
+            </h1>
             {dataForm?.description && (
               <div
                 dangerouslySetInnerHTML={{ __html: dataForm?.description }}
@@ -686,7 +707,18 @@ const FormMainBox = ({
               dataForm?.pro?.customizations?.hideBranding_pro &&
               dataUser?.is_subscribed
             ) && (
-              <div className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400">
+              <div
+                className="mt-5 text-xs text-gray-400 text-center border-t pt-5 mx-10 border-opacity-10 border-gray-400"
+                style={{
+                  color:
+                    dataForm?.pro?.customizations?.light
+                      ?.enableBackgroundColor && dataUser?.is_subscribed
+                      ? calculateTextColor(
+                          form?.pro?.customizations?.light?.backgroundColor
+                        )
+                      : undefined,
+                }}
+              >
                 <div>
                   Power by{" "}
                   <Link

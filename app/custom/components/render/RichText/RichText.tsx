@@ -2,6 +2,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import RequiredStar from "../RequireStar";
 import React from "react";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const RichTextRender = ({
   data,
@@ -9,6 +11,8 @@ const RichTextRender = ({
   error,
   isSubscribed,
 }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
+
   return data.hidden ? (
     <></>
   ) : (
@@ -27,7 +31,7 @@ const RichTextRender = ({
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground text-xs"
+          className="text-muted-foreground text-sm my-2"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
@@ -50,11 +54,23 @@ const RichTextRender = ({
         }
         disabled={data.disable}
         required={data.required}
+        style={{
+          backgroundColor:
+            form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed
+              ? form?.pro?.customizations?.light?.inputColor
+              : null,
+          color:
+            form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed
+              ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+              : undefined,
+        }}
       />
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground text-xs"
+            className="text-muted-foreground text-sm my-2"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}

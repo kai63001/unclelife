@@ -1,6 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import RequiredStar from "../RequireStar";
+import { useAppSelector } from "@/app/redux/hook";
+import { calculateTextColor } from "@/lib/formController";
 
 const TitleRender = ({
   data,
@@ -9,6 +11,8 @@ const TitleRender = ({
   error,
   isSubscribed,
 }: any) => {
+  const { form } = useAppSelector((state) => state.formReducer);
+
   return data.hidden ? (
     <></>
   ) : (
@@ -28,7 +32,7 @@ const TitleRender = ({
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground text-xs"
+          className="text-muted-foreground text-sm my-2"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
@@ -36,7 +40,7 @@ const TitleRender = ({
       )}
       {data.required && data?.pro?.hideFieldName && isSubscribed && (
         <div className="absolute -top-2 -right-2">
-          <RequiredStar/>
+          <RequiredStar />
         </div>
       )}
       <Input
@@ -52,11 +56,23 @@ const TitleRender = ({
         disabled={data.disable}
         required={data.required}
         type={type}
+        style={{
+          backgroundColor:
+            form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed
+              ? form?.pro?.customizations?.light?.inputColor
+              : null,
+          color:
+            form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed
+              ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+              : undefined,
+        }}
       />
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground text-xs"
+            className="text-muted-foreground text-sm my-2"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}

@@ -2,13 +2,23 @@
 import Link from "next/link";
 import { useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
+import { calculateTextColor } from "@/lib/formController";
 
 const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
   const { form: dataForm } = useAppSelector((state) => state.formReducer);
   const { data: dataUser } = useAppSelector((state) => state.userReducer);
 
   return (
-    <div className="flex items-center justify-center">
+    <div
+      className="flex items-center justify-center"
+      style={{
+        backgroundColor:
+          dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+          dataUser?.is_subscribed
+            ? dataForm?.pro?.customizations?.light?.backgroundColor
+            : null,
+      }}
+    >
       <div className="p-6 ">
         {!(
           dataForm?.free?.successPage?.icon == "hide" &&
@@ -24,7 +34,18 @@ const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
           </div>
         )}
         <div className="flex flex-col items-center justify-center mt-5">
-          <h1 className="text-3xl font-bold text-muted-foreground">
+          <h1
+            style={{
+              color:
+                dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                dataUser?.is_subscribed
+                  ? calculateTextColor(
+                      dataForm?.pro?.customizations?.light?.backgroundColor
+                    )
+                  : undefined,
+            }}
+            className="text-3xl font-bold text-muted-foreground"
+          >
             {dataForm?.free?.successPage?.title != undefined &&
             (dataUser?.is_subscribed || testMode)
               ? dataForm?.free?.successPage?.title
@@ -50,12 +71,23 @@ const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
               {dataForm?.free?.successPage?.refillText || "Refill Form"}
             </Button>
           )}
-          
+
           {!(
             dataForm?.pro?.customizations?.hideBranding_pro &&
             (dataUser?.is_subscribed || testMode)
           ) && (
-            <p className="mt-5 text-gray-400 text-sm">
+            <p
+              style={{
+                color:
+                  dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                  dataUser?.is_subscribed
+                    ? calculateTextColor(
+                      dataForm?.pro?.customizations?.light?.backgroundColor
+                      )
+                    : undefined,
+              }}
+              className="mt-5 text-gray-400 text-sm"
+            >
               If you want to create your form, go to
               <Link href="https://www.unclelife.co" className="ml-1 underline">
                 unclelife.co

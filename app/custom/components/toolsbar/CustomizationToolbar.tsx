@@ -4,6 +4,7 @@ import UploadCoverPicture from "@/app/custom/components/toolsbar/Customize/Uploa
 import HideBranding from "@/app/custom/components/toolsbar/Customize/HideBranding";
 import UploadLogoPicture from "./Customize/UploadLogoPicture";
 import { DarkmodeSelectionForm } from "./Customize/DarkmodeSelection";
+import { CustomBackgroundColorForm } from "./Customize/CustomBackgroundColor";
 
 const CustomizationToolbar = ({onChangeHook, form}: any) => {
     return (
@@ -19,6 +20,7 @@ const CustomizationToolbar = ({onChangeHook, form}: any) => {
                     <UploadLogoPicture onChangeHook={onChangeHook} form={form}/>
                     <HideBranding onChangeHook={onChangeHook} form={form}/>
                     <DarkmodeSelectionForm onChangeHook={onChangeHook} form={form}/>
+                    <CustomBackgroundColorForm onChangeHook={onChangeHook} form={form}/>
                 </div>
             </AccordionContent>
         </AccordionItem>

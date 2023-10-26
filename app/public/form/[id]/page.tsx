@@ -53,7 +53,16 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
   const dataUser: any = responseData?.data ? responseData.data.user_id : null;
 
   return (
-    <div className="h-screen w-screen md:flex overflow-x-hidden md:flex-col">
+    <div
+      className="h-screen w-screen md:flex overflow-x-hidden md:flex-col"
+      style={{
+        backgroundColor:
+          dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+          dataUser?.is_subscribed
+            ? dataForm?.pro?.customizations?.light?.backgroundColor
+            : null,
+      }}
+    >
       <div className="w-full">
         {dataForm?.pro?.customizations?.coverPicture &&
           dataUser?.is_subscribed && (

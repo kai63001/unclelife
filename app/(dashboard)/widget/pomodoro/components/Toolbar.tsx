@@ -52,7 +52,7 @@ const PomodoroToolbar = () => {
   return (
     <div
       className={
-        "fixed right-0 top-0 h-screen w-96 flex flex-col border-l bg-background pl-5"
+        "fixed right-0 top-0 h-screen w-96 flex flex-col border-l bg-background pl-5 z-50"
       }
     >
       <ScrollArea className={"pr-5"}>
