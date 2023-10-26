@@ -75,7 +75,7 @@ const MultiSelectRender = ({
       {(data?.helpPositionAboveInput ||
         data?.helpPositionAboveInput == undefined) && (
         <p
-          className="text-muted-foreground text-xs my-1"
+          className="text-muted-foreground text-sm my-2"
           dangerouslySetInnerHTML={{
             __html: data?.help,
           }}
@@ -168,7 +168,7 @@ const MultiSelectRender = ({
       {!data?.helpPositionAboveInput &&
         data?.helpPositionAboveInput != undefined && (
           <p
-            className="text-muted-foreground text-xs my-1"
+            className="text-muted-foreground text-sm my-2"
             dangerouslySetInnerHTML={{
               __html: data?.help,
             }}
