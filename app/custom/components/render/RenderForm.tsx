@@ -5,6 +5,7 @@ import FileRender from "@/app/custom/components/render/File/FileRender";
 import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
 import { cn } from "@/lib/utils";
 import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
+import { DividerRenderBlock } from "./Layout/DividerBlock/DividerBlockRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -120,6 +121,15 @@ const RenderFormComponent = ({
             error={error}
           />
         );
+      case "dividerBlock":
+        return (
+          <DividerRenderBlock
+            updateInputForm={updateInputForm}
+            isSubscribed={dataUser?.is_subscribed}
+            data={data}
+            error={error}
+          />
+        );
       case "formula":
         return <></>;
       case "relation":
@@ -143,7 +153,7 @@ const RenderFormComponent = ({
   return (
     <div
       className={cn(
-        "my-2 px-2",
+        "px-2",
         data?.pro?.layout && dataUser?.is_subscribed
           ? data?.pro?.layout
           : "w-full"

@@ -19,6 +19,7 @@ import CustomizeSheet from "./components/CustomizeSheet";
 import RichTextEditor from "@/components/RichTextEditor";
 import {
   disabledNotAllow,
+  fieldNameNotAllow,
   helpFieldNotAllow,
   requiredNotAllow,
 } from "./Lib/AllowFieldTypeList";
@@ -82,18 +83,20 @@ const SheetTab = ({ id }: any) => {
           <div>
             <span className="text-lg font-medium">General</span>
             <div className={"mt-2 flex flex-col space-y-3"}>
-              <div>
-                <Label htmlFor={"label"} className="font-semibold">
-                  Field Name :
-                </Label>
-                <RichTextEditor
-                  content={data?.label}
-                  minHeight={50}
-                  onChange={(e: any) => {
-                    inputOnChange(e, "label");
-                  }}
-                />
-              </div>
+              {!fieldNameNotAllow.includes(data?.type) && (
+                <div>
+                  <Label htmlFor={"label"} className="font-semibold">
+                    Field Name :
+                  </Label>
+                  <RichTextEditor
+                    content={data?.label}
+                    minHeight={50}
+                    onChange={(e: any) => {
+                      inputOnChange(e, "label");
+                    }}
+                  />
+                </div>
+              )}
               {!helpFieldNotAllow.includes(data?.type) && (
                 <>
                   <div>
@@ -160,7 +163,7 @@ const SheetTab = ({ id }: any) => {
             </div>
             {checkThisTypeIsOption() && (
               <div className={"mt-2"}>
-                <GridColForOption data={data}/>
+                <GridColForOption data={data} />
                 <HeaderForOption data={data} />
                 <AddOptions data={data} />
               </div>

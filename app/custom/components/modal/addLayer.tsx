@@ -23,6 +23,7 @@ import {
   Upload,
   Text,
   PlusCircle,
+  Minus,
 } from "lucide-react";
 import { RocketIcon } from "@radix-ui/react-icons";
 
@@ -100,6 +101,13 @@ const ModalAddLayer = () => {
       block: true,
       pro: true,
     },
+    {
+      name: "Divider Block",
+      icon: <Minus className="h-10 w-10" />,
+      type: "dividerBlock",
+      block: true,
+      pro: true,
+    }
   ];
 
   const randomTitleWithType = (type: string) => {

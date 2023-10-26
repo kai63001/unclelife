@@ -72,6 +72,8 @@ const LayerBar = () => {
         return true;
       case "textBlock":
         return true;
+      case "dividerBlock":
+        return true;
       default:
         return false;
     }
