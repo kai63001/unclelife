@@ -130,7 +130,7 @@ export const CustomBackgroundColorForm = ({ onChangeHook, form }: any) => {
           </Label>
         </div>
       )}
-      <p className="text-muted-foreground text-xs">
+      <p className="text-muted-foreground text-xs my-1">
         If custom color enable dark mode will be disabled
       </p>
     </div>
