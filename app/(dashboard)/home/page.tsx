@@ -32,7 +32,6 @@ const DashboardPage = () => {
                             <CardDescription>Start building your custom Notion form with just a few
                                 clicks.
                                 <br/>
-                                <br/>
                             </CardDescription>
                         </CardHeader>
                         <CardContent>

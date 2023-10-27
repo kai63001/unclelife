@@ -64,6 +64,15 @@ const SheetTab = ({ id }: any) => {
     }
   };
 
+  const checkThisTypeIsRadio = () => {
+    switch (data.type) {
+      case "radio_button":
+        return true;
+      default:
+        return false;
+    }
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -163,8 +172,12 @@ const SheetTab = ({ id }: any) => {
             </div>
             {checkThisTypeIsOption() && (
               <div className={"mt-2"}>
-                <GridColForOption data={data} />
-                <HeaderForOption data={data} />
+                {checkThisTypeIsRadio() && (
+                  <>
+                    <GridColForOption data={data} />
+                    <HeaderForOption data={data} />
+                  </>
+                )}
                 <AddOptions data={data} />
               </div>
             )}

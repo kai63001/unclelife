@@ -30,7 +30,11 @@ export async function generateMetadata({
 
 const PublicFormPage = async ({ params: { id } }: Props) => {
   const responseData = await getFormData(id);
-  if (responseData.error) {
+  const dataForm = responseData?.data ? responseData.data.detail : null;
+  const formId = responseData?.data ? responseData.data.id : null;
+
+  const dataUser: any = responseData?.data ? responseData.data.user_id : null;
+  if (responseData.error || dataForm?.visibility == 'closed') {
     return (
       <div className="h-screen w-screen md:flex overflow-x-hidden md:flex-col">
         <div className="m-auto">
@@ -46,11 +50,6 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
       </div>
     );
   }
-
-  const dataForm = responseData?.data ? responseData.data.detail : null;
-  const formId = responseData?.data ? responseData.data.id : null;
-
-  const dataUser: any = responseData?.data ? responseData.data.user_id : null;
 
   return (
     <div

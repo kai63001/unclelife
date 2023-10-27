@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       .from("form")
       .insert([
         {
-          user_id: user_id,
+          user_id: userId,
           layer: layer,
           detail: detail,
           databaseId: databaseId,
@@ -117,6 +117,26 @@ export async function PUT(req: NextRequest) {
     if (!session) {
       return NextResponse.json({
         message: "no session",
+      });
+    }
+
+    //check if user is owner
+    const userId = session.user.id;
+    const { data: form, error } = await supabaseBypass
+      .from("form")
+      .select("user_id")
+      .eq("id", id)
+      .single();
+    if (error) {
+      return NextResponse.json({
+        message: "error",
+        error: error,
+      });
+    }
+    if (form.user_id !== userId) {
+      return NextResponse.json({
+        message: "error",
+        error: "user not owner",
       });
     }
 

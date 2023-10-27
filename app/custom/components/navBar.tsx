@@ -6,6 +6,7 @@ import ButtonEmbed from "@/app/custom/components/button/ButtonEmbed";
 import ControllerButtonSave from "./button/ControllerButtonSave";
 import ButtonCondition from "./button/ButtonCondition";
 import ButtonNotification from "./button/ButtonNotification";
+import { FormVisibilitySelection } from "./button/FormVisibilitySelection";
 
 const CustomFormNavbar = async () => {
   const [session] = await Promise.all([getSession()]);
@@ -25,6 +26,7 @@ const CustomFormNavbar = async () => {
         <ButtonNotification />
       </div>
       <div className="flex space-x-3 mt-3 md:mt-0">
+        <FormVisibilitySelection/>
         <ButtonMapInput />
         <ControllerButtonSave session={session} />
       </div>
