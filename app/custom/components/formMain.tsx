@@ -24,7 +24,7 @@ import Image from "next/image";
 import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
-import { calculateTextColor, evaluateGroup } from "@/lib/formController";
+import { calculateTextColor, evaluateGroup, hexColorToHsl } from "@/lib/formController";
 import { sendEmail } from "@/lib/formApi";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useTheme } from "next-themes";
@@ -187,16 +187,16 @@ const FormMainBox = ({
     });
 
     //filter custom color
-    filterCustomization = filterCustomization.filter((item:any) => {
-      if (item == 'light') {
+    filterCustomization = filterCustomization.filter((item: any) => {
+      if (item == "light") {
         if (dataForm?.pro?.customizations[item]?.enableBackgroundColor) {
-          return item
+          return item;
         }
-        return
+        return;
       }
-      return item
+      return item;
     });
-    
+
     const filterSuccessPage = Object.keys(
       dataForm?.pro?.successPage || {}
     )?.filter((key) => {
@@ -557,6 +557,14 @@ const FormMainBox = ({
           ${dataForm?.pro?.customizations?.css}
         `}</style>
       )}
+      {dataForm?.pro?.customizations?.light?.primaryColor &&
+        dataUser?.is_subscribed && (
+          <style jsx global>{`
+            :root {
+              --ring:  ${hexColorToHsl(dataForm?.pro?.customizations?.light?.primaryColor)};
+            }
+          `}</style>
+        )}
       {successSubmit ? (
         <SuccessPageComponent setSuccessSubmit={setSuccessSubmit} />
       ) : (

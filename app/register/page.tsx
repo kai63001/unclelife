@@ -22,27 +22,18 @@ const RegisterPage = () => {
             Login
           </Link>
         </Button>
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <Image
-            src="/image/auth/authBanner.png"
-            quality={100}
-            width={600}
-            height={700}
-            className="absolute inset-0 top-[10%] left-[10%] object-cover"
-            alt="Authentication"
-          />
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex w-full">
+          <div className="absolute inset-0 bg-zinc-900 w-full" />
           <div className="relative z-20 flex items-center text-lg font-medium">
             <Link href="/">Uncle Life</Link>
           </div>
-          <div className="relative z-20 mt-auto">
-            <blockquote className="space-y-2">
-              <p className="text-lg">
-                &ldquo;Dive into UncleLife and discover a world where form
-                creation meets Notion integration. Say goodbye to complicated
-                setups and hello to a smoother workflow.&rdquo;
-              </p>
-            </blockquote>
+          <div className="relative z-20 mt-8 flex justify-center items-center h-full">
+            <Image
+              src="/image/auth/authBanner.png"
+              alt="Uncle Life"
+              width={800}
+              height={800}
+            />
           </div>
         </div>
         <div className="lg:p-8">

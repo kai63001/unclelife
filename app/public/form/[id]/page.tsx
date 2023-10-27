@@ -71,7 +71,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
                 src={dataForm?.pro?.customizations?.coverPicture as string}
                 alt={"cover image"}
                 fill
-                className={"w-full h-full object-cover"}
+                className={"w-full h-full object-cover object-center"}
               />
             </div>
           )}
@@ -91,6 +91,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
                     <Image
                       src={dataForm?.pro?.customizations?.logoPicture as string}
                       alt={"logo image"}
+                      objectPosition="center"
                       fill
                       className={"w-full h-full object-cover"}
                     />
