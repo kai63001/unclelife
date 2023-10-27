@@ -23,7 +23,7 @@ const UploadCoverPicture = ({onChangeHook, form}: any) => {
                 ...form?.pro,
                 customizations: {
                     ...form?.pro?.customizations,
-                    ['coverPicture']: uriImage.data.publicURL
+                    ['coverPicture']: uriImage.data?.publicURL
                 }
             }, 'pro')
             setUploading(false)
