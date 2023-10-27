@@ -43,11 +43,14 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
       return;
     }
     setLoading(true);
+    //check if has space in slug convert it to -
+    const slugReplace = slug?.replaceAll(" ", "-").toLowerCase();
+
     //check if slug is exist
     const { data, error } = await supabase
       .from("form")
       .select("id")
-      .eq("slug", slug)
+      .eq("slug", slugReplace)
       .single();
     if (data) {
       toast({
@@ -61,7 +64,7 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
     //update slug
     const { data: dataUpdate, error: errorUpdate } = await supabase
       .from("form")
-      .update({ slug })
+      .update({ slug: slugReplace })
       .eq("id", id)
       .select("slug")
       .single();
@@ -81,6 +84,8 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
         description: "Slug is updated",
       });
     }
+
+    setSlug(slugReplace)
 
     setLoading(false);
     setOnCustomBackHref(false);
@@ -111,18 +116,21 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
 
   return (
     <div>
-      <div className="border dark:bg-background bg-gray-100 rounded-sm mt-1 w-full px-3 py-2 flex justify-between items-center">
+      <div className="border dark:bg-background bg-gray-100 rounded-sm mt-1 w-full px-3 py-2 flex justify-between items-center relative">
         <p>https://unclelife.co/public/form/{id}</p>
-        <Button onClick={() => copyUrl(id)} className="py-1 h-7 px-2">
+        <Button
+          onClick={() => copyUrl(id)}
+          className="py-1 h-7 px-2 absolute right-5 md:static"
+        >
           <Copy className="w-4 h-4 mr-2" />
           COPY
         </Button>
       </div>
       {slug && !onCustomBackHref && (
-        <div className="border dark:bg-background bg-gray-100 rounded-sm mt-1 w-full px-3 py-2 flex justify-between items-center">
+        <div className="border dark:bg-background bg-gray-100 rounded-sm mt-1 w-full px-3 py-2 flex justify-between items-center relative">
           <p>https://unclelife.co/public/form/{slug}</p>
-          <div className="flexx space-x-2">
-            <Button onClick={() => copyUrl(slug)} className="py-1 h-7 px-2">
+          <div className="flex space-x-2 absolute right-5 md:static">
+            <Button onClick={() => copyUrl(slug)} className="py-1 h-7 px-2 ">
               <Copy className="w-4 h-4 mr-2" />
               COPY
             </Button>
@@ -166,7 +174,7 @@ export const ShareURLDetailForm = ({ id, dataSlug }: any) => {
               setOnCustomBackHref(false);
               if (dataSlug) {
                 setSlug(dataSlug);
-                return
+                return;
               }
               setSlug("");
             }}

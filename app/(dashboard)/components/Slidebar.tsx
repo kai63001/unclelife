@@ -54,7 +54,7 @@ const Slidebars = async () => {
               <Menu className={"w-6 h-6"} />
             </Button>
           </SheetTrigger>
-          <SheetContent side={"left"} className="w-64 px-0">
+          <SheetContent side={"right"} className="w-64 px-0">
             <div className="flex flex-col justify-between bg-background z-50 left-0 h-screen">
               <div>
                 <div className="p-4">

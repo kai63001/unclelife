@@ -172,7 +172,7 @@ const WorkspaceSetting = () => {
 
   return (
     <>
-      <div className={"grid grid-cols-2 gap-3"}>
+      <div className={"grid grid-cols-1 md:grid-cols-2 gap-3"}>
         {listWorkspace?.map((workspace: any, index: any) => (
           <div
             key={index}
