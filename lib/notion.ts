@@ -12,6 +12,11 @@ export const convertLayerToProperty = (layer: any) => {
           title: {},
         };
         break;
+      case "phone_number":
+        properties[name] = {
+          phone_number: {},
+        };
+        break;
       case "rich_text":
         properties[name] = {
           rich_text: {},
@@ -75,11 +80,6 @@ export const convertLayerToProperty = (layer: any) => {
       case "email":
         properties[name] = {
           email: {},
-        };
-        break;
-      case "phone_number":
-        properties[name] = {
-          phone_number: {},
         };
         break;
       case "url":

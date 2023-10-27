@@ -24,6 +24,7 @@ import {
   Text,
   PlusCircle,
   Minus,
+  Phone,
 } from "lucide-react";
 import { RocketIcon } from "@radix-ui/react-icons";
 
@@ -59,6 +60,11 @@ const ModalAddLayer = () => {
       name: "Number",
       icon: <Hash className="h-10 w-10" />,
       type: "number",
+    },
+    {
+      name: "Phone",
+      icon: <Phone className="h-10 w-10" />,
+      type: "phone_number",
     },
     {
       name: "Select",
@@ -107,7 +113,7 @@ const ModalAddLayer = () => {
       type: "dividerBlock",
       block: true,
       pro: true,
-    }
+    },
   ];
 
   const randomTitleWithType = (type: string) => {
@@ -120,6 +126,15 @@ const ModalAddLayer = () => {
           "Article Title",
           "Header",
           "Footer",
+        ];
+        break;
+      case "phone_number":
+        titles = [
+          "Phone Number",
+          "Contact Phone",
+          "Business Phone",
+          "Personal Phone",
+          "Alternate Phone",
         ];
         break;
       case "rich_text":
@@ -202,7 +217,16 @@ const ModalAddLayer = () => {
   };
 
   const addLayer = (type: string, block: boolean = false) => {
-    const labelName = randomTitleWithType(type);
+    let labelName = randomTitleWithType(type);
+    //check if labelName is duplicate add number
+    if (layer.length > 0) {
+      let count = 1;
+      while (layer.some((item: any) => item.label === labelName)) {
+        labelName = `${labelName} ${count}`;
+        count++;
+      }
+    }
+    
     //no duplicate id
     let newLayer: any = {
       id:

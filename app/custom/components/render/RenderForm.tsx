@@ -1,11 +1,12 @@
 import dynamic from "next/dynamic";
-import MultiSelectRender from "./MultiSelect/MultiSelectRender";
-import CheckBoxRender from "./CheckBox/CheckBoxRender";
-import FileRender from "@/app/custom/components/render/File/FileRender";
-import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
+// import MultiSelectRender from "./MultiSelect/MultiSelectRender";
+// import CheckBoxRender from "./CheckBox/CheckBoxRender";
+// import FileRender from "@/app/custom/components/render/File/FileRender";
+// import RadioRender from "@/app/custom/components/render/Radio/RadioRender";
 import { cn } from "@/lib/utils";
-import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
+// import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
 import { DividerRenderBlock } from "./Layout/DividerBlock/DividerBlockRender";
+// import PhoneRender from "./Phone/PhoneRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
   ssr: false,
@@ -19,6 +20,30 @@ const DateRender = dynamic(() => import("./Date/DateRender"), {
 const SelectionRender = dynamic(() => import("./Selection/SelectionRender"), {
   ssr: false,
 });
+const MultiSelectRender = dynamic(
+  () => import("./MultiSelect/MultiSelectRender"),
+  {
+    ssr: false,
+  }
+);
+const CheckBoxRender = dynamic(() => import("./CheckBox/CheckBoxRender"), {
+  ssr: false,
+});
+const FileRender = dynamic(() => import("./File/FileRender"), {
+  ssr: false,
+});
+const RadioRender = dynamic(() => import("./Radio/RadioRender"), {
+  ssr: false,
+});
+const PhoneRender = dynamic(() => import("./Phone/PhoneRender"), {
+  ssr: false,
+});
+const TextBlockRender = dynamic(
+  () => import("./Layout/TextBlock/TextBlockRender"),
+  {
+    ssr: false,
+  }
+);
 
 const RenderFormComponent = ({
   data,
@@ -106,6 +131,15 @@ const RenderFormComponent = ({
       case "radio_button":
         return (
           <RadioRender
+            updateInputForm={updateInputForm}
+            isSubscribed={dataUser?.is_subscribed}
+            data={data}
+            error={error}
+          />
+        );
+      case "phone_number":
+        return (
+          <PhoneRender
             updateInputForm={updateInputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}

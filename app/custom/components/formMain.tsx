@@ -386,16 +386,16 @@ const FormMainBox = ({
         }
       }
       //validate phone number
-      if (
-        item?.type === "phone_number" &&
-        inputForm[item?.mapTo]?.value?.length != 0 &&
-        inputForm[item?.mapTo]?.value != undefined
-      ) {
-        if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
-          error[item?.id] = "Invalid phone number";
-          check = false;
-        }
-      }
+      // if (
+      //   item?.type === "phone_number" &&
+      //   inputForm[item?.mapTo]?.value?.length != 0 &&
+      //   inputForm[item?.mapTo]?.value != undefined
+      // ) {
+      //   if (!/^\d+$/.test(inputForm[item?.mapTo]?.value)) {
+      //     error[item?.id] = "Invalid phone number";
+      //     check = false;
+      //   }
+      // }
     });
 
     console.log(error);
