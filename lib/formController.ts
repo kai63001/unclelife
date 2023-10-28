@@ -169,3 +169,56 @@ export function rgbToHsl(rgb: string): string {
 
   return `${h} ${s}% ${l}%`;
 }
+
+//this function is used to get the next page data layer end at type nextPage and page is page number if 0 then it will return the first page that end at type nextPage first
+export function nextPageDataLayer(dataLayer: any, page: number) {
+  const oldDataLayer = dataLayer;
+  const newDataLayer = [];
+  let startPageIndex = 0;
+  //find all index of type nextPage
+  let allIndex = oldDataLayer.map((item: any, index: number) => {
+    if (item.type === "nextPage") {
+      return index;
+    }
+  }).filter((item: any) => item !== undefined);
+  let nextPageIndex = oldDataLayer.findIndex(
+    (item: any) => item.type === "nextPage"
+  );
+  if (nextPageIndex === -1) {
+    return oldDataLayer;
+  }
+  if (page !== 0) {
+    //find index of type nextPage after page
+    startPageIndex = allIndex[page - 1];
+    nextPageIndex = allIndex[page] || oldDataLayer.length;
+  }
+  // console.log("startPageIndex", startPageIndex);
+  // console.log("nextPageIndex", nextPageIndex);
+  // console.log("allIndex", allIndex);
+
+  // loop from page to nextPageIndex
+  for (let i = startPageIndex; i < nextPageIndex; i++) {
+    newDataLayer.push(oldDataLayer[i]);
+  }
+
+  return newDataLayer;
+}
+
+export function checkNextPage(dataLayer:any, page:any) {
+  let allIndex = dataLayer.map((item: any, index: number) => {
+    if (item.type === "nextPage") {
+      return index;
+    }
+  }).filter((item: any) => item !== undefined);
+
+  if (allIndex.length === 0) {
+    return false;
+  }
+
+  if (page === allIndex.length) {
+    return false;
+  }
+
+  return true;
+  
+}

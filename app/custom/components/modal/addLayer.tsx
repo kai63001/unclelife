@@ -31,6 +31,7 @@ import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { FilePlus2 } from "lucide-react";
 
 const ModalAddLayer = () => {
   const [open, setOpen] = useState(false);
@@ -100,6 +101,13 @@ const ModalAddLayer = () => {
   ];
 
   const LayoutBlock = [
+    {
+      name: "Next Page",
+      icon: <FilePlus2 className="h-10 w-10" />,
+      type: "nextPage",
+      block: true,
+      pro: true,
+    },
     {
       name: "Text Block",
       icon: <Text className="h-10 w-10" />,

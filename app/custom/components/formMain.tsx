@@ -24,7 +24,13 @@ import Image from "next/image";
 import { setUserData } from "@/app/redux/slice/userController.slice";
 import { convertInputToProperty } from "@/lib/notion";
 import { cn } from "@/lib/utils";
-import { calculateTextColor, evaluateGroup, hexColorToHsl } from "@/lib/formController";
+import {
+  calculateTextColor,
+  checkNextPage,
+  evaluateGroup,
+  hexColorToHsl,
+  nextPageDataLayer,
+} from "@/lib/formController";
 import { sendEmail } from "@/lib/formApi";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useTheme } from "next-themes";
@@ -53,6 +59,7 @@ const FormMainBox = ({
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
 
   const [inputForm, setInputForm]: any = useState<any>({});
   const [error, setError] = useState<any>({});
@@ -156,6 +163,7 @@ const FormMainBox = ({
   };
 
   useEffect(() => {
+    const _id = searchParams.get("id");
     if (layer.length === 0) {
       setDefaultInputFormLayer();
       return;
@@ -226,7 +234,9 @@ const FormMainBox = ({
     });
 
     const filterTypeProLayer = dataLayer?.filter((item: any) => {
-      return ["files", "textBlock", "dividerBlock"].includes(item?.type);
+      return ["files", "textBlock", "dividerBlock", "nextPage"].includes(
+        item?.type
+      );
     });
 
     let other: any = [];
@@ -348,9 +358,8 @@ const FormMainBox = ({
       return;
     }
     setDataForm(form);
-    setDataLayer(layer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form, id, layer, supabase]);
+  }, [form, id, supabase]);
 
   const checkRequire = () => {
     let error: any = {};
@@ -561,7 +570,9 @@ const FormMainBox = ({
         dataUser?.is_subscribed && (
           <style jsx global>{`
             :root {
-              --ring:  ${hexColorToHsl(dataForm?.pro?.customizations?.light?.primaryColor)};
+              --ring: ${hexColorToHsl(
+                dataForm?.pro?.customizations?.light?.primaryColor
+              )};
             }
           `}</style>
         )}
@@ -688,37 +699,78 @@ const FormMainBox = ({
               noValidate
               key={formKey}
             >
-              {dataLayer?.map((item: any, index: number) => {
-                return (
-                  <RenderFormComponent
-                    updateInputForm={updateInputForm}
-                    data={item}
-                    error={error[item?.id]}
-                    dataUser={dataUser}
-                    key={index}
-                  />
-                );
-              })}
+              {nextPageDataLayer(dataLayer, page)?.map(
+                (item: any, index: number) => {
+                  return (
+                    <RenderFormComponent
+                      updateInputForm={updateInputForm}
+                      data={item}
+                      error={error[item?.id]}
+                      dataUser={dataUser}
+                      key={index}
+                    />
+                  );
+                }
+              )}
               <div
                 className="mt-3 flex w-full px-2"
                 style={{
                   justifyContent: dataForm?.button?.position,
                 }}
               >
-                <Button
-                  disabled={loading}
-                  style={{
-                    backgroundColor: dataForm?.button?.color,
-                    color: calculateColor(dataForm?.button?.color),
-                    //     position
-                  }}
-                  className="px-10"
-                >
-                  {loading && (
-                    <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
-                  )}
-                  {dataForm?.button?.text || "Submit"}
-                </Button>
+                {page != 0 && (
+                  <Button
+                    disabled={loading}
+                    style={{
+                      backgroundColor: dataForm?.button?.color,
+                      color: calculateColor(dataForm?.button?.color),
+                      //     position
+                    }}
+                    className="px-10 mr-2"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page - 1);
+                    }}
+                  >
+                    Previous
+                  </Button>
+                )}
+                {checkNextPage(dataLayer, page) ? (
+                  <Button
+                    disabled={loading}
+                    style={{
+                      backgroundColor: dataForm?.button?.color,
+                      color: calculateColor(dataForm?.button?.color),
+                      //     position
+                    }}
+                    className="px-10"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page + 1);
+                    }}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      disabled={loading}
+                      style={{
+                        backgroundColor: dataForm?.button?.color,
+                        color: calculateColor(dataForm?.button?.color),
+                        //     position
+                      }}
+                      className="px-10"
+                    >
+                      {loading && (
+                        <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                      )}
+                      {dataForm?.button?.text || "Submit"}
+                    </Button>
+                  </>
+                )}
               </div>
             </form>
             {/* power by */}

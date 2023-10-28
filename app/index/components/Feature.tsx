@@ -75,7 +75,7 @@ const FeatureIndex = () => {
             <video
               width="100%"
               height=" 176px"
-              className={"h-44 w-full object-cover"}
+              className={"h-44 w-full object-cover extraClassCrop1"}
               autoPlay
               muted
               playsInline

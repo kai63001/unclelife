@@ -172,6 +172,8 @@ const RenderFormComponent = ({
         return <></>;
       case "people":
         return <></>;
+      case "nextPage":
+        return <></>; 
       default:
         return (
           <TitleRender

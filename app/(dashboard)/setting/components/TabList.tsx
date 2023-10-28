@@ -40,7 +40,7 @@ const TabListSetting = () => {
 
   return (
     <Tabs defaultValue={tab} className="w-full mt-10">
-      <TabsList className="grid grid-cols-1 md:grid-cols-3 w-[800px]">
+      <TabsList className="grid grid-cols-3 w-[800px]">
         <TabsTrigger value="workspaces">Workspaces</TabsTrigger>
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="subscription">Subscription</TabsTrigger>
