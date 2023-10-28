@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": ">=16 <17"
+    "node": ">=20 <21"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
