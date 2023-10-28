@@ -3,14 +3,14 @@ import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Percent } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import { loadStripe } from "@stripe/stripe-js";
 import { Icons } from "@/components/Icons";
 import { useSupabase } from "@/app/hook/supabase-provider";
-import { cache } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const revalidate = 3600 * 24; // 1 day
 const PricingBox = () => {
@@ -117,6 +117,14 @@ const PricingBox = () => {
 
   return (
     <>
+      <Alert>
+        <Percent className="h-4 w-4" />
+        <AlertTitle>Special Offer!</AlertTitle>
+        <AlertDescription>
+          The first 20 people who use the code <strong>BETA20</strong> will get
+          a 20% discount on their purchase!
+        </AlertDescription>
+      </Alert>
       <div className={"flex justify-center space-x-3 mt-7 mb-5"}>
         <span className={"font-bold"}>Monthly</span>
         <span className={""}>
@@ -134,7 +142,11 @@ const PricingBox = () => {
           </Badge>
         </span>
       </div>
-      <div className={"flex items-center flex-col md:flex-row space-y-3 md:space-y-0"}>
+      <div
+        className={
+          "flex items-center flex-col md:flex-row space-y-3 md:space-y-0"
+        }
+      >
         <div
           className={
             "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full"

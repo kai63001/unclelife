@@ -121,3 +121,8 @@ html, body {
 .prose :where(p):not(:where([class~="not-prose"] *)) {
     margin: 0 !important;
 }
+
+.extraClassCrop1 {
+    transform: none !important;
+    -webkit-transform: none !important;
+}

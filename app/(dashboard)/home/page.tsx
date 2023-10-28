@@ -32,7 +32,6 @@ const DashboardPage = () => {
                             <CardDescription>Start building your custom Notion form with just a few
                                 clicks.
                                 <br/>
-                                <br/>
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -60,7 +59,7 @@ const DashboardPage = () => {
                         </CardHeader>
                         <CardContent>
                             <video width="100%" height="240"
-                                   className={'h-[240px] w-full object-cover'}
+                                   className={'h-[240px] w-full object-cover extraClassCrop1'}
                                    autoPlay
                                    muted
                                    playsInline

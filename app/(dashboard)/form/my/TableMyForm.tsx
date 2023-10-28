@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Edit, FileSymlink, MoreVertical, Trash } from "lucide-react";
+import { Box, Edit, FileSymlink, MoreVertical, Trash } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -95,6 +95,16 @@ export const TableMyForm = ({ form }: any) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className={""}>
+              <DropdownMenuItem
+                className={"cursor-pointer"}
+                onClick={(e) => openForm(e, form.id)}
+                asChild
+              >
+                <Link href={`/form/detail/${form.id}`} target={"_blank"}>
+                  <Box className={"w-4 h-4 mr-2"} />
+                  View Detail
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 className={"cursor-pointer"}
                 onClick={(e) => openForm(e, form.id)}

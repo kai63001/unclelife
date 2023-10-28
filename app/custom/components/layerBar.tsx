@@ -4,12 +4,16 @@ import React, { useEffect } from "react";
 
 import { SortableList } from "./layer";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
-import { setLayer } from "@/app/redux/slice/formController.slice";
+import {
+  setLayer,
+  setLayerWithId,
+} from "@/app/redux/slice/formController.slice";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import dynamic from "next/dynamic";
 import ModalAddLayer from "./modal/addLayer";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
 import { Layers, Pencil } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
@@ -74,6 +78,8 @@ const LayerBar = () => {
         return true;
       case "dividerBlock":
         return true;
+      case "nextPage":
+        return true;
       default:
         return false;
     }
@@ -81,7 +87,7 @@ const LayerBar = () => {
 
   return (
     <>
-    {/* <div className="fixed bg-[#E51E0F] bottom-3 left-5 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
+      {/* <div className="fixed bg-[#E51E0F] bottom-3 left-5 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
       <Pencil className="h-5 w-5" />
     </div>
     <div className="fixed bg-[#E51E0F] bottom-3 left-20 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
@@ -99,37 +105,67 @@ const LayerBar = () => {
               onChange={setLayerHook}
               renderItem={(item: any) => (
                 <SortableList.Item id={item.id}>
-                  <div className="flex space-x-3 min-h-[30px]">
-                    <div className="flex flex-col">
-                      {item.block != true ? (
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html: item?.label,
-                          }}
-                        ></p>
-                      ) : (
-                        <p>{item?.type.toUpperCase()}</p>
+                  {item?.type == "nextPage" ? (
+                    <div className="flex items-center space-x-3 min-h-[30px]">
+                      <div className="flex flex-col">
+                        Next Page
+                      </div>
+                      {checkTypeIsPro(item.type) && (
+                        <div className="flex items-center space-x-1">
+                          <ProBadge />
+                        </div>
                       )}
-                      <div className="flex items-center space-x-1">
-                        {/*<p className="text-xs text-[#9E9E9E]">{item.name}</p>*/}
-                        {/*<p className="text-xs text-[#9E9E9E]">·</p>*/}
-                        <p className="text-xs text-[#9E9E9E] capitalize">
-                          {renderFilterTypeWording(item.type)}
-                        </p>
-                        {item.block && (
-                          <>
-                            <p className="text-xs text-[#9E9E9E]">·</p>
-                            <p className="text-xs text-[#9E9E9E]">Block</p>
-                          </>
-                        )}
-                      </div>
                     </div>
-                    {checkTypeIsPro(item.type) && (
-                      <div className="flex items-center space-x-1">
-                        <ProBadge />
+                  ) : (
+                    <div className="flex space-x-3 group w-full min-h-[30px]">
+                      <div className="flex flex-col">
+                        {item.block != true ? (
+                          <div className=" cursor-pointer w-full">
+                            <p
+                              className="group-hover:hidden w-full"
+                              dangerouslySetInnerHTML={{
+                                __html: item?.label,
+                              }}
+                            ></p>
+                            <input
+                              className="hidden group-hover:block cursor-pointer hover:bg-red-200 w-full bg-red-200"
+                              value={item?.name}
+                              onChange={(e: any) => {
+                                dispatch(
+                                  setLayerWithId({
+                                    id: item.id,
+                                    value: {
+                                      ...item,
+                                      name: e.target.value,
+                                    },
+                                  })
+                                );
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <p>{item?.type.toUpperCase()}</p>
+                        )}
+                        <div className="flex items-center space-x-1">
+                          <p className="text-xs text-[#9E9E9E] capitalize">
+                            {renderFilterTypeWording(item.type)}
+                          </p>
+                          {item.block && (
+                            <>
+                              <p className="text-xs text-[#9E9E9E]">·</p>
+                              <p className="text-xs text-[#9E9E9E]">Block</p>
+                            </>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
+                      {checkTypeIsPro(item.type) && (
+                        <div className="flex items-center space-x-1">
+                          <ProBadge />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <div className="flex">
                     <SheetTab id={item.id} />
                     <SortableList.DragHandle />

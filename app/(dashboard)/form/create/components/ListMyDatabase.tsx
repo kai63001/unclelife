@@ -240,7 +240,7 @@ const ListMyDatabase = ({ session }: any) => {
       {loading ? (
         <ListMyDatabaseLoading />
       ) : (
-        <div className={"grid grid-cols-3 gap-4"}>
+        <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
           <CardDatabaseList
             listDatabase={listDatabase}
             selectedWorkspace={selectedWorkspace}

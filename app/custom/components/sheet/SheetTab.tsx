@@ -26,6 +26,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { GridColForOption } from "./optional/GridColForOption";
 import { HeaderForOption } from "./optional/HeaderForOption";
+import { Input } from "@/components/ui/input";
 
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
@@ -64,6 +65,15 @@ const SheetTab = ({ id }: any) => {
     }
   };
 
+  const checkThisTypeIsRadio = () => {
+    switch (data.type) {
+      case "radio_button":
+        return true;
+      default:
+        return false;
+    }
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -86,7 +96,23 @@ const SheetTab = ({ id }: any) => {
               {!fieldNameNotAllow.includes(data?.type) && (
                 <div>
                   <Label htmlFor={"label"} className="font-semibold">
-                    Field Name :
+                    Name :
+                  </Label>
+                  <Input
+                    value={data?.name}
+                    onChange={(e: any) => {
+                      inputOnChange(e, "name");
+                    }}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    This is the name of the field in your database.
+                  </p>
+                </div>
+              )}
+              {!fieldNameNotAllow.includes(data?.type) && (
+                <div>
+                  <Label htmlFor={"label"} className="font-semibold">
+                    Field Label :
                   </Label>
                   <RichTextEditor
                     content={data?.label}
@@ -163,8 +189,12 @@ const SheetTab = ({ id }: any) => {
             </div>
             {checkThisTypeIsOption() && (
               <div className={"mt-2"}>
-                <GridColForOption data={data} />
-                <HeaderForOption data={data} />
+                {checkThisTypeIsRadio() && (
+                  <>
+                    <GridColForOption data={data} />
+                    <HeaderForOption data={data} />
+                  </>
+                )}
                 <AddOptions data={data} />
               </div>
             )}
