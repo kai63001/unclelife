@@ -18,12 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <div className="flex min-h-screen h-fit bg-customMode">
-      <CustomFormNavbar />
       <ToolsBar />
+      <LayerBar />
+      <CustomFormNavbar />
       <div className="flex-grow flex justify-center p-4 w-full max-w-6xl mx-auto mt-20">
         {children}
       </div>
-      <LayerBar />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SortableList } from "./layer";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hook";
@@ -12,8 +12,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import dynamic from "next/dynamic";
 import ModalAddLayer from "./modal/addLayer";
 import ProBadge from "@/app/custom/components/toolsbar/ProBadge";
-import { Layers, Pencil } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Eye, EyeOff, Layers } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { debounce } from "lodash";
 
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
@@ -22,6 +24,22 @@ const LayerBar = () => {
     (state) => state.formReducer
   );
   const dispatch = useAppDispatch();
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    const updateWindowDimensions = debounce(() => {
+      const innerWidth = window.innerWidth;
+      if (innerWidth < 768) {
+        setActive(false);
+      } else {
+        setActive(true);
+      }
+    }, 500);
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions);
+  }, []);
 
   //hook for init
   useEffect(() => {
@@ -93,11 +111,38 @@ const LayerBar = () => {
     <div className="fixed bg-[#E51E0F] bottom-3 left-20 z-50 flex 2xl:hidden w-14 h-14 shadow-md rounded-full items-center justify-center text-white">
       <Layers className="h-5 w-5" />
     </div> */}
-      <div className="text-[#3d3d3d] h-screen w-[350px] fixed right-0 pb-5 pt-20 pr-5">
-        <div className="flex flex-col px-5 shadow-me h-full rounded-xl bg-background text-primary">
+      {/* <div className="text-[#3d3d3d] h-full w-[230] md:w-[350px] fixed right-0 pb-5 pt-20 pr-5"> */}
+      <div
+        className={cn(
+          "text-[#3d3d3d] w-[250px] md:w-[350px] md:right-0 fixed pr-5 pb-5 pt-20 pl-5 z-40",
+          active
+            ? "h-full w-full md:w-[350px]"
+            : "h-16 bottom-14 md:top-10 w-[280px]"
+        )}
+      >
+        <div
+          className={cn(
+            "flex flex-col px-5 shadow-me rounded-xl bg-background text-primary duration-300 pb-3",
+            active ? "h-full" : "h-16"
+          )}
+        >
           <div className="flex items-center justify-between">
-            <b className="mt-5 mb-5 uppercase">Structure</b>
-            <ModalAddLayer />
+            <b className="mt-5 mb-5 hidden md:block">Structure</b>
+            <b className="mt-5 mb-5 mr-5 block md:hidden">
+              <Layers size={16} />
+            </b>
+            <div className="flex space-x-2 items-center">
+              <ModalAddLayer />
+              <Button
+                onClick={() => {
+                  setActive(!active);
+                }}
+                variant={"outline"}
+                size={"icon"}
+              >
+                {active ? <Eye size={16} /> : <EyeOff size={16} />}
+              </Button>
+            </div>
           </div>
           <ScrollArea>
             <SortableList
@@ -107,9 +152,7 @@ const LayerBar = () => {
                 <SortableList.Item id={item.id} type={item.type}>
                   {item?.type == "nextPage" ? (
                     <div className="flex items-center space-x-3 min-h-[30px]">
-                      <div className="flex flex-col">
-                        Next Page
-                      </div>
+                      <div className="flex flex-col">Next Page</div>
                       {checkTypeIsPro(item.type) && (
                         <div className="flex items-center space-x-1">
                           <ProBadge />
