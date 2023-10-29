@@ -7,24 +7,17 @@ const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
 });
 import type { Metadata } from "next";
 // import PricingBox from "@/app/pricing/components/PricingBox";
-import FeatureIndex from "@/app/index/components/Feature";
+// import FeatureIndex from "@/app/index/components/Feature";
 // import FooterIndex from "@/app/index/components/FooterIndex";
 import FAQs from "@/app/index/components/FAQs";
 import HeaderBannder from "./index/components/HeaderBanner";
 // import YoutubeEmbedIndex from "./index/components/YoutubeEmbed";
 
-const FooterIndex = dynamic(() => import("./index/components/FooterIndex"), {
-  ssr: true,
-});
-const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
-  ssr: true,
-});
+const FooterIndex = dynamic(() => import("./index/components/FooterIndex"));
+const PricingBox = dynamic(() => import("./pricing/components/PricingBox"));
 const YoutubeEmbedIndex = dynamic(
-  () => import("./index/components/YoutubeEmbed"),
-  {
-    ssr: true,
-  }
-);
+  () => import("./index/components/YoutubeEmbed"));
+const FeatureIndex = dynamic(() => import("./index/components/Feature"));
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",

@@ -24,7 +24,7 @@ const SortableItemContext = createContext<Context>({
   ref() {},
 });
 
-export function SortableItem({ children, id }: PropsWithChildren<Props>) {
+export function SortableItem({ children, id, type }: any) {
   const {
     attributes,
     isDragging,
@@ -46,7 +46,9 @@ export function SortableItem({ children, id }: PropsWithChildren<Props>) {
   return (
     <SortableItemContext.Provider value={context}>
       <li
-        className="SortableItem list-none bg-background px-5 py-2 w-full flex justify-between mb-1 border rounded-sm select-none"
+        className={`SortableItem list-none bg-background px-5 py-2 w-full flex justify-between mb-1 border rounded-sm select-none ${
+          type == "nextPage" && "bg-red-500 text-white"
+        }`}
         ref={setNodeRef}
       >
         {children}
@@ -59,7 +61,12 @@ export function DragHandle() {
   const { attributes, listeners, ref } = useContext(SortableItemContext);
 
   return (
-    <button className="hover:bg-[#ececec] fill-primary px-2 rounded-sm cursor-grab" {...attributes} {...listeners} ref={ref}>
+    <button
+      className="hover:bg-[#ececec] fill-primary px-2 rounded-sm cursor-grab"
+      {...attributes}
+      {...listeners}
+      ref={ref}
+    >
       <svg viewBox="0 0 20 20" width="12">
         <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
       </svg>

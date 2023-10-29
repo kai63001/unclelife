@@ -104,7 +104,7 @@ const LayerBar = () => {
               items={layer}
               onChange={setLayerHook}
               renderItem={(item: any) => (
-                <SortableList.Item id={item.id}>
+                <SortableList.Item id={item.id} type={item.type}>
                   {item?.type == "nextPage" ? (
                     <div className="flex items-center space-x-3 min-h-[30px]">
                       <div className="flex flex-col">
