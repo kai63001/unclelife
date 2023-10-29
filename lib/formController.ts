@@ -190,7 +190,7 @@ export function nextPageDataLayer(dataLayer: any, page: number) {
   if (page !== 0) {
     //find index of type nextPage after page
     startPageIndex = allIndex[page - 1];
-    nextPageIndex = allIndex[page] || oldDataLayer.length;
+    nextPageIndex = allIndex[page] || oldDataLayer?.length;
   }
   // console.log("startPageIndex", startPageIndex);
   // console.log("nextPageIndex", nextPageIndex);
@@ -211,11 +211,11 @@ export function checkNextPage(dataLayer:any, page:any) {
     }
   }).filter((item: any) => item !== undefined);
 
-  if (allIndex.length === 0) {
+  if (allIndex?.length === 0) {
     return false;
   }
 
-  if (page === allIndex.length) {
+  if (page === allIndex?.length) {
     return false;
   }
 

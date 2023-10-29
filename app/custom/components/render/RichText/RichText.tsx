@@ -48,7 +48,7 @@ const RichTextRender = ({
         id={data.label}
         className={`mt-1 block w-full ${
           error ? "border-red-500" : ""
-        } shadow-sm`}
+        } shadow-sm bg-background`}
         placeholder={
           data?.pro?.placeholder && isSubscribed ? data?.pro?.placeholder : ""
         }

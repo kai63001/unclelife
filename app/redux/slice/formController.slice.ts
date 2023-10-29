@@ -81,7 +81,7 @@ export const formSlice = createSlice({
         return { ...item, id: index + 1 };
       });
       state.layer.push({
-        id: state.layer.length + 1,
+        id: state.layer?.length + 1,
         ...action.payload,
       });
     },

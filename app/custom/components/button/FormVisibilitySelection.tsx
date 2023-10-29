@@ -29,7 +29,7 @@ export const FormVisibilitySelection = () => {
       value={form?.visibility}
       defaultValue="public"
     >
-      <SelectTrigger className="w-[150px] bg-white h-13 font-medium">
+      <SelectTrigger className="w-[150px] h-13 font-medium bg-background">
         <SelectValue placeholder="Select form visibility" />
       </SelectTrigger>
       <SelectContent>

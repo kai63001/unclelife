@@ -299,7 +299,7 @@ const CustomDomainComponent = () => {
         </div>
       </div>
       {user?.is_enterprise &&
-        listDomain?.filter((item: any) => item?.verify).length > 0 &&
+        listDomain?.filter((item: any) => item?.verify)?.length > 0 &&
         listDomain?.map((item: any, index) => (
           <div key={index} className="border rounded-md mt-5 p-10">
             <h3 className="text-2xl font-bold border-b pb-5">{item?.domain}</h3>
@@ -394,7 +394,7 @@ const CustomDomainComponent = () => {
 const NotVerified = ({ handleVerify, loading, domain }: any) => {
   const getSubdomain = () => {
     //check if not have subdomain
-    if (domain.split(".").length === 2) {
+    if (domain.split(".")?.length === 2) {
       return "@";
     }
     const subdomain = domain.split(".")[0];
