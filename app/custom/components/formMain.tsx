@@ -361,16 +361,22 @@ const FormMainBox = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, supabase]);
 
-  const checkRequire = () => {
+  const checkRequire = (page: any = null) => {
     let error: any = {};
     let check = true;
+
+    let newDataLeyers = dataLayer;
+
+    if (page != null) {
+      newDataLeyers = nextPageDataLayer(dataLayer, page);
+    }
 
     //check if testMode
     if (testMode) {
       return false;
     }
 
-    dataLayer?.map((item: any) => {
+    newDataLeyers?.map((item: any) => {
       if (item?.required) {
         if (
           inputForm[item?.mapTo]?.value?.length === 0 ||
@@ -381,7 +387,6 @@ const FormMainBox = ({
           error[item?.id] = "This field is required";
           check = false;
         }
-        return;
       }
       //check email
       if (
@@ -394,6 +399,7 @@ const FormMainBox = ({
           check = false;
         }
       }
+
       //validate phone number
       // if (
       //   item?.type === "phone_number" &&
@@ -409,6 +415,17 @@ const FormMainBox = ({
 
     setError(error);
     return check;
+  };
+
+  const nextPage = () => {
+    if (page + 1 >= dataLayer?.length) {
+      return;
+    }
+    // validate require
+    if (!checkRequire(page)) {
+      return;
+    }
+    setPage(page + 1);
   };
 
   /**
@@ -746,8 +763,7 @@ const FormMainBox = ({
                     className="px-10"
                     type="button"
                     onClick={(e) => {
-                      e.preventDefault();
-                      setPage(page + 1);
+                      nextPage();
                     }}
                   >
                     Next
