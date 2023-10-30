@@ -47,6 +47,7 @@ const TextBlockRender = dynamic(
 
 const RenderFormComponent = ({
   data,
+  inputForm,
   updateInputForm,
   dataUser,
   error,
@@ -58,6 +59,7 @@ const RenderFormComponent = ({
         return (
           <TitleRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -67,6 +69,7 @@ const RenderFormComponent = ({
         return (
           <RichTextRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -76,6 +79,7 @@ const RenderFormComponent = ({
         return (
           <DateRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -85,6 +89,7 @@ const RenderFormComponent = ({
         return (
           <SelectionRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -94,6 +99,7 @@ const RenderFormComponent = ({
         return (
           <SelectionRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -103,6 +109,7 @@ const RenderFormComponent = ({
         return (
           <MultiSelectRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -112,6 +119,7 @@ const RenderFormComponent = ({
         return (
           <CheckBoxRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -122,6 +130,7 @@ const RenderFormComponent = ({
           return (
             <FileRender
               updateInputForm={updateInputForm}
+              inputForm={inputForm}
               isSubscribed={dataUser?.is_subscribed}
               data={data}
               error={error}
@@ -132,6 +141,7 @@ const RenderFormComponent = ({
         return (
           <RadioRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -141,6 +151,7 @@ const RenderFormComponent = ({
         return (
           <PhoneRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -173,11 +184,12 @@ const RenderFormComponent = ({
       case "people":
         return <></>;
       case "nextPage":
-        return <></>; 
+        return <></>;
       default:
         return (
           <TitleRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             type={data.type}

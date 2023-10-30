@@ -1,7 +1,7 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import RequiredStar from "@/app/custom/components/render/RequireStar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/app/redux/hook";
 import {
   calculateTextColor,
@@ -9,7 +9,13 @@ import {
 } from "@/lib/formController";
 import { cn } from "@/lib/utils";
 
-const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const RadioRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+  inputForm,
+}: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected] = useState<any>(null);
 
@@ -18,6 +24,13 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
     setSelected(e);
     updateInputForm(e, data);
   };
+
+  useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setSelected(inputForm[data.mapTo]?.value);
+    }
+  }
+  , [data.mapTo, inputForm]);
 
   return data.hidden ? (
     <></>
@@ -104,8 +117,8 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                         : undefined,
                   }}
                 >
-                  {(data.headerOption == "number" ||
-                    !data.headerOption) && index + 1}
+                  {(data.headerOption == "number" || !data.headerOption) &&
+                    index + 1}
                   {data.headerOption == "alphabet" &&
                     convertNumberToAlphabet(index)}
                 </div>

@@ -10,10 +10,22 @@ import * as React from "react";
 import { useAppSelector } from "@/app/redux/hook";
 import { calculateTextColor } from "@/lib/formController";
 
-const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const FileRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+  inputForm,
+}: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [file, setFile] = useState<any>(null);
   const { toast } = useToast();
+
+  React.useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setFile(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
 
   const onFileChange = (e: any) => {
     const file = e.target.files[0];

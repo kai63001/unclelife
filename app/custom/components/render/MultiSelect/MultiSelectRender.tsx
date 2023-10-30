@@ -12,6 +12,7 @@ const MultiSelectRender = ({
   updateInputForm,
   error,
   isSubscribed,
+  inputForm,
 }: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected]: any = useState([]);
@@ -31,6 +32,12 @@ const MultiSelectRender = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setSelected(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
 
   const handleButtonClick = () => {
     setOpen(!open);

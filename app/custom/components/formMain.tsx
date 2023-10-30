@@ -407,8 +407,6 @@ const FormMainBox = ({
       // }
     });
 
-    console.log(error);
-
     setError(error);
     return check;
   };
@@ -704,6 +702,7 @@ const FormMainBox = ({
                   return (
                     <RenderFormComponent
                       updateInputForm={updateInputForm}
+                      inputForm={inputForm}
                       data={item}
                       error={error[item?.id]}
                       dataUser={dataUser}

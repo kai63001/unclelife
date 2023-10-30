@@ -28,10 +28,10 @@ const IndexNavbar = async () => {
       </Link>
       <nav className="">
         <ul className="flex space-x-4 items-center">
-          <Link href={'/blog'} className={'md:block hidden'}>
+          <Link href={'/blog'} className={'md:block hidden mr-2'}>
             <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">Blog</li>
           </Link>
-          <Link href={'/pricing'} className={'md:block hidden'}>
+          <Link href={'/pricing'} className={'md:block hidden mr-2'}>
             <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">Pricing</li>
           </Link>
           {session ? (

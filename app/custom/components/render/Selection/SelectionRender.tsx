@@ -14,6 +14,7 @@ import { calculateTextColor } from "@/lib/formController";
 const SelectionRender = ({
   data,
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -53,6 +54,7 @@ const SelectionRender = ({
         onValueChange={(e) => {
           updateInputForm(e, data);
         }}
+        value={inputForm[data.mapTo]?.value}
         required={data.required}
       >
         <SelectTrigger

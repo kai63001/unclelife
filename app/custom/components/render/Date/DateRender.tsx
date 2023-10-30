@@ -24,9 +24,23 @@ import RequiredStar from "../RequireStar";
 import { useAppSelector } from "@/app/redux/hook";
 import { calculateTextColor } from "@/lib/formController";
 
-const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const DateRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+  inputForm,
+}: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [date, setDate] = React.useState<Date>();
+
+
+  React.useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setDate(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
+
   return data.hidden ? (
     <></>
   ) : (
@@ -53,7 +67,7 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
       )}
       {data.required && data?.pro?.hideFieldName && isSubscribed && (
         <div className="absolute -top-2 -right-2">
-          <RequiredStar/>
+          <RequiredStar />
         </div>
       )}
       <Popover>
@@ -74,7 +88,9 @@ const DateRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
               color:
                 form?.pro?.customizations?.light?.enableBackgroundColor &&
                 isSubscribed
-                  ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+                  ? calculateTextColor(
+                      form?.pro?.customizations?.light?.inputColor
+                    )
                   : undefined,
             }}
           >

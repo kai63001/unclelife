@@ -8,6 +8,7 @@ import { calculateTextColor } from "@/lib/formController";
 const RichTextRender = ({
   data,
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -54,6 +55,7 @@ const RichTextRender = ({
         }
         disabled={data.disable}
         required={data.required}
+        value={inputForm[data.mapTo]?.value}
         style={{
           backgroundColor:
             form?.pro?.customizations?.light?.enableBackgroundColor &&

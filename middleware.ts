@@ -23,9 +23,6 @@ export async function middleware(req: NextRequest) {
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes("_next")) return;
   const host = req.headers.get("host");
 
-  // console.log("url", url);
-  // console.log("host", host);
-
   if (
     host &&
     host != "localhost:3000" &&
@@ -62,7 +59,3 @@ export async function middleware(req: NextRequest) {
 
   return res;
 }
-
-// export const config = {
-//   matcher: ["/home","/form/create","/form/my", '/setting', "/widget/pomodoro", "/custom/form"],
-// };

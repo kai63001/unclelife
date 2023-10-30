@@ -7,6 +7,7 @@ const CheckBoxRender = ({
   updateInputForm,
   error,
   isSubscribed,
+  inputForm,
 }: any) => {
   return data.hidden ? (
     <></>
@@ -24,6 +25,7 @@ const CheckBoxRender = ({
       <Checkbox
         disabled={data.disable}
         required={data.required}
+        checked={inputForm[data.mapTo]?.value}
         id={data.label}
         onCheckedChange={(e) => {
           updateInputForm(e, data);

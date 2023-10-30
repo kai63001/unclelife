@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Open_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { Providers } from "./redux/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
@@ -7,7 +7,10 @@ import Script from "next/script";
 import NextNProgressbar from "@/components/NextProgressbar";
 export const dynamic = "force-dynamic";
 
-const inter = Open_Sans({ subsets: ["latin"] });
+const inter = Poppins({
+  subsets: ["latin"],
+  weight: ["200", "300", "500", "600"],
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   // const
@@ -42,7 +45,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={inter.className} >
+      <body className={inter.className}>
         <NextNProgressbar />
         <Providers>{children}</Providers>
         <Toaster />

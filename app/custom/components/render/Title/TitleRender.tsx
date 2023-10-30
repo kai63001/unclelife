@@ -8,6 +8,7 @@ const TitleRender = ({
   data,
   type = "text",
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -52,6 +53,7 @@ const TitleRender = ({
         placeholder={
           data?.pro?.placeholder && isSubscribed ? data?.pro?.placeholder : ""
         }
+        value={inputForm[data.mapTo]?.value}
         id={data.label}
         disabled={data.disable}
         required={data.required}
