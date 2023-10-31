@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import { ArrowRightCircle, ShieldCheck } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
   ssr: true,
@@ -30,20 +31,36 @@ export default function Home() {
               Create beautiful forms and widget connected to your Notion pages
             </p>
             <div className="flex space-x-2">
-              <button className="bg-white text-[#EA7252] font-semibold px-3 py-3 rounded-md flex items-center">
+              <button className="bg-white text-[#db7255] font-semibold px-3 py-3 rounded-md flex items-center">
                 Create a Form
                 <ArrowRightCircle className="ml-2" size={20} />
               </button>
-              <button className="font-semibold px-3 py-3 rounded-md flex items-center border-2 duration-300 border-white hover:bg-white text-white hover:text-[#EA7252]">
-                See Live Example
-              </button>
+              <Link href="https://unclelife-form.notion.site/unclelife-form/Notion-Form-20bf97e746c942bc8504230b33840653" target="_blank">
+                <button className="font-semibold px-3 py-3 rounded-md flex items-center border-2 duration-300 border-white hover:bg-white text-white hover:text-[#EA7252]">
+                  See Live Example
+                </button>
+              </Link>
             </div>
           </div>
           <div className="w-2/5 relative">
+            <div className="">
+              <div className="whitespace-pre-line z-50 transform -translate-x-52 translate-y-72 rotate-6 -left-40">
+                {"This form was created\nusing unclelife 🤩"}
+              </div>
+              <svg
+                className="z-50 absolute transform -translate-x-14 translate-y-56 scale-x-[1] rotate-[190deg] dark:fill-white"
+                width="67"
+                height="47"
+                viewBox="0 0 67 47"
+              >
+                <path d="M3.04155 46.2853C3.19913 46.8146 3.75598 47.116 4.28531 46.9584L12.9112 44.3904C13.4405 44.2328 13.7418 43.676 13.5843 43.1466C13.4267 42.6173 12.8698 42.316 12.3405 42.4735L4.67307 44.7562L2.39041 37.0888C2.23282 36.5594 1.67597 36.2581 1.14665 36.4157C0.617322 36.5733 0.315967 37.1301 0.473552 37.6594L3.04155 46.2853ZM66 1C65.936 0.00204828 65.9354 0.00209071 65.9346 0.00214323C65.9341 0.00217371 65.9331 0.00223648 65.9322 0.00229829C65.9303 0.00242209 65.9279 0.00258709 65.9248 0.00279554C65.9187 0.00321244 65.9102 0.00380315 65.8994 0.00458564C65.8778 0.00615061 65.8469 0.00848276 65.8068 0.0117258C65.7266 0.0182119 65.6099 0.0283423 65.4584 0.0432674C65.1553 0.0731167 64.7128 0.122151 64.1443 0.199578C63.0075 0.354421 61.3663 0.622905 59.3285 1.07881C55.2538 1.99047 49.5888 3.65269 43.1994 6.65758C30.4123 12.6713 14.7373 24.0582 3.1205 45.524L4.87945 46.4759C16.2626 25.4418 31.5877 14.3287 44.0506 8.46742C50.2862 5.53481 55.8087 3.91578 59.7652 3.03056C61.7431 2.58803 63.3284 2.32917 64.4143 2.18128C64.9571 2.10734 65.375 2.06116 65.6544 2.03364C65.7941 2.01988 65.8992 2.01078 65.9681 2.00521C66.0025 2.00243 66.0278 2.00053 66.0439 1.99936C66.0519 1.99878 66.0576 1.99838 66.061 1.99816C66.0626 1.99804 66.0637 1.99797 66.0642 1.99794C66.0645 1.99792 66.0644 1.99792 66.0645 1.99791C66.0643 1.99793 66.064 1.99795 66 1Z"></path>
+              </svg>
+            </div>
             <div className="absolute -top-40">
               <ScrollArea className="w-[460px] h-[500px] top-0 rounded-3xl shadow-md bg-background">
                 <iframe
                   src="/public/form/7b61afb5-0828-40bd-bae9-6fc38505165c"
+                  title="UncleLife Demo Form"
                   className="w-[460px] h-[73vh] overflow-hidden"
                   height={"100%"}
                   scrolling="no"

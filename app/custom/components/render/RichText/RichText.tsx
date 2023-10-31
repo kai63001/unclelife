@@ -62,13 +62,13 @@ const RichTextRender = ({
             isSubscribed
               ? form?.pro?.customizations?.light?.inputColor
               : null,
-              ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
-                isSubscribed &&
-                form?.pro?.customizations?.light?.inputColor && {
-                  color: calculateTextColor(
-                    form?.pro?.customizations?.light?.inputColor
-                  ),
-                }),
+          ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed &&
+            form?.pro?.customizations?.light?.inputColor && {
+              color: calculateTextColor(
+                form?.pro?.customizations?.light?.inputColor
+              ),
+            }),
         }}
       />
       {!data?.helpPositionAboveInput &&

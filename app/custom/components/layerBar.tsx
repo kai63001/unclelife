@@ -20,7 +20,7 @@ import { debounce } from "lodash";
 const SheetTab = dynamic(() => import("./sheet/SheetTab"), { ssr: false });
 
 const LayerBar = () => {
-  const { tableOfDatabase, layer }: any = useAppSelector(
+  const { tableOfDatabase, layer, databaseId }: any = useAppSelector(
     (state) => state.formReducer
   );
   const dispatch = useAppDispatch();
@@ -160,7 +160,7 @@ const LayerBar = () => {
                       )}
                     </div>
                   ) : (
-                    <div className="flex space-x-3 group w-full min-h-[30px]">
+                    <div className={cn("flex space-x-3 w-full min-h-[30px]", databaseId.length > 0 ? '' : 'group')}>
                       <div className="flex flex-col">
                         {item.block != true ? (
                           <div className=" cursor-pointer w-full">
