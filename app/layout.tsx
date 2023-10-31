@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 const inter = Poppins({
   subsets: ["latin"],
-  weight: ["200", "300", "500", "600"],
+  weight: ["200", "300", "500", "600","700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {

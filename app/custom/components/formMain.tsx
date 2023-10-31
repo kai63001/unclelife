@@ -17,6 +17,7 @@ import {
   setLogic,
   setNotification,
   setWorkspaceId,
+  setThemeColor
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
 import SuccessPageComponent from "./successPage";
@@ -45,7 +46,7 @@ const FormMainBox = ({
   responseData?: any;
 }) => {
   const { toast } = useToast();
-  const { setTheme } = useTheme();
+  const { setTheme, systemTheme, theme } = useTheme();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
@@ -55,7 +56,7 @@ const FormMainBox = ({
   const [dataUser, setDataUser] = useState<any>({});
   const [formKey, setFormKey] = useState<any>(0);
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId, logic, notification } = useAppSelector(
+  const { form, layer, workspaceId, logic, notification,themeColor } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
@@ -155,12 +156,26 @@ const FormMainBox = ({
             }
             return layerItem;
           });
-          console.log("layer", layer);
           setDataLayer(layer);
         }
       }
     });
   };
+
+  useEffect(() => {
+    const renderColorTheme = () => {
+      if (theme == "dark") {
+        return "#000000";
+      } else if (theme == "light") {
+        return "#ffffff";
+      }
+      if (systemTheme == "dark") {
+        return "#000000";
+      }
+      return "#ffffff";
+    };
+    dispatch(setThemeColor(renderColorTheme()));
+  }, [theme, systemTheme, dispatch]);
 
   useEffect(() => {
     const _id = searchParams.get("id");
@@ -574,6 +589,8 @@ const FormMainBox = ({
       : null;
   };
 
+  
+
   return (
     <>
       {dataForm?.pro?.customizations?.css && dataUser?.is_subscribed && (
@@ -674,9 +691,10 @@ const FormMainBox = ({
                   dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
                   dataUser?.is_subscribed
                     ? calculateTextColor(
-                        form?.pro?.customizations?.light?.backgroundColor
+                        form?.pro?.customizations?.light?.backgroundColor ||
+                          themeColor
                       )
-                    : undefined,
+                    : calculateTextColor(themeColor) || undefined,
               }}
             >
               {dataForm?.title}
@@ -800,9 +818,10 @@ const FormMainBox = ({
                     dataForm?.pro?.customizations?.light
                       ?.enableBackgroundColor && dataUser?.is_subscribed
                       ? calculateTextColor(
-                          form?.pro?.customizations?.light?.backgroundColor
+                          form?.pro?.customizations?.light?.backgroundColor ||
+                            themeColor
                         )
-                      : undefined,
+                      : calculateTextColor(themeColor) || undefined,
                 }}
               >
                 <div>

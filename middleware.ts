@@ -43,18 +43,16 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL("/404", req.url));
   }
 
-  const supabase = createMiddlewareClient({ req, res });
+  if (req.nextUrl.pathname !== "/" && list.includes(req.nextUrl.pathname)) {
+    const supabase = createMiddlewareClient({ req, res });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    req.nextUrl.pathname !== "/" &&
-    list.includes(req.nextUrl.pathname)
-  ) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    if (!user) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   return res;

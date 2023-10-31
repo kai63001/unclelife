@@ -10,6 +10,7 @@ export interface FormState {
   form: any;
   layer: any[];
   logic: any;
+  themeColor: string;
   infomation: any;
   notification: any;
   alertPro: any[];
@@ -22,6 +23,7 @@ const initialState: FormState = {
   selectedForm: "",
   databaseName: "",
   tableOfDatabase: [],
+  themeColor: "#ffffff",
   form: {
     title: "Untitle",
     button: {
@@ -158,6 +160,9 @@ export const formSlice = createSlice({
     setNotification: (state, action: PayloadAction<any>) => {
       state.notification = action.payload;
     },
+    setThemeColor: (state, action: PayloadAction<any>) => {
+      state.themeColor = action.payload;
+    }
   },
 });
 
@@ -182,6 +187,7 @@ export const {
   addLogic,
   deleteLogic,
   setNotification,
+  setThemeColor
 } = formSlice.actions;
 
 export default formSlice.reducer;
