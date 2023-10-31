@@ -3,6 +3,11 @@ import type { Metadata } from "next";
 import { ArrowRightCircle, ShieldCheck } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import Image from "next/image";
+import FAQs from "./index/components/FAQs";
+import VideoIndex from "./index/components/VideoIndex";
+import SlideTrandingForm from "./index/components/SlideTrandingForm";
+import PricingBox from "./pricing/components/PricingBox";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
   ssr: true,
@@ -31,11 +36,16 @@ export default function Home() {
               Create beautiful forms and widget connected to your Notion pages
             </p>
             <div className="flex space-x-2">
-              <button className="bg-white text-[#db7255] font-semibold px-3 py-3 rounded-md flex items-center">
-                Create a Form
-                <ArrowRightCircle className="ml-2" size={20} />
-              </button>
-              <Link href="https://unclelife-form.notion.site/unclelife-form/Notion-Form-20bf97e746c942bc8504230b33840653" target="_blank">
+              <Link href="/form/create" className="inline-block">
+                <button className="bg-white text-[#b85a3f] border-2 border-white font-semibold px-3 py-3 rounded-md flex items-center">
+                  Create a Form
+                  <ArrowRightCircle className="ml-2" size={20} />
+                </button>
+              </Link>
+              <Link
+                href="https://unclelife-form.notion.site/unclelife-form/Notion-Form-20bf97e746c942bc8504230b33840653"
+                target="_blank"
+              >
                 <button className="font-semibold px-3 py-3 rounded-md flex items-center border-2 duration-300 border-white hover:bg-white text-white hover:text-[#EA7252]">
                   See Live Example
                 </button>
@@ -45,7 +55,7 @@ export default function Home() {
           <div className="w-2/5 relative">
             <div className="">
               <div className="whitespace-pre-line z-50 transform -translate-x-52 translate-y-72 rotate-6 -left-40">
-                {"This form was created\nusing unclelife 🤩"}
+                {"This form was created\nusing UncleLife 🤩"}
               </div>
               <svg
                 className="z-50 absolute transform -translate-x-14 translate-y-56 scale-x-[1] rotate-[190deg] dark:fill-white"
@@ -85,7 +95,16 @@ export default function Home() {
         </section>
         <section className="max-w-6xl w-full m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
           <div className="flex w-full items-center space-x-4">
-            <div className="w-5/12">asda</div>
+            <div className="w-5/12">
+              <Image
+                src="https://cdn.unclelife.co/Create%20next-level%20Form.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
             <div className="w-7/12">
               <h3 className="font-semibold text-3xl">Create next-level Form</h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
@@ -106,10 +125,28 @@ UncleLife enables you to craft amazing forms with unlimited responses, offering 
 Enjoy unlimited responses and full customization to make every form uniquely and colorful.`}
               </p>
             </div>
-            <div className="w-6/12">asda</div>
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/Unleash%20Unlimited%20Possibilities.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Unleash Unlimited Possibilities"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div className="flex w-full items-center space-x-4">
-            <div className="w-6/12">asda</div>
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/Seamless%20Notion%20Integration.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Seamless Notion Integration"
+                loading="lazy"
+              />
+            </div>
             <div className="w-6/12">
               <h3 className="font-semibold text-3xl">
                 Seamless Notion Integration
@@ -124,7 +161,7 @@ Capture responses in real-time and keep your data organized and accessible right
           <div className="flex w-full items-center space-x-4">
             <div className="w-6/12">
               <h3 className="font-semibold text-3xl">
-                Customize to Your Heart’s Content
+                Customize to Your Heart{`'`}s Content
               </h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
                 {`UncleLife grants you the creative freedom to tailor every\n form to perfection. 
@@ -132,10 +169,28 @@ Capture responses in real-time and keep your data organized and accessible right
 Customize layouts, themes, and fields to mirror your \n brand’s essence and provide a delightful user experience.`}
               </p>
             </div>
-            <div className="w-6/12">asda</div>
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/Customize%20to%20Your%20Heart%E2%80%99s%20Content.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Customize to Your Hearts Content"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div className="flex w-full items-center space-x-4">
-            <div className="w-5/12">asda</div>
+            <div className="w-5/12">
+              <Image
+                src="https://cdn.unclelife.co/Intuitive%20Form%20Logic.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Intuitive Form Logic"
+                loading="lazy"
+              />
+            </div>
             <div className="w-7/12">
               <h3 className="font-semibold text-3xl">Intuitive Form Logic</h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
@@ -152,7 +207,16 @@ Our support for form logic lets you create intelligent, interactive forms that r
                 {`After someone fills out your form on UncleLife, you can send them an email. This can be a thank you note or a confirmation of their submission. You can also send yourself an email when someone submits`}
               </p>
             </div>
-            <div className="w-5/12">asda</div>
+            <div className="w-5/12 flex justify-end">
+              <Image
+                src="https://cdn.unclelife.co/Notifications.webp"
+                width={400}
+                height={400}
+                className="rounded-3xl"
+                alt="Notifications"
+                loading="lazy"
+              />
+            </div>
           </div>
         </section>
         <section className="w-full m-auto flex flex-col justify-center  items-center bg-gradient-to-r from-[#6b6ea7] to-[#3b79ed] py-10 mt-10">
@@ -208,15 +272,114 @@ Our support for form logic lets you create intelligent, interactive forms that r
             </p>
           </div>
           <div className="px-20 rounded-t-3xl overflow-hidden">
-            <video
-              src="https://cdn.unclelife.co/1017.mp4"
-              className="rounded-t-3xl overflow-hidden"
-              autoPlay={true}
-              loop={true}
-              muted={true}
-              playsInline={true}
-            ></video>
+            <VideoIndex />
           </div>
+        </section>
+        <section className="w-full m-auto flex flex-col justify-center items-center py-10 mt-10">
+          <h3 className="text-3xl font-semibold">Trending Form!</h3>
+          <SlideTrandingForm />
+        </section>
+        <section className="max-w-6xl w-full m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
+          <div className="flex w-full items-center space-x-4">
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/1.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
+            <div className="w-6/12">
+              <h3 className="font-semibold text-3xl">
+                Infinite Number of Fields
+              </h3>
+              <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
+                {`You enter data fields on your form. Create as many databases as in Notion`}
+              </p>
+            </div>
+          </div>
+          <div className="flex w-full items-center space-x-4">
+            <div className="w-6/12">
+              <h3 className="font-semibold text-3xl">Custom Color</h3>
+              <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
+                {`Users can fully customize the look and feel of their form to suit their aesthetics. This includes the ability to customize colors, themes, text, and images.`}
+              </p>
+            </div>
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/2.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div className="flex w-full items-center space-x-4">
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/3.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
+            <div className="w-6/12">
+              <h3 className="font-semibold text-3xl">Mode Dark</h3>
+              <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
+                {`You can choose a beautiful dark mode. in the form you want it to fit Your Notion`}
+              </p>
+            </div>
+          </div>
+          <div className="flex w-full items-center space-x-4">
+            <div className="w-6/12">
+              <h3 className="font-semibold text-3xl">
+                Infinite Number of Forms
+              </h3>
+              <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
+                {`You can create as many forms as you want. and many formats`}
+              </p>
+            </div>
+            <div className="w-6/12">
+              <Image
+                src="https://cdn.unclelife.co/4.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+        <section className="max-w-6xl w-full justify-center text-center m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
+          <h3 className="text-4xl">Pricing</h3>
+          <PricingBox />
+        </section>
+        <section className="w-full m-auto flex flex-col justify-center  items-center bg-gradient-to-r from-[#E43D47] to-[#EA7252] py-10 mt-10">
+          <h3 className="flex justify-center items-center text-2xl text-white">
+            Wanna stay up-to-date?
+          </h3>
+          <div className="mx-auto max-w-2xl text-center text-white text-sm my-2">
+            {`Sign up for our newsletter and we'll keep you updated with news about Uncle Life`}
+          </div>
+          <Link href="/register" className="inline-block">
+            <button className="bg-white text-[#b85a3f] mt-5 border-white font-semibold px-3 py-3 rounded-md flex items-center">
+              Sign up
+              <ArrowRightCircle className="ml-2" size={20} />
+            </button>
+          </Link>
+        </section>
+        <section className="max-w-4xl w-full m-auto flex flex-col justify-center  items-center py-10 mt-10">
+          <h3 className="text-2xl font-semibold">
+            Frequently Asked Questions (FAQs)
+          </h3>
+          <FAQs />
         </section>
       </main>
       <FooterIndex />
