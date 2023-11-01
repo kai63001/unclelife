@@ -370,7 +370,7 @@ Our support for form logic lets you create intelligent, interactive forms that r
             </div>
           </div>
         </section>
-        <section className="max-w-4xl w-full justify-center m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
+        <section className="max-w-6xl mx-auto w-full flex-col justify-center pt-5 items-center relative">
           <h3 className="text-4xl">Pricing</h3>
           <PricingFeatureTable />
         </section>
