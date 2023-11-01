@@ -34,7 +34,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
   const formId = responseData?.data ? responseData.data.id : null;
 
   const dataUser: any = responseData?.data ? responseData.data.user_id : null;
-  if (responseData.error || dataForm?.visibility == 'closed') {
+  if (responseData.error || dataForm?.visibility == "closed") {
     return (
       <div className="h-screen w-screen md:flex overflow-x-hidden md:flex-col">
         <div className="m-auto">
@@ -67,6 +67,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
           dataUser?.is_subscribed && (
             <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
               <Image
+                unoptimized={true}
                 src={dataForm?.pro?.customizations?.coverPicture as string}
                 alt={"cover image"}
                 fill
@@ -88,6 +89,7 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
                     )}
                   >
                     <Image
+                      unoptimized={true}
                       src={dataForm?.pro?.customizations?.logoPicture as string}
                       alt={"logo image"}
                       objectPosition="center"
