@@ -7,12 +7,15 @@ import Image from "next/image";
 import FAQs from "./index/components/FAQs";
 import VideoIndex from "./index/components/VideoIndex";
 import SlideTrandingForm from "./index/components/SlideTrandingForm";
-import PricingBox from "./pricing/components/PricingBox";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
-  ssr: true,
+  ssr: false,
 });
 const FooterIndex = dynamic(() => import("./index/components/FooterIndex"));
+
+const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",

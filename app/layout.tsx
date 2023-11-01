@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import NextNProgressbar from "@/components/NextProgressbar";
 export const dynamic = "force-dynamic";
+import { Partytown } from '@builder.io/partytown/react';
 
 const inter = Poppins({
   subsets: ["latin"],
@@ -49,8 +50,8 @@ export default function RootLayout({
         <NextNProgressbar />
         <Providers>{children}</Providers>
         <Toaster />
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-C7BSJTQDVY" />
-        <Script id="google-analytics">
+        <Script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-C7BSJTQDVY" />
+        <Script type="text/partytown" id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

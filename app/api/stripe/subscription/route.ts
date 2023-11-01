@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const {priceId} = body;
+    const {priceId,plan} = body;
     if (!priceId) {
         return NextResponse.json(
             {
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     ]
 
     let subscriptionData = {}
-    if (trail_end == null) {
+    if (trail_end == null && plan != 'team') {
         subscriptionData = {
             trial_period_days: 3,
         }
