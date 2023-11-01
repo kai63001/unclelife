@@ -3,7 +3,7 @@ import Link from 'next/link'
 const FooterIndex = () => {
     return (
         <footer className="max-w-6xl mx-auto w-full flex-col justify-between pt-8 items-center relative pb-10">
-            <div className={'pb-5 grid grid-cols-4 gap-4'}>
+            <div className={'pb-5 px-10 lg:px-0 grid grid-cols-1 lg:grid-cols-4 gap-4'}>
                 <ul className={'text-muted-foreground p-0 m-0'}>
                     <li>
                         <h2 className={'font-bold text-2xl text-foreground'}>Uncle Life</h2>

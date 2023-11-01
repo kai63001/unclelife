@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 // import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
 import { DividerRenderBlock } from "./Layout/DividerBlock/DividerBlockRender";
+import { useEffect, useState } from "react";
+import { debounce } from "lodash";
 // import PhoneRender from "./Phone/PhoneRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
@@ -52,6 +54,21 @@ const RenderFormComponent = ({
   dataUser,
   error,
 }: any) => {
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const updateWindowDimensions = debounce(() => {
+      const innerWidth = window.innerWidth;
+
+      setWidth(innerWidth);
+    }, 500);
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions);
+  }, []);
+
   const renderCase = () => {
     //return SwitchCase
     switch (data.type) {
@@ -203,7 +220,7 @@ const RenderFormComponent = ({
       className={cn(
         "px-2",
         data?.pro?.layout && dataUser?.is_subscribed
-          ? data?.pro?.layout
+          ? `${width > 376 ? data?.pro?.layout: 'w-full'}`
           : "w-full"
       )}
     >
