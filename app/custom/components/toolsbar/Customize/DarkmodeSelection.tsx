@@ -9,9 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import FreeBadge from "../FreeBadge";
+import { useTheme } from "next-themes";
 
 export const DarkmodeSelectionForm = ({ onChangeHook, form }: any) => {
+  const {setTheme} = useTheme();
   const updateTheme = (e: any) => {
+    setTheme(e);
     onChangeHook(
       {
         ...form?.free,

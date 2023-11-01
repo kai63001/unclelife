@@ -8,6 +8,7 @@ import { calculateTextColor } from "@/lib/formController";
 const RichTextRender = ({
   data,
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -18,7 +19,7 @@ const RichTextRender = ({
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -54,17 +55,20 @@ const RichTextRender = ({
         }
         disabled={data.disable}
         required={data.required}
+        value={inputForm[data.mapTo]?.value}
         style={{
           backgroundColor:
             form?.pro?.customizations?.light?.enableBackgroundColor &&
             isSubscribed
               ? form?.pro?.customizations?.light?.inputColor
               : null,
-          color:
-            form?.pro?.customizations?.light?.enableBackgroundColor &&
-            isSubscribed
-              ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
-              : undefined,
+          ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+            isSubscribed &&
+            form?.pro?.customizations?.light?.inputColor && {
+              color: calculateTextColor(
+                form?.pro?.customizations?.light?.inputColor
+              ),
+            }),
         }}
       />
       {!data?.helpPositionAboveInput &&

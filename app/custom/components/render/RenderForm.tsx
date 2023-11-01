@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 // import TextBlockRender from "./Layout/TextBlock/TextBlockRender";
 import { DividerRenderBlock } from "./Layout/DividerBlock/DividerBlockRender";
+import { useEffect, useState } from "react";
+import { debounce } from "lodash";
 // import PhoneRender from "./Phone/PhoneRender";
 
 const TitleRender = dynamic(() => import("./Title/TitleRender"), {
@@ -47,10 +49,26 @@ const TextBlockRender = dynamic(
 
 const RenderFormComponent = ({
   data,
+  inputForm,
   updateInputForm,
   dataUser,
   error,
 }: any) => {
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const updateWindowDimensions = debounce(() => {
+      const innerWidth = window.innerWidth;
+
+      setWidth(innerWidth);
+    }, 500);
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions);
+  }, []);
+
   const renderCase = () => {
     //return SwitchCase
     switch (data.type) {
@@ -58,6 +76,7 @@ const RenderFormComponent = ({
         return (
           <TitleRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -67,6 +86,7 @@ const RenderFormComponent = ({
         return (
           <RichTextRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -76,6 +96,7 @@ const RenderFormComponent = ({
         return (
           <DateRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -85,6 +106,7 @@ const RenderFormComponent = ({
         return (
           <SelectionRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -94,6 +116,7 @@ const RenderFormComponent = ({
         return (
           <SelectionRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -103,6 +126,7 @@ const RenderFormComponent = ({
         return (
           <MultiSelectRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -112,6 +136,7 @@ const RenderFormComponent = ({
         return (
           <CheckBoxRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -122,6 +147,7 @@ const RenderFormComponent = ({
           return (
             <FileRender
               updateInputForm={updateInputForm}
+              inputForm={inputForm}
               isSubscribed={dataUser?.is_subscribed}
               data={data}
               error={error}
@@ -132,6 +158,7 @@ const RenderFormComponent = ({
         return (
           <RadioRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -141,6 +168,7 @@ const RenderFormComponent = ({
         return (
           <PhoneRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             error={error}
@@ -173,11 +201,12 @@ const RenderFormComponent = ({
       case "people":
         return <></>;
       case "nextPage":
-        return <></>; 
+        return <></>;
       default:
         return (
           <TitleRender
             updateInputForm={updateInputForm}
+            inputForm={inputForm}
             isSubscribed={dataUser?.is_subscribed}
             data={data}
             type={data.type}
@@ -191,7 +220,7 @@ const RenderFormComponent = ({
       className={cn(
         "px-2",
         data?.pro?.layout && dataUser?.is_subscribed
-          ? data?.pro?.layout
+          ? `${width > 376 ? data?.pro?.layout: 'w-full'}`
           : "w-full"
       )}
     >

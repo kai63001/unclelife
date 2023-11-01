@@ -83,24 +83,24 @@ const PricingFeatureTable = () => {
         },
       ],
     },
-    {
-      name: "Widget",
-      list: [
-        {
-          name: "Pomodoro",
-          free: true,
-          pro: true,
-          enterprise: true,
-        },
-        {
-          name: "Habit Tracker",
-          free: true,
-          pro: true,
-          enterprise: true,
-          soon: true,
-        },
-      ],
-    },
+    // {
+    //   name: "Widget",
+    //   list: [
+    //     {
+    //       name: "Pomodoro",
+    //       free: true,
+    //       pro: true,
+    //       enterprise: true,
+    //     },
+    //     {
+    //       name: "Habit Tracker",
+    //       free: true,
+    //       pro: true,
+    //       enterprise: true,
+    //       soon: true,
+    //     },
+    //   ],
+    // },
     {
       name: "Pomodoro",
       list: [
@@ -140,11 +140,11 @@ const PricingFeatureTable = () => {
   };
 
   return (
-    <div className="mx-auto my-8">
+    <div className="mx-auto my-8 overflow-y-auto">
       {features.map((featureCategory, index) => (
         <div key={index}>
           <h3 className="text-xl font-semibold mb-4">{featureCategory.name}</h3>
-          <table className="min-w-full border-t border-b rounded-lg mb-8">
+          <table className="min-w-full border-t border-b rounded-lg mb-8 overflow-y-auto">
             <thead>
               <tr>
                 <th className="py-4 px-6 border-b border-gray-300 text-left text-md font-bold tracking-wider">

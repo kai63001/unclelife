@@ -23,9 +23,6 @@ export async function middleware(req: NextRequest) {
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes("_next")) return;
   const host = req.headers.get("host");
 
-  // console.log("url", url);
-  // console.log("host", host);
-
   if (
     host &&
     host != "localhost:3000" &&
@@ -46,23 +43,17 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL("/404", req.url));
   }
 
-  const supabase = createMiddlewareClient({ req, res });
+  if (req.nextUrl.pathname !== "/" && list.includes(req.nextUrl.pathname)) {
+    const supabase = createMiddlewareClient({ req, res });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    req.nextUrl.pathname !== "/" &&
-    list.includes(req.nextUrl.pathname)
-  ) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    if (!user) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   return res;
 }
-
-// export const config = {
-//   matcher: ["/home","/form/create","/form/my", '/setting', "/widget/pomodoro", "/custom/form"],
-// };

@@ -17,6 +17,7 @@ import {
   setLogic,
   setNotification,
   setWorkspaceId,
+  setThemeColor
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
 import SuccessPageComponent from "./successPage";
@@ -45,7 +46,7 @@ const FormMainBox = ({
   responseData?: any;
 }) => {
   const { toast } = useToast();
-  const { setTheme } = useTheme();
+  const { setTheme, systemTheme, theme } = useTheme();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const supabase = createClientComponentClient();
@@ -55,7 +56,7 @@ const FormMainBox = ({
   const [dataUser, setDataUser] = useState<any>({});
   const [formKey, setFormKey] = useState<any>(0);
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId, logic, notification } = useAppSelector(
+  const { form, layer, workspaceId, logic, notification,themeColor } = useAppSelector(
     (state) => state.formReducer
   );
   const [loading, setLoading] = useState(false);
@@ -155,12 +156,26 @@ const FormMainBox = ({
             }
             return layerItem;
           });
-          console.log("layer", layer);
           setDataLayer(layer);
         }
       }
     });
   };
+
+  useEffect(() => {
+    const renderColorTheme = () => {
+      if (theme == "dark") {
+        return "#000000";
+      } else if (theme == "light") {
+        return "#ffffff";
+      }
+      if (systemTheme == "dark") {
+        return "#000000";
+      }
+      return "#ffffff";
+    };
+    dispatch(setThemeColor(renderColorTheme()));
+  }, [theme, systemTheme, dispatch]);
 
   useEffect(() => {
     const _id = searchParams.get("id");
@@ -361,16 +376,22 @@ const FormMainBox = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form, id, supabase]);
 
-  const checkRequire = () => {
+  const checkRequire = (page: any = null) => {
     let error: any = {};
     let check = true;
+
+    let newDataLeyers = dataLayer;
+
+    if (page != null) {
+      newDataLeyers = nextPageDataLayer(dataLayer, page);
+    }
 
     //check if testMode
     if (testMode) {
       return false;
     }
 
-    dataLayer?.map((item: any) => {
+    newDataLeyers?.map((item: any) => {
       if (item?.required) {
         if (
           inputForm[item?.mapTo]?.value?.length === 0 ||
@@ -381,7 +402,6 @@ const FormMainBox = ({
           error[item?.id] = "This field is required";
           check = false;
         }
-        return;
       }
       //check email
       if (
@@ -394,6 +414,7 @@ const FormMainBox = ({
           check = false;
         }
       }
+
       //validate phone number
       // if (
       //   item?.type === "phone_number" &&
@@ -407,10 +428,19 @@ const FormMainBox = ({
       // }
     });
 
-    console.log(error);
-
     setError(error);
     return check;
+  };
+
+  const nextPage = () => {
+    if (page + 1 >= dataLayer?.length) {
+      return;
+    }
+    // validate require
+    if (!checkRequire(page)) {
+      return;
+    }
+    setPage(page + 1);
   };
 
   /**
@@ -559,6 +589,8 @@ const FormMainBox = ({
       : null;
   };
 
+  
+
   return (
     <>
       {dataForm?.pro?.customizations?.css && dataUser?.is_subscribed && (
@@ -659,9 +691,10 @@ const FormMainBox = ({
                   dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
                   dataUser?.is_subscribed
                     ? calculateTextColor(
-                        form?.pro?.customizations?.light?.backgroundColor
+                        form?.pro?.customizations?.light?.backgroundColor ||
+                          themeColor
                       )
-                    : undefined,
+                    : calculateTextColor(themeColor) || undefined,
               }}
             >
               {dataForm?.title}
@@ -704,6 +737,7 @@ const FormMainBox = ({
                   return (
                     <RenderFormComponent
                       updateInputForm={updateInputForm}
+                      inputForm={inputForm}
                       data={item}
                       error={error[item?.id]}
                       dataUser={dataUser}
@@ -747,8 +781,7 @@ const FormMainBox = ({
                     className="px-10"
                     type="button"
                     onClick={(e) => {
-                      e.preventDefault();
-                      setPage(page + 1);
+                      nextPage();
                     }}
                   >
                     Next
@@ -785,9 +818,10 @@ const FormMainBox = ({
                     dataForm?.pro?.customizations?.light
                       ?.enableBackgroundColor && dataUser?.is_subscribed
                       ? calculateTextColor(
-                          form?.pro?.customizations?.light?.backgroundColor
+                          form?.pro?.customizations?.light?.backgroundColor ||
+                            themeColor
                         )
-                      : undefined,
+                      : calculateTextColor(themeColor) || undefined,
                 }}
               >
                 <div>

@@ -8,6 +8,7 @@ const PhoneRender = ({
   data,
   type = "text",
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -16,7 +17,7 @@ const PhoneRender = ({
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -41,11 +42,13 @@ const PhoneRender = ({
           <RequiredStar />
         </div>
       )}
+      {JSON.stringify(inputForm[data.mapTo]?.value)}
       <PhoneInput
         className={`mt-1 block w-full ${error ? "border-red-500" : ""}`}
         inputComponent={PhoneComponentInput}
         onChange={(e) => updateInputForm(e, data)}
         name={data.label}
+        value={inputForm[data.mapTo]?.value}
         placeholder={
           data?.pro?.placeholder && isSubscribed ? data?.pro?.placeholder : ""
         }

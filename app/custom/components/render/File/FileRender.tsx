@@ -10,10 +10,22 @@ import * as React from "react";
 import { useAppSelector } from "@/app/redux/hook";
 import { calculateTextColor } from "@/lib/formController";
 
-const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const FileRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+  inputForm,
+}: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [file, setFile] = useState<any>(null);
   const { toast } = useToast();
+
+  React.useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setFile(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
 
   const onFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -45,7 +57,7 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -79,13 +91,13 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                   isSubscribed
                     ? form?.pro?.customizations?.light?.inputColor
                     : null,
-                color:
-                  form?.pro?.customizations?.light?.enableBackgroundColor &&
-                  isSubscribed
-                    ? calculateTextColor(
-                        form?.pro?.customizations?.light?.inputColor
-                      )
-                    : undefined,
+                ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed &&
+                  form?.pro?.customizations?.light?.inputColor && {
+                    color: calculateTextColor(
+                      form?.pro?.customizations?.light?.inputColor
+                    ),
+                  }),
               }}
               className="flex w-full border px-3 py-2 rounded-md overflow-hidden"
             >
@@ -109,13 +121,13 @@ const FileRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                   isSubscribed
                     ? form?.pro?.customizations?.light?.primaryColor
                     : null,
-                color:
-                  form?.pro?.customizations?.light?.enableBackgroundColor &&
-                  isSubscribed
-                    ? calculateTextColor(
-                        form?.pro?.customizations?.light?.primaryColor
-                      )
-                    : undefined,
+                ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed &&
+                  form?.pro?.customizations?.light?.inputColor && {
+                    color: calculateTextColor(
+                      form?.pro?.customizations?.light?.inputColor
+                    ),
+                  }),
               }}
             >
               <Label className="flex flex-col space-y-2 cursor-pointer">

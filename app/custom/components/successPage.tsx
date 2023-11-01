@@ -36,13 +36,20 @@ const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
         <div className="flex flex-col items-center justify-center mt-5">
           <h1
             style={{
-              color:
-                dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
-                dataUser?.is_subscribed
-                  ? calculateTextColor(
-                      dataForm?.pro?.customizations?.light?.backgroundColor
-                    )
-                  : undefined,
+              ...(dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                dataUser?.is_subscribed &&
+                dataForm?.pro?.customizations?.light?.backgroundColor && {
+                  color: calculateTextColor(
+                    dataForm?.pro?.customizations?.light?.backgroundColor
+                  ),
+                }),
+              // color:
+              //   dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+              //   dataUser?.is_subscribed
+              //     ? calculateTextColor(
+              //         dataForm?.pro?.customizations?.light?.backgroundColor
+              //       )
+              //     : undefined,
             }}
             className="text-3xl font-bold text-muted-foreground"
           >
@@ -78,13 +85,12 @@ const SuccessPageComponent = ({ testMode = false, setSuccessSubmit }: any) => {
           ) && (
             <p
               style={{
-                color:
-                  dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
-                  dataUser?.is_subscribed
-                    ? calculateTextColor(
+                ...(dataForm?.pro?.customizations?.light?.enableBackgroundColor &&
+                  dataForm?.pro?.customizations?.light?.backgroundColor && {
+                    color: calculateTextColor(
                       dataForm?.pro?.customizations?.light?.backgroundColor
-                      )
-                    : undefined,
+                    ),
+                  }),
               }}
               className="mt-5 text-gray-400 text-sm"
             >

@@ -11,12 +11,16 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Icons } from "@/components/Icons";
 import { useSupabase } from "@/app/hook/supabase-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export const revalidate = 3600 * 24; // 1 day
 const PricingBox = () => {
   const { user, isLoading } = useSupabase();
   const [yearly, setYearly] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [mobilePlanSelected, setMobilePlanSelected] = useState("pro");
+
   const PriceDetailList = {
     basic: [
       "Unlimited Responses",
@@ -76,11 +80,12 @@ const PricingBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const subscribe = async (priceId: any) => {
+  const subscribe = async (priceId: any, plan: any = "pro") => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/stripe/subscription", {
+      const { data } = await axios.post(`/api/stripe/subscription`, {
         priceId,
+        plan,
       });
       const stripe = await loadStripe(
         process.env.NEXT_PUBLIC_STRIPE_KEY as string
@@ -142,21 +147,73 @@ const PricingBox = () => {
           </Badge>
         </span>
       </div>
+      <div className="flex space-x-3 justify-center mb-5 md:hidden">
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("basic");
+          }}
+          variant={mobilePlanSelected == "basic" ? "default" : "secondary"}
+        >
+          Basic
+        </Button>
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("pro");
+          }}
+          variant={mobilePlanSelected == "pro" ? "default" : "secondary"}
+        >
+          Pro
+        </Button>
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("team");
+          }}
+          variant={mobilePlanSelected == "team" ? "default" : "secondary"}
+        >
+          Team
+        </Button>
+      </div>
       <div
         className={
-          "flex items-center flex-col md:flex-row space-y-3 md:space-y-0"
+          "flex items-center space-x-0 md:space-x-3 flex-col md:flex-row space-y-3 md:space-y-0"
         }
       >
         <div
-          className={
-            "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full"
-          }
+          className={cn(
+            "md:flex-1 border rounded-2xl shadow-lg bg-background p-5 relative w-full h-[650px]",
+            mobilePlanSelected == "basic" ? "" : "hidden md:block"
+          )}
         >
-          <h2 className={"text-3xl font-bold"}>Basic</h2>
+          <h2 className={"text-3xl text-center font-bold"}>Basic</h2>
+          <div className="flex flex-col justify-center">
+            <div className="flex justify-center">
+              <Image
+                src={"https://cdn.unclelife.co/free.webp"}
+                width={160}
+                height={160}
+                alt={"basic"}
+                className=""
+              />
+            </div>
+            <h3 className={"text-3xl font-bold text-center my-5"}>Free</h3>
+            <div className={"w-full flex justify-center mb-2"}>
+              <Link href={"/home"} className={"w-full px-10"}>
+                <Button
+                  className={
+                    "w-full py-3 bg-gradient-to-r from-red-500 to-orange-500"
+                  }
+                >
+                  Try Now
+                </Button>
+              </Link>
+            </div>
+          </div>
           <p className={"my-2"}>
             All the basics tools to create beautiful forms and widgets.
           </p>
-          <h3 className={"text-3xl font-bold text-center my-5"}>Free</h3>
           <div className={"flex flex-col space-y-1"}>
             {PriceDetailList.basic.map((item, index) => (
               <div className={"flex space-x-3"} key={index}>
@@ -165,43 +222,102 @@ const PricingBox = () => {
               </div>
             ))}
           </div>
-          <div
-            className={
-              "w-full absolute bottom-[10px] left-0 flex justify-center p-5"
-            }
-          >
-            <Link href={"/home"} className={"w-full"}>
-              <Button className={"w-full"}>Try Now</Button>
-            </Link>
-          </div>
         </div>
         <div
-          className={
-            "md:flex-1 border h-[520px] rounded-md shadow-lg bg-primary text-secondary p-5 relative w-full"
-          }
+          className={cn(
+            "md:flex-1 border-4 border-[#E43D47] rounded-2xl shadow-lg p-5 relative w-full",
+            mobilePlanSelected == "pro" ? "" : "hidden md:block"
+          )}
         >
-          <h2 className={"text-3xl font-bold"}>Pro</h2>
+          <h2 className={"text-3xl font-bold text-center"}>Pro</h2>
+          <div className="flex flex-col justify-center">
+            <div className="flex justify-center">
+              <Image
+                src={"https://cdn.unclelife.co/pro.webp"}
+                width={285}
+                height={198}
+                alt={"pro"}
+                className=""
+              />
+            </div>
+            <h3 className={"text-3xl font-bold text-center my-5"}>
+              {priceMonthlyAndYearly.pro.month.price === 0 ? (
+                <div className={"flex justify-center"}>
+                  <Skeleton className="w-[130px] h-[40px] rounded-full" />
+                </div>
+              ) : (
+                <div>
+                  <span className={"text-3xl font-bold"}>$</span>
+                  <span className={"text-3xl font-bold"}>
+                    {yearly
+                      ? (priceMonthlyAndYearly.pro.year.price / 12).toFixed(2)
+                      : priceMonthlyAndYearly.pro.month.price}
+                  </span>
+                  <span className={"text-lg font-bold"}>/mo</span>
+                </div>
+              )}
+            </h3>
+            <div className={"w-full flex justify-center px-10 mb-2"}>
+              {user ? (
+                isLoading ? (
+                  <Button
+                    disabled={true}
+                    className={"w-full"}
+                    variant={"secondary"}
+                  >
+                    <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                  </Button>
+                ) : user.is_subscribed ? (
+                  <Button
+                    className={
+                      "w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white"
+                    }
+                    onClick={portal}
+                    variant={"secondary"}
+                  >
+                    Manage Subscription
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={!checkDataIsExist() || loading}
+                    onClick={() =>
+                      subscribe(
+                        yearly
+                          ? priceMonthlyAndYearly.pro.year.id
+                          : priceMonthlyAndYearly.pro.month.id
+                      )
+                    }
+                    className={
+                      "w-full bg-gradient-to-r from-red-500 to-orange-500 py-3 text-white"
+                    }
+                    variant={"secondary"}
+                  >
+                    {loading ? (
+                      <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                    ) : (
+                      "🚀 Start Trial"
+                    )}
+                  </Button>
+                )
+              ) : (
+                <Link href={"/login"} className={"w-full"}>
+                  <Button
+                    className={
+                      "w-full bg-gradient-to-r from-red-500 to-orange-500 py-3 text-white"
+                    }
+                    variant={"secondary"}
+                  >
+                    🚀 Start Trial
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
           <p className={"my-2"}>
             Everything you need to create beautiful and professional forms and
             widget, and support an indie dev.
           </p>
-          <h3 className={"text-3xl font-bold text-center my-5"}>
-            {priceMonthlyAndYearly.pro.month.price === 0 ? (
-              <div className={"flex justify-center"}>
-                <Skeleton className="w-[130px] h-[40px] rounded-full" />
-              </div>
-            ) : (
-              <div>
-                <span className={"text-3xl font-bold"}>$</span>
-                <span className={"text-3xl font-bold"}>
-                  {yearly
-                    ? (priceMonthlyAndYearly.pro.year.price / 12).toFixed(2)
-                    : priceMonthlyAndYearly.pro.month.price}
-                </span>
-                <span className={"text-lg font-bold"}>/mo</span>
-              </div>
-            )}
-          </h3>
+
           <div className={"flex flex-col space-y-1"}>
             {PriceDetailList.pro.map((item, index) => (
               <div className={"flex space-x-3"} key={index}>
@@ -210,83 +326,97 @@ const PricingBox = () => {
               </div>
             ))}
           </div>
-          <div
-            className={
-              "w-full absolute bottom-[10px] left-0 flex justify-center p-5"
-            }
-          >
-            {user ? (
-              isLoading ? (
-                <Button
-                  disabled={true}
-                  className={"w-full"}
-                  variant={"secondary"}
-                >
-                  <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
-                </Button>
-              ) : user.is_subscribed ? (
-                <Button
-                  className={"w-full"}
-                  onClick={portal}
-                  variant={"secondary"}
-                >
-                  Manage Subscription
-                </Button>
-              ) : (
-                <Button
-                  disabled={!checkDataIsExist() || loading}
-                  onClick={() =>
-                    subscribe(
-                      yearly
-                        ? priceMonthlyAndYearly.pro.year.id
-                        : priceMonthlyAndYearly.pro.month.id
-                    )
-                  }
-                  className={"w-full"}
-                  variant={"secondary"}
-                >
-                  {loading ? (
-                    <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
-                  ) : (
-                    "Start Trial"
-                  )}
-                </Button>
-              )
-            ) : (
-              <Link href={"/login"} className={"w-full"}>
-                <Button
-                  className={"w-full"}
-                  onClick={portal}
-                  variant={"secondary"}
-                >
-                  Start Trial
-                </Button>
-              </Link>
-            )}
-          </div>
         </div>
         <div
-          className={
-            "md:flex-1 border h-[430px] rounded-md shadow-lg bg-background p-5 relative w-full -mt-1"
-          }
+          className={cn(
+            "md:flex-1 border rounded-2xl shadow-lg bg-background p-5 relative w-full h-[650px]",
+            mobilePlanSelected == "team" ? "" : "hidden md:block"
+          )}
         >
           <h2 className={"text-3xl font-bold"}>Team</h2>
+          <div className="flex flex-col justify-center">
+            <div className="flex justify-center h-[160px]">
+              <Image
+                src={"https://cdn.unclelife.co/team.webp"}
+                width={160}
+                height={160}
+                alt={"team"}
+                className="object-contain"
+              />
+            </div>
+            <h3 className={"text-3xl font-bold text-center my-5"}>
+              <div>
+                <span className={"text-3xl font-bold"}>$</span>
+                <span className={"text-3xl font-bold"}>
+                  {yearly
+                    ? (
+                        priceMonthlyAndYearly.enterprise.year.price / 12
+                      ).toFixed(2)
+                    : priceMonthlyAndYearly.enterprise.month.price}
+                </span>
+                <span className={"text-lg font-bold"}>/mo</span>
+              </div>
+            </h3>
+            <div className={"w-full flex justify-center px-10 mb-2"}>
+              {user ? (
+                isLoading ? (
+                  <Button
+                    disabled={true}
+                    className={"w-full"}
+                    variant={"secondary"}
+                  >
+                    <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                  </Button>
+                ) : user.is_enterprise ? (
+                  <Button
+                    className={
+                      "w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white"
+                    }
+                    onClick={portal}
+                    variant={"secondary"}
+                  >
+                    Manage Subscription
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={!checkDataIsExist() || loading}
+                    onClick={() =>
+                      subscribe(
+                        yearly
+                          ? priceMonthlyAndYearly.enterprise.year.id
+                          : priceMonthlyAndYearly.enterprise.month.id,
+                        "team"
+                      )
+                    }
+                    className={
+                      "w-full bg-gradient-to-r from-red-500 to-orange-500 py-3 text-white"
+                    }
+                    variant={"secondary"}
+                  >
+                    {loading ? (
+                      <Icons.spinner className="animate-spin mr-2 h-5 w-5 " />
+                    ) : (
+                      "🚀 Upgrade"
+                    )}
+                  </Button>
+                )
+              ) : (
+                <Link href={"/login"} className={"w-full"}>
+                  <Button
+                    className={
+                      "w-full bg-gradient-to-r from-red-500 to-orange-500 py-3 text-white"
+                    }
+                    variant={"secondary"}
+                  >
+                    🚀 Start Trial
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
           <p className={"my-2"}>
             For organizations seeking collaborative form solutions.
           </p>
-          <h3 className={"text-3xl font-bold text-center my-5"}>
-            <div>
-              <span className={"text-3xl font-bold"}>$</span>
-              <span className={"text-3xl font-bold"}>
-                {yearly
-                  ? (priceMonthlyAndYearly.enterprise.year.price / 12).toFixed(
-                      2
-                    )
-                  : priceMonthlyAndYearly.enterprise.month.price}
-              </span>
-              <span className={"text-lg font-bold"}>/mo</span>
-            </div>
-          </h3>
           <div className={"flex flex-col space-y-1"}>
             {PriceDetailList.enterprise.map((item, index) => (
               <div className={"flex space-x-3"} key={index}>
@@ -295,7 +425,7 @@ const PricingBox = () => {
               </div>
             ))}
           </div>
-          <div
+          {/* <div
             className={
               "w-full absolute bottom-[10px] left-0 flex justify-center p-5"
             }
@@ -348,7 +478,7 @@ const PricingBox = () => {
                 </Button>
               </Link>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={"flex justify-center"}>

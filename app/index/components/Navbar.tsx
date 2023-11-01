@@ -4,7 +4,7 @@ import { LogIn } from "lucide-react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Database } from "@/lib/types_db";
-import {ModeToggle} from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/ModeToggle";
 import MobileToggle from "@/app/index/components/MobileToggle";
 import dynamic from "next/dynamic";
 
@@ -21,41 +21,45 @@ const IndexNavbar = async () => {
 
   return (
     <div className="max-w-6xl m-auto w-full flex justify-between pt-8 items-center">
-      <CrispWithNoSSR/>
+      <CrispWithNoSSR />
       <Link href="/" className="font-bold text-xl">
         UncleLife
         <span className="ml-2 text-xs">BETA</span>
       </Link>
       <nav className="">
         <ul className="flex space-x-4 items-center">
-          <Link href={'/blog'} className={'md:block hidden'}>
-            <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">Blog</li>
-          </Link>
-          <Link href={'/pricing'} className={'md:block hidden'}>
-            <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">Pricing</li>
-          </Link>
-          {session ? (
-            <Link href={'/home'} className={'md:block hidden'}>
-              <Button>
-                <li>Dashboard</li>
-              </Button>
+          <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+            <Link href={"/blog"} className={"md:block hidden mr-2"}>
+              Blog
             </Link>
+          </li>
+          <li className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+            <Link href={"/pricing"} className={"md:block hidden mr-2"}>
+              Pricing
+            </Link>
+          </li>
+          {session ? (
+            <li>
+              <Link href={"/home"} className={"md:block hidden"}>
+                <Button>Dashboard</Button>
+              </Link>
+            </li>
           ) : (
             <>
-              <Link href={'/login'} className={'md:block hidden'}>
-                <li>
+              <li>
+                <Link href={"/login"} className={"md:block hidden"}>
                   <Button>
                     <LogIn className="mr-2" size={20} /> Login
                   </Button>
-                </li>
-              </Link>
+                </Link>
+              </li>
             </>
           )}
-          <li className={'block md:hidden'}>
-            <MobileToggle session={session}/>
+          <li className={"block md:hidden"}>
+            <MobileToggle session={session} />
           </li>
           <li>
-            <ModeToggle/>
+            <ModeToggle />
           </li>
         </ul>
       </nav>

@@ -1,7 +1,7 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import RequiredStar from "@/app/custom/components/render/RequireStar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/app/redux/hook";
 import {
   calculateTextColor,
@@ -9,7 +9,13 @@ import {
 } from "@/lib/formController";
 import { cn } from "@/lib/utils";
 
-const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
+const RadioRender = ({
+  data,
+  updateInputForm,
+  error,
+  isSubscribed,
+  inputForm,
+}: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected] = useState<any>(null);
 
@@ -19,12 +25,18 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
     updateInputForm(e, data);
   };
 
+  useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setSelected(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
+
   return data.hidden ? (
     <></>
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -65,13 +77,13 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                   isSubscribed
                     ? form?.pro?.customizations?.light?.inputColor
                     : null,
-                color:
-                  form?.pro?.customizations?.light?.enableBackgroundColor &&
-                  isSubscribed
-                    ? calculateTextColor(
-                        form?.pro?.customizations?.light?.inputColor
-                      )
-                    : undefined,
+                ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+                  isSubscribed &&
+                  form?.pro?.customizations?.light?.inputColor && {
+                    color: calculateTextColor(
+                      form?.pro?.customizations?.light?.inputColor
+                    ),
+                  }),
                 borderColor:
                   selected == item.name &&
                   form?.pro?.customizations?.light?.enableBackgroundColor &&
@@ -104,8 +116,8 @@ const RadioRender = ({ data, updateInputForm, error, isSubscribed }: any) => {
                         : undefined,
                   }}
                 >
-                  {(data.headerOption == "number" ||
-                    !data.headerOption) && index + 1}
+                  {(data.headerOption == "number" || !data.headerOption) &&
+                    index + 1}
                   {data.headerOption == "alphabet" &&
                     convertNumberToAlphabet(index)}
                 </div>

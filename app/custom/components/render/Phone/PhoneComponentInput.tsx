@@ -12,14 +12,16 @@ const PhoneComponentInput = React.forwardRef<HTMLInputElement, InputProps>(
         {...props}
         ref={ref}
         style={{
-          backgroundColor:
-            form?.pro?.customizations?.light?.enableBackgroundColor
-              ? form?.pro?.customizations?.light?.inputColor
-              : null,
-          color:
-            form?.pro?.customizations?.light?.enableBackgroundColor
-              ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
-              : undefined,
+          backgroundColor: form?.pro?.customizations?.light
+            ?.enableBackgroundColor
+            ? form?.pro?.customizations?.light?.inputColor
+            : null,
+          ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+            form?.pro?.customizations?.light?.inputColor && {
+              color: calculateTextColor(
+                form?.pro?.customizations?.light?.inputColor
+              ),
+            }),
         }}
       />
     );

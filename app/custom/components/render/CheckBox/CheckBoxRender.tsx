@@ -7,6 +7,7 @@ const CheckBoxRender = ({
   updateInputForm,
   error,
   isSubscribed,
+  inputForm,
 }: any) => {
   return data.hidden ? (
     <></>
@@ -24,6 +25,7 @@ const CheckBoxRender = ({
       <Checkbox
         disabled={data.disable}
         required={data.required}
+        checked={inputForm[data.mapTo]?.value}
         id={data.label}
         onCheckedChange={(e) => {
           updateInputForm(e, data);
@@ -32,7 +34,7 @@ const CheckBoxRender = ({
       />
       <Label
         htmlFor={data.label}
-        className={`text-lg font-bold cursor-text leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
+        className={`text-lg cursor-text leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
           error && "text-red-500"
         }`}
       >

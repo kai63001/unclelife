@@ -31,7 +31,7 @@ import { Input } from "@/components/ui/input";
 const SheetTab = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const [data, setData] = useState<any>({});
-  const { layer } = useAppSelector((state) => state.formReducer);
+  const { layer, databaseId } = useAppSelector((state) => state.formReducer);
 
   useEffect(() => {
     const layerFilter = layer?.filter((item: any) => item.id === id);
@@ -95,10 +95,12 @@ const SheetTab = ({ id }: any) => {
             <div className={"mt-2 flex flex-col space-y-3"}>
               {!fieldNameNotAllow.includes(data?.type) && (
                 <div>
-                  <Label htmlFor={"label"} className="font-semibold">
+                  <Label htmlFor={"name"} className="font-semibold">
                     Name :
                   </Label>
                   <Input
+                    disabled={!!databaseId}
+                    id="name"
                     value={data?.name}
                     onChange={(e: any) => {
                       inputOnChange(e, "name");

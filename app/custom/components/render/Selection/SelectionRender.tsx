@@ -14,6 +14,7 @@ import { calculateTextColor } from "@/lib/formController";
 const SelectionRender = ({
   data,
   updateInputForm,
+  inputForm,
   error,
   isSubscribed,
 }: any) => {
@@ -24,7 +25,7 @@ const SelectionRender = ({
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -53,6 +54,7 @@ const SelectionRender = ({
         onValueChange={(e) => {
           updateInputForm(e, data);
         }}
+        value={inputForm[data.mapTo]?.value}
         required={data.required}
       >
         <SelectTrigger
@@ -68,13 +70,13 @@ const SelectionRender = ({
               isSubscribed
                 ? form?.pro?.customizations?.light?.inputColor
                 : null,
-            color:
-              form?.pro?.customizations?.light?.enableBackgroundColor &&
-              isSubscribed
-                ? calculateTextColor(
-                    form?.pro?.customizations?.light?.inputColor
-                  )
-                : undefined,
+            ...(form?.pro?.customizations?.light?.enableBackgroundColor &&
+              isSubscribed &&
+              form?.pro?.customizations?.light?.inputColor && {
+                color: calculateTextColor(
+                  form?.pro?.customizations?.light?.inputColor
+                ),
+              }),
           }}
         >
           <SelectValue

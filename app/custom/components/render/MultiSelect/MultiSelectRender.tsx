@@ -12,6 +12,7 @@ const MultiSelectRender = ({
   updateInputForm,
   error,
   isSubscribed,
+  inputForm,
 }: any) => {
   const { form } = useAppSelector((state) => state.formReducer);
   const [selected, setSelected]: any = useState([]);
@@ -31,6 +32,12 @@ const MultiSelectRender = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (inputForm[data.mapTo]?.value) {
+      setSelected(inputForm[data.mapTo]?.value);
+    }
+  }, [data.mapTo, inputForm]);
 
   const handleButtonClick = () => {
     setOpen(!open);
@@ -62,7 +69,7 @@ const MultiSelectRender = ({
   ) : (
     <div className="relative mb-2">
       {data?.pro?.hideFieldName && isSubscribed ? null : (
-        <Label htmlFor={data.label} className="text-lg font-bold cursor-text">
+        <Label htmlFor={data.label} className="text-lg cursor-text">
           <span
             className="inline-block"
             dangerouslySetInnerHTML={{
@@ -104,7 +111,9 @@ const MultiSelectRender = ({
             color:
               form?.pro?.customizations?.light?.enableBackgroundColor &&
               isSubscribed
-                ? calculateTextColor(form?.pro?.customizations?.light?.inputColor)
+                ? calculateTextColor(
+                    form?.pro?.customizations?.light?.inputColor
+                  )
                 : undefined,
           }}
         >
@@ -120,11 +129,14 @@ const MultiSelectRender = ({
                       isSubscribed
                         ? form?.pro?.customizations?.light?.primaryColor
                         : null,
-                    color:
-                      form?.pro?.customizations?.light?.enableBackgroundColor &&
-                      isSubscribed
-                        ? calculateTextColor(form?.pro?.customizations?.light?.primaryColor)
-                        : undefined,
+                    ...(form?.pro?.customizations?.light
+                      ?.enableBackgroundColor &&
+                      isSubscribed &&
+                      form?.pro?.customizations?.light?.inputColor && {
+                        color: calculateTextColor(
+                          form?.pro?.customizations?.light?.inputColor
+                        ),
+                      }),
                   }}
                 >
                   {item}
