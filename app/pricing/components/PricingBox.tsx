@@ -12,12 +12,15 @@ import { Icons } from "@/components/Icons";
 import { useSupabase } from "@/app/hook/supabase-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export const revalidate = 3600 * 24; // 1 day
 const PricingBox = () => {
   const { user, isLoading } = useSupabase();
   const [yearly, setYearly] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [mobilePlanSelected, setMobilePlanSelected] = useState("pro");
+
   const PriceDetailList = {
     basic: [
       "Unlimited Responses",
@@ -144,15 +147,45 @@ const PricingBox = () => {
           </Badge>
         </span>
       </div>
+      <div className="flex space-x-3 justify-center mb-5 md:hidden">
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("basic");
+          }}
+          variant={mobilePlanSelected == "basic" ? "default" : "secondary"}
+        >
+          Basic
+        </Button>
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("pro");
+          }}
+          variant={mobilePlanSelected == "pro" ? "default" : "secondary"}
+        >
+          Pro
+        </Button>
+        <Button
+          className="w-24"
+          onClick={() => {
+            setMobilePlanSelected("team");
+          }}
+          variant={mobilePlanSelected == "team" ? "default" : "secondary"}
+        >
+          Team
+        </Button>
+      </div>
       <div
         className={
-          "flex items-center space-x-3 flex-col md:flex-row space-y-3 md:space-y-0"
+          "flex items-center space-x-0 md:space-x-3 flex-col md:flex-row space-y-3 md:space-y-0"
         }
       >
         <div
-          className={
-            "md:flex-1 border rounded-2xl shadow-lg bg-background p-5 relative w-full"
-          }
+          className={cn(
+            "md:flex-1 border rounded-2xl shadow-lg bg-background p-5 relative w-full h-[650px]",
+            mobilePlanSelected == "basic" ? "" : "hidden md:block"
+          )}
         >
           <h2 className={"text-3xl text-center font-bold"}>Basic</h2>
           <div className="flex flex-col justify-center">
@@ -191,9 +224,10 @@ const PricingBox = () => {
           </div>
         </div>
         <div
-          className={
-            "md:flex-1 border-4 border-[#E43D47] rounded-2xl shadow-lg p-5 relative w-full"
-          }
+          className={cn(
+            "md:flex-1 border-4 border-[#E43D47] rounded-2xl shadow-lg p-5 relative w-full",
+            mobilePlanSelected == "pro" ? "" : "hidden md:block"
+          )}
         >
           <h2 className={"text-3xl font-bold text-center"}>Pro</h2>
           <div className="flex flex-col justify-center">
@@ -294,19 +328,20 @@ const PricingBox = () => {
           </div>
         </div>
         <div
-          className={
-            "md:flex-1 border rounded-2xl shadow-lg p-5 relative w-full -mt-1"
-          }
+          className={cn(
+            "md:flex-1 border rounded-2xl shadow-lg bg-background p-5 relative w-full h-[650px]",
+            mobilePlanSelected == "team" ? "" : "hidden md:block"
+          )}
         >
           <h2 className={"text-3xl font-bold"}>Team</h2>
           <div className="flex flex-col justify-center">
-            <div className="flex justify-center">
+            <div className="flex justify-center h-[160px]">
               <Image
                 src={"https://cdn.unclelife.co/team.webp"}
                 width={160}
                 height={160}
-                alt={"basic"}
-                className=""
+                alt={"team"}
+                className="object-contain"
               />
             </div>
             <h3 className={"text-3xl font-bold text-center my-5"}>
