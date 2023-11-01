@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import FAQs from "./index/components/FAQs";
 import VideoIndex from "./index/components/VideoIndex";
+// import PricingFeatureTable from "./pricing/components/PricingFeatureTable";
 // import SlideTrandingForm from "./index/components/SlideTrandingForm";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
@@ -13,9 +14,20 @@ const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
 });
 const FooterIndex = dynamic(() => import("./index/components/FooterIndex"));
 
-const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
-  ssr: false,
-});
+// const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
+//   ssr: false,
+// });
+
+// const PricingFaq = dynamic(() => import("./pricing/components/FAQs"), {
+//   ssr: false,
+// });
+
+const PricingFeatureTable = dynamic(
+  () => import("./pricing/components/PricingFeatureTable"),
+  {
+    ssr: false,
+  }
+);
 
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",
@@ -105,6 +117,7 @@ export default function Home() {
                 height={500}
                 className="rounded-3xl"
                 alt="Create next-level Form"
+                loading="eager"
               />
             </div>
             <div className="w-full lg:w-7/12">
@@ -357,9 +370,9 @@ Our support for form logic lets you create intelligent, interactive forms that r
             </div>
           </div>
         </section>
-        <section className="max-w-6xl w-full justify-center text-center m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
+        <section className="max-w-4xl w-full justify-center m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
           <h3 className="text-4xl">Pricing</h3>
-          <PricingBox />
+          <PricingFeatureTable />
         </section>
         <section className="w-full m-auto flex flex-col justify-center  items-center bg-gradient-to-r from-[#E43D47] to-[#EA7252] py-10 mt-10 rounded-lg lg:rounded-none">
           <h3 className="flex justify-center items-center text-2xl text-white">

@@ -47,6 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className}>
+        <Partytown />
         <NextNProgressbar />
         <Providers>{children}</Providers>
         <Toaster />

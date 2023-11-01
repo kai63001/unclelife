@@ -70,6 +70,8 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
                 unoptimized={true}
                 src={dataForm?.pro?.customizations?.coverPicture as string}
                 alt={"cover image"}
+                loading="eager"
+                priority
                 fill
                 className={"w-full h-full object-cover object-center"}
               />
@@ -93,6 +95,8 @@ const PublicFormPage = async ({ params: { id } }: Props) => {
                       src={dataForm?.pro?.customizations?.logoPicture as string}
                       alt={"logo image"}
                       objectPosition="center"
+                      loading="eager"
+                      priority
                       fill
                       className={"w-full h-full object-cover"}
                     />
