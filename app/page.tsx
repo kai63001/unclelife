@@ -105,7 +105,6 @@ export default function Home() {
                 height={500}
                 className="rounded-3xl"
                 alt="Create next-level Form"
-                loading="lazy"
               />
             </div>
             <div className="w-full lg:w-7/12">
@@ -135,7 +134,6 @@ Enjoy unlimited responses and full customization to make every form uniquely and
                 height={500}
                 className="rounded-3xl"
                 alt="Unleash Unlimited Possibilities"
-                loading="lazy"
               />
             </div>
           </div>
@@ -147,7 +145,6 @@ Enjoy unlimited responses and full customization to make every form uniquely and
                 height={500}
                 className="rounded-3xl"
                 alt="Seamless Notion Integration"
-                loading="lazy"
               />
             </div>
             <div className="w-full lg:w-6/12">

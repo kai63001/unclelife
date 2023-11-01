@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run partytown && next build",
     "start": "next start",
     "lint": "next lint",
+    "partytown": "partytown copylib public/~partytown",
     "analyze": "next build && next bundle-analyzer"
   },
   "engines": {
