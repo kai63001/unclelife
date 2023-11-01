@@ -17,7 +17,7 @@ import {
   setLogic,
   setNotification,
   setWorkspaceId,
-  setThemeColor
+  setThemeColor,
 } from "@/app/redux/slice/formController.slice";
 import { useSearchParams } from "next/navigation";
 import SuccessPageComponent from "./successPage";
@@ -56,9 +56,8 @@ const FormMainBox = ({
   const [dataUser, setDataUser] = useState<any>({});
   const [formKey, setFormKey] = useState<any>(0);
   const [databaseId, setDatabaseIdState] = useState<string>("");
-  const { form, layer, workspaceId, logic, notification,themeColor } = useAppSelector(
-    (state) => state.formReducer
-  );
+  const { form, layer, workspaceId, logic, notification, themeColor } =
+    useAppSelector((state) => state.formReducer);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -589,8 +588,6 @@ const FormMainBox = ({
       : null;
   };
 
-  
-
   return (
     <>
       {dataForm?.pro?.customizations?.css && dataUser?.is_subscribed && (
@@ -620,6 +617,7 @@ const FormMainBox = ({
                   dataUser?.is_subscribed && (
                     <div className="w-full h-64 bg-cover bg-center bg-no-repeat relative">
                       <Image
+                        unoptimized={true}
                         src={
                           dataForm?.pro?.customizations?.coverPicture as string
                         }
@@ -644,6 +642,7 @@ const FormMainBox = ({
                             )}
                           >
                             <Image
+                              unoptimized={true}
                               src={
                                 dataForm?.pro?.customizations
                                   ?.logoPicture as string
