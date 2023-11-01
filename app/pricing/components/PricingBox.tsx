@@ -7,7 +7,7 @@ import { Check, Percent } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js/pure";
 import { Icons } from "@/components/Icons";
 import { useSupabase } from "@/app/hook/supabase-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
