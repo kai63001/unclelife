@@ -17,6 +17,13 @@ const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
   ssr: false,
 });
 
+const SlideTrandingForm = dynamic(
+  () => import("./index/components/SlideTrandingForm"),
+  {
+    ssr: false,
+  }
+);
+
 export const metadata: Metadata = {
   title: "Uncle Life - Notion Forms & Widgets Simplified",
   description:
@@ -276,10 +283,10 @@ Our support for form logic lets you create intelligent, interactive forms that r
             <VideoIndex />
           </div>
         </section>
-        {/* <section className="w-full m-auto flex flex-col justify-center items-center py-10 mt-10">
+        <section className="w-full m-auto flex flex-col justify-center items-center py-10 mt-10">
           <h3 className="text-3xl font-semibold">Trending Form!</h3>
           <SlideTrandingForm />
-        </section> */}
+        </section>
         <section className="max-w-6xl w-full m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
           <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
             <div className="w-full md:w-6/12 pb-5 mb:pb-0">
@@ -294,10 +301,10 @@ Our support for form logic lets you create intelligent, interactive forms that r
             </div>
             <div className="w-full md:w-6/12">
               <h3 className="font-semibold text-3xl">
-                Infinite Number of Fields
+              Unlimited Field Options
               </h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
-                {`You enter data fields on your form. Create as many databases as in Notion`}
+                {`Input data effortlessly through your form fields. With UncleLife, you have the freedom to create and manage as many databases as you desire, mirroring your Notion setup seamlessly.`}
               </p>
             </div>
           </div>
@@ -333,17 +340,17 @@ Our support for form logic lets you create intelligent, interactive forms that r
             <div className="w-full md:w-6/12">
               <h3 className="font-semibold text-3xl">Mode Dark</h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
-                {`You can choose a beautiful dark mode. in the form you want it to fit Your Notion`}
+                {`You can choose a beautiful dark mode. in the form you want it to fit Your Integrate`}
               </p>
             </div>
           </div>
           <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
             <div className="w-full md:w-6/12 order-2 md:order-1">
               <h3 className="font-semibold text-3xl">
-                Infinite Number of Forms
+              Unlimited Form Creation
               </h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
-                {`You can create as many forms as you want. and many formats`}
+                {`You have the liberty to create endless forms, embracing a myriad of formats to suit your needs.`}
               </p>
             </div>
             <div className="w-full md:w-6/12 order-1 md:order-2 pb-5 mb:pb-0">
