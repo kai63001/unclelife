@@ -16,6 +16,7 @@ export async function middleware(req: NextRequest) {
     "/setting",
     "/widget/pomodoro",
     "/custom/form",
+    "/form/detail",
   ];
   const PUBLIC_FILE = /\.(.*)$/; // Files
 
@@ -43,7 +44,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL("/404", req.url));
   }
 
-  if (req.nextUrl.pathname !== "/" && list.includes(req.nextUrl.pathname)) {
+  if (
+    req.nextUrl.pathname !== "/" &&
+    list.some((path) => req.nextUrl.pathname.startsWith(path))
+  ) {
     const supabase = createMiddlewareClient({ req, res });
 
     const {

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import FAQs from "./index/components/FAQs";
 import VideoIndex from "./index/components/VideoIndex";
+import PomodoroVideoIndex from "./index/components/PomodoroVideoIndex";
 // import SlideTrandingForm from "./index/components/SlideTrandingForm";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
@@ -289,6 +290,24 @@ Our support for form logic lets you create intelligent, interactive forms that r
         </section>
         <section className="max-w-6xl w-full m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
           <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
+            <div className="w-full md:w-6/12 order-2 md:order-1">
+              <h3 className="font-semibold text-3xl">Unlimited Submission</h3>
+              <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
+                {`Enjoy Unlimited Submissions on All Your Forms – Bid Farewell to Stressful Quotas and Metrics.`}
+              </p>
+            </div>
+            <div className="w-full md:w-6/12 order-1 md:order-2 pb-5 mb:pb-0">
+              <Image
+                src="https://cdn.unclelife.co/Submission.webp"
+                width={500}
+                height={500}
+                className="rounded-3xl"
+                alt="Create next-level Form"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
             <div className="w-full md:w-6/12 pb-5 mb:pb-0">
               <Image
                 src="https://cdn.unclelife.co/1.webp"
@@ -301,7 +320,7 @@ Our support for form logic lets you create intelligent, interactive forms that r
             </div>
             <div className="w-full md:w-6/12">
               <h3 className="font-semibold text-3xl">
-              Unlimited Field Options
+                Unlimited Field Options
               </h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
                 {`Input data effortlessly through your form fields. With UncleLife, you have the freedom to create and manage as many databases as you desire, mirroring your Notion setup seamlessly.`}
@@ -347,7 +366,7 @@ Our support for form logic lets you create intelligent, interactive forms that r
           <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
             <div className="w-full md:w-6/12 order-2 md:order-1">
               <h3 className="font-semibold text-3xl">
-              Unlimited Form Creation
+                Unlimited Form Creation
               </h3>
               <p className="whitespace-pre-line text-muted-foreground mt-2 font-light">
                 {`You have the liberty to create endless forms, embracing a myriad of formats to suit your needs.`}
@@ -369,6 +388,24 @@ Our support for form logic lets you create intelligent, interactive forms that r
           <h3 className="text-4xl">Pricing</h3>
           <PricingBox />
         </section>
+        <section className="max-w-7xl w-full m-auto flex text-center px-5 lg:px-0 lg:text-left flex-col lg:flex-row py-10 mt-10 rounded-3xl bg-gradient-to-r from-[#AF36CD] to-[#E15066]">
+          <div className="lg:w-5/12">
+            <div className="lg:absolute lg:ml-12 lg:-mt-16 w-full lg:w-[450px] lg:h-[300px]">
+              <PomodoroVideoIndex />
+            </div>
+          </div>
+          <div className="lg:w-7/12 mt-5 lg:mt-0">
+            <h2 className="text-white text-lg lg:text-5xl">
+              Pomodoro Set work and break intervals Audio and visual alerts
+            </h2>
+            <Link href="/widget/pomodoro">
+              <button className="bg-white rounded-full px-5 py-3 mt-3">
+                Create a Pomodoro
+              </button>
+            </Link>
+          </div>
+        </section>
+        {/* pomodoro section */}
         <section className="w-full m-auto flex flex-col justify-center  items-center bg-gradient-to-r from-[#E43D47] to-[#EA7252] py-10 mt-10 rounded-lg lg:rounded-none">
           <h3 className="flex justify-center items-center text-2xl text-white">
             Wanna stay up-to-date?
