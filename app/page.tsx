@@ -5,8 +5,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import Image from "next/image";
 import FAQs from "./index/components/FAQs";
-import VideoIndex from "./index/components/VideoIndex";
-import PomodoroVideoIndex from "./index/components/PomodoroVideoIndex";
+// import VideoIndex from "./index/components/VideoIndex";
+// import PomodoroVideoIndex from "./index/components/PomodoroVideoIndex";
 // import SlideTrandingForm from "./index/components/SlideTrandingForm";
 
 const IndexNavbar = dynamic(() => import("./index/components/Navbar"), {
@@ -20,6 +20,16 @@ const PricingBox = dynamic(() => import("./pricing/components/PricingBox"), {
 
 const SlideTrandingForm = dynamic(
   () => import("./index/components/SlideTrandingForm"),
+  {
+    ssr: false,
+  }
+);
+const VideoIndex = dynamic(() => import("./index/components/VideoIndex"), {
+  ssr: false,
+});
+
+const PomodoroVideoIndex = dynamic(
+  () => import("./index/components/PomodoroVideoIndex"),
   {
     ssr: false,
   }
@@ -284,10 +294,10 @@ Our support for form logic lets you create intelligent, interactive forms that r
             <VideoIndex />
           </div>
         </section>
-        <section className="w-full m-auto flex flex-col justify-center items-center py-10 mt-10">
+        {/* <section className="w-full m-auto flex flex-col justify-center items-center py-10 mt-10">
           <h3 className="text-3xl font-semibold">Trending Form!</h3>
           <SlideTrandingForm />
-        </section>
+        </section> */}
         <section className="max-w-6xl w-full m-auto flex flex-col space-y-12 mt-10 rounded-3xl">
           <div className="flex w-full items-center space-x-4 flex-col md:flex-row">
             <div className="w-full md:w-6/12 order-2 md:order-1">
