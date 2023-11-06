@@ -86,6 +86,7 @@
     "react-day-picker": "^8.8.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
+    "react-fast-marquee": "^1.6.2",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.45.0",
     "react-phone-number-input": "^3.3.7",
