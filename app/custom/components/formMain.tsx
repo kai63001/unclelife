@@ -386,7 +386,7 @@ const FormMainBox = ({
     }
 
     //check if testMode
-    if (testMode) {
+    if (testMode && page == null) {
       return false;
     }
 
@@ -780,6 +780,7 @@ const FormMainBox = ({
                     className="px-10"
                     type="button"
                     onClick={(e) => {
+                      e.preventDefault();
                       nextPage();
                     }}
                   >

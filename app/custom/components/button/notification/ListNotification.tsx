@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Send, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
+import SelfEmail from "./SelfEmail";
 const RespondentEmail = dynamic(() => import("./RespontEmail"), {
   ssr: false,
 });
@@ -13,6 +14,9 @@ const ListNotification = ({
 }: any) => {
   if (selectNotification == "RespondentEmail") {
     return <RespondentEmail />;
+  }
+  if (selectNotification == "SelfEmail") {
+    return <SelfEmail />;
   }
 
   return (
@@ -28,7 +32,6 @@ const ListNotification = ({
       <Button
         variant={"outline"}
         className="py-5"
-        disabled={true}
         onClick={() => setSelectNotification("SelfEmail")}
       >
         <Mail className="h-4 w-4 mr-2" />
