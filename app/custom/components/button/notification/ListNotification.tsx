@@ -3,8 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Send, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
-import SelfEmail from "./SelfEmail";
 const RespondentEmail = dynamic(() => import("./RespontEmail"), {
+  ssr: false,
+});
+const SelfEmail = dynamic(() => import("./SelfEmail"), {
   ssr: false,
 });
 

@@ -26,6 +26,8 @@ const ButtonNotification = () => {
     switch (selectNotification) {
       case "RespondentEmail":
         return "Respondent Email Notifications";
+      case "SelfEmail":
+        return "Self Email Notifications";
       default:
         return "Notification & Integrations";
     }
