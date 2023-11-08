@@ -21,38 +21,25 @@ const ControllerButtonSave = ({ session }: any) => {
     (state) => state.formReducer
   );
   const [showButton, setShowButton] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (!databaseId && !workspaceId) {
         setShowButton(true);
       }
+      setLoading(false);
     }, 1000);
     return () => clearTimeout(timeoutId);
   }, [databaseId, workspaceId]);
+  if (loading) {
+    return null;
+  }
 
   if (!databaseId && workspaceId) {
     return <ButtonCreateDatabase session={session} />;
   } else if (showButton) {
-    return (
-      <AlertDialog open={true}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              You need to select a workspace to create a form
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Back to create form and select a workspace to create a form
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction asChild>
-              <Link href={"/form/create"}>Create Form</Link>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    );
+    return <ButtonCreateDatabase session={session} />;
   }
 
   return <ButtonSaveCustomForm session={session} />;

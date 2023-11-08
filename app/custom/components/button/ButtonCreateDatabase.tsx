@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux/hook";
 import { Button } from "@/components/ui/button";
 import { addMapToLayer, convertLayerToProperty } from "@/lib/notion";
-import { Newspaper, Send, SendIcon } from "lucide-react";
+import { Briefcase, Newspaper, Send, SendIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -19,22 +19,30 @@ import { ToastAction } from "@/components/ui/toast";
 import { setInformation } from "@/app/redux/slice/formController.slice";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
+import { useSupabase } from "@/app/hook/supabase-provider";
+import SelectWorkspace from "./createDatabase/SelectWorkspace";
 
 const ButtonCreateDatabase = ({ session }: any) => {
   const dispatch = useAppDispatch();
+  const { supabase } = useSupabase();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [listPage, setListPage] = useState<any>([]);
   const [pageId, setPageId] = useState<any>("");
   const [loading, setLoading] = useState(false);
-  const { layer, infomation, form, workspaceId, logic, notification } = useAppSelector(
-    (state) => state.formReducer
-  );
+  const { layer, infomation, form, workspaceId, logic, notification } =
+    useAppSelector((state) => state.formReducer);
+
+  const [workspaceList, setWorkspaceList] = useState<any>([]);
+  const [loadingWorkspace, setLoadingWorkspace] = useState(false);
+  const [noWorkspace, setNoWorkspace] = useState(false);
 
   useEffect(() => {
     const getListPageCallback = async () => {
+      setLoadingWorkspace(true);
       const listPageData = await getListPage(workspaceId);
       setListPage(listPageData);
+      setLoadingWorkspace(false);
     };
     getListPageCallback();
   }, [workspaceId]);
@@ -45,6 +53,30 @@ const ButtonCreateDatabase = ({ session }: any) => {
       `${process.env.NEXT_PUBLIC_FRONT_END_URL}/public/form/${idData}`
     );
   };
+
+  useEffect(() => {
+    const getListWorkspace = async () => {
+      if (workspaceId) {
+        return;
+      }
+      const listWorkspaceData = await supabase
+        .from("integration_notion")
+        .select("workspace_id,workspace_name")
+        .eq("user_id", session?.user?.id)
+        .then((data) => {
+          if (data.error) {
+            return [];
+          }
+          return data.data;
+        });
+      console.log(listWorkspaceData);
+      setWorkspaceList(listWorkspaceData);
+      if (listWorkspaceData.length === 0) {
+        setNoWorkspace(true);
+      }
+    };
+    getListWorkspace();
+  }, [session?.user?.id, supabase, workspaceId]);
 
   const createDatabase = async () => {
     setLoading(true);
@@ -73,7 +105,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
         detail: form,
         layer: newLayer,
         logic,
-        notification
+        notification,
       });
       if (error) {
         console.log(error);
@@ -107,7 +139,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
       databaseId,
       workspaceId,
       logic,
-      notification
+      notification,
     });
     if (error) {
       console.log(error);
@@ -161,29 +193,59 @@ const ButtonCreateDatabase = ({ session }: any) => {
             Publish form
           </Button>
         </DialogTrigger>
-        <DialogContent className="min-w-[700px]">
-          <Newspaper className="mx-auto mt-4" size={128} />
-          <h2 className="text-center text-2xl font-bold">
-            Select a Notion page
-          </h2>
-          <p>
-            {`Choose a page within your Notion Workspace. We'll set up a Notion database there, where all your form responses will be collected.`}
-          </p>
-
-          <SearchPageComboBox listPage={listPage} setPageId={setPageId} />
-          <DialogFooter>
-            <Button
-              onClick={createDatabase}
-              disabled={!pageId || pageId.length <= 0 || loading}
-            >
-              {loading && (
+        {workspaceId ? (
+          <DialogContent className="min-w-[700px]">
+            <Newspaper className="mx-auto mt-4" size={128} />
+            <h2 className="text-center text-2xl font-bold">
+              Select a Notion page
+            </h2>
+            <p>
+              {`Choose a page within your Notion Workspace. We'll set up a Notion database there, where all your form responses will be collected.`}
+            </p>
+            {loadingWorkspace && (
+              <div className="flex justify-center">
                 <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
-              )}
-              {!loading && <SendIcon size={24} className="mr-2" />}
-              Publish Form
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+                loading...
+              </div>
+            )}
+            {listPage.length > 0 && (
+              <SearchPageComboBox listPage={listPage} setPageId={setPageId} />
+            )}
+            <DialogFooter>
+              <Button
+                onClick={createDatabase}
+                disabled={!pageId || pageId.length <= 0 || loading}
+              >
+                {loading && (
+                  <Icons.spinner className="animate-spin mr-2 h-5 w-5" />
+                )}
+                {!loading && <SendIcon size={24} className="mr-2" />}
+                Publish Form
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        ) : (
+          <DialogContent className="min-w-[700px]">
+            <Briefcase className="mx-auto mt-4" size={128} />
+            <h2 className="text-center text-2xl font-bold">
+              Select a Workspace
+            </h2>
+            <p>
+              {`Before selecting a page, you need to choose a workspace in Notion. Once a workspace is selected, we can then establish a database to organize all your form responses.`}
+            </p>
+            <SelectWorkspace
+              listWorkspace={workspaceList}
+            />
+            <DialogFooter>
+              <Button
+                onClick={createDatabase}
+                disabled={!pageId || pageId.length <= 0 || loading}
+              >
+                Select Workspace
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        )}
       </Dialog>
     </>
   );

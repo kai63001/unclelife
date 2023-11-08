@@ -33,32 +33,35 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
         >
           <div className="flex space-x-3">
             {value &&
-              listPage.find((page: any) => page.id === value)?.icon.type ===
+              listPage?.find((page: any) => page.id === value)?.icon.type ===
                 "emoji" && (
                 <span className="mr-2">
-                  {listPage.find((page: any) => page.id === value)?.icon.emoji}
+                  {listPage?.find((page: any) => page.id === value)?.icon.emoji}
                 </span>
               )}
-            {listPage.find((page: any) => page.id === value)?.icon.type ===
+            {listPage?.find((page: any) => page.id === value)?.icon.type ===
               "external" && (
               <Image
                 src={
-                  listPage.find((page: any) => page.id === value)?.icon.external
+                  listPage?.find((page: any) => page.id === value)?.icon
+                    .external
                 }
                 alt={`icon external ${
-                  listPage.find((page: any) => page.id === value)?.title
+                  listPage?.find((page: any) => page.id === value)?.title
                 }`}
                 width={16}
                 height={16}
                 className="mr-2"
               />
             )}
-            {listPage.find((page: any) => page.id === value)?.icon.type ===
+            {listPage?.find((page: any) => page.id === value)?.icon.type ===
               "file" && (
               <Image
-                src={listPage.find((page: any) => page.id === value)?.icon.file}
+                src={
+                  listPage?.find((page: any) => page.id === value)?.icon.file
+                }
                 alt={`icon file ${
-                  listPage.find((page: any) => page.id === value)?.title
+                  listPage?.find((page: any) => page.id === value)?.title
                 }`}
                 width={16}
                 height={16}
@@ -67,7 +70,7 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
             )}
 
             {value
-              ? listPage.find((page: any) => page.id === value)?.title
+              ? listPage?.find((page: any) => page.id === value)?.title
               : "Select a Notion Page"}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -78,49 +81,50 @@ const SearchPageComboBox = ({ listPage, setPageId }: any) => {
           <CommandInput placeholder="Search Notion Page..." />
           <CommandEmpty>No Database found.</CommandEmpty>
           <CommandGroup className="max-h-96 overflow-scroll">
-            {listPage.map((page: any) => (
-              <CommandItem
-                key={page.id}
-                onSelect={() => {
-                  const currentValue = page.id;
-                  setPageId(currentValue === value ? "" : currentValue);
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === page.id ? "opacity-100" : "opacity-0"
+            {listPage?.length > 0 &&
+              listPage?.map((page: any) => (
+                <CommandItem
+                  key={page.id}
+                  onSelect={() => {
+                    const currentValue = page.id;
+                    setPageId(currentValue === value ? "" : currentValue);
+                    setValue(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === page.id ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {/* icon */}
+                  {page.icon.type === "emoji" && (
+                    <span className="mr-2">{page.icon.emoji}</span>
                   )}
-                />
-                {/* icon */}
-                {page.icon.type === "emoji" && (
-                  <span className="mr-2">{page.icon.emoji}</span>
-                )}
-                {page.icon.type === "external" && (
-                  <Image
-                    src={page.icon.external}
-                    alt={`icon external ${page.title}`}
-                    width={16}
-                    height={16}
-                    className="mr-2"
-                  />
-                )}
-                {page.icon.type === "file" && (
-                  <Image
-                    src={page.icon.file}
-                    alt={`icon file ${page.title}`}
-                    width={16}
-                    height={16}
-                    className="mr-2"
-                  />
-                )}
+                  {page.icon.type === "external" && (
+                    <Image
+                      src={page.icon.external}
+                      alt={`icon external ${page.title}`}
+                      width={16}
+                      height={16}
+                      className="mr-2"
+                    />
+                  )}
+                  {page.icon.type === "file" && (
+                    <Image
+                      src={page.icon.file}
+                      alt={`icon file ${page.title}`}
+                      width={16}
+                      height={16}
+                      className="mr-2"
+                    />
+                  )}
 
-                {page.title}
-                <span className="hidden">{page.id}</span>
-              </CommandItem>
-            ))}
+                  {page.title}
+                  <span className="hidden">{page.id}</span>
+                </CommandItem>
+              ))}
           </CommandGroup>
         </Command>
       </PopoverContent>
