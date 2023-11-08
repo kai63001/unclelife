@@ -40,7 +40,7 @@ export const FormAPIComponent = ({ id, layer }: any) => {
     // Create a data object
     const data = {
       ${layer
-        ?.map((item:any) => {
+        ?.map((item: any) => {
           return `"${item.mapTo}": ${item.mapTo},`;
         })
         .join("\n       ")}
@@ -69,7 +69,7 @@ export const FormAPIComponent = ({ id, layer }: any) => {
     // Create a data object
     const data = JSON.stringify({
       ${layer
-        ?.map((item:any) => {
+        ?.map((item: any) => {
           return `"${item.mapTo}": ${item.mapTo},`;
         })
         .join("\n       ")}
@@ -104,13 +104,20 @@ export const FormAPIComponent = ({ id, layer }: any) => {
 
   return (
     <div className="mt-3">
-      <h2 className="text-2xl font-bold">Form API</h2>
+      <h2 className="text-2xl font-bold flex items-center space-x-2">
+        Form API
+        <span className="rounded-lg px-2 py-1 text-white bg-red-500 text-xs">
+          BETA
+        </span>
+      </h2>
       <div className="flex mt-3">
         {listCode.map((code) => (
           <div
             key={code}
             className={`mr-3 cursor-pointer border-2 rounded-md px-2 py-1 w-32 h-23 flex justify-center items-center mb-5 text-center ${
-              selectedCode === code ? "font-bold border-red-500" : "border-gray-300"
+              selectedCode === code
+                ? "font-bold border-red-500"
+                : "border-gray-300"
             }`}
             onClick={() => handleCodeSelect(code)}
           >

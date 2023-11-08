@@ -47,6 +47,9 @@ const FormDetailPage = async ({ params: { id } }: any) => {
       </div>
       <div>
         <ShareURLDetailForm id={id} dataSlug={data?.slug} />
+        <h2 className="mt-3 -mb-10 text-2xl font-semibold">
+          List Submission
+        </h2>
         <ListSubmition id={id} databaseId={data?.databaseId} />
         <FormAPIComponent id={id} layer={data?.layer}/>
       </div>

@@ -54,8 +54,20 @@ export async function middleware(req: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
+    const redirectToCreateForm = () => {
+      if (
+        req.nextUrl.pathname == "/form/create" ||
+        req.nextUrl.pathname == "/custom/form"
+      ) {
+        return "?redirect=/custom/form";
+      }
+      return "";
+    };
+
     if (!user) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(
+        new URL(`/login${redirectToCreateForm()}`, req.url)
+      );
     }
   }
 

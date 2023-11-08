@@ -57,7 +57,7 @@ export default function Home() {
               Create beautiful forms and widget connected to your Notion pages
             </p>
             <div className="flex justify-center lg:justify-start space-x-2">
-              <Link href="/form/create" className="inline-block">
+              <Link href="/custom/form" className="inline-block">
                 <button className="bg-white text-[#b85a3f] border-2 border-white font-semibold px-2 py-2 md:px-3 md:py-3 rounded-md flex items-center">
                   Create a Form
                   <ArrowRightCircle className="ml-2" size={20} />

@@ -7,16 +7,19 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClientComponentClient<Database>();
   const { toast } = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookie, setCookie] = useCookies(["redirect"]);
 
   const loginWithEmail = async (e: any) => {
     e.preventDefault();
@@ -60,11 +63,27 @@ const Login = () => {
     });
     setLoading(false);
     //redirect
+    if (searchParams.get("redirect") == "/custom/form") {
+      router.push(searchParams.get("redirect") as string);
+      return;
+    }
+
     router.push("/home");
   };
 
   async function signInWithNotion() {
     setLoading(true);
+    if (
+      searchParams.get("redirect") &&
+      decodeURIComponent(searchParams.get("redirect") as string) ==
+        "/custom/form"
+    ) {
+      // cookies().set("redirect", searchParams.get("redirect") as string);
+
+      setCookie("redirect", searchParams.get("redirect") as string, {
+        path: "/",
+      });
+    }
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

@@ -11,7 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { createNotionDatabase, getListPage } from "@/lib/notionApi";
+import {
+  createNotionDatabase,
+  getAuthLink,
+  getListPage,
+} from "@/lib/notionApi";
 import SearchPageComboBox from "./createDatabase/SearchPageComboBox";
 import { insertForm, updateForm } from "@/lib/formApi";
 import { toast } from "@/components/ui/use-toast";
@@ -21,6 +25,16 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { useSupabase } from "@/app/hook/supabase-provider";
 import SelectWorkspace from "./createDatabase/SelectWorkspace";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import Link from "next/link";
 
 const ButtonCreateDatabase = ({ session }: any) => {
   const dispatch = useAppDispatch();
@@ -36,6 +50,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
   const [workspaceList, setWorkspaceList] = useState<any>([]);
   const [loadingWorkspace, setLoadingWorkspace] = useState(false);
   const [noWorkspace, setNoWorkspace] = useState(false);
+  const [addWorkspace, setAddWorkspace] = useState(false);
 
   useEffect(() => {
     const getListPageCallback = async () => {
@@ -56,6 +71,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
 
   useEffect(() => {
     const getListWorkspace = async () => {
+      setNoWorkspace(false);
       if (workspaceId) {
         return;
       }
@@ -69,14 +85,47 @@ const ButtonCreateDatabase = ({ session }: any) => {
           }
           return data.data;
         });
-      console.log(listWorkspaceData);
       setWorkspaceList(listWorkspaceData);
-      if (listWorkspaceData.length === 0) {
+      if (listWorkspaceData.length == 0) {
         setNoWorkspace(true);
       }
     };
     getListWorkspace();
-  }, [session?.user?.id, supabase, workspaceId]);
+  }, [session?.user?.id, supabase, workspaceId, addWorkspace]);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    if (noWorkspace) {
+      intervalId = setInterval(() => {
+        const notionIntegrationMessage = localStorage.getItem(
+          "notion_integration_message"
+        );
+        if (
+          notionIntegrationMessage &&
+          notionIntegrationMessage !== "" &&
+          notionIntegrationMessage != null &&
+          notionIntegrationMessage != undefined
+        ) {
+          localStorage.removeItem("notion_integration_message");
+          if (notionIntegrationMessage === "success") {
+            setAddWorkspace(true);
+            clearInterval(intervalId);
+          } else {
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: notionIntegrationMessage,
+              variant: "destructive",
+            });
+          }
+        }
+      }, 2000);
+    }
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [noWorkspace]);
 
   const createDatabase = async () => {
     setLoading(true);
@@ -162,7 +211,10 @@ const ButtonCreateDatabase = ({ session }: any) => {
     );
 
     //update a fake path
-    router.replace(`/custom/form?id=${data.id}`);
+    // router.replace(`/custom/form?id=${data.id}`);
+
+    //push to detail page
+    router.replace(`/form/detail/${data.id}`);
 
     //toast success
     toast({
@@ -178,6 +230,39 @@ const ButtonCreateDatabase = ({ session }: any) => {
       ),
     });
   };
+
+  if (noWorkspace && dialogOpen) {
+    return (
+      <AlertDialog open={true}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl font-bold">
+              Connect your Notion Workspace
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {`Link your Notion workspace and begin gathering responses. Ensure you choose at least one Notion page.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex justify-center sm:justify-center mt-10">
+            <AlertDialogAction
+              onClick={async () => {
+                const url = await getAuthLink();
+                const win = window.open(url, "_blank");
+                win?.focus();
+              }}
+              className="animate-bounce"
+            >
+              <Icons.notion className={"w-6 h-6 mr-2"} />
+              Connect a workspace
+            </AlertDialogAction>
+          </AlertDialogFooter>
+          <div className="text-xs border bg-muted px-3 py-3">
+            {`Your information remains in Notion. We don't keep any form responses.`}
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
 
   return (
     <>
@@ -233,9 +318,7 @@ const ButtonCreateDatabase = ({ session }: any) => {
             <p>
               {`Before selecting a page, you need to choose a workspace in Notion. Once a workspace is selected, we can then establish a database to organize all your form responses.`}
             </p>
-            <SelectWorkspace
-              listWorkspace={workspaceList}
-            />
+            <SelectWorkspace listWorkspace={workspaceList} />
             <DialogFooter>
               <Button
                 onClick={createDatabase}

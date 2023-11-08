@@ -63,6 +63,8 @@
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
+    "cookie-cutter": "^0.2.0",
+    "cookies": "^0.8.0",
     "crisp-sdk-web": "^1.0.21",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
@@ -83,6 +85,7 @@
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-code-blocks": "^0.1.4",
+    "react-cookie": "^6.1.1",
     "react-day-picker": "^8.8.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
@@ -112,6 +115,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "@types/cookies": "^0.7.10",
     "@types/lodash": "^4.14.199",
     "@types/nodemailer": "^6.4.13"
   }
