@@ -7,6 +7,7 @@ import { Database } from "@/lib/types_db";
 import { ModeToggle } from "@/components/ModeToggle";
 import MobileToggle from "@/app/index/components/MobileToggle";
 import dynamic from "next/dynamic";
+import { Icons } from "@/components/Icons";
 
 const CrispWithNoSSR = dynamic(() => import("@/components/Crisp"), {
   ssr: false,
@@ -57,6 +58,16 @@ const IndexNavbar = async () => {
           )}
           <li className={"block md:hidden"}>
             <MobileToggle session={session} />
+          </li>
+          <li>
+            <Button asChild size={"icon"} variant={"outline"}>
+              <Link
+                href="https://chat.openai.com/g/g-zaxhffX9F-unclelife-co"
+                target="_blank"
+              >
+                <Icons.gpt className="" size={20} />
+              </Link>
+            </Button>
           </li>
           <li>
             <ModeToggle />
